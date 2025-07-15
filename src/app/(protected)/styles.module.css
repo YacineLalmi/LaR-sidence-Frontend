@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-template-rows: 5rem 1fr;
+  grid-auto-flow: row dense;
+  grid-template-areas:
+    "sideBar header"
+    "sideBar content";
+  height: 100vh;
+}
+
+.content {
+  grid-area: content;
+  padding: 1rem;
+}
+
+.header {
+  grid-area: header;
+}
+
+.sideBar {
+  grid-area: sideBar;
+}
