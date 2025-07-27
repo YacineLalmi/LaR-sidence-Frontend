@@ -10,6 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const handleApiResponse = async <Data>(response: Response): Promise<ApiResponse<Data>> => {
+  console.log(response);
   if (response.ok) {
     if (response.status === 204) {
       return {
@@ -78,12 +79,12 @@ export function hasIntersection<T>(arr1: T[], arr2: T[]): boolean {
 export class ApiResponseError extends Error {
   status: boolean;
   errorCode?: ErrorCodes;
-  errors?: Record<string, string[]>;
+  error?: string;
 
-  constructor({ message, status, errors }: ApiResponse<any>) {
+  constructor({ message, status, error }: ApiResponse<any>) {
     super(message);
     this.status = status;
-    this.errors = errors;
+    this.error = error;
   }
 }
 
@@ -143,9 +144,17 @@ export async function setCookie({
 
 export async function getCookie(key: string): Promise<string | null> {
   const cookieStore = await require("next/headers").cookies();
-  const encryptedValue = cookieStore.get(key)?.value;
-  if (encryptedValue) {
-    return await decrypt(encryptedValue);
+  const cookie = cookieStore.get(key);
+
+  if (cookie) {
+    let encryptedValue = cookie.value;
+    if (encryptedValue) {
+      try {
+        return await decrypt(encryptedValue);
+      } catch (error) {
+        cookieStore.delete(key);
+      }
+    }
   }
   return null;
 }

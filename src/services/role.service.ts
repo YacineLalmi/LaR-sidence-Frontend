@@ -49,7 +49,7 @@ export const RoleService = {
     return validatedResponseData;
   },
 
-  update: async (data: Role, id: number) => {
+  update: async (data: CreateOrUpdateRole, id: number) => {
     const response = await ApiService.put<Role>({
       endpoint: END_POINTS.update(id),
       body: data,

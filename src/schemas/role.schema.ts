@@ -1,19 +1,23 @@
-import { InputField } from "@/lib/definitions";
 import z from "zod";
+import { MultiLangSchema } from "./global.schema";
+import { PermissionSchema } from "./permission.schema";
 
 export const RoleSchema = z.object({
   id: z.number(),
   name: z.string(),
-  display_name: z.string(),
-  description: z.string(),
+  display_name: MultiLangSchema,
+  description: MultiLangSchema,
+  permissions: z.array(z.number()).optional(),
   created_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))
-    .transform((val) => new Date(val)),
+    .transform((val) => new Date(val))
+    .optional(),
   updated_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))
-    .transform((val) => new Date(val)),
+    .transform((val) => new Date(val))
+    .optional(),
   deleted_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))
@@ -23,34 +27,12 @@ export const RoleSchema = z.object({
 });
 
 export const CreateOrUpdateRoleSchema = z.object({
-  name: z.string().min(100),
+  name: z.string(),
   display_name: z.string(),
   description: z.string(),
+  permissions: z.array(z.number()),
 });
 
 export type CreateOrUpdateRole = z.infer<typeof CreateOrUpdateRoleSchema>;
-export const CreateRoleInputs: InputField[] = [
-  {
-    type: "text",
-    placeholder: "Enter the name",
-    label: "Code",
-    id: "name",
-    name: "name",
-  },
-  {
-    type: "text",
-    placeholder: "Enter the display name",
-    label: "Nom",
-    id: "display_name",
-    name: "display_name",
-  },
-  {
-    type: "text",
-    placeholder: "Enter the description",
-    label: "Description",
-    id: "description",
-    name: "description",
-  },
-];
 
 export type Role = z.infer<typeof RoleSchema>;

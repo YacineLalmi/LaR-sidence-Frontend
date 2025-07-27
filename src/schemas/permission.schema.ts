@@ -1,11 +1,12 @@
 import { InputField } from "@/lib/definitions";
 import z from "zod";
+import { MultiLangSchema } from "./global.schema";
 
 export const PermissionSchema = z.object({
   id: z.number(),
-  name: z.string(),
-  display_name: z.string(),
-  description: z.string().optional(),
+  name: z.string().optional(),
+  display_name: MultiLangSchema,
+  description: MultiLangSchema.optional(),
   created_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))
@@ -23,5 +24,8 @@ export const PermissionSchema = z.object({
     .nullable()
     .optional(),
 });
+
+export const GroupedPermissionsSchema = z.record(z.string(), z.array(PermissionSchema));
+export type GroupedPermissions = z.infer<typeof GroupedPermissionsSchema>;
 
 export type Permission = z.infer<typeof PermissionSchema>;

@@ -1,9 +1,14 @@
-import { LoginForm } from "@/components/login-form";
+import { GalleryVerticalEnd } from "lucide-react";
+import { LoginForm } from "./_components/login-form";
+import Carousel from "./_components/carousel/carousel";
 
-export default function Login() {
+export default function LoginPage() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <div className="flex gap-1 h-screen items-center p-2">
+      <div className="w-3/5">
+        <Carousel />
+      </div>
+      <div className="w-2/5">
         <LoginForm />
       </div>
     </div>

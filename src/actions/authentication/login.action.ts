@@ -1,15 +1,11 @@
 "use server";
-import { cookies } from "next/headers";
-// import { authService } from "@/services/auth.service";
-import { redirect } from "next/navigation";
+
 import { ApiResponseError, setCookie } from "@/lib/utils";
 import { ErrorCodes } from "@/lib/constants";
 import { FormState } from "@/lib/definitions";
 import { LoginRequestData, LoginRequestDataSchema } from "@/schemas/auth.schema";
 import { authService } from "@/services/auth.service";
 import { differenceInSeconds } from "date-fns";
-// import { differenceInSeconds } from "date-fns";
-// import { setCookie } from "@/lib/server.helper";
 
 export type LoginState = FormState & LoginRequestData;
 

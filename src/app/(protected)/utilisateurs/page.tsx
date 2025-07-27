@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/data-table";
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
-import { createRoleAction } from "@/app/(protected)/roles/_actions/create.action";
+import { createRoleAction } from "@/actions/roles/create.action";
 import useViewModel from "./view-model";
 import { columns } from "./user.columns";
 import { UserService } from "@/services/utilisateur.service";

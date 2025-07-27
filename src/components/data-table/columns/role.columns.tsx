@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Eye, Trash2 } from "lucide-react";
+import { Edit, Eye, Trash2 } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Role } from "@/schemas/role.schema";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { MultiLang } from "@/schemas/global.schema";
 
 const handleDelete = (item: Role) => {
   const router = useRouter();
@@ -45,41 +46,41 @@ export const columns: ColumnDef<Role>[] = [
   {
     accessorKey: "display_name",
     header: "Nom",
+    cell: ({ row }) => {
+      const displayName = row.getValue("display_name") as MultiLang;
+      console.log(displayName.fr);
+      return displayName.fr || "N/A";
+    },
   },
   {
     accessorKey: "description",
     header: "Description",
+    cell: ({ row }) => {
+      const description = row.getValue("description") as MultiLang;
+      console.log(description.fr);
+      return description.fr || "N/A";
+    },
   },
   {
     id: "actions",
     cell: (row) => (
       <div className="flex items-center gap-2">
         <Link href={`/roles/${row.row.original.id}`}>
-          <Button
-            variant="outline"
-            size="sm"
-            title="voir"
-            className="h-8 w-8 p-0 bg-green-50 text-green-600 border-green-200 hover:bg-green-100 hover:text-green-700 cursor-pointer"
-          >
+          <Button variant="ghost" size="sm" className="cursor-pointer" title="voir">
             <Eye className="h-4 w-4" />
           </Button>
         </Link>
         <Link href={`/roles/modifier/${row.row.original.id}`}>
-          <Button
-            variant="outline"
-            size="sm"
-            title="modifier"
-            className="h-8 w-8 p-0 bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 hover:text-blue-700 cursor-pointer"
-          >
-            <Trash2 className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
+            <Edit className="h-4 w-4" />
           </Button>
         </Link>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="cursor-pointer"
           title="supprimer"
           onClick={() => handleDelete(row.row.original)}
-          className="h-8 w-8 p-0 bg-red-50 text-red-600 border-red-200 hover:bg-red-100 hover:text-red-700 cursor-pointer"
         >
           <Trash2 className="h-4 w-4" />
         </Button>
