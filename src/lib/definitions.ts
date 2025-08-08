@@ -10,7 +10,7 @@ export interface ApiResponse<T = any> {
     perPage: number;
     totalRecords: number;
   };
-  errors?: Record<string, string[]>;
+  error?: string;
   errorCode?: ErrorCodes;
 }
 
@@ -27,7 +27,7 @@ export interface FormState {
   isOk: "OK" | "NOK" | "UNDEFINED";
   errorMessage?: string;
   errorCode?: ErrorCodes;
-  errorDetails?: Record<string, string>;
+  errorDetails?: Record<string, string[] | undefined>;
 }
 
 export interface RequestOptions<Body = any> {
@@ -51,14 +51,6 @@ export interface ResponseMetaData {
   perPage: number;
   totalPages: number;
   totalRecords: number;
-}
-
-export interface InputField {
-  type: "text" | "number" | "select";
-  placeholder: string;
-  id: string;
-  name: string;
-  label: string;
 }
 
 export type QueryParams = Record<string, string>;

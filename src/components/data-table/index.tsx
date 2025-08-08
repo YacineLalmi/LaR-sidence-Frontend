@@ -4,20 +4,9 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponseMetaData } from "@/lib/definitions";
 import Pagination from "./_components/pagination";
-import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  actions: {
-    create?: any;
-    update?: any;
-    delete?: any;
-  };
-  initialStale: any;
-  createButtonText: string;
-  currentPath: string;
   data: {
     items: TData[];
     meta?: ResponseMetaData;
@@ -34,14 +23,6 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
 
   return (
     <div className="w-full flex flex-col justify-start gap-6">
-      <div className="flex items-center gap-2 justify-end w-full p-0">
-        <Link href={`${props.currentPath}/ajouter`}>
-          <Button>
-            <Plus />
-            {props.createButtonText}
-          </Button>
-        </Link>
-      </div>
       <div className="overflow-hidden rounded-lg border">
         <Table>
           <TableHeader className="bg-muted sticky top-0 z-10">
@@ -57,7 +38,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="**:data-[slot=table-cell]:first:w-8">
+          <TableBody className="**:data-[slot=table-cell]:first:w-8 bg-white">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>

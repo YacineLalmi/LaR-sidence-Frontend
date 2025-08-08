@@ -1,19 +1,19 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { CreateOrUpdateRole, Role, RoleSchema } from "@/schemas/role.schema";
+import { Role, RoleForm, RoleSchema } from "@/schemas/role.schema";
 import z from "zod";
 
 const END_POINTS = {
-  create: "/roles",
-  findAll: "/roles",
-  findOne: (id: number) => `/roles/${id}`,
-  update: (id: number) => `/roles/${id}`,
-  delete: (id: number) => `/roles/${id}`,
+  create: "/configurations/users/roles",
+  findAll: "/configurations/users/roles",
+  findOne: (id: number) => `/configurations/users/roles/${id}`,
+  update: (id: number) => `/configurations/users/roles/${id}`,
+  delete: (id: number) => `/configurations/users/roles/${id}`,
 };
 
 export const RoleService = {
-  create: async (data: CreateOrUpdateRole) => {
+  create: async (data: RoleForm) => {
     const response = await ApiService.post<Role>({
       endpoint: END_POINTS.create,
       body: data,
@@ -49,7 +49,7 @@ export const RoleService = {
     return validatedResponseData;
   },
 
-  update: async (data: Role, id: number) => {
+  update: async (data: RoleForm, id: number) => {
     const response = await ApiService.put<Role>({
       endpoint: END_POINTS.update(id),
       body: data,

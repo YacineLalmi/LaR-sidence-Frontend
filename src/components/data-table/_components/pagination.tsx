@@ -4,9 +4,24 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResponseMetaData } from "@/lib/definitions";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback } from "react";
 
 export default function Pagination<TData>({ page, perPage, totalRecords, totalPages }: ResponseMetaData) {
+  const router = useRouter();
+
+  const handlePageChange = useCallback((value: any) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", value);
+    router.push(`?${params.toString()}`);
+  }, []);
+
+  const handlePerPageChange = useCallback((value: any) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("perPage", value);
+    router.push(`?${params.toString()}`);
+  }, []);
+
   return (
     <div className="flex items-center justify-between px-4">
       <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
@@ -17,12 +32,7 @@ export default function Pagination<TData>({ page, perPage, totalRecords, totalPa
           <Label htmlFor="rows-per-page" className="text-sm font-medium">
             Rows per page
           </Label>
-          <Select
-            value={`${perPage}`}
-            onValueChange={(value) => {
-              console.log("per Page Chnaged");
-            }}
-          >
+          <Select value={`${perPage}`} onValueChange={(value) => handlePerPageChange(value)}>
             <SelectTrigger size="sm" className="w-20" id="rows-per-page">
               <SelectValue placeholder={perPage} />
             </SelectTrigger>
@@ -42,17 +52,29 @@ export default function Pagination<TData>({ page, perPage, totalRecords, totalPa
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => console.log("handle first Page Change")}
+            onClick={() => handlePageChange(1)}
             disabled={page == 1}
           >
             <span className="sr-only">Go to first page</span>
             <ChevronsLeft />
           </Button>
-          <Button variant="outline" className="size-8" size="icon" onClick={() => console.log("handle previous")} disabled={page == 1}>
+          <Button
+            variant="outline"
+            className="size-8"
+            size="icon"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page == 1}
+          >
             <span className="sr-only">Go to previous page</span>
             <ChevronLeft />
           </Button>
-          <Button variant="outline" className="size-8" size="icon" onClick={() => console.log("handle next page")} disabled={page == totalPages}>
+          <Button
+            variant="outline"
+            className="size-8"
+            size="icon"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page == totalPages}
+          >
             <span className="sr-only">Go to next page</span>
             <ChevronRight />
           </Button>
@@ -60,7 +82,7 @@ export default function Pagination<TData>({ page, perPage, totalRecords, totalPa
             variant="outline"
             className="hidden size-8 lg:flex"
             size="icon"
-            onClick={() => console.log("handle last page")}
+            onClick={() => handlePageChange(totalPages)}
             disabled={page == totalPages}
           >
             <span className="sr-only">Go to last page</span>

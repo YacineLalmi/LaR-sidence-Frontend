@@ -21,7 +21,17 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
     }
   } else {
     const content = await response.json();
-    throw new ApiResponseError(content);
+    switch (response.status) {
+      case 401:
+        throw new UnauthorizedError();
+      case 403:
+        throw new ForbiddenError();
+      case 400:
+        throw new ValidationError(content.message);
+
+      default:
+        throw new ServerError();
+    }
   }
 };
 
@@ -29,12 +39,8 @@ export function validateResponseData<Data>(data: any, Schema: ZodSchema): Data {
   const validatedFields = Schema.safeParse(data);
 
   if (!validatedFields.success) {
-    console.error(validatedFields.error.flatten().fieldErrors);
-    throw new ApiResponseError({
-      status: false,
-      message: "Error parsing the response body", // TODO : CHANGE WITH THE i18n Multilang
-      errorCode: ErrorCodes.BAD_RESPONSE_BODY,
-    });
+    console.error(validatedFields.error.flatten());
+    throw new ValidationError();
   }
   return validatedFields.data;
 }
@@ -75,17 +81,17 @@ export function hasIntersection<T>(arr1: T[], arr2: T[]): boolean {
   return arr2.some((item) => set1.has(item));
 }
 
-export class ApiResponseError extends Error {
-  status: boolean;
-  errorCode?: ErrorCodes;
-  errors?: Record<string, string[]>;
+// export class ApiResponseError extends Error {
+//   status: boolean;
+//   errorCode?: ErrorCodes;
+//   error?: string;
 
-  constructor({ message, status, errors }: ApiResponse<any>) {
-    super(message);
-    this.status = status;
-    this.errors = errors;
-  }
-}
+//   constructor({ message, status, error }: ApiResponse<any>) {
+//     super(message);
+//     this.status = status;
+//     this.error = error;
+//   }
+// }
 
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "ThisMustBeA32ByteKey";
 
@@ -143,9 +149,54 @@ export async function setCookie({
 
 export async function getCookie(key: string): Promise<string | null> {
   const cookieStore = await require("next/headers").cookies();
-  const encryptedValue = cookieStore.get(key)?.value;
-  if (encryptedValue) {
-    return await decrypt(encryptedValue);
+  const cookie = cookieStore.get(key);
+
+  if (cookie) {
+    let encryptedValue = cookie.value;
+    if (encryptedValue) {
+      try {
+        return await decrypt(encryptedValue);
+      } catch (error) {
+        cookieStore.delete(key);
+      }
+    }
   }
   return null;
+}
+
+// app/lib/errors.ts
+
+export class UnauthorizedError extends Error {
+  constructor(message = "Access is denied due to invalid credentials or missing authentication.") {
+    super(message);
+    this.name = ErrorCodes.UNAUTHORIZED;
+  }
+}
+
+export class ForbiddenError extends Error {
+  constructor(message = "You do not have permission to access this resource.") {
+    super(message);
+    this.name = ErrorCodes.FORBIDDEN;
+  }
+}
+
+export class ServerError extends Error {
+  constructor(message = "Server Error: An unexpected error occurred on the server. Please try again later.") {
+    super(message);
+    this.name = ErrorCodes.SERVER_ERROR;
+  }
+}
+
+export class ValidationError extends Error {
+  constructor(message = "The recieved data did not pass validation checks.") {
+    super(message);
+    this.name = ErrorCodes.VALIDATION_ERROR;
+  }
+}
+
+export class BadRequestError extends Error {
+  constructor(message = "The submitted data did not pass validation checks.") {
+    super(message);
+    this.name = ErrorCodes.BAD_REQUEST;
+  }
 }

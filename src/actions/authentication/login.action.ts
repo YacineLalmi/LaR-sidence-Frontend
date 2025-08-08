@@ -1,43 +1,42 @@
 "use server";
-import { cookies } from "next/headers";
-// import { authService } from "@/services/auth.service";
-import { redirect } from "next/navigation";
-import { ApiResponseError, setCookie } from "@/lib/utils";
+
+import { setCookie, UnauthorizedError, ValidationError } from "@/lib/utils";
 import { ErrorCodes } from "@/lib/constants";
 import { FormState } from "@/lib/definitions";
-import { LoginRequestData, LoginRequestDataSchema } from "@/schemas/auth.schema";
 import { authService } from "@/services/auth.service";
 import { differenceInSeconds } from "date-fns";
-// import { differenceInSeconds } from "date-fns";
-// import { setCookie } from "@/lib/server.helper";
+import { LoginForm, LoginFormSchema } from "@/schemas/auth.schema";
 
-export type LoginState = FormState & LoginRequestData;
+export interface LoginState {
+  form: FormState;
+  data: LoginForm;
+}
 
 export async function login(initialState: LoginState, formData: FormData): Promise<LoginState> {
-  const nom_utilisateur = formData.get("nom_utilisateur") as string;
-  const mot_de_passe = formData.get("mot_de_passe") as string;
+  const data: LoginForm = {
+    username: formData.get("username") as string,
+    password: formData.get("password") as string,
+  };
 
-  const validatedFields = LoginRequestDataSchema.safeParse({
-    nom_utilisateur,
-    mot_de_passe,
-  });
+  let form = initialState.form;
+
+  const validatedFields = LoginFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return {
-      nom_utilisateur,
-      mot_de_passe,
+    form = {
       isOk: "NOK",
-      errorMessage: "Validation Error", // TODO Change with i18n
+      errorMessage: "Validation Error",
       errorCode: ErrorCodes.VALIDATION_ERROR,
-      errorDetails: {
-        username: validatedFields.error?.flatten().fieldErrors.nom_utilisateur?.[0] || "",
-        password: validatedFields.error?.flatten().fieldErrors.mot_de_passe?.[0] || "",
-      },
+      errorDetails: validatedFields.error?.flatten().fieldErrors,
+    };
+    return {
+      data,
+      form: form,
     };
   }
 
   try {
-    const response = await authService.login({ nom_utilisateur, mot_de_passe });
+    const response = await authService.login(data);
     await setCookie({
       key: "access_token",
       value: response.access_token,
@@ -45,28 +44,30 @@ export async function login(initialState: LoginState, formData: FormData): Promi
       maxAge: differenceInSeconds(response.access_token_expires_at, new Date()),
     });
 
+    await setCookie({
+      key: "refresh_token",
+      value: response.refresh_token,
+      expires: differenceInSeconds(response.refresh_token_expires_at, new Date()),
+      maxAge: differenceInSeconds(response.refresh_token_expires_at, new Date()),
+    });
+
+    form.isOk = "OK";
     return {
-      nom_utilisateur,
-      mot_de_passe,
-      isOk: "OK",
+      data,
+      form: form,
     };
   } catch (error) {
-    if (error instanceof ApiResponseError) {
+    console.log("form", form);
+    form.isOk = "NOK";
+    if (error instanceof ValidationError) {
+      form.errorMessage = error.message;
+      form.errorCode = ErrorCodes.VALIDATION_ERROR;
       return {
-        nom_utilisateur,
-        mot_de_passe,
-        isOk: "NOK",
-        errorMessage: error.message,
-        errorCode: ErrorCodes.UKNOWN_ERROR,
+        data,
+        form: form,
       };
+    } else {
+      throw error;
     }
-    console.error(error);
-    return {
-      nom_utilisateur,
-      mot_de_passe,
-      isOk: "NOK",
-      errorCode: ErrorCodes.UKNOWN_ERROR,
-      errorMessage: "Something went wrong from login",
-    };
   }
 }
