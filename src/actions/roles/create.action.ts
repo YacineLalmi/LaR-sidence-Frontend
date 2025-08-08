@@ -1,69 +1,53 @@
 "use server";
-import { ApiResponseError } from "@/lib/utils";
 import { ErrorCodes } from "@/lib/constants";
 import { FormState } from "@/lib/definitions";
+import { RoleForm, RoleFormSchema } from "@/schemas/role.schema";
 import { RoleService } from "@/services/role.service";
-import { CreateOrUpdateRole, CreateOrUpdateRoleSchema } from "@/schemas/role.schema";
 
-export type CreateRoleState = FormState & CreateOrUpdateRole;
-
+export interface CreateRoleState {
+  data: Partial<RoleForm>;
+  form: FormState;
+}
 export async function createRoleAction(initialState: CreateRoleState, formData: FormData): Promise<CreateRoleState> {
-  const name = formData.get("name") as string;
-  const display_name = formData.get("display_name") as string;
-  const description = formData.get("description") as string;
-  const permissions = JSON.parse(formData.get("permissions") as string) as number[];
+  const data: RoleForm = {
+    name: formData.get("name") as string,
+    display_name: formData.get("display_name") as string,
+    description: formData.get("description") as string,
+    permissions: JSON.parse(formData.get("permissions") as string) as number[],
+  };
 
-  const validatedFields = CreateOrUpdateRoleSchema.safeParse({
-    name,
-    display_name,
-    description,
-    permissions,
-  });
+  let form = { ...initialState.form };
+
+  const validatedFields = RoleFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return {
-      name,
-      display_name,
-      description,
-      permissions,
+    form = {
       isOk: "NOK",
       errorMessage: "Validation Error", // TODO Change with i18n
       errorCode: ErrorCodes.VALIDATION_ERROR,
-      errorDetails: {
-        name: validatedFields.error?.flatten().fieldErrors.name?.[0] || "",
-        display_name: validatedFields.error?.flatten().fieldErrors.display_name?.[0] || "",
-        description: validatedFields.error?.flatten().fieldErrors.description?.[0] || "",
-        permissions: validatedFields.error?.flatten().fieldErrors.permissions?.[0] || "",
-      },
+      errorDetails: validatedFields.error?.flatten().fieldErrors,
+    };
+    return {
+      data,
+      form,
     };
   }
 
   try {
-    const response = await RoleService.create({ name, display_name, description, permissions });
-    console.log("inster response", response);
-
-    return { name, display_name, description, permissions, isOk: "OK" };
+    const response = await RoleService.create(data);
+    form.isOk = "OK";
+    return {
+      data,
+      form,
+    };
   } catch (error) {
     console.error(error);
-    if (error instanceof ApiResponseError) {
-      return {
-        name,
-        display_name,
-        description,
-        permissions,
-        isOk: "NOK",
-        errorMessage: error.error,
-        errorCode: ErrorCodes.UKNOWN_ERROR,
-      };
-    }
+    form.isOk = "NOK";
+    form.errorMessage = "Something went wrong from login";
+    form.errorCode = ErrorCodes.UKNOWN_ERROR;
     return {
-      name,
-      display_name,
-      description,
-      permissions,
-      isOk: "NOK",
-      errorCode: ErrorCodes.UKNOWN_ERROR,
-      errorMessage: "Something went wrong from login",
+      data,
+      form,
     };
   }
 }

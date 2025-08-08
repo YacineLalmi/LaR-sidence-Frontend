@@ -4,5 +4,19 @@
   },
   "roles": {
     "edit": "Modifier un Rôle"
+  },
+  "biens": {
+    "management": "Gestion des biens",
+    "create": "Créer un bien"
+  },
+  "settings": {
+    "settings": "Paramètres",
+    "wilayas": "Gestion des Wilayas",
+    "communes": "Gestion des Communes",
+    "users": "Gestion des Utilisateurs",
+    "roles": "Gestion des Rôles",
+    "bien-types": "Gestion des Types de Bien",
+    "transaction-types": "Gestion des Types de Transaction",
+    "status": "Gestion des Statuts"
   }
 }

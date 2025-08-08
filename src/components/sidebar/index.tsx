@@ -4,8 +4,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -25,7 +23,7 @@ const items = [
   },
   {
     title: "Utilisateurs",
-    url: "/utilisateurs",
+    url: "/users",
     icon: Users,
   },
   {
@@ -40,7 +38,7 @@ const items = [
   },
   {
     title: "Demandes",
-    url: "/demandes",
+    url: "/demands",
     icon: Mails,
   },
   {
@@ -84,7 +82,7 @@ export function SideBar() {
           <SidebarMenuButton asChild>
             <a href="/settings">
               <Settings />
-              <span>Settings</span>
+              <span>Paramètres</span>
             </a>
           </SidebarMenuButton>
         </SidebarMenuItem>

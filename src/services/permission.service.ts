@@ -1,17 +1,9 @@
+import { GroupedPermissions, GroupedPermissionsSchema, Permission } from "@/schemas/Permission.schema";
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import {
-  GroupedPermissions,
-  GroupedPermissionsSchema,
-  Permission,
-  PermissionSchema,
-} from "@/schemas/permission.schema";
-import { CreateOrUpdateRole, Role, RoleSchema } from "@/schemas/role.schema";
-import z from "zod";
 
 const END_POINTS = {
-  findAll: "/permissions",
+  findAll: "/configurations/users/permissions",
 };
 
 export const PermissionService = {
@@ -19,7 +11,6 @@ export const PermissionService = {
     const response = await ApiService.get<Permission[]>({
       endpoint: END_POINTS.findAll,
     });
-    console.log(response);
     const validatedResponseData = validateResponseData<GroupedPermissions>(response.data, GroupedPermissionsSchema);
 
     return {

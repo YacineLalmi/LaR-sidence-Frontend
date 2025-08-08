@@ -1,6 +1,5 @@
 import z from "zod";
-import { MultiLangSchema } from "./global.schema";
-import { PermissionSchema } from "./permission.schema";
+import { MultiLangSchema } from "./Global.schema";
 
 export const RoleSchema = z.object({
   id: z.number(),
@@ -26,13 +25,14 @@ export const RoleSchema = z.object({
     .optional(),
 });
 
-export const CreateOrUpdateRoleSchema = z.object({
+export const RoleFormSchema = z.object({
+  id: z.number().optional(),
   name: z.string(),
-  display_name: z.string(),
-  description: z.string(),
-  permissions: z.array(z.number()),
+  display_name: MultiLangSchema,
+  description: MultiLangSchema,
+  permissions: z.array(z.number()).optional(),
 });
 
-export type CreateOrUpdateRole = z.infer<typeof CreateOrUpdateRoleSchema>;
+export type RoleForm = z.infer<typeof RoleFormSchema>;
 
 export type Role = z.infer<typeof RoleSchema>;

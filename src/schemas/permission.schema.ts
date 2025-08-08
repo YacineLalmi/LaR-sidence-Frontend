@@ -1,6 +1,5 @@
-import { InputField } from "@/lib/definitions";
 import z from "zod";
-import { MultiLangSchema } from "./global.schema";
+import { MultiLangSchema } from "./Global.schema";
 
 export const PermissionSchema = z.object({
   id: z.number(),

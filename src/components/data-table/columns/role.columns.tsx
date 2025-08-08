@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Role } from "@/schemas/role.schema";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { MultiLang } from "@/schemas/global.schema";
+import { MultiLang } from "@/schemas/Global.schema";
 
 const handleDelete = (item: Role) => {
   const router = useRouter();
@@ -46,20 +46,20 @@ export const columns: ColumnDef<Role>[] = [
   {
     accessorKey: "display_name",
     header: "Nom",
-    cell: ({ row }) => {
-      const displayName = row.getValue("display_name") as MultiLang;
-      console.log(displayName.fr);
-      return displayName.fr || "N/A";
-    },
+    // cell: ({ row }) => {
+    //   const displayName = row.getValue("display_name") as MultiLang;
+    //   console.log(displayName.fr);
+    //   return displayName.fr || "N/A";
+    // },
   },
   {
     accessorKey: "description",
     header: "Description",
-    cell: ({ row }) => {
-      const description = row.getValue("description") as MultiLang;
-      console.log(description.fr);
-      return description.fr || "N/A";
-    },
+    // cell: ({ row }) => {
+    //   const description = row.getValue("description") as MultiLang;
+    //   console.log(description.fr);
+    //   return description.fr || "N/A";
+    // },
   },
   {
     id: "actions",

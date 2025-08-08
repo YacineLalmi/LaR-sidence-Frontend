@@ -27,7 +27,7 @@ export interface FormState {
   isOk: "OK" | "NOK" | "UNDEFINED";
   errorMessage?: string;
   errorCode?: ErrorCodes;
-  errorDetails?: Record<string, string>;
+  errorDetails?: Record<string, string[] | undefined>;
 }
 
 export interface RequestOptions<Body = any> {
