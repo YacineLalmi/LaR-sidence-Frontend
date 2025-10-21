@@ -1,0 +1,197 @@
+{
+  "management": "Gestion des biens",
+  "create": {
+    "title": "Créer un bien",
+    "buttonText": "Créer un bien",
+    "form": {
+      "generalInformation": {
+        "header": "Information Générale",
+        "title": {
+          "label": "Titre",
+          "placeholder": "Entrez le titre du bien..."
+        },
+        "type": {
+          "label": "Type de bien",
+          "placeholder": "Sélectionnez un type de bien"
+        },
+        "transactionType": {
+          "label": "Type de transaction",
+          "placeholder": "Sélectionnez un type de transaction"
+        },
+        "status": {
+          "label": "Statut",
+          "placeholder": "Sélectionnez un statut"
+        },
+        "agent": {
+          "label": "Agent",
+          "placeholder": "Sélectionnez un agent"
+        },
+        "price": {
+          "label": "Prix de Vente / Loyer Mensuel",
+          "placeholder": "Entrez le prix du bien..."
+        },
+        "monthlyCharges": {
+          "label": "Charges Mensuelles (si applicable)",
+          "placeholder": "Entrez les charges mensuelles..."
+        }
+      },
+      "localisation": {
+        "header": "Localisation",
+        "wilaya": {
+          "label": "Wilaya",
+          "placeholder": "Sélectionnez une wilaya"
+        },
+        "commune": {
+          "label": "Commune",
+          "placeholder": "Sélectionnez une commune"
+        },
+        "postalCode": {
+          "label": "Code Postal",
+          "placeholder": "Entrez le code postal..."
+        },
+        "address": {
+          "label": "Adresse",
+          "placeholder": "Entrez l'adresse du bien..."
+        },
+        "GPSCordinates": {
+          "label": "Coordonnées GPS",
+          "placeholder": "Entrez les coordonnées GPS..."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Entrez la description du bien..."
+        }
+      },
+      "additionalCharacteristics": {
+        "header": "Caractéristiques Additionnelles",
+        "heatingType": {
+          "label": "Type de Chauffage",
+          "placeholder": "Sélectionnez un type de chauffage"
+        },
+        "furnished": {
+          "label": "Meublé",
+          "placeholder": "Sélectionnez si le bien est meublé"
+        },
+        "garden": {
+          "label": "Jardin",
+          "placeholder": "Sélectionnez si le bien a un jardin"
+        },
+        "swimmingPool": {
+          "label": "Piscine",
+          "placeholder": "Sélectionnez si le bien a une piscine"
+        },
+        "terrace": {
+          "label": "Terrasse",
+          "placeholder": "Sélectionnez si le bien a une terrasse"
+        },
+        "garage": {
+          "label": "Garage",
+          "placeholder": "Sélectionnez si le bien a un garage"
+        },
+        "elevator": {
+          "label": "Ascenseur",
+          "placeholder": "Sélectionnez si le bien a un ascenseur"
+        }
+      },
+      "technicalCharacteristics": {
+        "header": "Caractéristiques Techniques",
+        "devolopedSurface": {
+          "label": "Surface Développée (m²)",
+          "placeholder": "Entrez la surface développée..."
+        },
+        "habitalSurface": {
+          "label": "Surface Habitable (m²)",
+          "placeholder": "Entrez la surface habitable..."
+        },
+        "totalSurface": {
+          "label": "Surface Totale (m²)",
+          "placeholder": "Entrez la surface totale..."
+        },
+        "rooms": {
+          "label": "Nombre de pièces",
+          "placeholder": "Entrez le nombre de pièces..."
+        },
+        "bedrooms": {
+          "label": "Nombre de chambres",
+          "placeholder": "Entrez le nombre de chambres..."
+        },
+        "bathrooms": {
+          "label": "Nombre de salles de bain",
+          "placeholder": "Entrez le nombre de salles de bain..."
+        },
+        "availabilityDate": {
+          "label": "Date de disponibilité",
+          "placeholder": "Sélectionnez la date de disponibilité"
+        },
+        "floorNumber": {
+          "label": "Numéro d'étage",
+          "placeholder": "Entrez le numéro d'étage..."
+        }
+      },
+      "comment": {
+        "header": "Commentaire"
+      },
+      "description": {
+        "header": "Description"
+      },
+      "linkedDocuments": {
+        "header": "Documents Liés"
+      },
+      "images": {
+        "header": "Images du bien"
+      },
+      "exclusivity": {
+        "header": "Exclusivité",
+        "isExlusive": {
+          "label": "Le bien est en exclusivité"
+        },
+        "exclusiveEndDate": {
+          "label": "Date de fin d'exclusivité",
+          "placeholder": "JJ/MM/AAAA"
+        },
+        "exclusiveStartDate": {
+          "label": "Date de début d'exclusivité",
+          "placeholder": "JJ/MM/AAAA"
+        },
+        "priority": {
+          "label": "Priorité",
+          "placeholder": "Choississez la priorité du bien"
+        }
+      }
+    }
+  },
+  "filter": {
+    "title": "Filtrer les biens",
+    "submit": "Appliquer les filtres",
+    "placeholder": {
+      "bienType": "Sélectionnez un type de bien",
+      "transactionType": "Sélectionnez un type de transaction",
+      "status": "Sélectionnez un statut",
+      "wilaya": "Sélectionnez une wilaya",
+      "commune": "Sélectionnez une commune",
+      "agent": "Sélectionnez un agent"
+    },
+    "label": {
+      "status": "Statut",
+      "bienType": "Type de bien",
+      "transactionType": "Type de transaction",
+      "wilaya": "Wilaya",
+      "commune": "Commune",
+      "agent": "Agent"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "title": "Titre",
+    "type": "Type de bien",
+    "transactionType": "Type de transaction",
+    "status": "Statut",
+    "wilaya": "Wilaya",
+    "commune": "Commune",
+    "adresse": "Adresse",
+    "isActive": "Actif",
+    "agent": "Agent",
+    "price": "Prix",
+    "createdAt": "Créé le"
+  }
+}

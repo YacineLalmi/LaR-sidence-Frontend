@@ -1,6 +1,5 @@
 import { SideBar } from "@/components/sidebar";
-import styles from "./styles.module.css";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import NavBar from "@/components/navbar";
 
 export default async function ProtectedPagesLayout({ children }: { children: React.ReactNode }) {
@@ -11,7 +10,7 @@ export default async function ProtectedPagesLayout({ children }: { children: Rea
         <SideBar />
         <SidebarInset className="bg-transparent">
           <NavBar />
-          <main className="p-5">{children}</main>
+          <main className="px-5">{children}</main>
         </SidebarInset>
       </SidebarProvider>
     </div>

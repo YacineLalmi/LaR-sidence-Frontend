@@ -1,0 +1,37 @@
+{
+  "title": "Gestion des utilisateurs",
+  "filter": {
+    "label": {
+      "role": "Rôle",
+      "status": "Statut",
+      "createdBetween": "Créé entre"
+    },
+    "placeholder": {
+      "role": "Sélectionner un rôle",
+      "status": "Sélectionner un statut",
+      "createdBetween": "Sélectionner une période"
+    }
+  },
+  "form": {
+    "title": "Créer un utilisateur",
+    "success": "Utilisateur créé avec succès",
+    "faild": "Échec de la création de l’utilisateur",
+    "buttonText": "Créer un utilisateur",
+    "label": {
+      "email": "E-mail",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "isActive": "Actif",
+      "username": "Nom d’utilisateur",
+      "roles": "Rôles"
+    },
+    "placeholder": {
+      "email": "Entrez votre e-mail",
+      "firstName": "Entrez votre prénom",
+      "lastName": "Entrez votre nom",
+      "isActive": "Sélectionnez le statut",
+      "username": "Entrez votre nom d’utilisateur",
+      "roles": "Sélectionnez les Rôles"
+    }
+  }
+}

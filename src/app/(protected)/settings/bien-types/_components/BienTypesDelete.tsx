@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { customToast } from "@/lib/utils";
-import { User } from "@/schemas/user.schema";
+import { User } from "@/schemas/users/user.schema";
 import { useRouter } from "next/navigation";
 import React, { useActionState, useEffect } from "react";
 
@@ -46,7 +46,9 @@ export default function BienTypeDelete({ open, setOpen, item }: Props) {
           <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
           <form action={formAction}>
             <input type="hidden" name="id" value={item?.id ?? ""} />
-            <AlertDialogAction disabled={isPending} type="submit">Continue</AlertDialogAction>
+            <AlertDialogAction disabled={isPending} type="submit">
+              Continue
+            </AlertDialogAction>
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,6 +1,6 @@
 "use client";
 import { updateBienStatusAction, UpdateBienStatusState } from "@/actions/BienStatus/update.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -77,7 +77,8 @@ export default function BienStatusUpdate({ item }: Props) {
             disabled={isPending}
             required
             error={state.form.errorDetails?.is_active && state.form.errorDetails.is_active[0]}
-          /><Input type="color" id="color" name="color" defaultValue={state.data.color} disabled={isPending} required />
+          />
+          <Input type="color" id="color" name="color" defaultValue={state.data.color} disabled={isPending} required />
           <CustomInput id="id" name="id" value={item.id} type="hidden" inputClassName="hidden" />
         </form>
       </CardContent>

@@ -3,28 +3,19 @@
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Role } from "@/schemas/role.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit,  Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import React, { useCallback, useState } from "react";
-import RoleFilter from "./role-filter";
-import RoleDelete from "./role-delete";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
+import { Role } from "@/schemas/roles/roles.schema";
+import SortingButton from "@/components/ui/sorting-button";
+import { format } from "date-fns";
 
 interface Props {
   data: any;
 }
 
 export default function RolesTable({ data }: Props) {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const [itemToDelete, setItemToDelete] = useState<Role | null>(null);
-
-  const handleDelete = useCallback((item: Role) => {
-    setItemToDelete(item);
-    setIsDeleteModalOpen(true);
-  }, []);
-
   const columns: ColumnDef<Role>[] = [
     {
       id: "select",
@@ -50,6 +41,12 @@ export default function RolesTable({ data }: Props) {
       enableHiding: false,
     },
     {
+      accessorKey: "id",
+      header: () => {
+        return <SortingButton columnName="ID" columnKey="id" />;
+      },
+    },
+    {
       accessorKey: "name",
       header: "Code",
       enableHiding: false,
@@ -61,6 +58,15 @@ export default function RolesTable({ data }: Props) {
     {
       accessorKey: "description",
       header: "Description",
+    },
+    {
+      accessorKey: "created_at",
+      header: () => {
+        return <SortingButton columnName="Date de création" columnKey="created_at" />;
+      },
+      cell: ({ row }) => {
+        return format(new Date(row.getValue("created_at")), "P");
+      },
     },
     {
       id: "actions",
@@ -76,7 +82,7 @@ export default function RolesTable({ data }: Props) {
             size="sm"
             className="cursor-pointer"
             title="supprimer"
-            onClick={() => handleDelete(row.row.original)}
+            onClick={() => console.log("first")}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -84,20 +90,5 @@ export default function RolesTable({ data }: Props) {
       ),
     },
   ];
-  return (
-    <Card className="bg-transparent border-none shadow-none">
-      <CardHeader className="flex">
-        <RoleFilter />
-        <Link href="/settings/roles/add">
-          <Button className="cursor-pointer">Ajouter un role</Button>
-        </Link>
-      </CardHeader>
-      <CardContent>
-        <DataTable data={data} columns={columns} />
-      </CardContent>
-
-      {/* Modals */}
-      <RoleDelete open={isDeleteModalOpen} setOpen={setIsDeleteModalOpen} item={itemToDelete} />
-    </Card>
-  );
+  return <DataTable data={data} columns={columns} />;
 }

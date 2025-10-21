@@ -1,0 +1,15 @@
+{
+  "forgotYourPassword": "Mot de passe oublié ?",
+  "welcome": "Bienvenue sur La Résidence",
+  "submit": "Se connecter",
+  "username": {
+    "label": "Nom d'utilisateur",
+    "placeholder": "Entrez votre nom d'utilisateur..."
+  },
+  "loginSuccess": "Vous vous êtes connecté avec succès",
+  "loginFailed": "Échec de la connexion : une erreur est survenue",
+  "password": {
+    "label": "Mot de passe",
+    "placeholder": "Entrez votre mot de passe..."
+  }
+}

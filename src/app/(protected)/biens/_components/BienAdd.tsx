@@ -1,55 +1,94 @@
 "use client";
-import { createBienAction, CreateBienState } from "@/actions/Bien/create.action";
-import { createBienTypeAction, CreateBienTypeState } from "@/actions/BienTypes/create.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import { createBienAction } from "@/actions/Bien/create.action";
+import InputSelectField from "@/components/custom-inputs/input-select";
+import InputTextField from "@/components/custom-inputs/input-text";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
+import { BienForm, BienFormSchema } from "@/schemas/Bien.schema";
 import { BienStatus } from "@/schemas/BienStatus.schema";
 import { BienTransaction } from "@/schemas/BienTransaction.schema";
 import { BienType } from "@/schemas/BienType.schema";
-import React, { useActionState, useCallback, useEffect, useState } from "react";
+import { ListItem } from "@/schemas/Global.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
-  types: BienType[];
-  transactions: BienTransaction[];
-  status: BienStatus[];
+  bienTypes: ListItem[];
+  transactionsTypes: ListItem[];
+  status: ListItem[];
+  wilayas: ListItem[];
+  agents: ListItem[];
 }
 
-export default function BienAdd({ types, transactions, status }: Props) {
-  const initalState: CreateBienState = {
-    isOk: "UNDEFINED",
-    title: "",
-    adresse: "",
-    wilaya: "",
-    commune: "",
-    habitable_surface: 0,
-    total_surface: 0,
-    peices: 0,
-    rooms: 0,
-    price: 0,
-    exclusivity: false,
-    exclusivity_start: new Date(),
-    exclusivity_end: new Date(),
-    responsible_agent: "",
-  };
-  const [state, formAction, isPending] = useActionState(createBienAction, initalState);
+export default function BienAdd({ agents, bienTypes, status, transactionsTypes, wilayas }: Props) {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const t = useTranslations();
+  const router = useRouter();
+  const form = useForm<BienForm>({
+    resolver: zodResolver(BienFormSchema),
+    defaultValues: {
+      title: "",
+      adresse: "",
+      postal_code: "",
+      description: "",
+      comment: null,
 
-  useEffect(() => {
-    if (state.isOk === "NOK") {
-      customToast.error(state.errorMessage || "");
-    } else if (state.isOk === "OK") {
-      customToast.success("Bien Type successfully added");
+      habitable_surface: 0,
+      total_surface: 0,
+      floor: 0,
+      peices: 1,
+      rooms: 0,
+      price: 0,
+      monthly_charges: null,
+
+      exclusivity: false,
+      exclusivity_start: null,
+      exclusivity_end: null,
+
+      wilaya_id: 0,
+      commune_id: 0,
+      agent_id: 0,
+      bien_type_id: 0,
+      transaction_type_id: 0,
+      status_id: 0,
+
+      documents: [],
+    },
+  });
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: BienForm) {
+    setIsPending(true);
+    try {
+      const response = await createBienAction(values);
+      setIsPending(false);
+      if (response.isOk) {
+        router.push("/dashboard");
+        customToast.success(t("loginSuccess"));
+      } else customToast.error(response.errorMessage || t("loginFailed"));
+    } catch (error) {
+      customToast.error(t("loginFailed"));
     }
-  }, [state]);
+  }
+
+  const selectedWilayaId = form.watch("wilaya_id");
 
   return (
     <Card className="bg-transparent shadow-none border-none">
       <CardHeader>
-        <h2>Ajouter un Type de bien</h2>
+        <h2>Ajouter un bien</h2>
       </CardHeader>
       <CardContent>
-        <form className="grid grid-cols-2 gap-5" action={formAction} id="bien-type-create-form">
+        <Form {...form}>
+          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-3"></form>
+        </Form>
+        {/* <form className="grid grid-cols-2 gap-5" action={formAction} id="bien-type-create-form">
           <CustomInput
             label="Titre"
             id="title"
@@ -245,7 +284,7 @@ export default function BienAdd({ types, transactions, status }: Props) {
             selectOptions={status.map((status) => ({ label: status.name, value: status.id }))}
             error={state.errorDetails?.wilaya}
           />
-        </form>
+        </form> */}
       </CardContent>
       <CardFooter className="w-full justify-end">
         <Button className="border-1 cursor-pointer w-52 p-5" type="submit" form="bien-type-create-form">

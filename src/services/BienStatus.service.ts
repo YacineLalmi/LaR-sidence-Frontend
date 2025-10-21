@@ -2,11 +2,13 @@ import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienStatus, BienStatusForm, BienStatusSchema } from "@/schemas/BienStatus.schema";
+import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import z from "zod";
 
 const END_POINTS = {
   create: "/configurations/biens/status",
   findAll: "/configurations/biens/status",
+  list: "/lists/biens/status",
   findOne: (id: number) => `/configurations/biens/status/${id}`,
   update: (id: number) => `/configurations/biens/status/${id}`,
   delete: (id: number) => `/configurations/biens/status/${id}`,
@@ -36,6 +38,16 @@ export const BienStatusService = {
       items: validatedResponseData,
       meta: response.meta,
     };
+  },
+
+  list: async () => {
+    const response = await ApiService.get<ListItem[]>({
+      endpoint: END_POINTS.list,
+    });
+
+    const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
+
+    return validatedResponseData;
   },
 
   findOne: async (id: number) => {

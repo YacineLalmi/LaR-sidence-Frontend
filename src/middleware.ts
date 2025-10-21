@@ -1,57 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookie, setCookie } from "./lib/utils";
-import { authService } from "./services/auth.service";
-import { differenceInSeconds } from "date-fns";
+import { clearCookies, getCookie, refreshTokens, removeCookie, setCookie } from "./lib/server.helper";
+import { UserService } from "./services/users.service";
+import { addHours } from "date-fns";
+import { Profile } from "./schemas/users/profile.schema";
 
-const protectedRoutes = ["/dashboard"];
+const adminRoutes = ["/dashboard", "/settings/users", "/settings", "/"];
+const agentRoutes = ["/dashboard", "/"];
+const protectedRoutes = new Set([...adminRoutes, ...agentRoutes]);
 const publicRoutes = ["/login"];
-let count = 0;
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
+  const isAdminRoute = adminRoutes.includes(path);
+  const isAgentRoute = agentRoutes.includes(path);
+  const isProtectedRoute = protectedRoutes.has(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  // const access_token = cookieStore.get("access_token")?.value;
   const access_token = await getCookie("access_token");
 
   if (!access_token) {
-    // Has no access token
-    const refresh_token = await getCookie("refresh_token");
-    if (!refresh_token) {
-      // Has no access token and no refresh token: redirect user to login page
-      return isProtectedRoute || path === "/"
-        ? NextResponse.redirect(new URL("/login", req.nextUrl))
-        : NextResponse.next();
-    } else {
-      // Has a refresh token: trying to get a new access token and refresh token
+    if (isProtectedRoute) {
       try {
-        console.log("refresh_token", refresh_token);
-        const responseData = await authService.refresh(refresh_token);
-
-        await setCookie({
-          key: "access_token",
-          value: responseData.access_token,
-          expires: differenceInSeconds(responseData.access_token_expires_at, new Date()),
-          maxAge: differenceInSeconds(responseData.access_token_expires_at, new Date()),
-        });
-
-        await setCookie({
-          key: "refresh_token",
-          value: responseData.refresh_token,
-          expires: differenceInSeconds(responseData.refresh_token_expires_at, new Date()),
-          maxAge: differenceInSeconds(responseData.refresh_token_expires_at, new Date()),
-        });
-        return NextResponse.next();
+        await refreshTokens();
       } catch (error) {
-        // Generating to access token and refresh token went wrong: show an error page
-        return NextResponse.redirect(new URL("/ERROR", req.nextUrl));
+        await removeCookie("access_token");
+        await removeCookie("refresh_token");
+        await removeCookie("eo_rmnsutoifirna");
+        return NextResponse.redirect(new URL("/login", req.nextUrl));
       }
-    }
+    } else return NextResponse.next();
   } else {
-    // Has an access token and trying to access a public route: redirect the user to the dashboard
-    if (isPublicRoute) return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    try {
+      const encoded_user_information = await getCookie("eo_rmnsutoifirna");
+      if (!encoded_user_information) {
+        const user_information = await UserService.profile();
+        await setCookie({
+          key: "eo_rmnsutoifirna",
+          value: JSON.stringify(user_information),
+          expires: addHours(new Date(), 1),
+          maxAge: 60 * 60,
+        });
+      }
+    } catch (error) {
+      await removeCookie("eo_rmnsutoifirna");
+    }
 
+    if (isPublicRoute) return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
     if (path === "/") return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
 
     // Everything is OK

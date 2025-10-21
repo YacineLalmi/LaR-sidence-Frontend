@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { User } from "@/schemas/user.schema";
+import { User } from "@/schemas/users/user.schema";
 import React from "react";
 
 interface Props {

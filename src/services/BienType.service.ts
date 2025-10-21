@@ -1,19 +1,21 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { BienType, BienTypeSchema, CreateBienType } from "@/schemas/BienType.schema";
+import { BienType, BienTypeForm, BienTypeSchema } from "@/schemas/BienType.schema";
+import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import z from "zod";
 
 const END_POINTS = {
   create: "/configurations/biens/types",
   findAll: "/configurations/biens/types",
+  list: "/lists/biens/types",
   findOne: (id: number) => `/configurations/biens/types/${id}`,
   update: (id: number) => `/configurations/biens/types/${id}`,
   delete: (id: number) => `/configurations/biens/types/${id}`,
 };
 
 export const BienTypeService = {
-  create: async (data: CreateBienType) => {
+  create: async (data: BienTypeForm) => {
     const response = await ApiService.post<BienType>({
       endpoint: END_POINTS.create,
       body: data,
@@ -36,6 +38,16 @@ export const BienTypeService = {
       items: validatedResponseData,
       meta: response.meta,
     };
+  },
+
+  list: async () => {
+    const response = await ApiService.get<ListItem[]>({
+      endpoint: END_POINTS.list,
+    });
+
+    const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
+
+    return validatedResponseData;
   },
 
   findOne: async (id: number) => {

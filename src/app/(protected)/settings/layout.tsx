@@ -1,51 +1,38 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+
+import NavigationButton from "@/components/ui/navigation-button";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+  const t = useTranslations();
   const pathname = usePathname();
-  console.log(pathname);
-  const t = useTranslations("settings");
 
-  const title: Record<string, string> = {
-    "/settings/wilayas": t("wilayas"),
-    "/settings/communes": t("communes"),
-    "/settings/users": t("users"),
-    "/settings/roles": t("roles"),
-    "/settings/bien-types": t("bien-types"),
-    "/settings/transaction-types": t("transaction-types"),
-    "/settings/status": t("status"),
-    "/settings": t("settings"),
+  const pathsMap: Record<string, { title: string; backLink: string }> = {
+    "/settings/users/add": {
+      title: t("settings.users.form.title"),
+      backLink: "/settings/users",
+    },
+    "/settings/users": {
+      title: t("settings.users.title"),
+      backLink: "/settings",
+    },
+    "/settings/roles/add": {
+      title: t("settings.roles.form.title"),
+      backLink: "/settings/roles",
+    },
+    "/settings/roles": {
+      title: t("settings.roles.title"),
+      backLink: "/settings",
+    },
   };
-
-  const backNavigation: Record<string, string> = {
-    "/settings/wilayas": "/settings",
-    "/settings/communes": "/settings",
-    "/settings/users": "/settings",
-    "/settings/roles": "/settings",
-    "/settings/bien-types": "/settings",
-    "/settings/transaction-types": "/settings",
-    "/settings/status": "/settings",
-    "/settings/status/add": "/settings/status",
-    "/settings": "/dashboard",
-  };
-
   return (
-    <Card className="bg-transparent border-0 shadow-none p-0">
-      <CardHeader className="flex gap-4 items-center">
-        <Link href={backNavigation[pathname] || "/dashboard"}>
-          <Button className="cursor-pointer rounded-full">
-            <ArrowLeft />
-          </Button>
-        </Link>
-        <h1 className="text-2xl font-bold">{title[pathname]}</h1>
-      </CardHeader>
-      <CardContent>{children}</CardContent>
-    </Card>
+    <div className="flex flex-col gap-3">
+      <div className="mb-3">
+        <NavigationButton title={pathsMap[pathname]?.title} backLink={pathsMap[pathname]?.backLink} />
+      </div>
+      <div>{children}</div>
+    </div>
   );
 }

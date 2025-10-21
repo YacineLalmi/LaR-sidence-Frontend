@@ -1,11 +1,10 @@
 import z from "zod";
-import { MultiLangSchema } from "./Global.schema";
 
 export const PermissionSchema = z.object({
   id: z.number(),
   name: z.string().optional(),
-  display_name: MultiLangSchema,
-  description: MultiLangSchema.optional(),
+  display_name: z.string(),
+  description: z.string().optional(),
   created_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))

@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect } from "react";
 import carousel1 from "@/assests/images/carousel-1.jpg";
 import carousel2 from "@/assests/images/carousel-2.jpg";
@@ -69,7 +62,7 @@ export default function Component() {
 
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 5000); // Change slide every 3 seconds
+    }, 50000); // Change slide every 3 seconds
 
     return () => clearInterval(interval);
   }, [api]);
@@ -79,21 +72,21 @@ export default function Component() {
   };
 
   return (
-    <Carousel setApi={setApi} opts={{ loop: true }} className="p-5">
-      <div className="relative rounded-3xl overflow-hidden">
-        <CarouselContent className="rounded-3xl">
+    <Carousel setApi={setApi} opts={{ loop: false }} className="p-5 h-full">
+      <div className="relative rounded-3xl overflow-hidden h-full">
+        <CarouselContent className="rounded-3xl h-full">
           {carouselData.map((item, index) => (
-            <CarouselItem key={item.id}>
-              <Image src={item.image || carousel1} alt={item.title} className="w-full object-cover" />
+            <CarouselItem className="h-full" key={item.id}>
+              <Image src={item.image || carousel1} alt={item.title} height={2000} />
             </CarouselItem>
           ))}
         </CarouselContent>
 
         {/* Black Description Banner - Outside carousel content */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/80 text-white p-6 rounded-b-lg">
-          <div className="flex">
+        <div className="absolute bottom-0 left-0 right-0 h-50 bg-black/80 text-white p-6 rounded-b-lg">
+          <div className="flex h-full">
             <div className="flex-1">
-              <h3 className="text-xl font-semibold mb-2">{carouselData[current]?.title}</h3>
+              <h3 className="text-3xl mb-2">{carouselData[current]?.title}</h3>
               <p className="text-gray-200 text-sm">{carouselData[current]?.description}</p>
             </div>
             {/* Pagination Dots */}
@@ -102,7 +95,7 @@ export default function Component() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`h-1 rounded-full transition-all duration-200 ${
+                  className={`h-1 rounded-full transition-all duration-200 cursor-pointer ${
                     index === current ? "bg-white w-8" : "bg-white/40 hover:bg-white/60 w-3"
                   }`}
                   aria-label={`Go to slide ${index + 1}`}

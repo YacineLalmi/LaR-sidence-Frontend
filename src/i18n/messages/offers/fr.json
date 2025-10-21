@@ -1,0 +1,70 @@
+{
+  "title": "Gestion des offres",
+  "table": {
+    "headers": {
+      "id": "Offre ID",
+      "relatedBien": "Bien Associé",
+      "relatedClient": "Client",
+      "offerType": "Type D'Offer",
+      "price": "Prix",
+      "creationDate": "Date De Création",
+      "status": "Statut",
+      "card": "Fiche",
+      "actions": "Actions"
+    }
+  },
+  "create": {
+    "title": "Créer une offre",
+    "buttonText": "Créer une offre",
+    "form": {
+      "generalInformation": {
+        "header": "Informations Générales",
+        "title": {
+          "label": "Titre",
+          "placeholder": "Entrez le titre de l'offre..."
+        },
+        "type": {
+          "label": "Type d'offre",
+          "placeholder": "Sélectionnez un type d'offre"
+        },
+        "status": {
+          "label": "Statut",
+          "placeholder": "Sélectionnez un statut"
+        },
+        "agent": {
+          "label": "Agent",
+          "placeholder": "Sélectionnez un agent"
+        },
+        "price": {
+          "label": "Prix",
+          "placeholder": "Entrez le prix de l'offre..."
+        }
+      },
+      "description": {
+        "header": "Description",
+        "label": "Description",
+        "placeholder": "Entrez la description de l'offre..."
+      },
+      "linkedDocuments": {
+        "header": "Documents Liés"
+      },
+      "images": {
+        "header": "Images de l'offre"
+      }
+    }
+  },
+  "filter": {
+    "title": "Filtrer les offres",
+    "submit": "Appliquer les filtres",
+    "placeholder": {
+      "offerType": "Sélectionnez un type d'offre",
+      "status": "Sélectionnez un statut",
+      "agent": "Sélectionnez un agent"
+    },
+    "label": {
+      "status": "Statut",
+      "offerType": "Type d'offre",
+      "agent": "Agent"
+    }
+  }
+}

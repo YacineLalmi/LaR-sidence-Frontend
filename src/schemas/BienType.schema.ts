@@ -1,10 +1,9 @@
 import z from "zod";
-import { MultiLangSchema } from "./Global.schema";
 
 export const BienTypeSchema = z.object({
   id: z.number().optional(),
   code: z.string().optional(),
-  name: MultiLangSchema,
+  name: z.string(),
   description: z.string().optional(),
   is_active: z.boolean(),
   created_at: z
@@ -35,3 +34,10 @@ export const BienTypeFormSchema = z.object({
 });
 
 export type BienTypeForm = z.infer<typeof BienTypeFormSchema>;
+
+export const BienTypeListItemSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type BienTypeListItem = z.infer<typeof BienTypeListItemSchema>;

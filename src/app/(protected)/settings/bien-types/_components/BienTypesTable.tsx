@@ -2,16 +2,16 @@
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { User } from "@/schemas/user.schema";
+import { User } from "@/schemas/users/user.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Eye, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React, { useCallback, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import BienTypeFilter from "./BienTypeFilter";
 import BienTypeDelete from "./BienTypesDelete";
-import { MultiLang } from "@/schemas/Global.schema";
-import BienTypeAdd from "./BienTypeAdd";
+import SortingButton from "@/components/ui/sorting-button";
+import { format } from "date-fns";
 
 interface Props {
   data: any;
@@ -52,17 +52,26 @@ export default function BienTypesTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: "ID",
-      enableHiding: false,
+      header: () => {
+        return <SortingButton columnName="ID" columnKey="id" />;
+      },
     },
     {
       accessorKey: "name",
       header: "Nom",
     },
     {
-      accessorKey: "is_active",
-      header: "Actif",
-      cell: ({ row }) => (row.getValue("is_active") ? "Oui" : "Non"),
+      accessorKey: "description",
+      header: "Description",
+    },
+    {
+      accessorKey: "created_at",
+      header: () => {
+        return <SortingButton columnName="Date de création" columnKey="created_at" />;
+      },
+      cell: ({ row }) => {
+        return format(new Date(row.getValue("created_at")), "P");
+      },
     },
     {
       id: "actions",
@@ -78,7 +87,7 @@ export default function BienTypesTable({ data }: Props) {
             size="sm"
             className="cursor-pointer"
             title="supprimer"
-            onClick={() => handleDelete(row.row.original)}
+            onClick={() => console.log("first")}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -87,18 +96,5 @@ export default function BienTypesTable({ data }: Props) {
       header: "Actions",
     },
   ];
-  return (
-    <Card className="bg-transparent border-none shadow-none">
-      <CardHeader className="flex">
-        <BienTypeFilter />
-        <Link href="/settings/bien-types/add">
-          <Button className="cursor-pointer">Ajouter un Type de bien</Button>
-        </Link>
-      </CardHeader>
-      <CardContent>
-        <DataTable data={data} columns={columns} />
-      </CardContent>
-      <BienTypeDelete open={isDeleteModalOpen} setOpen={setIsDeleteModalOpen} item={itemToDelete} />
-    </Card>
-  );
+  return <DataTable data={data} columns={columns} />;
 }

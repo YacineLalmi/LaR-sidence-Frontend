@@ -5,8 +5,8 @@ import { BadgeCheck, BadgeEuro, Building2, Map, Shield, User2 } from "lucide-rea
 export default function page() {
   return (
     <div className="grid grid-cols-4 gap-3">
-      <SettingCard link="/settings/wilaya" title="Wilayas" icon={Map} />
-      <SettingCard link="/settings/commune" title="Communes" icon={Map} />
+      <SettingCard link="/settings/wilayas" title="Wilayas" icon={Map} />
+      <SettingCard link="/settings/communes" title="Communes" icon={Map} />
       <SettingCard link="/settings/users" title="Utilisateurs" icon={User2} />
       <SettingCard link="/settings/roles" title="Roles" icon={Shield} />
       <SettingCard link="/settings/bien-types" title="Type de Bien" icon={Building2} />

@@ -2,14 +2,12 @@
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { User } from "@/schemas/user.schema";
+import { User } from "@/schemas/users/user.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Eye, Plus, Trash2 } from "lucide-react";
+import { Edit, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import BienTypeFilter from "./BienFilter";
-import BienTypeDelete from "./BienDelete";
+import React from "react";
+import BienHeader from "./BienHeader";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -17,14 +15,7 @@ interface Props {
 }
 
 export default function BienTable({ data }: Props) {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const [itemToDelete, setItemToDelete] = useState<User | null>(null);
   const t = useTranslations("biens");
-
-  const handleDelete = useCallback((item: User) => {
-    setItemToDelete(item);
-    setIsDeleteModalOpen(true);
-  }, []);
 
   const columns: ColumnDef<User>[] = [
     {
@@ -51,24 +42,28 @@ export default function BienTable({ data }: Props) {
       enableHiding: false,
     },
     {
+      accessorKey: "id",
+      header: t("columns.id"),
+    },
+    {
       accessorKey: "title",
-      header: "Titre",
+      header: t("columns.title"),
     },
     {
       accessorKey: "wilaya",
-      header: "Wilaya",
+      header: t("columns.wilaya"),
     },
     {
       accessorKey: "commune",
-      header: "Commune",
+      header: t("columns.commune"),
     },
     {
-      accessorKey: "address",
-      header: "Addresse",
+      accessorKey: "adresse",
+      header: t("columns.adresse"),
     },
     {
       accessorKey: "is_active",
-      header: "Actif",
+      header: t("columns.isActive"),
       cell: ({ row }) => (row.getValue("is_active") ? "Oui" : "Non"),
     },
     {
@@ -85,7 +80,9 @@ export default function BienTable({ data }: Props) {
             size="sm"
             className="cursor-pointer"
             title="supprimer"
-            onClick={() => handleDelete(row.row.original)}
+            onClick={() => {
+              alert("delete " + row.row.original.id);
+            }}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -95,20 +92,19 @@ export default function BienTable({ data }: Props) {
     },
   ];
   return (
-    <Card className="bg-transparent border-none shadow-none">
-      <CardHeader className="flex">
-        <BienTypeFilter />
+    <div className="flex flex-col gap-3">
+      <div className="flex gap-3">
+        <BienHeader />
         <Link href="/biens/add">
-          <Button className="cursor-pointer flex gap-1">
+          <Button className="cursor-pointer p-6 rounded-4xl flex gap-1 hover:bg-amber-200 hover:text-black hover:border-gray-600 border-1">
             <Plus />
-            {t("create")}
+            {t("create.buttonText")}
           </Button>
         </Link>
-      </CardHeader>
-      <CardContent>
+      </div>
+      <div>
         <DataTable data={data} columns={columns} />
-      </CardContent>
-      <BienTypeDelete open={isDeleteModalOpen} setOpen={setIsDeleteModalOpen} item={itemToDelete} />
-    </Card>
+      </div>
+    </div>
   );
 }

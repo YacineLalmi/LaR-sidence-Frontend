@@ -1,25 +1,31 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { CreateOrUpdateUser, User, UserSchema } from "@/schemas/user.schema";
+import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { Profile, ProfileSchema } from "@/schemas/users/profile.schema";
+import { UserDetails, UserDetailsSchema } from "@/schemas/users/user-details.schema";
+import { UserForm } from "@/schemas/users/user-form.schema";
+import { User, UserSchema } from "@/schemas/users/user.schema";
 import z from "zod";
 
 const END_POINTS = {
-  create: "/users",
-  findAll: "/users",
-  findOne: (id: string) => `/users/${id}`,
-  update: (id: string) => `/users/${id}`,
-  delete: (id: string) => `/users/${id}`,
+  create: "/configurations/users",
+  findAll: "/configurations/users",
+  agentsList: "/lists/agents",
+  profile: "/profile",
+  findOne: (id: string) => `/configurations/users/${id}`,
+  update: (id: string) => `/configurations/users/${id}`,
+  delete: (id: string) => `/configurations/users/${id}`,
 };
 
 export const UserService = {
-  create: async (data: CreateOrUpdateUser) => {
+  create: async (data: UserForm) => {
     const response = await ApiService.post<User>({
       endpoint: END_POINTS.create,
       body: data,
     });
 
-    const validatedResponseData = validateResponseData<User>(response.data, UserSchema);
+    const validatedResponseData = validateResponseData<User>(response.data, UserDetailsSchema);
 
     return validatedResponseData;
   },
@@ -30,7 +36,7 @@ export const UserService = {
       query: QueryParams,
     });
 
-    console.log(response);
+    console.log("response", response);
     const validatedResponseData = validateResponseData<User[]>(response.data, z.array(UserSchema));
 
     return {
@@ -39,23 +45,45 @@ export const UserService = {
     };
   },
 
-  findOne: async (id: string) => {
-    const response = await ApiService.get<User>({
-      endpoint: END_POINTS.findOne(id),
+  agentList: async () => {
+    const response = await ApiService.get<ListItem[]>({
+      endpoint: END_POINTS.agentsList,
     });
 
-    const validatedResponseData = validateResponseData<User>(response.data, UserSchema);
+    console.log("response", response);
+    const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
   },
 
-  update: async (data: CreateOrUpdateUser, id: string) => {
+  findOne: async (id: string) => {
+    const response = await ApiService.get<UserDetails>({
+      endpoint: END_POINTS.findOne(id),
+    });
+
+    const validatedResponseData = validateResponseData<UserDetails>(response.data, UserDetailsSchema);
+
+    return validatedResponseData;
+  },
+
+  profile: async () => {
+    const response = await ApiService.get<Profile>({
+      endpoint: END_POINTS.profile,
+    });
+
+    console.log(response);
+    const validatedResponseData = validateResponseData<Profile>(response.data, ProfileSchema);
+
+    return validatedResponseData;
+  },
+
+  update: async (id: string, data: UserForm) => {
     const response = await ApiService.put<User>({
       endpoint: END_POINTS.update(id),
       body: data,
     });
 
-    const validatedResponseData = validateResponseData<User>(response.data, UserSchema);
+    const validatedResponseData = validateResponseData<User>(response.data, UserDetailsSchema);
 
     return validatedResponseData;
   },

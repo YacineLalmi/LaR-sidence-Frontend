@@ -24,7 +24,7 @@ export interface HttpOptions {
 }
 
 export interface FormState {
-  isOk: "OK" | "NOK" | "UNDEFINED";
+  isOk: boolean;
   errorMessage?: string;
   errorCode?: ErrorCodes;
   errorDetails?: Record<string, string[] | undefined>;

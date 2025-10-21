@@ -1,6 +1,6 @@
 "use client";
 import { createBienTypeAction, CreateBienTypeState } from "@/actions/BienTypes/create.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";
@@ -19,7 +19,7 @@ export default function BienTypeAdd() {
     form: {
       isOk: "UNDEFINED",
       errorCode: undefined,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
   const [state, formAction, isPending] = useActionState(createBienTypeAction, initialState);

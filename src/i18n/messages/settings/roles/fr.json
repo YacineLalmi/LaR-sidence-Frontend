@@ -1,0 +1,31 @@
+{
+  "title": "Gestion des roles",
+  "filters": {
+    "label": {
+      "role": "Rôle",
+      "status": "Statut",
+      "createdBetween": "Créé entre"
+    },
+    "placeholder": {
+      "role": "Sélectionner un rôle",
+      "status": "Sélectionner un statut",
+      "createdBetween": "Sélectionner une période"
+    }
+  },
+  "form": {
+    "title": "Créer un rôle",
+    "success": "Rôle créé avec succès",
+    "faild": "Échec de la création du Rôle",
+    "buttonText": "Créer un rôle",
+    "labels": {
+      "name": "Code",
+      "displayName": "Nom",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Entrez le code du rôle",
+      "displayName": "Entrez le nom du rôle",
+      "description": "Entrez la description du rôle"
+    }
+  }
+}

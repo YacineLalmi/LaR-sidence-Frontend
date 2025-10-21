@@ -1,6 +1,6 @@
 "use client";
 import { createBienStatusAction, CreateBienStatusState } from "@/actions/BienStatus/create.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,10 +14,9 @@ interface Props {
 }
 
 export default function BienStatusAddForm({ formId }: Props) {
-
   const initialState: CreateBienStatusState = {
     data: {
-      code:"",
+      code: "",
       name: "",
       description: "",
       is_active: true,
@@ -25,13 +24,13 @@ export default function BienStatusAddForm({ formId }: Props) {
     form: {
       isOk: "UNDEFINED",
       errorCode: ErrorCodes.UKNOWN_ERROR,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
   const [state, formAction, isPending] = useActionState(createBienStatusAction, initialState);
 
   useEffect(() => {
-    console.log(state)
+    console.log(state);
     if (state.form.isOk === "NOK") {
       customToast.error(state.form.errorMessage || "");
     } else if (state.form.isOk === "OK") {

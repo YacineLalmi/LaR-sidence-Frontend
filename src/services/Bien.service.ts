@@ -1,7 +1,9 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { Bien, BienSchema, CreateBien } from "@/schemas/Bien.schema";
+import { BienForm } from "@/schemas/Bien.schema";
+import { BienDetails, BienDetailsSchema } from "@/schemas/biens/bien-details.schema";
+import { Bien, BienSchema } from "@/schemas/biens/bien.schema";
 import z from "zod";
 
 const END_POINTS = {
@@ -13,13 +15,13 @@ const END_POINTS = {
 };
 
 export const BienService = {
-  create: async (data: CreateBien) => {
-    const response = await ApiService.post<Bien>({
+  create: async (data: BienForm) => {
+    const response = await ApiService.post<BienDetails>({
       endpoint: END_POINTS.create,
       body: data,
     });
 
-    const validatedResponseData = validateResponseData<Bien>(response.data, BienSchema);
+    const validatedResponseData = validateResponseData<BienDetails>(response.data, BienDetailsSchema);
 
     return validatedResponseData;
   },
@@ -29,9 +31,9 @@ export const BienService = {
       endpoint: END_POINTS.findAll,
       query: queryParams,
     });
-
+    console.log("response", response);
     const validatedResponseData = validateResponseData<Bien[]>(response.data, z.array(BienSchema));
-
+    console.log("validated data", validateResponseData);
     return {
       items: validatedResponseData,
       meta: response.meta,

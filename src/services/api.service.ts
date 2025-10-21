@@ -1,5 +1,6 @@
 import { ApiResponse, HttpOptions, RequestOptions } from "@/lib/definitions";
-import { getCookie, handleApiResponse } from "@/lib/utils";
+import { getCookie } from "@/lib/server.helper";
+import { handleApiResponse, transformQuery } from "@/lib/utils";
 
 class ApiService {
   private baseUrl: string;
@@ -11,7 +12,8 @@ class ApiService {
   }
 
   private async request<Data>({ endpoint, method, query, options = {}, body }: RequestOptions) {
-    const queryParams = new URLSearchParams(query).toString();
+    // const queryParams = new URLSearchParams(query).toString();
+    const queryParams = transformQuery(query);
     const url = `${this.baseUrl}${endpoint}${queryParams ? "?" + queryParams : ""}`; // To not include '?' every time
 
     const config: RequestInit = {
@@ -37,6 +39,7 @@ class ApiService {
 
     const response = await fetch(url, config);
 
+    console.log("response", response);
     const apiResponse = await handleApiResponse<Data>(response);
 
     return apiResponse;

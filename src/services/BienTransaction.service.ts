@@ -2,11 +2,13 @@ import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienTransaction, BienTransactionForm, BienTransactionSchema } from "@/schemas/BienTransaction.schema";
+import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import z from "zod";
 
 const END_POINTS = {
   create: "/configurations/biens/transactions",
   findAll: "/configurations/biens/transactions",
+  list: "/lists/transactions/types",
   findOne: (id: number) => `/configurations/biens/transactions/${id}`,
   update: (id: number) => `/configurations/biens/transactions/${id}`,
   delete: (id: number) => `/configurations/biens/transactions/${id}`,
@@ -39,6 +41,16 @@ export const BienTransactionService = {
       items: validatedResponseData,
       meta: response.meta,
     };
+  },
+
+  list: async () => {
+    const response = await ApiService.get<ListItem[]>({
+      endpoint: END_POINTS.list,
+    });
+
+    const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
+
+    return validatedResponseData;
   },
 
   findOne: async (id: number) => {

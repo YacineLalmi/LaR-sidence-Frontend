@@ -1,25 +1,23 @@
 import React from "react";
-import { BienTypeService } from "@/services/BienType.service";
 import BienTable from "./_components/BienTable";
 import { BienService } from "@/services/Bien.service";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
 
 export default async function Biens({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const page = (await searchParams).page ?? "1";
   const perPage = (await searchParams).perPage ?? "10";
-  const query = (await searchParams).query ?? "";
+  const search = (await searchParams).search ?? "";
 
-  const data = await BienService.findAll({ page, perPage, query });
-  const t = await getTranslations("biens");
+  const data = await BienService.findAll({ page, perPage, "filter[search]": search });
+  const t = await getTranslations();
   return (
-    <Card className="bg-transparent border-none shadow-none">
-      <CardHeader>
-        <h1 className="text-2xl font-bold">{t("management")}</h1>
-      </CardHeader>
-      <CardContent>
+    <div className="flex flex-col gap-3">
+      <div>
+        <h1 className="text-2xl font-bold">{t("biens.management")}</h1>
+      </div>
+      <div>
         <BienTable data={data} />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

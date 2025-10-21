@@ -1,6 +1,6 @@
 "use client";
 import { updateBienTransactionAction, UpdateBienTransactionState } from "@/actions/BienTransaction/update.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";

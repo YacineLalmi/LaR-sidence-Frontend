@@ -1,0 +1,10 @@
+{
+  "settings": "Paramètres",
+  "wilayas": "Gestion des Wilayas",
+  "communes": "Gestion des Communes",
+  "users": "Gestion des Utilisateurs",
+  "roles": "Gestion des Rôles",
+  "bien-types": "Gestion des Types de Bien",
+  "transaction-types": "Gestion des Types de Transaction",
+  "status": "Gestion des Statuts"
+}

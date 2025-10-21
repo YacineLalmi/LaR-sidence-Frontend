@@ -1,0 +1,21 @@
+{
+  "search": {
+    "placeholder": "Tapez pour rechercher...",
+    "button": "Rechercher"
+  },
+  "filter": "Filtrer",
+  "next": "Suivant",
+  "previous": "Précédent",
+  "submit": "Soumettre",
+  "apply": "Appliquer",
+  "description": "Description",
+  "selectAPeriod": "Sélectionner une période",
+  "errors": {
+    "somethingwrong": "Une erreur est survenue!",
+    "notfound": "La ressource demandée est introuvable",
+    "unknown": "Erreur inconnue",
+    "forbidden": "Vous n’avez pas le privilège d’effectuer cette action",
+    "unauthorized": "Vous n’êtes pas autorisé à effectuer cette action"
+  },
+  "tryagain": "Réessayez!"
+}

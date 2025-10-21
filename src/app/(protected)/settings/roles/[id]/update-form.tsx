@@ -1,121 +1,124 @@
 "use client";
 
-import { updateRoleAction} from "@/actions/roles/update.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import { createRoleAction } from "@/actions/roles/create-role.action";
+import { updateRoleAction } from "@/actions/roles/update-role.action";
+import InputTextField from "@/components/custom-inputs/input-text";
+import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
 import { Toggle } from "@/components/ui/toggle";
 import { customToast } from "@/lib/utils";
-import { GroupedPermissions } from "@/schemas/Permission.schema";
-import { Role } from "@/schemas/role.schema";
-import React, { useActionState, useCallback, useEffect, useState } from "react";
+import { PermissionCategory } from "@/schemas/permissions/permissions.schema";
+import { RoleForm, RoleFormSchema } from "@/schemas/roles/role-form.schema";
+import { RoleDetails } from "@/schemas/roles/role.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
-  formId: string;
-  role: Role;
-  permissions: GroupedPermissions;
+  role: RoleDetails;
+  permissionCategories: PermissionCategory[];
 }
-export default function RoleUpdate({ role, formId, permissions }: Props) {
-  const [rolePermissions, setRolePermissions] = useState<number[]>(role.permissions || []);
 
-  const initialState: any = {
-    data: {
+export default function UpdateRoleForm({ permissionCategories, role }: Props) {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [rolePermissions, setRolePermissions] = useState<number[]>(role.permissions.map((permission) => permission.id));
+
+  const router = useRouter();
+  const t = useTranslations();
+
+  const form = useForm<RoleForm>({
+    resolver: zodResolver(RoleFormSchema),
+    defaultValues: {
       name: role.name,
       display_name: role.display_name,
       description: role.description,
-      permissions: role.permissions || [],
+      permissions: role.permissions.map((permission) => permission.id),
     },
-    form: {
-      isOk: "UNDEFINED",
-      errorCode: undefined,
-      errorMessage: ""
-    },
-  };
-  const [state, formAction, isPending] = useActionState(updateRoleAction, initialState);
+  });
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: RoleForm) {
+    setIsPending(true);
+    try {
+      const response = await updateRoleAction(role.id, values);
+      setIsPending(false);
+      if (response.isOk) {
+        router.push("/settings/roles");
+        customToast.success(t("roles.form.success"));
+      } else customToast.error(response.errorMessage || t("users.create.failed"));
+    } catch (error) {
+      customToast.error(t("roles.form.failed"));
+    }
+  }
 
   const hasPermission = useCallback(
     (id: number) => {
       return rolePermissions.includes(id);
     },
-    [rolePermissions]
+    [form, rolePermissions]
   );
 
-  const togglePermission = useCallback((id: number) => {
-    setRolePermissions((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item != id);
-      }
-      return [...prev, id];
-    });
-  }, []);
+  const togglePermission = useCallback(
+    (id: number) => {
+      if (rolePermissions.includes(id)) {
+        setRolePermissions((prev) => prev.filter((permissionId) => permissionId !== id));
+      } else setRolePermissions((prev) => [...prev, id]);
+    },
+    [form]
+  );
 
   useEffect(() => {
-    if (state.form.isOk === "NOK") {
-      customToast.error(state.form.errorMessage || "");
-    } else if (state.form.isOk === "OK") {
-      customToast.success("Role successfully updated");
-    }
-  }, [state.form]);
+    form.setValue("permissions", rolePermissions);
+  }, [rolePermissions, form]);
+
   return (
-    <Card className="bg-transparent shadow-none border-none">
-      <CardHeader>
-        <h2>Modifier un Rôle</h2>
-      </CardHeader>
-      <CardContent>
-        <form className="grid grid-cols-2 gap-5" action={formAction} id={formId}>
-          <CustomInput
-            label="Code"
-            id="name"
-            name="name"
-            value={state.data.name}
-            placeholder="Code de rôle"
-            disabled={isPending}
-            required
-            error={state.form.errorDetails?.name && state.form.errorDetails.name[0]}
-          />
-          <CustomInput
-            label="Nom"
-            id="display_name"
-            name="display_name"
-            value={state.data.display_name}
-            placeholder="Nom de rôle"
-            disabled={isPending}
-            required
-            error={state.form.errorDetails?.display_name && state.form.errorDetails.display_name[0]}
-          />
-          <CustomInput
-            label="Description"
-            id="description"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-3">
+        <InputTextField
+          control={form.control}
+          name="name"
+          label={t("roles.form.labels.name")}
+          placeholder={t("roles.form.placeholders.name")}
+          required
+          disabled={isPending}
+        />
+        <InputTextField
+          control={form.control}
+          name="display_name"
+          label={t("roles.form.labels.displayName")}
+          placeholder={t("roles.form.placeholders.displayName")}
+          required
+          disabled={isPending}
+        />
+        <div className="col-span-2">
+          <InputTextArea
+            control={form.control}
             name="description"
-            value={state.data.description}
-            type="textarea"
-            containerClassName="col-span-2"
-            placeholder="Description de rôle"
-            disabled={isPending}
+            className="col-span-2"
+            label={t("roles.form.labels.description")}
+            placeholder={t("roles.form.placeholders.description")}
             required
-            error={state.form.errorDetails?.description && state.form.errorDetails.description[0]}
+            disabled={isPending}
           />
-          <CustomInput
-            id="permissions"
-            name="permissions"
-            value={JSON.stringify(rolePermissions)}
-            type="hidden"
-            error={state.form.errorDetails?.permissions && state.form.errorDetails.permissions[0]}
-          />
-          <CustomInput id="id" name="id" value={role.id} type="hidden" />
-          <div className="flex- flex-col gap-2 col-span-2">
-            <h1 className="font-bold text-xl">Permissions Management</h1>
-            {Object.entries(permissions).map(([category, categoryPermissions]) => (
-              <div key={category} className="flex w-full mt-2">
-                <div className="w-1/4">{category}</div>
+        </div>
+        {/* <input hidden value={}/> */}
+        <div className="flex- flex-col gap-2 col-span-2">
+          <h1 className="font-bold text-xl">Permissions Management</h1>
+          {permissionCategories.length > 0 &&
+            permissionCategories.map((category) => (
+              <div key={category.name} className="flex w-full mt-2">
+                <div className="w-1/4">{category.name}</div>
                 <div className="flex gap-2 justify-start">
-                  {categoryPermissions.map((permission) => (
+                  {category.permissions.map((permission) => (
                     <Toggle
                       key={permission.id}
                       pressed={hasPermission(permission.id)}
                       onPressedChange={() => togglePermission(permission.id)}
                       aria-label={`Toggle ${permission.display_name}`}
-                      className="w-44 border-1 bg-none border-black text-black data-[state=on]:bg-amber-100 data-[state=on]:border-amber-700  hover:bg-amber-100 transition-all duration-200"
+                      className="w-44 border-1 bg-none border-black text-black data-[state=on]:bg-amber-100 data-[state=on]:border-amber-700  hover:bg-amber-100 transition-all duration-200 cursor-pointer"
                     >
                       {permission.display_name}
                     </Toggle>
@@ -123,14 +126,11 @@ export default function RoleUpdate({ role, formId, permissions }: Props) {
                 </div>
               </div>
             ))}
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="w-full justify-end">
-        <Button className="border-1 cursor-pointer w-52 p-5" type="submit" form={formId}>
-          Sauvegarder
+        </div>
+        <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
+          {t("global.submit")}
         </Button>
-      </CardFooter>
-    </Card>
+      </form>
+    </Form>
   );
 }

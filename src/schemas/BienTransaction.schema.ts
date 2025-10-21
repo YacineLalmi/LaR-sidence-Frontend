@@ -1,10 +1,9 @@
 import z from "zod";
-import { MultiLangSchema } from "./Global.schema";
 
 export const BienTransactionSchema = z.object({
   id: z.number().optional(),
   code: z.string().optional(),
-  name: MultiLangSchema,
+  name: z.string(),
   description: z.string().optional(),
   is_active: z.boolean(),
   created_at: z

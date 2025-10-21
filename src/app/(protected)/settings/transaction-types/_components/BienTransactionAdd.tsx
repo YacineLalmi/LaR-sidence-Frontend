@@ -1,6 +1,6 @@
 "use client";
 import { createBienTransactionAction } from "@/actions/BienTransaction/create.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";
@@ -9,7 +9,7 @@ import { useActionState, useEffect } from "react";
 interface Props {
   formId: string;
 }
-export default function BienTransactionAdd({formId}:Props){
+export default function BienTransactionAdd({ formId }: Props) {
   const initialState: any = {
     data: {
       code: "",
@@ -20,7 +20,7 @@ export default function BienTransactionAdd({formId}:Props){
     form: {
       isOk: "UNDEFINED",
       errorCode: undefined,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
   const [state, formAction, isPending] = useActionState(createBienTransactionAction, initialState);

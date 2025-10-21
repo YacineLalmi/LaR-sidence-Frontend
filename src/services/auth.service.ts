@@ -1,6 +1,6 @@
 import ApiService from "./api.service";
 import { validateResponseData } from "@/lib/utils";
-import { LoginForm, LoginFormSchema, LoginResponse, LoginResponseSchema } from "@/schemas/auth.schema";
+import { LoginFormData, LoginResponse, LoginResponseSchema } from "@/schemas/auth.schema";
 
 const END_POINTS = {
   login: "/auth/login",
@@ -9,7 +9,7 @@ const END_POINTS = {
 };
 
 export const authService = {
-  login: async (data: LoginForm) => {
+  login: async (data: LoginFormData) => {
     const response = await ApiService.post<LoginResponse>({
       endpoint: END_POINTS.login,
       body: data,

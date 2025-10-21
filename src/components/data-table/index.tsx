@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponseMetaData } from "@/lib/definitions";
 import Pagination from "./_components/pagination";
@@ -19,13 +19,16 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
     columns: props.columns,
     enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: (e) => console.log(e),
+    manualSorting: true,
   });
 
   return (
     <div className="w-full flex flex-col justify-start gap-6">
       <div className="overflow-hidden rounded-lg border">
         <Table>
-          <TableHeader className="bg-muted sticky top-0 z-10">
+          <TableHeader className="bg-muted">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

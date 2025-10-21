@@ -1,14 +1,14 @@
 import { ErrorCodes } from "@/lib/constants";
 import { z } from "zod";
 
-export const LoginFormSchema = z.object({
+export const LoginFormDataSchema = z.object({
   username: z.string({
     message: ErrorCodes.REQUIRED_FIELD,
   }),
   password: z.string().min(8, { message: ErrorCodes.TOO_SHORT }),
 });
 
-export type LoginForm = z.infer<typeof LoginFormSchema>;
+export type LoginFormData = z.infer<typeof LoginFormDataSchema>;
 
 export const LoginResponseSchema = z.object({
   access_token: z.string(),

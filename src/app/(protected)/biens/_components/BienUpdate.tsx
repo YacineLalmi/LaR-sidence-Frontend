@@ -1,7 +1,7 @@
 "use client";
 import { updateBienAction, UpdateBienState } from "@/actions/Bien/update.action";
 import { updateBienTypeAction, UpdateBienTypeState } from "@/actions/BienTypes/update.action";
-import CustomInput from "@/components/custom-input/custom-input";
+import CustomInput from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";

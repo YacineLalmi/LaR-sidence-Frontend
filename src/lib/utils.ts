@@ -3,10 +3,61 @@ import { twMerge } from "tailwind-merge";
 import { ZodSchema } from "zod";
 import { ErrorCodes } from "./constants";
 import { ExternalToast, toast } from "sonner";
-import { ApiResponse } from "./definitions";
+import { ApiResponse, QueryParams } from "./definitions";
+import { ForbiddenError, NotFoundError, ResponseValidationError, ServerError, UnauthorizedError } from "./errors";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function transformQuery(query: QueryParams | undefined) {
+  const params = new URLSearchParams(query);
+  const transformed = new URLSearchParams();
+
+  const passthroughKeys = ["page", "perPage", "sort"];
+
+  for (const [key, value] of params.entries()) {
+    if (passthroughKeys.includes(key)) {
+      transformed.append(key, value);
+    } else {
+      transformed.append(`filter[${key}]`, value);
+    }
+  }
+
+  return transformed.toString();
+}
+
+export function parseNumberRange(input: string): { from: number; to: number } {
+  const [from, to] = input.split(",");
+
+  if (!from || !to) {
+    return {
+      from: 0,
+      to: Infinity,
+    };
+  }
+
+  return { from: parseInt(from), to: parseInt(to) };
+}
+
+export function parseDateRange(range: string | null | undefined): { from: Date | undefined; to: Date | undefined } {
+  if (range) {
+    const [from, to] = range.split(",");
+
+    if (!from || !to) {
+      return {
+        from: new Date(),
+        to: new Date(),
+      };
+    }
+
+    return { from: new Date(from), to: new Date(to) };
+  }
+
+  return {
+    from: undefined,
+    to: undefined,
+  };
 }
 
 export const handleApiResponse = async <Data>(response: Response): Promise<ApiResponse<Data>> => {
@@ -17,7 +68,9 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
         message: "No Content",
       };
     } else {
-      return await response.json();
+      const responseBody = await response.json();
+      console.log("responseBody", responseBody);
+      return responseBody;
     }
   } else {
     const content = await response.json();
@@ -26,8 +79,10 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
         throw new UnauthorizedError();
       case 403:
         throw new ForbiddenError();
+      case 404:
+        throw new NotFoundError();
       case 400:
-        throw new ValidationError(content.message);
+        throw new ResponseValidationError(content.message);
 
       default:
         throw new ServerError();
@@ -35,14 +90,15 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
   }
 };
 
-export function validateResponseData<Data>(data: any, Schema: ZodSchema): Data {
-  const validatedFields = Schema.safeParse(data);
-
-  if (!validatedFields.success) {
-    console.error(validatedFields.error.flatten());
-    throw new ValidationError();
+export function validateResponseData<ParsedBody>(data: any, Schema: ZodSchema): ParsedBody {
+  const result = Schema.safeParse(data);
+  if (!result.success) {
+    console.log(result.error.issues);
+    const errorMessage = result.error.issues[0].message;
+    let firstErrorMsg = errorMessage;
+    throw new ResponseValidationError(firstErrorMsg);
   }
-  return validatedFields.data;
+  return result.data as ParsedBody;
 }
 
 export const customToast = {
@@ -81,122 +137,51 @@ export function hasIntersection<T>(arr1: T[], arr2: T[]): boolean {
   return arr2.some((item) => set1.has(item));
 }
 
-// export class ApiResponseError extends Error {
-//   status: boolean;
-//   errorCode?: ErrorCodes;
-//   error?: string;
-
-//   constructor({ message, status, error }: ApiResponse<any>) {
-//     super(message);
-//     this.status = status;
-//     this.error = error;
-//   }
-// }
-
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "ThisMustBeA32ByteKey";
-
-export async function encrypt(text: string): Promise<string> {
-  const keyBytes = new Uint8Array(Buffer.from(ENCRYPTION_KEY, "hex"));
-  const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["encrypt"]);
-
-  const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV recommended for AES-GCM
-
-  const encodedText = new TextEncoder().encode(text);
-
-  const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, encodedText);
-
-  return `${Buffer.from(iv).toString("hex")}:${Buffer.from(encrypted).toString("hex")}`;
-}
-
-export async function decrypt(cipherText: string): Promise<string> {
-  const [ivHex, encryptedHex] = cipherText.split(":");
-  const iv = Buffer.from(ivHex, "hex");
-  const encryptedBytes = Buffer.from(encryptedHex, "hex");
-  const keyBytes = new Uint8Array(Buffer.from(ENCRYPTION_KEY, "hex"));
-
-  const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["decrypt"]);
-
-  const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, encryptedBytes);
-
-  return new TextDecoder().decode(decrypted);
-}
-
-const httpOnly: boolean = true;
-const sameSite: boolean | "strict" | "lax" | "none" | undefined = "strict";
-const secure: boolean = true;
-
-export async function setCookie({
-  key,
-  value,
-  expires = Infinity,
-  maxAge = Infinity,
-}: {
-  key: string;
-  value: string;
-  expires?: number;
-  maxAge?: number;
-}) {
-  const cookieStore = await require("next/headers").cookies();
-  const encryptedValue = await encrypt(value);
-  cookieStore.set(key, encryptedValue, {
-    httpOnly: httpOnly,
-    sameSite: sameSite,
-    secure: secure,
-    maxAge: maxAge,
-    expires: expires,
-  });
-}
-
-export async function getCookie(key: string): Promise<string | null> {
-  const cookieStore = await require("next/headers").cookies();
-  const cookie = cookieStore.get(key);
-
-  if (cookie) {
-    let encryptedValue = cookie.value;
-    if (encryptedValue) {
-      try {
-        return await decrypt(encryptedValue);
-      } catch (error) {
-        cookieStore.delete(key);
-      }
-    }
+export const handleServerActionError = (error: any) => {
+  console.log("Errrrorror CCOOOODE", error.code);
+  console.log("Errrrorror message", error.message);
+  console.log("Errrrorror message", error?.cause?.code);
+  if (error instanceof ResponseValidationError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.RESPONSE_VALIDATION_ERROR,
+    };
+  } else if (error instanceof UnauthorizedError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.UNAUTHORIZED,
+    };
+  } else if (error instanceof ForbiddenError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.FORBIDDEN,
+    };
+  } else if (error instanceof NotFoundError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.RESOURCE_NOT_FOUND,
+    };
+  } else if (error?.cause?.code === "UND_ERR_CONNECT_TIMEOUT" || error?.cause?.code === "EHOSTUNREACH") {
+    return {
+      errorMessage: "Erreur de connexion : impossible de se connecter au serveur",
+      errorCode: ErrorCodes.CONNECTION_ERROR,
+    };
   }
-  return null;
-}
 
-// app/lib/errors.ts
+  return {
+    errorMessage: "Erreur inconnue",
+    errorCode: ErrorCodes.UKNOWN_ERROR,
+  };
+};
 
-export class UnauthorizedError extends Error {
-  constructor(message = "Access is denied due to invalid credentials or missing authentication.") {
-    super(message);
-    this.name = ErrorCodes.UNAUTHORIZED;
+export const loadOptions = async (endPoint: string) => {
+  try {
+    const result = await fetch(endPoint, {
+      cache: "force-cache",
+      next: { revalidate: 300 },
+    }).then((res) => res.json());
+    return result;
+  } catch (error) {
+    console.error("erroorrrrr", error);
   }
-}
-
-export class ForbiddenError extends Error {
-  constructor(message = "You do not have permission to access this resource.") {
-    super(message);
-    this.name = ErrorCodes.FORBIDDEN;
-  }
-}
-
-export class ServerError extends Error {
-  constructor(message = "Server Error: An unexpected error occurred on the server. Please try again later.") {
-    super(message);
-    this.name = ErrorCodes.SERVER_ERROR;
-  }
-}
-
-export class ValidationError extends Error {
-  constructor(message = "The recieved data did not pass validation checks.") {
-    super(message);
-    this.name = ErrorCodes.VALIDATION_ERROR;
-  }
-}
-
-export class BadRequestError extends Error {
-  constructor(message = "The submitted data did not pass validation checks.") {
-    super(message);
-    this.name = ErrorCodes.BAD_REQUEST;
-  }
-}
+};
