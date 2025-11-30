@@ -1,5 +1,6 @@
 "use client";
 
+import { getRolesList } from "@/actions/roles/get-roles-list.action";
 import { InputRangeField } from "@/components/custom-inputs/input-range";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function UsersFilters() {
@@ -60,7 +61,7 @@ export default function UsersFilters() {
   //     }
   //     return [];
   //   }, []);
-  async function onSubmit(values: UserFilterForm) {
+  function onSubmit(values: UserFilterForm) {
     const params = new URLSearchParams();
     if (values.role_id && values.role_id !== "0") params.append("role_id", values.role_id);
     if (values.is_active && values.is_active !== "2") params.append("is_active", values.is_active);
@@ -77,59 +78,84 @@ export default function UsersFilters() {
     router.push(`?${params.toString()}`);
     setIsOpen(false);
   }
+
+  const handleClearFilters = useCallback(() => {
+    console.log("clearing filters");
+    const params = new URLSearchParams();
+    params.delete("role_id");
+    params.delete("is_active");
+    params.append("created_between", "");
+    router.push(`?${params.toString()}`);
+    setIsOpen(false);
+    console.log("cleared");
+  }, [router, setIsOpen]);
+
   const t = useTranslations();
 
   useEffect(() => {
-    loadOptions("/api/lists/roles").then((data) => {
-      setRoles([{ id: "0", name: "all" }, ...data]);
-      form.setValue("role_id", searchParams.get("role_id") || undefined);
-    });
+    if (isOpen) {
+      getRolesList().then((data) => {
+        console.log("Rolllles", data);
 
-    if (searchParams.has("role_id")) {
-      form.setValue("role_id", searchParams.get("role_id") as string);
-    }
+        setRoles([{ id: "0", name: "all" }, ...data]);
+        form.setValue("role_id", searchParams.get("role_id") || undefined);
+      });
 
-    if (searchParams.has("is_active")) {
-      form.setValue("is_active", searchParams.get("is_active") as string);
-    }
+      if (searchParams.has("role_id")) {
+        form.setValue("role_id", searchParams.get("role_id") as string);
+      }
 
-    if (searchParams.has("created_between")) {
-      form.setValue("created_between", parseDateRange(searchParams.get("created_between")));
+      if (searchParams.has("is_active")) {
+        form.setValue("is_active", searchParams.get("is_active") as string);
+      }
+
+      if (searchParams.has("created_between")) {
+        form.setValue("created_between", parseDateRange(searchParams.get("created_between")));
+      }
     }
 
     return () => {
       setRoles([]);
       form.reset();
     };
-  }, [form]);
+  }, [form, isOpen, searchParams]);
+
   return (
-    <FilterDrawer buttonText={t("global.filter")} title={t("biens.filter.title")} isOpen={isOpen} setIsOpen={setIsOpen}>
+    <FilterDrawer
+      buttonText={t("common.filter")}
+      title={t("settings.users.filter.title")}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+    >
       <Form {...form}>
         <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
           <InputSelectField
             control={form.control}
             name="role_id"
-            label={t("users.filter.label.role")}
+            label={t("settings.users.filter.label.role")}
             options={roles}
-            placeholder={t("users.filter.placeholder.role")}
+            placeholder={t("settings.users.filter.placeholder.role")}
           />
           <InputSelectField
             control={form.control}
             name="is_active"
-            label={t("users.filter.label.status")}
+            label={t("settings.users.filter.label.status")}
             options={statusOptions}
-            placeholder={t("users.filter.placeholder.status")}
+            placeholder={t("settings.users.filter.placeholder.status")}
           />
           <div className=" flex gap-1 w-full">
             <InputRangeField
               control={form.control}
               name="created_between"
-              label={t("users.filter.label.createdBetween")}
-              placeholder={t("users.filter.placeholder.createdBetween")}
+              label={t("settings.users.filter.label.createdBetween")}
+              placeholder={t("settings.users.filter.placeholder.createdBetween")}
             />
           </div>
           <Button type="submit" className="w-full mt-5">
-            {t("global.apply")}
+            {t("common.apply")}
+          </Button>
+          <Button className="w-full hover:bg-amber-200 cursor-pointer" variant="secondary" onClick={handleClearFilters}>
+            {t("common.clearFilters")}
           </Button>
         </form>
       </Form>

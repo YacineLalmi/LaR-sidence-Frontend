@@ -1,7 +1,8 @@
 "use client";
 import { updateBienAction, UpdateBienState } from "@/actions/Bien/update.action";
 import { updateBienTypeAction, UpdateBienTypeState } from "@/actions/BienTypes/update.action";
-import CustomInput from "@/components/custom-inputs/input-text";
+import CustomInput from "@/components/custom-inputs/custom-input copy";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";
@@ -20,15 +21,15 @@ interface Props {
 
 export default function BienUpdate({ item, types, status, transactions }: Props) {
   const initalState: UpdateBienState = {
-    isOk: "UNDEFINED",
+    isOk: false,
     ...item,
   };
   const [state, formAction, isPending] = useActionState(updateBienAction, initalState);
 
   useEffect(() => {
-    if (state.isOk === "NOK") {
+    if (!state.isOk) {
       customToast.error(state.errorMessage || "");
-    } else if (state.isOk === "OK") {
+    } else if (state.isOk) {
       customToast.success("Bien Type successfully added");
     }
   }, [state]);

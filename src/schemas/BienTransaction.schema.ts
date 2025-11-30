@@ -1,11 +1,11 @@
 import z from "zod";
 
 export const BienTransactionSchema = z.object({
-  id: z.number().optional(),
+  id: z.string().optional(),
   code: z.string().optional(),
   name: z.string(),
   description: z.string().optional(),
-  is_active: z.boolean(),
+  is_active: z.string(),
   created_at: z
     .string()
     .refine((val) => !isNaN(Date.parse(val)))

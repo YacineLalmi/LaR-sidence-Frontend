@@ -1,5 +1,5 @@
 "use server";
-import { ApiResponseError } from "@/lib/utils";
+
 import { ErrorCodes } from "@/lib/constants";
 import { FormState } from "@/lib/definitions";
 import { BienService } from "@/services/Bien.service";
@@ -60,7 +60,7 @@ export async function updateBienAction(initialState: UpdateBienState, formData: 
       responsible_agent,
       isOk: "NOK",
       errorMessage: "Validation Error",
-      errorCode: ErrorCodes.VALIDATION_ERROR,
+      errorCode: ErrorCodes.FORM_VALIDATION_ERROR,
       errorDetails: {
         title: validatedFields.error?.flatten().fieldErrors.title?.[0] || "",
         adresse: validatedFields.error?.flatten().fieldErrors.adresse?.[0] || "",
@@ -152,7 +152,7 @@ export async function updateBienAction(initialState: UpdateBienState, formData: 
       exclusivity_start: new Date(exclusivity_start),
       exclusivity_end: new Date(exclusivity_start),
       responsible_agent,
-      isOk: "NOK",
+      isOk: false,
       errorCode: ErrorCodes.UKNOWN_ERROR,
       errorMessage: "Something went wrong",
     };

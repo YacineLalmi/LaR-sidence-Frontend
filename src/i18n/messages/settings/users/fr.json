@@ -1,6 +1,7 @@
 {
   "title": "Gestion des utilisateurs",
   "filter": {
+    "title": "Filtrer les utilisateurs",
     "label": {
       "role": "Rôle",
       "status": "Statut",
@@ -14,8 +15,10 @@
   },
   "form": {
     "title": "Créer un utilisateur",
-    "success": "Utilisateur créé avec succès",
-    "faild": "Échec de la création de l’utilisateur",
+    "created": "Utilisateur créé avec succès",
+    "updated": "Utilisateur modifié avec succès",
+    "failedCreation": "Échec de la création de l’utilisateur",
+    "failedUpdate": "Échec de la modification de l’utilisateur",
     "buttonText": "Créer un utilisateur",
     "label": {
       "email": "E-mail",

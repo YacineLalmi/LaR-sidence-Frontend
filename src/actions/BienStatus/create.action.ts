@@ -1,9 +1,10 @@
 "use server";
-import { ValidationError } from "@/lib/utils";
+
 import { ErrorCodes } from "@/lib/constants";
 import { FormState } from "@/lib/definitions";
 import { BienStatusService } from "@/services/BienStatus.service";
 import { BienStatusForm, BienStatusFormSchema } from "@/schemas/BienStatus.schema";
+import { FormValidationError } from "@/lib/errors";
 
 // export type CreateBienStatusSta:te = FormState & CreateBienStatus;
 
@@ -30,9 +31,9 @@ export async function createBienStatusAction(
 
   if (!validatedFields.success) {
     form = {
-      isOk: "NOK",
+      isOk: false,
       errorMessage: "Validation Error",
-      errorCode: ErrorCodes.VALIDATION_ERROR,
+      errorCode: ErrorCodes.FORM_VALIDATION_ERROR,
       errorDetails: validatedFields.error?.flatten().fieldErrors,
     };
     return {
@@ -43,16 +44,16 @@ export async function createBienStatusAction(
 
   try {
     await BienStatusService.create(data);
-    form.isOk = "OK";
+    form.isOk = true
     return {
       data,
       form,
     };
   } catch (error) {
-    form.isOk = "NOK";
-    if (error instanceof ValidationError) {
+    form.isOk = false;
+    if (error instanceof FormValidationError) {
       form.errorMessage = error.message;
-      form.errorCode = ErrorCodes.VALIDATION_ERROR;
+      form.errorCode = ErrorCodes.FORM_VALIDATION_ERROR;
       return {
         data,
         form,

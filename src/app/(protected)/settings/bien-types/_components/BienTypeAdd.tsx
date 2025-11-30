@@ -1,14 +1,16 @@
 "use client";
 import { createBienTypeAction, CreateBienTypeState } from "@/actions/BienTypes/create.action";
-import CustomInput from "@/components/custom-inputs/input-text";
+import CustomInput from "@/components/custom-inputs/custom-input copy";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { customToast } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import React, { useActionState, useCallback, useEffect, useState } from "react";
 
 interface Props {}
 
 export default function BienTypeAdd() {
+  const router = useRouter();
   const initialState: any = {
     data: {
       name: "",
@@ -28,6 +30,7 @@ export default function BienTypeAdd() {
     if (state.form.isOk === "NOK") {
       customToast.error(state.form.errorMessage || "");
     } else if (state.form.isOk === "OK") {
+      router.push("/settings/bien-types");
       customToast.success("Bien Type successfully added");
     }
   }, [state.form]);

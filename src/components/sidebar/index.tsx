@@ -1,4 +1,4 @@
-import { Building2, ChevronLeft, Home, LogOut, Mails, Shield, User2, Users } from "lucide-react";
+import { Building2, Home, LogOut, Mails, Shield, User2, Users } from "lucide-react";
 
 import {
   Sidebar,
@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import logo from "@/assests/images/logo-black.png";
 import Settings from "../navbar/components/settings";
+import Link from "next/link";
 
 const items = [
   {
@@ -68,10 +69,10 @@ export function SideBar() {
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild>
-                <a href={item.url}>
+                <Link href={item.url}>
                   <item.icon size={25} />
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
@@ -80,15 +81,15 @@ export function SideBar() {
       <SidebarFooter className=" py-7">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton asChild>
-            <a href="/settings">
+            <Link href="/settings">
               <Settings />
               <span>Paramètres</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
 
         <SidebarMenuItem className="list-none">
-          <SidebarMenuButton asChild>
+          <SidebarMenuButton asChild >
             <a href="/settings">
               <LogOut />
               <span>Se déconnecter</span>

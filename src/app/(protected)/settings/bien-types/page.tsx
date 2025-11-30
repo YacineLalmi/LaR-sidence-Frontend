@@ -7,5 +7,5 @@ export default async function Utilisateurs({ searchParams }: { searchParams: Pro
   const queryParams = await searchParams;
 
   const data = await BienTypeService.findAll(queryParams);
-  return <SettingsView module="bienType" table={<BienTypesTable data={data} />} />;
+  return <SettingsView module="bien-type" table={<BienTypesTable data={data} />} />;
 }

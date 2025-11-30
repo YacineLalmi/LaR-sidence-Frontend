@@ -15,7 +15,7 @@ export default async function page({ searchParams }: { searchParams: Promise<{ [
         <h1 className="text-2xl font-bold">{t("offer.title")}</h1>
       </div>
       <div>
-        <BienTable data={data} />
+        {/* <BienTable data={data} /> */}
       </div>
     </div>
   );

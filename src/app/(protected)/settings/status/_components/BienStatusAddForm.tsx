@@ -1,12 +1,14 @@
 "use client";
 import { createBienStatusAction, CreateBienStatusState } from "@/actions/BienStatus/create.action";
-import CustomInput from "@/components/custom-inputs/input-text";
+import CustomInput from "@/components/custom-inputs/custom-input copy";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ErrorCodes } from "@/lib/constants";
 import { customToast } from "@/lib/utils";
 import { stat } from "fs";
+import { useRouter } from "next/navigation";
 import React, { useActionState, useEffect } from "react";
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
 }
 
 export default function BienStatusAddForm({ formId }: Props) {
+  const router = useRouter();
   const initialState: CreateBienStatusState = {
     data: {
       code: "",
@@ -22,7 +25,7 @@ export default function BienStatusAddForm({ formId }: Props) {
       is_active: true,
     },
     form: {
-      isOk: "UNDEFINED",
+      isOk: true,
       errorCode: ErrorCodes.UKNOWN_ERROR,
       errorMessage: "",
     },
@@ -31,9 +34,12 @@ export default function BienStatusAddForm({ formId }: Props) {
 
   useEffect(() => {
     console.log(state);
-    if (state.form.isOk === "NOK") {
+    if (!state.form.isOk) {
       customToast.error(state.form.errorMessage || "");
-    } else if (state.form.isOk === "OK") {
+    } else if (state.form.isOk) {
+      // TODO Add redirect to status list page
+
+      router.push("/settings/bien/status");
       customToast.success("Status ajouté avec succès");
     }
   }, [state.form]);

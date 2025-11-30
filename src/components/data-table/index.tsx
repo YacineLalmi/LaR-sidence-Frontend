@@ -4,6 +4,7 @@ import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, useReactTabl
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponseMetaData } from "@/lib/definitions";
 import Pagination from "./_components/pagination";
+import { useTranslations } from "next-intl";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -14,6 +15,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
+  const t = useTranslations();
   const table = useReactTable({
     data: props.data.items,
     columns: props.columns,
@@ -53,7 +55,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
             ) : (
               <TableRow>
                 <TableCell colSpan={props.columns.length} className="h-24 text-center">
-                  No results.
+                  {t("common.noDataFound")}
                 </TableCell>
               </TableRow>
             )}

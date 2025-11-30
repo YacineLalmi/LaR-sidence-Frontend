@@ -12,6 +12,7 @@ export default function page() {
       <SettingCard link="/settings/bien-types" title="Type de Bien" icon={Building2} />
       <SettingCard link="/settings/transaction-types" title="Type de transactions" icon={BadgeEuro} />
       <SettingCard link="/settings/status" title="Statut de Bien" icon={BadgeCheck} />
+      <SettingCard link="/settings/profile" title="Profile" icon={BadgeCheck} />
     </div>
   );
 }

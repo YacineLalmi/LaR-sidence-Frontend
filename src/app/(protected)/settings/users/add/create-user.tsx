@@ -43,10 +43,10 @@ export default function CreateUserForm({ roles }: Props) {
       setIsPending(false);
       if (response.isOk) {
         router.push("/settings/users");
-        customToast.success(t("users.create.success"));
-      } else customToast.error(response.errorMessage || t("users.create.failed"));
+        customToast.success(t("settings.users.form.created"));
+      } else customToast.error(response.errorMessage || t("settings.users.form.failedCreation"));
     } catch (error) {
-      customToast.error(t("users.create.failed"));
+      customToast.error(t("settings.users.form.failedCreation"));
     }
   }
 
@@ -56,18 +56,18 @@ export default function CreateUserForm({ roles }: Props) {
         <InputTextField
           control={form.control}
           name="first_name"
-          label={t("users.form.label.firstName")}
+          label={t("settings.users.form.label.firstName")}
           disabled={isPending}
           required
-          placeholder={t("users.form.placeholder.firstName")}
+          placeholder={t("settings.users.form.placeholder.firstName")}
         />
         <InputTextField
           control={form.control}
           name="last_name"
-          label={t("users.form.label.lastName")}
+          label={t("settings.users.form.label.lastName")}
           disabled={isPending}
           required
-          placeholder={t("users.form.placeholder.lastName")}
+          placeholder={t("settings.users.form.placeholder.lastName")}
         />
         <InputSelectField
           control={form.control}
@@ -75,29 +75,29 @@ export default function CreateUserForm({ roles }: Props) {
           options={roles}
           disabled={isPending}
           required
-          label={t("users.form.label.roles")}
-          placeholder={t("users.form.placeholder.roles")}
+          label={t("settings.users.form.label.roles")}
+          placeholder={t("settings.users.form.placeholder.roles")}
         />
         <div className="col-span-3 grid grid-cols-2 gap-3">
           <InputTextField
             control={form.control}
             name="username"
-            label={t("users.form.label.username")}
+            label={t("settings.users.form.label.username")}
             disabled={isPending}
             required
-            placeholder={t("users.form.placeholder.username")}
+            placeholder={t("settings.users.form.placeholder.username")}
           />
           <InputTextField
             control={form.control}
             name="email"
-            label={t("users.form.label.email")}
+            label={t("settings.users.form.label.email")}
             disabled={isPending}
             required
-            placeholder={t("users.form.placeholder.email")}
+            placeholder={t("settings.users.form.placeholder.email")}
           />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {t("global.submit")}
+          {t("common.submit")}
         </Button>
       </form>
     </Form>

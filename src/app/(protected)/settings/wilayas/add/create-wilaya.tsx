@@ -97,7 +97,7 @@ export default function CreateWilayaForm({ roles }: Props) {
           />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {t("global.submit")}
+          {t("common.submit")}
         </Button>
       </form>
     </Form>

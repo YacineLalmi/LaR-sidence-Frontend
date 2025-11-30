@@ -1,5 +1,6 @@
 import Settings from "@/components/navbar/components/settings";
 import { getCookie } from "@/lib/server.helper";
+import { profile } from "console";
 import { se } from "date-fns/locale";
 import { getRequestConfig } from "next-intl/server";
 
@@ -12,6 +13,9 @@ async function loadMessages(locale: string) {
   const settingUsers = (await import(`./messages/settings/users/${locale}.json`)).default;
   const settingWilayas = (await import(`./messages/settings/wilayas/${locale}.json`)).default;
   const settingsRoles = (await import(`./messages/settings/roles/${locale}.json`)).default;
+  const settingProfile = (await import(`./messages/settings/profile/${locale}.json`)).default;
+
+  console.log(settingUsers.filter.title);
 
   return {
     common,
@@ -22,6 +26,7 @@ async function loadMessages(locale: string) {
       users: settingUsers,
       wilayas: settingWilayas,
       roles: settingsRoles,
+      profile: settingProfile,
     },
   };
 }

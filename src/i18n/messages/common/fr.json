@@ -4,18 +4,23 @@
     "button": "Rechercher"
   },
   "filter": "Filtrer",
+  "clearFilters": "Effacer les filtres",
   "next": "Suivant",
   "previous": "Précédent",
   "submit": "Soumettre",
   "apply": "Appliquer",
   "description": "Description",
   "selectAPeriod": "Sélectionner une période",
+  "noDataFound": "Aucune donnée trouvée",
   "errors": {
     "somethingwrong": "Une erreur est survenue!",
     "notfound": "La ressource demandée est introuvable",
     "unknown": "Erreur inconnue",
     "forbidden": "Vous n’avez pas le privilège d’effectuer cette action",
     "unauthorized": "Vous n’êtes pas autorisé à effectuer cette action"
+  },
+  "success": {
+    "operationcompleted": "Opération réussie!"
   },
   "tryagain": "Réessayez!"
 }

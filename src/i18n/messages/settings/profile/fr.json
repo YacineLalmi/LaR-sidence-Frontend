@@ -1,0 +1,15 @@
+{
+  "title": "Gestion de Profile",
+  "form": {
+    "label": {
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmNewPassword": "Confirmer le nouveau mot de passe"
+    },
+    "placeholder": {
+      "currentPassword": "Entrez votre mot de passe actuel",
+      "newPassword": "Entrez votre nouveau mot de passe",
+      "confirmNewPassword": "Confirmez votre nouveau mot de passe"
+    }
+  }
+}

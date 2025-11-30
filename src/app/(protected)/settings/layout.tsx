@@ -26,6 +26,10 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
       title: t("settings.roles.title"),
       backLink: "/settings",
     },
+    "/settings/profile": {
+      title: t("settings.profile.title"),
+      backLink: "/settings",
+    },
   };
   return (
     <div className="flex flex-col gap-3">
