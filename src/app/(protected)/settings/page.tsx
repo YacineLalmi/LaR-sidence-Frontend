@@ -11,7 +11,7 @@ export default function page() {
       <SettingCard link="/settings/roles" title="Roles" icon={Shield} />
       <SettingCard link="/settings/bien-types" title="Type de Bien" icon={Building2} />
       <SettingCard link="/settings/transaction-types" title="Type de transactions" icon={BadgeEuro} />
-      <SettingCard link="/settings/status" title="Statut de Bien" icon={BadgeCheck} />
+      <SettingCard link="/settings/biens/status" title="Statut de Bien" icon={BadgeCheck} />
       <SettingCard link="/settings/profile" title="Profile" icon={BadgeCheck} />
       <SettingCard link="/settings/colors" title="Colors" icon={BadgeCheck} />
       <SettingCard link="/settings/clients/status" title="Status des clients" icon={BadgeCheck} />

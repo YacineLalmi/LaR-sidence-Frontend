@@ -61,7 +61,7 @@ export const BienStatusService = {
     return validatedResponseData;
   },
 
-  update: async (data: BienStatus, id: number) => {
+  update: async (data: BienStatusForm, id: number) => {
     const response = await ApiService.put<BienStatus>({
       endpoint: END_POINTS.update(id),
       body: data,

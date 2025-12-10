@@ -1,16 +1,16 @@
 "use client";
 
-import { createClientStatusAction } from "@/actions/client-status/create.action";
-import { updateClientStatusAction } from "@/actions/client-status/update.action";
-import InputSelectField from "@/components/custom-inputs/input-select";
+import { updateTransactionTypeAction } from "@/actions/transaction-type/update.action";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
-import { ClientStatusForm, ClientStatusFormSchema } from "@/schemas/client-status/client-status-form.schema";
-import { ClientStatus } from "@/schemas/client-status/client-status.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import {
+  TransactionTypeForm,
+  TransactionTypeFormSchema,
+} from "@/schemas/transaction-type/transaction-type-form.schema";
+import { TransactionType } from "@/schemas/transaction-type/transaction-type.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -18,35 +18,31 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
-  colors: ListItem[];
-  clientStatus: ClientStatus;
+  transactionType: TransactionType;
 }
-
-export default function UpdateClientStatusForm({ colors, clientStatus }: Props) {
+export default function CreateTransactionTypeForm({ transactionType }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const router = useRouter();
   const t = useTranslations();
 
-  const form = useForm<ClientStatusForm>({
-    resolver: zodResolver(ClientStatusFormSchema),
+  const form = useForm<TransactionTypeForm>({
+    resolver: zodResolver(TransactionTypeFormSchema),
     defaultValues: {
-      code: clientStatus.code,
-      name: clientStatus.name,
-      description: clientStatus.description,
-      color_id: clientStatus.color.id.toString(),
-      is_active: clientStatus.is_active,
+      code: transactionType.code,
+      name: transactionType.name,
+      description: transactionType.description,
+      is_active: transactionType.is_active,
     },
   });
 
-  async function onSubmit(values: ClientStatusForm) {
-    console.log(values);
+  async function onSubmit(values: TransactionTypeForm) {
     setIsPending(true);
     try {
-      const response = await updateClientStatusAction(values, clientStatus.id);
+      const response = await updateTransactionTypeAction(values, transactionType.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push("/settings/clients/status");
+        router.push("/settings/transactions/types");
         customToast.success(t("common.success.operationcompleted"));
       } else customToast.error(response.errorMessage || t("common.errors.somethingwrong"));
     } catch (error) {
@@ -66,35 +62,26 @@ export default function UpdateClientStatusForm({ colors, clientStatus }: Props) 
         <InputTextField
           control={form.control}
           name="code"
-          label={t("settings.clientStatus.form.label.code")}
+          label={t("settings.transactionTypes.form.label.code")}
           disabled={isPending}
           required
-          placeholder={t("settings.clientStatus.form.placeholder.code")}
+          placeholder={t("settings.transactionTypes.form.placeholder.code")}
         />
         <InputTextField
           control={form.control}
           name="name"
-          label={t("settings.clientStatus.form.label.name")}
+          label={t("settings.transactionTypes.form.label.name")}
           disabled={isPending}
           required
-          placeholder={t("settings.clientStatus.form.placeholder.name")}
+          placeholder={t("settings.transactionTypes.form.placeholder.name")}
         />
         <InputTextArea
           control={form.control}
           name="description"
-          label={t("settings.clientStatus.form.label.description")}
+          label={t("settings.transactionTypes.form.label.description")}
           disabled={isPending}
           required
-          placeholder={t("settings.clientStatus.form.placeholder.description")}
-        />
-        <InputSelectField
-          control={form.control}
-          name="color_id"
-          options={colors}
-          label={t("settings.clientStatus.form.label.colorId")}
-          disabled={isPending}
-          required
-          placeholder={t("settings.clientStatus.form.placeholder.colorId")}
+          placeholder={t("settings.transactionTypes.form.placeholder.description")}
         />
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto" type="submit">
           {t("common.submit")}

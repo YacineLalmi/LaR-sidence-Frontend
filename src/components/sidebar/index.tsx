@@ -38,8 +38,8 @@ const items = [
     icon: Building2,
   },
   {
-    title: "Demandes",
-    url: "/demands",
+    title: "Offers",
+    url: "/offers",
     icon: Mails,
   },
   {

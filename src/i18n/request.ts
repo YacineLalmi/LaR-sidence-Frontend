@@ -21,6 +21,8 @@ async function loadMessages(locale: string) {
   const settingClientSources = (await import(`./messages/settings/client-sources/${locale}.json`)).default;
   const settingClientTypes = (await import(`./messages/settings/client-types/${locale}.json`)).default;
   const settingBienTypes = (await import(`./messages/settings/bien-types/${locale}.json`)).default;
+  const settingTransactionTypes = (await import(`./messages/settings/transaction-types/${locale}.json`)).default;
+  const settingBienStatus = (await import(`./messages/settings/bien-status/${locale}.json`)).default;
 
   return {
     common,
@@ -39,6 +41,8 @@ async function loadMessages(locale: string) {
       clientSources: settingClientSources,
       clientTypes: settingClientTypes,
       bienTypes: settingBienTypes,
+      transactionTypes: settingTransactionTypes,
+      bienStatus: settingBienStatus,
     },
   };
 }
