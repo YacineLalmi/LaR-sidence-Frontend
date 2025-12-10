@@ -8,6 +8,6 @@ export default async function ClientStatus({ searchParams }: { searchParams: Pro
 
   const data = await ClientSourceService.findAll(queryParams);
   return (
-    <SettingsView moduleName="clientSource" modulePath="clients/sources" table={<ClientSourceTable data={data} />} />
+    <SettingsView moduleName="clientSources" modulePath="clients/sources" table={<ClientSourceTable data={data} />} />
   );
 }
