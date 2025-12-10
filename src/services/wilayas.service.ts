@@ -62,9 +62,9 @@ export const WilayasService = {
     return validatedResponseData;
   },
 
-  update: async (data: WilayaForm, id: string) => {
+  update: async (data: WilayaForm, id: number) => {
     const response = await ApiService.put<Wilaya>({
-      endpoint: END_POINTS.update(id),
+      endpoint: END_POINTS.update(id.toString()),
       body: data,
     });
 

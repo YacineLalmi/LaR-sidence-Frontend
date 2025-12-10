@@ -1,7 +1,5 @@
-import { RoleService } from "@/services/role.service";
-import CreateUserForm from "./create-user";
+import CreateWilayaForm from "./create-wilaya";
 
-export default async function AjouterUtilisateurPage() {
-  const data = await RoleService.list();
-  return <CreateUserForm roles={data} />;
+export default async function AjouterWilayaPage() {
+  return <CreateWilayaForm />;
 }

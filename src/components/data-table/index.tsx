@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: {
-    items: TData[];
+    items: any[];
     meta?: ResponseMetaData;
   };
 }

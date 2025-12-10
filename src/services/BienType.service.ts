@@ -1,7 +1,8 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { BienType, BienTypeForm, BienTypeSchema } from "@/schemas/BienType.schema";
+import { BienTypeForm } from "@/schemas/bien-type/bien-type-form.schema";
+import { BienType, BienTypeSchema } from "@/schemas/bien-type/bien-type.schema";
 import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import z from "zod";
 
@@ -60,7 +61,7 @@ export const BienTypeService = {
     return validatedResponseData;
   },
 
-  update: async (data: BienType, id: number) => {
+  update: async (data: BienTypeForm, id: number) => {
     const response = await ApiService.put<BienType>({
       endpoint: END_POINTS.update(id),
       body: data,

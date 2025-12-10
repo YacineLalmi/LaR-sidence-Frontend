@@ -1,0 +1,31 @@
+{
+  "title": "Gestion des sources des clients",
+  "form": {
+    "title": "Créer une source de client",
+    "created": "Source créée avec succès",
+    "updated": "Source modifié avec succès",
+    "failedCreation": "Échec de la création de source",
+    "failedUpdate": "Échec de la modification de source",
+    "buttonText": "Créer une source",
+    "label": {
+      "code": "Code de source",
+      "name": " Nom de source",
+      "description": "Description de source",
+      "isActive": "source actif"
+    },
+    "placeholder": {
+      "code": "Insérer le code du source",
+      "name": "Insérer le nom du source",
+      "description": "Description de la couleur",
+      "isActive": "La source est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "createdAt": "created_at"
+  }
+}

@@ -9,24 +9,36 @@ async function loadMessages(locale: string) {
   const common = (await import(`./messages/common/${locale}.json`)).default;
   const login = (await import(`./messages/login/${locale}.json`)).default;
   const biens = (await import(`./messages/biens/${locale}.json`)).default;
+  const clients = (await import(`./messages/clients/${locale}.json`)).default;
   const settings = (await import(`./messages/settings/${locale}.json`)).default;
   const settingUsers = (await import(`./messages/settings/users/${locale}.json`)).default;
   const settingWilayas = (await import(`./messages/settings/wilayas/${locale}.json`)).default;
+  const settingCommune = (await import(`./messages/settings/communes/${locale}.json`)).default;
   const settingsRoles = (await import(`./messages/settings/roles/${locale}.json`)).default;
   const settingProfile = (await import(`./messages/settings/profile/${locale}.json`)).default;
-
-  console.log(settingUsers.filter.title);
+  const settingColors = (await import(`./messages/settings/colors/${locale}.json`)).default;
+  const settingClientStatus = (await import(`./messages/settings/client-status/${locale}.json`)).default;
+  const settingClientSources = (await import(`./messages/settings/client-sources/${locale}.json`)).default;
+  const settingClientTypes = (await import(`./messages/settings/client-types/${locale}.json`)).default;
+  const settingBienTypes = (await import(`./messages/settings/bien-types/${locale}.json`)).default;
 
   return {
     common,
     login,
     biens,
+    clients,
     settings: {
       ...settings,
       users: settingUsers,
       wilayas: settingWilayas,
+      communes: settingCommune,
       roles: settingsRoles,
       profile: settingProfile,
+      colors: settingColors,
+      clientStatus: settingClientStatus,
+      clientSources: settingClientSources,
+      clientTypes: settingClientTypes,
+      bienTypes: settingBienTypes,
     },
   };
 }

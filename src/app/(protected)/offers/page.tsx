@@ -1,21 +1,33 @@
 import React from "react";
-import { BienService } from "@/services/Bien.service";
 import { getTranslations } from "next-intl/server";
+import { ClientsService } from "@/services/clients.service";
+import OffersTable from "./_components/OffersTable";
+import { BienService } from "@/services/Bien.service";
+import { OffersService } from "@/services/offers.service";
 
-export default async function page({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
-  const page = (await searchParams).page ?? "1";
-  const perPage = (await searchParams).perPage ?? "10";
-  const search = (await searchParams).search ?? "";
+export default async function Offers({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
+  const queryParams = await searchParams;
 
-  const data = await BienService.findAll({ page, perPage, "filter[search]": search });
+  const offers = await OffersService.findAll(queryParams);
+  const biens = await BienService.list();
+  const types = await OffersService.typesList();
+  const clients = await ClientsService.list();
+  const status = await ClientsService.statusList();
+
   const t = await getTranslations();
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <h1 className="text-2xl font-bold">{t("offer.title")}</h1>
+        <h1 className="text-2xl font-bold">{t("clients.title")}</h1>
       </div>
       <div>
-        {/* <BienTable data={data} /> */}
+        <OffersTable
+          data={offers}
+          biens={biens}
+          types={types}
+          clients={clients}
+          status={status}
+        />
       </div>
     </div>
   );

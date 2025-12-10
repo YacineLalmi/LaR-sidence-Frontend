@@ -1,101 +1,87 @@
 "use client";
 
-import { createUserAction } from "@/actions/users/create-user.action";
-import InputSelectField from "@/components/custom-inputs/input-select";
+import { createWilayaAction } from "@/actions/wilayas/create.action";
+import InputNumberField from "@/components/custom-inputs/input-number";
 import InputTextField from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
-import { ListItem } from "@/schemas/Global.schema";
-import { UserForm, UserFormSchema } from "@/schemas/users/user-form.schema";
+import { WilayaForm, WilayaFormSchema } from "@/schemas/wilayas/wilaya-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-interface Props {
-  roles: ListItem[];
-}
-
-export default function CreateWilayaForm({ roles }: Props) {
+export default function CreateWilayaForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
   const t = useTranslations();
 
-  const form = useForm<UserForm>({
-    resolver: zodResolver(UserFormSchema),
+  const form = useForm<WilayaForm>({
+    resolver: zodResolver(WilayaFormSchema),
     defaultValues: {
-      email: "",
-      first_name: "",
-      last_name: "",
-      username: "",
-      role_id: undefined,
-      is_active: false,
+      name: "",
+      code: "",
+      longitude: undefined,
+      latitude: undefined,
     },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: UserForm) {
+  async function onSubmit(values: WilayaForm) {
     setIsPending(true);
     try {
-      const response = await createUserAction(values);
+      const response = await createWilayaAction(values);
       setIsPending(false);
       if (response.isOk) {
-        router.push("/settings/users");
-        customToast.success(t("users.create.success"));
-      } else customToast.error(response.errorMessage || t("users.create.failed"));
+        router.push("/settings/wilayas");
+        customToast.success(t("common.success.operationcompleted"));
+      } else customToast.error(response.errorMessage || t("common.errors.somethingwrong"));
     } catch (error) {
-      customToast.error(t("users.create.failed"));
+      customToast.error(t("common.errors.somethingwrong"));
     }
+  }
+
+  async function onInvalid(values: any) {
+    const [field, error] = Object.entries(values)[0] as [string, { message: string }];
+    customToast.error(`${field}: ${error.message}`);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 grid grid-cols-3 gap-3">
+      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-3 gap-3">
         <InputTextField
           control={form.control}
-          name="first_name"
-          label={t("users.form.label.firstName")}
+          name="code"
+          label={t("settings.wilayas.form.label.code")}
           disabled={isPending}
           required
-          placeholder={t("users.form.placeholder.firstName")}
+          placeholder={t("settings.wilayas.form.placeholder.code")}
         />
         <InputTextField
           control={form.control}
-          name="last_name"
-          label={t("users.form.label.lastName")}
+          name="name"
+          label={t("settings.wilayas.form.label.name")}
           disabled={isPending}
           required
-          placeholder={t("users.form.placeholder.lastName")}
+          placeholder={t("settings.wilayas.form.placeholder.name")}
         />
-        <InputSelectField
+        <InputNumberField
           control={form.control}
-          name="role_id"
-          options={roles}
+          name="longitude"
+          label={t("settings.wilayas.form.label.longitude")}
           disabled={isPending}
           required
-          label={t("users.form.label.roles")}
-          placeholder={t("users.form.placeholder.roles")}
+          placeholder={t("settings.wilayas.form.placeholder.longitude")}
         />
-        <div className="col-span-3 grid grid-cols-2 gap-3">
-          <InputTextField
-            control={form.control}
-            name="username"
-            label={t("users.form.label.username")}
-            disabled={isPending}
-            required
-            placeholder={t("users.form.placeholder.username")}
-          />
-          <InputTextField
-            control={form.control}
-            name="email"
-            label={t("users.form.label.email")}
-            disabled={isPending}
-            required
-            placeholder={t("users.form.placeholder.email")}
-          />
-        </div>
+        <InputNumberField
+          control={form.control}
+          name="latitude"
+          label={t("settings.wilayas.form.label.latitude")}
+          disabled={isPending}
+          required
+          placeholder={t("settings.wilayas.form.placeholder.latitude")}
+        />
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
           {t("common.submit")}
         </Button>

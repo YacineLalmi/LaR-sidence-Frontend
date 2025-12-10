@@ -8,5 +8,5 @@ export default async function Utilisateurs({ searchParams }: { searchParams: Pro
   const queryParams = await searchParams;
 
   const data = await UserService.findAll(queryParams);
-  return <SettingsView module="users" filters={<UsersFilters />} table={<UsersTable data={data} />} />;
+  return <SettingsView moduleName="users" modulePath="users" filters={<UsersFilters />} table={<UsersTable data={data} />} />;
 }

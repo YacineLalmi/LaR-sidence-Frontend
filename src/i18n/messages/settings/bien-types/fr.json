@@ -1,0 +1,31 @@
+{
+  "title": "Gestion des types des biens",
+  "form": {
+    "title": "Créer un type de bien",
+    "created": "Type créé avec succès",
+    "updated": "Type modifié avec succès",
+    "failedCreation": "Échec de la création de type",
+    "failedUpdate": "Échec de la modification de type",
+    "buttonText": "Créer un type",
+    "label": {
+      "code": "Code de type",
+      "name": " Nom de type",
+      "description": "Description de type",
+      "isActive": "Type actif"
+    },
+    "placeholder": {
+      "code": "Insérer le code du type",
+      "name": "Insérer le nom du type",
+      "description": "Description de la couleur",
+      "isActive": "Le type est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "createdAt": "created_at"
+  }
+}

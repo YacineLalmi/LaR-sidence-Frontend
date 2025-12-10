@@ -6,5 +6,5 @@ export default async function Roles({ searchParams }: { searchParams: Promise<{ 
   const queryParams = await searchParams;
 
   const data = await RoleService.findAll(queryParams);
-  return <SettingsView module="roles" table={<RolesTable data={data} />} />;
+  return <SettingsView moduleName="roles" modulePath="roles" table={<RolesTable data={data} />} />;
 }

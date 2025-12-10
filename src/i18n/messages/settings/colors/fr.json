@@ -1,0 +1,29 @@
+{
+  "title": "Gestion des couleurs",
+  "form": {
+    "title": "Créer une couleur",
+    "created": "Color créée avec succès",
+    "updated": "Color modifié avec succès",
+    "failedCreation": "Échec de la création de couleur",
+    "failedUpdate": "Échec de la modification de couleur",
+    "buttonText": "Créer une couleur",
+    "label": {
+      "code": "Code couleur",
+      "name": " Nom de la couleur",
+      "description": "Description de la couleur"
+    },
+    "placeholder": {
+      "code": "Code couleur",
+      "name": "Nom de la couleur",
+      "description": "Description de la couleur"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "createdAt": "created_at"
+  }
+}

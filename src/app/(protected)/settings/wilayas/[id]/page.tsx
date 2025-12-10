@@ -1,12 +1,10 @@
-import { UserService } from "@/services/users.service";
 import React from "react";
-import UpdateUserForm from "./update-form";
-import { RoleService } from "@/services/role.service";
+import UpdateWilayaForm from "./update-form";
+import { WilayasService } from "@/services/wilayas.service";
 
 export default async function UtilisateurDetailPage({ params }: { params: { id: string } }) {
   const id = params.id as string;
-  const user = await UserService.findOne(id);
-  const roles = await RoleService.list();
+  const wilaya = await WilayasService.findOne(id);
 
-  return <UpdateUserForm user={user} roles={roles} />;
+  return <UpdateWilayaForm wilaya={wilaya} />;
 }

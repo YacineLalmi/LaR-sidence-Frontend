@@ -39,7 +39,7 @@ export default function InputSelectField<T extends FieldValues>({
               {label} <span className={cn(" text-xl", required ? "text-red-500" : "text-transparent")}>*</span>
             </FormLabel>
           )}
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={val => field.onChange(val)} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={placeholder} />

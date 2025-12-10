@@ -1,0 +1,60 @@
+{
+  "title": "Gestion des clients",
+  "filter": {
+    "title": "Filtrer les client",
+    "label": {
+      "gender": "Genre",
+      "type": "Type",
+      "status": "Statut",
+      "source": "Source"
+    },
+    "placeholder": {
+      "gender": "Sélectionnez le genre",
+      "type": "Sélectionnez le type",
+      "status": "Sélectionner un statut",
+      "source": "Sélectionnez la source"
+    }
+  },
+  "form": {
+    "title": "Créer un client",
+    "created": "Client créé avec succès",
+    "updated": "Client modifié avec succès",
+    "failedCreation": "Échec de la création de client",
+    "failedUpdate": "Échec de la modification de client",
+    "buttonText": "Créer un client",
+    "label": {
+      "email": "E-mail",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "phoneNumber": "Téléphone",
+      "gender": "Genre",
+      "comment": "Commentaire",
+      "type": "Type",
+      "source": "Source",
+      "documents": "Documents",
+      "status": "Statut"
+    },
+    "placeholder": {
+      "email": "Entrez votre e-mail",
+      "firstName": "Entrez votre prénom",
+      "lastName": "Entrez votre nom",
+      "phoneNumber": "Entrez le numéro de téléphone",
+      "gender": "Sélectionnez le genre",
+      "type": "Sélectionnez le type",
+      "source": "Sélectionnez la source",
+      "status": "Sélectionner un statut",
+      "comment": "",
+      "documents": "Télécharger des documents"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "email": "E-mail",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "gender": "Genre",
+    "phoneNumber": "Numéro de téléphone",
+    "status": "Statut",
+    "createdAt": "Créé le"
+  }
+}

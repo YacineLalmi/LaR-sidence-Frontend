@@ -9,12 +9,13 @@ import Link from "next/link";
 import React from "react";
 
 interface Props {
-  module: string;
+  moduleName: string;
+  modulePath: string;
   filters?: React.ReactNode;
   table: React.ReactNode;
 }
 
-export default function SettingsView<T>({ filters, table, module }: Props) {
+export default function SettingsView<T>({ filters, table, moduleName, modulePath }: Props) {
   const t = useTranslations();
   return (
     <Card className="bg-transparent border-none shadow-none px-0">
@@ -23,10 +24,10 @@ export default function SettingsView<T>({ filters, table, module }: Props) {
           <SearchField />
           {filters}
         </div>
-        <Link href={`/settings/${module}/add`}>
+        <Link href={`/settings/${modulePath}/add`}>
           <Button className="cursor-pointer p-6 rounded-4xl flex gap-1 hover:bg-amber-200 hover:text-black hover:border-gray-600 border-1">
             <Plus />
-            {t(`settings.${module}.form.buttonText`)}
+            {t(`settings.${moduleName}.form.buttonText`)}
           </Button>
         </Link>
       </CardHeader>

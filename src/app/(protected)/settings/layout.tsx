@@ -30,6 +30,19 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
       title: t("settings.profile.title"),
       backLink: "/settings",
     },
+    "/settings/wilayas": {
+      title: t("settings.wilayas.title"),
+      backLink: "/settings",
+    },
+    "/settings/communes": {
+      title: t("settings.communes.title"),
+      backLink: "/settings",
+    },
+    "/settings/communes/add": {
+      title: t("settings.communes.title"),
+      backLink: "/settings",
+    },
+    
   };
   return (
     <div className="flex flex-col gap-3">

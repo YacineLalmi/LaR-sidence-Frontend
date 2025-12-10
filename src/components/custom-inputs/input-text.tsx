@@ -15,6 +15,7 @@ type InputFieldProps<T extends FieldValues> = {
   disabled?: boolean;
   LeftIcon?: LucideIcon;
   RightIcon?: LucideIcon;
+  RightIconOnClick?: () => any;
   className?: string;
 };
 
@@ -27,6 +28,7 @@ export default function InputTextField<T extends FieldValues>({
   disabled = false,
   LeftIcon,
   RightIcon,
+  RightIconOnClick,
   className,
 }: InputFieldProps<T>) {
   return (
@@ -52,7 +54,10 @@ export default function InputTextField<T extends FieldValues>({
                 {...field}
               />
               {RightIcon && (
-                <RightIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <RightIcon
+                  className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  onClick={RightIconOnClick}
+                />
               )}
             </div>
           </FormControl>
