@@ -17,9 +17,11 @@ async function loadMessages(locale: string) {
   const settingsRoles = (await import(`./messages/settings/roles/${locale}.json`)).default;
   const settingProfile = (await import(`./messages/settings/profile/${locale}.json`)).default;
   const settingColors = (await import(`./messages/settings/colors/${locale}.json`)).default;
-  const settingClientStatus = (await import(`./messages/settings/client-status/${locale}.json`)).default;
   const settingClientSources = (await import(`./messages/settings/client-sources/${locale}.json`)).default;
+  const settingClientStatus = (await import(`./messages/settings/client-status/${locale}.json`)).default;
   const settingClientTypes = (await import(`./messages/settings/client-types/${locale}.json`)).default;
+  const settingOfferStatus = (await import(`./messages/settings/offer-status/${locale}.json`)).default;
+  const settingOfferTypes = (await import(`./messages/settings/offer-types/${locale}.json`)).default;
   const settingBienTypes = (await import(`./messages/settings/bien-types/${locale}.json`)).default;
   const settingTransactionTypes = (await import(`./messages/settings/transaction-types/${locale}.json`)).default;
   const settingBienStatus = (await import(`./messages/settings/bien-status/${locale}.json`)).default;
@@ -43,6 +45,8 @@ async function loadMessages(locale: string) {
       bienTypes: settingBienTypes,
       transactionTypes: settingTransactionTypes,
       bienStatus: settingBienStatus,
+      offerStatus: settingOfferStatus,
+      offerTypes: settingOfferTypes,
     },
   };
 }

@@ -17,6 +17,8 @@ export default function page() {
       <SettingCard link="/settings/clients/status" title="Status des clients" icon={BadgeCheck} />
       <SettingCard link="/settings/clients/sources" title="Sources des clients" icon={BadgeCheck} />
       <SettingCard link="/settings/clients/types" title="Types des clients" icon={BadgeCheck} />
+      <SettingCard link="/settings/offers/types" title="Types des offers" icon={BadgeCheck} />
+      <SettingCard link="/settings/offers/status" title="Status des offers" icon={BadgeCheck} />
     </div>
   );
 }

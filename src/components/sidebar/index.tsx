@@ -22,16 +22,7 @@ const items = [
     url: "/",
     icon: Home,
   },
-  {
-    title: "Utilisateurs",
-    url: "/users",
-    icon: Users,
-  },
-  {
-    title: "Rôles et Autorisations",
-    url: "/roles",
-    icon: Shield,
-  },
+  
   {
     title: "Biens",
     url: "/biens",
@@ -89,7 +80,7 @@ export function SideBar() {
         </SidebarMenuItem>
 
         <SidebarMenuItem className="list-none">
-          <SidebarMenuButton asChild >
+          <SidebarMenuButton asChild>
             <a href="/settings">
               <LogOut />
               <span>Se déconnecter</span>

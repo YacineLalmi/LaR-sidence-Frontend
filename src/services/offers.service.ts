@@ -1,8 +1,6 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ClientForm } from "@/schemas/clients/client-form.schema";
-import { Client, ClientSchema } from "@/schemas/clients/client.schema";
 import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import { OfferForm } from "@/schemas/offers/offer-form.schema";
 import { Offer, OfferSchema } from "@/schemas/offers/offer.schema";
