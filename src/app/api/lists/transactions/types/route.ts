@@ -1,10 +1,10 @@
 import { BienStatusService } from "@/services/BienStatus.service";
-import { BienTransactionService } from "@/services/BienTransaction.service";
+import { TransactionTypeService } from "@/services/transaction-type.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const res = await BienTransactionService.list();
+    const res = await TransactionTypeService.list();
 
     return NextResponse.json(res);
   } catch (error) {

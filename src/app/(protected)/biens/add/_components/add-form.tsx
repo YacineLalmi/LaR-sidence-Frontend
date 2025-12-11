@@ -81,17 +81,21 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
   // 2. Define a submit handler.
   async function onSubmit(values: BienForm) {
     setIsPending(true);
-    console.log(values);
+    console.log("Form values:", values);
     try {
       const response = await createBienAction(values);
-      console.log("resposnesss", response)
+      console.log("Response:", response);
       setIsPending(false);
       if (response.isOk) {
         router.push("/biens");
-        customToast.success(t("loginSuccess"));
-      } else customToast.error(response.errorMessage || t("loginFailed"));
+        customToast.success(t("biens.form.created") || "Bien créé avec succès");
+      } else {
+        customToast.error(response.errorMessage || t("biens.form.failedCreation") || "Erreur lors de la création");
+      }
     } catch (error) {
-      customToast.error(t("loginFailed"));
+      console.error("Submit error:", error);
+      setIsPending(false);
+      customToast.error(t("biens.form.failedCreation") || "Erreur lors de la création");
     }
   }
 

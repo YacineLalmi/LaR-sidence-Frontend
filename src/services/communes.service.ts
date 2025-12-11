@@ -10,6 +10,7 @@ const END_POINTS = {
   create: "/configurations/communes",
   findAll: "/configurations/communes",
   list: "/lists/communes",
+  listByWilaya: (wilayaId: string) => `/lists/wilayas/${wilayaId}/communes`,
   findOne: (id: string) => `/configurations/communes/${id}`,
   update: (id: string) => `/configurations/communes/${id}`,
   delete: (id: string) => `/configurations/communes/${id}`,
@@ -42,9 +43,10 @@ export const CommunesService = {
     };
   },
 
-  list: async () => {
+  list: async (wilayaId?: string) => {
+    const endpoint = wilayaId ? END_POINTS.listByWilaya(wilayaId) : END_POINTS.list;
     const response = await ApiService.get<ListItem[]>({
-      endpoint: END_POINTS.list,
+      endpoint,
     });
 
     console.log("response", response);

@@ -16,7 +16,16 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.has(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  const access_token = await getCookie("access_token");
+  let access_token: string | null = null;
+  try {
+    access_token = await getCookie("access_token");
+  } catch (error) {
+    // If decryption fails (e.g., old cookies with wrong key), clear all cookies
+    console.error("Failed to decrypt access_token, clearing cookies:", error);
+    await removeCookie("access_token");
+    await removeCookie("refresh_token");
+    await removeCookie("eo_rmnsutoifirna");
+  }
 
   if (!access_token) {
     if (isProtectedRoute) {
@@ -42,6 +51,8 @@ export default async function middleware(req: NextRequest) {
         });
       }
     } catch (error) {
+      // If decryption fails, clear the cookie and continue
+      console.error("Failed to decrypt user information:", error);
       await removeCookie("eo_rmnsutoifirna");
     }
 

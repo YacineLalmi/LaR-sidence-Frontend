@@ -2,7 +2,7 @@ import React from "react";
 import BienAdd from "../_components/BienAdd";
 import { BienTypeService } from "@/services/BienType.service";
 import { BienStatusService } from "@/services/BienStatus.service";
-import { BienTransactionService } from "@/services/BienTransaction.service";
+import { TransactionTypeService } from "@/services/transaction-type.service";
 import { UserService } from "@/services/users.service";
 import AddBienForm from "./_components/add-form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -14,7 +14,7 @@ import { WilayasService } from "@/services/wilayas.service";
 export default async function BienStatusAddPage() {
   const bienTypes = await BienTypeService.list();
   const status = await BienStatusService.list();
-  const transactionsTypes = await BienTransactionService.list();
+  const transactionsTypes = await TransactionTypeService.list();
   const wilayas = await WilayasService.list();
   const agents = await UserService.agentList();
   const priorities = await BienPriorityService.list();

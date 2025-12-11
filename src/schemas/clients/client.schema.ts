@@ -13,10 +13,10 @@ export const ClientSchema = z.object({
   type: ClientTypeSchema,
   source: ClientSourceSchema,
   status: ClientStatusSchema,
-  comment: z.string().nullable(),
+  comment: z.string().nullable().optional(),
   created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime().nullable(),
-  deleted_at: z.iso.datetime().nullable(),
+  updated_at: z.iso.datetime().nullable().optional(),
+  deleted_at: z.iso.datetime().nullable().optional(),
 });
 
 export type Client = z.infer<typeof ClientSchema>;
