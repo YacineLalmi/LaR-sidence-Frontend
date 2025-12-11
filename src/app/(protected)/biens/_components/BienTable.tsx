@@ -2,7 +2,7 @@
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { User } from "@/schemas/users/user.schema";
+import { Bien } from "@/schemas/biens/bien.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +17,7 @@ interface Props {
 export default function BienTable({ data }: Props) {
   const t = useTranslations("biens");
 
-  const columns: ColumnDef<User>[] = [
+  const columns: ColumnDef<Bien>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -52,10 +52,18 @@ export default function BienTable({ data }: Props) {
     {
       accessorKey: "wilaya",
       header: t("columns.wilaya"),
+      cell: ({ row }) => {
+        const wilaya = row.original.wilaya;
+        return typeof wilaya === "object" && wilaya !== null ? wilaya.name || "N/A" : wilaya || "N/A";
+      },
     },
     {
       accessorKey: "commune",
       header: t("columns.commune"),
+      cell: ({ row }) => {
+        const commune = row.original.commune;
+        return typeof commune === "object" && commune !== null ? commune.name || "N/A" : commune || "N/A";
+      },
     },
     {
       accessorKey: "adresse",
