@@ -12,75 +12,73 @@ interface Props {
 }
 
 export default function TechnicalCharacteristics({ form, isPending = false }: Props) {
-  const t = useTranslations();
+  const t = useTranslations("biens.create.form.technicalCharacteristics");
   return (
-    <Section header={t("biens.create.form.technicalCharacteristics.header")}>
-      <InputNumberField
-        control={form.control}
-        name="habitable_surface"
-        label={t("biens.create.form.technicalCharacteristics.habitalSurface.label")}
-        disabled={isPending}
-        required
-        placeholder={t("biens.create.form.technicalCharacteristics.habitalSurface.placeholder")}
-      />
-
+    <Section header={t("header")}>
       <InputNumberField
         control={form.control}
         name="total_surface"
-        label={t("biens.create.form.technicalCharacteristics.totalSurface.label")}
+        label={t("totalSurface.label")}
         disabled={isPending}
         required
-        placeholder={t("biens.create.form.technicalCharacteristics.totalSurface.placeholder")}
+        placeholder={t("totalSurface.placeholder")}
       />
-
+      <InputNumberField
+        control={form.control}
+        name="habitable_surface"
+        label={t("habitalSurface.label")}
+        disabled={isPending}
+        required
+        placeholder={t("habitalSurface.placeholder")}
+      />
       <InputNumberField
         control={form.control}
         name="developed_surface"
-        label={t("biens.create.form.technicalCharacteristics.devolopedSurface.label")}
+        label={t("devolopedSurface.label")}
         disabled={isPending}
         required
-        placeholder={t("biens.create.form.technicalCharacteristics.devolopedSurface.placeholder")}
+        placeholder={t("devolopedSurface.placeholder")}
       />
       <InputNumberField
         control={form.control}
         name="floor_number"
-        label={t("biens.create.form.technicalCharacteristics.floorNumber.label")}
+        label={t("floorNumber.label")}
         disabled={isPending}
         required
-        placeholder={t("biens.create.form.technicalCharacteristics.floorNumber.placeholder")}
+        placeholder={t("floorNumber.placeholder")}
       />
       <div className="grid grid-cols-2 gap-5">
         <InputNumberField
           control={form.control}
           name="rooms_number"
-          label={t("biens.create.form.technicalCharacteristics.rooms.label")}
+          label={t("rooms.label")}
           disabled={isPending}
           required
-          placeholder={t("biens.create.form.technicalCharacteristics.rooms.placeholder")}
+          placeholder={t("rooms.placeholder")}
         />
         <InputNumberField
           control={form.control}
           name="bathrooms_number"
-          label={t("biens.create.form.technicalCharacteristics.bathrooms.label")}
+          label={t("bathrooms.label")}
           disabled={isPending}
           required
-          placeholder={t("biens.create.form.technicalCharacteristics.bathrooms.placeholder")}
+          placeholder={t("bathrooms.placeholder")}
         />
         <InputNumberField
           control={form.control}
           name="bedrooms_number"
-          label={t("biens.create.form.technicalCharacteristics.bedrooms.label")}
+          label={t("bedrooms.label")}
           disabled={isPending}
           required
-          placeholder={t("biens.create.form.technicalCharacteristics.bedrooms.placeholder")}
+          placeholder={t("bedrooms.placeholder")}
         />
         <InputDateField
           control={form.control}
           name="availability_date"
-          label={t("biens.create.form.technicalCharacteristics.availabilityDate.label")}
+          label={t("availabilityDate.label")}
           disabled={isPending}
           required
-          placeholder={t("biens.create.form.technicalCharacteristics.availabilityDate.placeholder")}
+          placeholder={t("availabilityDate.placeholder")}
         />
       </div>
     </Section>

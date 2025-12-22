@@ -8,6 +8,7 @@ import { UseFormReturn } from "react-hook-form";
 import Section from "./section";
 import InputNumberField from "@/components/custom-inputs/input-number";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
+import { InputSearchField } from "@/components/custom-inputs/input-search";
 
 interface Props {
   form: UseFormReturn<BienForm>;
@@ -29,6 +30,14 @@ export default function GeneralInformation({
   const t = useTranslations();
   return (
     <Section header={t("biens.create.form.generalInformation.header")}>
+      <InputSearchField
+        control={form.control}
+        name="client_id"
+        label={t("biens.create.form.generalInformation.client.label")}
+        disabled={isPending}
+        required
+        placeholder={t("biens.create.form.generalInformation.client.placeholder")}
+      />
       <InputTextField
         control={form.control}
         name="title"
@@ -60,7 +69,7 @@ export default function GeneralInformation({
 
       <InputSelectField
         control={form.control}
-        name="status_id"
+        name="bien_status_id"
         label={t("biens.create.form.generalInformation.status.label")}
         options={status}
         placeholder={t("biens.create.form.generalInformation.status.placeholder")}

@@ -1,7 +1,5 @@
-import Settings from "@/components/navbar/components/settings";
+
 import { getCookie } from "@/lib/server.helper";
-import { profile } from "console";
-import { se } from "date-fns/locale";
 import { getRequestConfig } from "next-intl/server";
 
 // Helper function to load all message files for a locale
@@ -26,6 +24,7 @@ async function loadMessages(locale: string) {
   const settingBienTypes = (await import(`./messages/settings/bien-types/${locale}.json`)).default;
   const settingTransactionTypes = (await import(`./messages/settings/transaction-types/${locale}.json`)).default;
   const settingBienStatus = (await import(`./messages/settings/bien-status/${locale}.json`)).default;
+  const settingBienAdditionalCharacteristics= (await import(`./messages/settings/bien-additional-characteristics/${locale}.json`)).default;
 
   return {
     common,
@@ -49,6 +48,7 @@ async function loadMessages(locale: string) {
       bienStatus: settingBienStatus,
       offerStatus: settingOfferStatus,
       offerTypes: settingOfferTypes,
+      bienAdditionalcharacteristics: settingBienAdditionalCharacteristics,
     },
   };
 }

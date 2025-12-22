@@ -10,6 +10,10 @@
           "label": "Titre",
           "placeholder": "Entrez le titre du bien..."
         },
+        "client": {
+          "label": "Client",
+          "placeholder": "Choississez un client"
+        },
         "type": {
           "label": "Type de bien",
           "placeholder": "Sélectionnez un type de bien"
@@ -181,9 +185,9 @@
     }
   },
   "columns": {
-    "id": "ID",
+    "id": "Bien ID",
     "title": "Titre",
-    "type": "Type de bien",
+    "bienType": "Type de bien",
     "transactionType": "Type de transaction",
     "status": "Statut",
     "wilaya": "Wilaya",
@@ -192,6 +196,10 @@
     "isActive": "Actif",
     "agent": "Agent",
     "price": "Prix",
-    "createdAt": "Créé le"
+    "availabilityDate": "Date de disponibilité",
+    "createdAt": "Créé le",
+    "actions": "Actions",
+    "fiche": "Fiche",
+    "client": "Client"
   }
 }

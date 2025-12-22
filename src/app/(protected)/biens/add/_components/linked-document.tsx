@@ -13,7 +13,7 @@ export default function LinkedDocuments({ form, isPending = false }: Props) {
   const t = useTranslations();
   return (
     <Section header={t("biens.create.form.linkedDocuments.header")}>
-      <InputFileLarge />
+      <InputFileLarge control={form.control} name="documents" />
     </Section>
   );
 }

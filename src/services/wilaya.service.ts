@@ -15,7 +15,7 @@ const END_POINTS = {
   delete: (id: string) => `/configurations/wilayas/${id}`,
 };
 
-export const WilayasService = {
+export const WilayaService = {
   create: async (data: WilayaForm) => {
     const response = await ApiService.post<Wilaya>({
       endpoint: END_POINTS.create,

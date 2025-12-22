@@ -103,7 +103,7 @@ export default function BienFilter() {
   return (
     <FilterDrawer buttonText={t("common.filter")} title={t("biens.filter.title")} isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form {...form}>
-        <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
           <InputSelectField
             control={form.control}
             name="bien_type_id"
@@ -147,7 +147,7 @@ export default function BienFilter() {
             options={agents}
             placeholder={t("biens.filter.placeholder.agent")}
           />
-          <Button type="submit" className="w-full mt-5">
+          <Button type="submit" >
             {t("biens.filter.submit")}
           </Button>
         </form>

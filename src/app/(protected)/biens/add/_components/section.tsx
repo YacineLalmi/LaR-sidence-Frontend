@@ -8,8 +8,8 @@ interface Props {
 export default function Section({ children, header }: Props) {
   return (
     <div>
-      <h1 className="text-xl font-bold my-2">{header}</h1>
-      {children}
+      <h1 className="text-[28px] font-bold my-2">{header}</h1>
+      <div className="grid grid-cols-1 gap-[12px]">{children}</div>
     </div>
   );
 }

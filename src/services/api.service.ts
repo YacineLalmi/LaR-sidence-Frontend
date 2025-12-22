@@ -34,7 +34,11 @@ class ApiService {
     }
 
     if (body) {
-      config.body = JSON.stringify(body);
+      if (body instanceof FormData) {
+        // If body is FormData, let the browser set the correct headers including boundaries
+        delete (config.headers as any)["content-type"];
+        config.body = body;
+      } else config.body = JSON.stringify(body);
     }
 
     const response = await fetch(url, config);

@@ -42,13 +42,10 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
       title: t("settings.communes.title"),
       backLink: "/settings",
     },
-    
   };
   return (
-    <div className="flex flex-col gap-3">
-      <div className="mb-3">
-        <NavigationButton title={pathsMap[pathname]?.title} backLink={pathsMap[pathname]?.backLink} />
-      </div>
+    <div className="flex flex-col">
+      <NavigationButton title={pathsMap[pathname]?.title} backLink={pathsMap[pathname]?.backLink} />
       <div>{children}</div>
     </div>
   );

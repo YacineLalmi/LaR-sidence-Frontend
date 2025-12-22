@@ -28,8 +28,17 @@ interface Props {
   wilayas: ListItem[];
   agents: ListItem[];
   priorities: ListItem[];
+  bienAdditionalcharacteristics: ListItem[];
 }
-export default function AddBienForm({ agents, bienTypes, status, transactionsTypes, wilayas, priorities }: Props) {
+export default function CreateBienForm({
+  agents,
+  bienTypes,
+  status,
+  transactionsTypes,
+  wilayas,
+  priorities,
+  bienAdditionalcharacteristics,
+}: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
 
@@ -39,10 +48,11 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
     resolver: zodResolver(BienFormSchema),
     mode: "onChange",
     defaultValues: {
+      client_id: undefined,
       title: "",
       bien_type_id: undefined,
       transaction_type_id: undefined,
-      status_id: undefined,
+      bien_status_id: undefined,
       agent_id: undefined,
       price: 0,
       monthly_charges: 0,
@@ -86,24 +96,20 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
       const response = await createBienAction(values);
       console.log("Response:", response);
       setIsPending(false);
-      if (response.isOk) {
+       if (response.isOk) {
         router.push("/biens");
-        customToast.success(t("biens.form.created") || "Bien créé avec succès");
-      } else {
-        customToast.error(response.errorMessage || t("biens.form.failedCreation") || "Erreur lors de la création");
-      }
+        customToast.success(t("common.success.operationcompleted"));
+      } else customToast.error(response.errorMessage || t("common.errors.somethingwrong"));
     } catch (error) {
-      console.error("Submit error:", error);
-      setIsPending(false);
-      customToast.error(t("biens.form.failedCreation") || "Erreur lors de la création");
+      console.log(error);
+      customToast.error(t("common.errors.somethingwrong"));
     }
+    setIsPending(false);
   }
 
-  function onError(errors: any) {
-    for (const key in errors) {
-      if (!Object.hasOwn(errors, key)) continue;
-      customToast.error(errors[key]?.message);
-    }
+  async function onInvalid(values: any) {
+    const [field, error] = Object.entries(values)[0] as [string, { message: string }];
+    customToast.error(`${field}: ${error.message}`);
   }
 
   const sampleSteps: StepperStep[] = [
@@ -123,7 +129,7 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="grid grid-cols-12 gap-3">
+      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid grid-cols-12 gap-3">
         <div className="col-span-1 h-full">
           <Stepper steps={sampleSteps} activeStep={activeStep} />
         </div>
@@ -147,7 +153,11 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
           <div className="col-span-11 grid grid-cols-2 gap-5">
             <TechnicalCharacteristics form={form} isPending={isPending} />
             <div>
-              <AdditionalCharacteristics form={form} isPending={isPending} />
+              <AdditionalCharacteristics
+                form={form}
+                isPending={isPending}
+                bienAdditionalcharacteristics={bienAdditionalcharacteristics}
+              />
               <Images form={form} isPending={isPending} />
             </div>
           </div>
@@ -155,12 +165,13 @@ export default function AddBienForm({ agents, bienTypes, status, transactionsTyp
         {activeStep === 3 && (
           <div className="col-span-11 grid grid-cols-2 gap-5">
             <div>
-              <LinkedDocuments form={form} isPending={isPending} />
+              <LinkedDocuments form={form} isPending={isPending}  />
               <Exclusivity form={form} isPending={isPending} priorities={priorities} />
             </div>
             <Commentaire form={form} isPending={isPending} />
           </div>
         )}
+
         <div className="col-span-12 flex justify-end">
           {activeStep > 1 && (
             <Button

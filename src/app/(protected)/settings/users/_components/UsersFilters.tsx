@@ -50,17 +50,6 @@ export default function UsersFilters() {
     },
   });
 
-  //   console.log(form.watch("wilaya_id"));
-  //   const loadOptions = useCallback(async (optionsEndPoint: string): Promise<ListItem[]> => {
-  //     try {
-  //       return await fetch(optionsEndPoint, { cache: "force-cache", next: { revalidate: 300 } }).then((res) =>
-  //         res.json()
-  //       );
-  //     } catch (error) {
-  //       console.error("erroorrrrr", error);
-  //     }
-  //     return [];
-  //   }, []);
   function onSubmit(values: UserFilterForm) {
     const params = new URLSearchParams();
     if (values.role_id && values.role_id !== "0") params.append("role_id", values.role_id);

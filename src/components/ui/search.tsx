@@ -37,14 +37,14 @@ export default function SearchField() {
           LeftIcon={Search}
           className="py-6"
         />
-        <Button
+        {/* <Button
           className="flex gap-2 p-6 rounded-4xl bg-transparent border-gray-600 cursor-pointer hover:bg-amber-200"
           variant="outline"
           type="submit"
         >
           {t("button")}
           <Search />
-        </Button>
+        </Button> */}
       </form>
     </Form>
   );

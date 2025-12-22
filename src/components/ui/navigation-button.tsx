@@ -17,7 +17,7 @@ export default function NavigationButton({ title, backLink = "/dashboard", backT
           <ArrowLeft />
         </Button>
       </Link>
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="text-[32px] font-bold">{title}</h1>
     </div>
   );
 }

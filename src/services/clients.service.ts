@@ -4,6 +4,7 @@ import { validateResponseData } from "@/lib/utils";
 import { ClientForm } from "@/schemas/clients/client-form.schema";
 import { Client, ClientSchema } from "@/schemas/clients/client.schema";
 import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { da } from "date-fns/locale";
 import z from "zod";
 
 const END_POINTS = {
@@ -20,14 +21,43 @@ const END_POINTS = {
 
 export const ClientsService = {
   create: async (data: ClientForm) => {
-    const adjustedData = {
-      ...data,
-      phone_numbers: data.phone_numbers.map((item) => item.phoneNumber),
-    };
-    console.log("first", adjustedData);
+    const formData = new FormData();
+    for (const key in data) {
+      if (key === "documents") {
+        const files = (data as any)[key] as File[];
+        files.forEach((file: File, index: number) => {
+          formData.append(`${key}[${index}]`, file);
+        });
+        continue;
+      }
+      if (key === "phone_numbers") {
+        const files = (data as any)[key] as File[];
+        files.forEach((file: File, index: number) => {
+          formData.append(`${key}[${index}]`, data.phone_numbers[index].phoneNumber);
+        });
+        continue;
+      }
+      if ((data as any)[key] instanceof Date) {
+        formData.append(key, (data as any)[key].toISOString());
+        continue;
+      }
+
+      if (typeof (data as any)[key] === "boolean") {
+        formData.append(key, (data as any)[key] ? "1" : "0");
+        continue;
+      }
+      const value = (data as any)[key];
+      formData.append(key, value);
+    }
+
+    // const adjustedData = {
+    //   ...data,
+    //   phone_numbers: data.phone_numbers.map((item) => item.phoneNumber),
+    // };
+    // console.log("first", adjustedData);
     const response = await ApiService.post<Client>({
       endpoint: END_POINTS.create,
-      body: adjustedData,
+      body: formData,
     });
 
     console.log(response.data?.phone_numbers);
@@ -50,10 +80,14 @@ export const ClientsService = {
     };
   },
 
-  list: async () => {
+  list: async (needle: string) => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
+      query: {
+        needle: needle,
+      },
     });
+
 
     console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));

@@ -14,7 +14,7 @@ export function transformQuery(query: QueryParams | undefined) {
   const params = new URLSearchParams(query);
   const transformed = new URLSearchParams();
 
-  const passthroughKeys = ["page", "perPage", "sort"];
+  const passthroughKeys = ["page", "perPage", "sort", "needle"];
 
   for (const [key, value] of params.entries()) {
     if (passthroughKeys.includes(key)) {

@@ -1,17 +1,5 @@
 import z from "zod";
 
-export const BienSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  adresse: z.string(),
-  wilaya: z.string(),
-  commune: z.string(),
-  peices: z.number().nullable(),
-  bien_type: z.string(),
-  transaction_type: z.string(),
-  status: z.string(),
-});
-
 export const DetailedBienSchema = z.object({
   id: z.string().optional(),
   title: z.string(),
@@ -54,8 +42,6 @@ export const DetailedBienSchema = z.object({
     .nullable()
     .optional(),
 });
-
-export type Bien = z.infer<typeof BienSchema>;
 
 export const BienFilterFormSchema = z.object({
   status_id: z.string().optional(),

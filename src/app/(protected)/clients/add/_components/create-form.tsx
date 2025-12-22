@@ -161,7 +161,7 @@ export default function CreateClientForm({ types, status, sources, genders }: Pr
         </div>
         <div>
           <Section header="Docmuments">
-            <InputFileLarge />
+            <InputFileLarge control={form.control} name="documents" />
             <InputSelectField
               control={form.control}
               name="source_id"
@@ -174,7 +174,7 @@ export default function CreateClientForm({ types, status, sources, genders }: Pr
             <InputSelectField
               control={form.control}
               name="type_id"
-              options={sources}
+              options={types}
               label={t("clients.form.label.type")}
               disabled={isPending}
               required
@@ -183,7 +183,7 @@ export default function CreateClientForm({ types, status, sources, genders }: Pr
             <InputSelectField
               control={form.control}
               name="status_id"
-              options={types}
+              options={status}
               label={t("clients.form.label.status")}
               disabled={isPending}
               required

@@ -42,13 +42,13 @@ export default async function middleware(req: NextRequest) {
     try {
       const encoded_user_information = await getCookie("eo_rmnsutoifirna");
       if (!encoded_user_information) {
-        const user_information = await UserService.profile();
-        await setCookie({
-          key: "eo_rmnsutoifirna",
-          value: JSON.stringify(user_information),
-          expires: addHours(new Date(), 1),
-          maxAge: 60 * 60,
-        });
+        // const user_information = await UserService.profile();
+        // await setCookie({
+        //   key: "eo_rmnsutoifirna",
+        //   value: JSON.stringify(user_information),
+        //   expires: addHours(new Date(), 1),
+        //   maxAge: 60 * 60,
+        // });
       }
     } catch (error) {
       // If decryption fails, clear the cookie and continue

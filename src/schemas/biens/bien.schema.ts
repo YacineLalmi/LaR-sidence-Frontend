@@ -4,60 +4,47 @@ import { CommuneSchema } from "../communes/commune.schema";
 import { BienTypeSchema } from "../bien-type/bien-type.schema";
 import { TransactionTypeSchema } from "../transaction-type/transaction-type.schema";
 import { UserSchema } from "../users/user.schema";
+import { BienStatusSchema } from "../BienStatus.schema";
+import { BienAdditionalcharacteristicsSchema } from "../bien-additional-characteristics/bien-addtional-characteristics.schema";
+import { FileSchema } from "../file/file.schema";
+import images from "@/lib/images";
+import { FileBlobSchema } from "../file/file-blob.schema";
 
-// Status schema for biens (from status table)
-const StatusSchema = z.object({
-  id: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? val : String(val)),
-  code: z.string(),
-  name: z.string(),
-  description: z.string().nullable().optional(),
-  is_active: z.union([z.boolean(), z.number()]).transform((val) => {
-    if (typeof val === 'number') return val === 1;
-    return val;
-  }),
-  color: z.string().nullable().optional(),
-  created_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  updated_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  deleted_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-});
+const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
 
 export const BienSchema = z.object({
-  id: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? val : String(val)),
+  client_id: z.number(),
   title: z.string().nullable().optional(),
   adresse: z.string().nullable().optional(),
   postal_code: z.string().nullable().optional(),
   wilaya: WilayaSchema.nullable().optional(),
   commune: CommuneSchema.nullable().optional(),
   bien_type: BienTypeSchema.nullable().optional(),
-  price: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseFloat(val) : val).nullable().optional(),
-  transaction_type: TransactionTypeSchema.nullable().optional(),
-  status: StatusSchema.nullable().optional(),
-  description: z.string().nullable().optional(),
-  habitable_surface: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseFloat(val) : val).nullable().optional(),
-  total_surface: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseFloat(val) : val).nullable().optional(),
-  developed_surface: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseFloat(val) : val).nullable().optional(),
-  floor_number: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseInt(val) : val).nullable().optional(),
-  rooms_number: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseInt(val) : val).nullable().optional(),
-  bedrooms_number: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseInt(val) : val).nullable().optional(),
-  bathrooms_number: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? parseInt(val) : val).nullable().optional(),
-  availability_date: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
+  price: z.number(),
+  transaction_type: TransactionTypeSchema,
+  bien_status: BienStatusSchema,
+  description: z.string().nullable(),
+  habitable_surface: z.number(),
+  total_surface: z.number(),
+  developed_surface: z.number(),
+  floor_number: z.number(),
+  rooms_number: z.number(),
+  bedrooms_number: z.number(),
+  bathrooms_number: z.number(),
+  availability_date: z.iso.datetime(),
   comment: z.string().nullable().optional(),
-  exclusivity: z.union([z.boolean(), z.number(), z.string()]).transform((val) => {
-    if (typeof val === 'number') return val === 1;
-    if (typeof val === 'string') return val === '1' || val.toLowerCase() === 'true';
-    return val;
-  }).nullable().optional(),
-  exclusivity_start: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  exclusivity_end: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  agent: UserSchema.extend({
-    id: z.union([z.number(), z.string()]).transform((val) => typeof val === 'string' ? val : String(val)),
-    role: z.any().nullable().optional(),
-    permissions: z.array(z.any()).nullable().optional(),
-  }).nullable().optional(),
-  documents: z.array(z.any()).nullable().optional(),
-  created_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  updated_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
-  deleted_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
+  exclusivity: z.boolean(),
+  exclusivity_start: z.iso.datetime().nullable(),
+  exclusivity_end: z.iso.datetime().nullable(),
+  agent: UserSchema,
+  additional_characteristics: z.array(BienAdditionalcharacteristicsSchema),
+  documents: z.array(FileSchema),
+  images: z.array(FileSchema),
+  first_image: FileBlobSchema.nullable(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime().nullable(),
+  deleted_at: z.iso.datetime().nullable(),
 });
 
 export type Bien = z.infer<typeof BienSchema>;

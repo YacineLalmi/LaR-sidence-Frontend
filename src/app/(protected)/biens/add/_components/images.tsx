@@ -13,7 +13,7 @@ export default function Images({ form, isPending = false }: Props) {
   const t = useTranslations();
   return (
     <Section header={t("biens.create.form.images.header")}>
-      <InputFileLarge />
+      <InputFileLarge control={form.control} name="images" />
     </Section>
   );
 }

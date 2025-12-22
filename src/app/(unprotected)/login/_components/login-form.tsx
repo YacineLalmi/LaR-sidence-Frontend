@@ -7,7 +7,7 @@ import MirageLoader from "@/components/mirage-loader";
 import logo from "@/assests/images/logo-black.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Form } from "@/components/ui/form";
+import { Form, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { LoginFormData, LoginFormDataSchema } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,9 @@ import { useTranslations } from "next-intl";
 import InputPasswordField from "@/components/custom-inputs/input-password-field";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/actions/authentication/login.action";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 export function LoginForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const t = useTranslations("login");
@@ -48,14 +51,17 @@ export function LoginForm() {
   return (
     <Card className="w-full bg-transparent shadow-none border-0">
       <CardHeader>
-        <CardTitle className="flex justify-center flex-col items-center gap-2">
-          <Image src={logo} alt="ss" width={50} />
+        <CardTitle className="flex justify-center items-center mb-[36px] ">
+          <Image src={logo} alt="ss" width={117} className="rounded-[16px]" />
         </CardTitle>
-        <CardDescription className="text-3xl tracking-widest text-center text-black">{t("welcome")}</CardDescription>
+        <CardDescription className="flex flex-col tracking-widest  text-black">
+          <span className="text-[36px] font-bold">{t("welcome")}</span>
+          <span>Connectez-vous</span>
+        </CardDescription>
       </CardHeader>
-      <CardContent className="my-2">
+      <CardContent className="my-0">
         <Form {...form}>
-          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
             <InputTextField
               control={form.control}
               name="username"
@@ -75,8 +81,12 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col items-end gap-2 ">
-        <div className="flex justify-end my-2">
+      <CardFooter className="flex flex-col gap-2 mt-[24px]">
+        <div className="flex justify-between my-2 w-full">
+          <div className="flex items-center gap-3">
+            <Checkbox id="saveme" />
+            <Label htmlFor="saveme">Se souvenir de moi</Label>
+          </div>
           <Link href="#" className=" flex justify-end">
             {t("forgotYourPassword")}
           </Link>

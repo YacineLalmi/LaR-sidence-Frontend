@@ -1,14 +1,21 @@
 import z from "zod";
 
+const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
+
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
+
 export const BienFormSchema = z
   .object({
+    client_id: z.string(),
     title: z
       .string()
       .min(3, "Le titre doit contenir au moins 3 caractères")
       .max(255, "Le titre ne peut pas dépasser 255 caractères"),
     bien_type_id: z.string().min(1, "Le type de bien est requis"),
     transaction_type_id: z.string().min(1, "Le type de transaction est requis"),
-    status_id: z.string().min(1, "Le statut est requis"),
+    bien_status_id: z.string().min(1, "Le statut est requis"),
     agent_id: z.string().nullable().optional(),
     price: z.number().positive("Le prix doit être positif").max(999999999999999, "Le prix est trop élevé"),
 
@@ -86,41 +93,21 @@ export const BienFormSchema = z
     addtional_characteristics: z.array(z.number().int()),
 
     images: z
-      .array(
-        z
-          .any()
-          .refine((file) => file instanceof File && ["image/png", "image/jpeg"].includes(file.type), {
-            message: "Invalid file type",
-          })
-          .refine((file) => file.size <= 5 * 1024, {
-            message: "File must be <= 5KB",
-          })
-      )
-      .nullable()
-      .optional(),
+      .array(z.instanceof(File))
+      .min(1, "At least one file is required")
+      .max(5, "You can upload up to 5 files")
+      .refine((files) => files.every((file) => file.size <= MAX_IMAGE_SIZE), "Each file must be 5MB or less")
+      .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only PDF files are allowed"),
 
     documents: z
-      .array(
-        z
-          .any()
-          .refine(
-            (file) =>
-              file instanceof File &&
-              [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-              ].includes(file.type),
-            { message: "Invalid file type" }
-          )
-          .refine((file) => file.size <= 5 * 1024 * 1024, {
-            message: "File must be <= 5MB",
-          })
-      )
-      .nullable()
-      .optional(),
+      .array(z.instanceof(File))
+      .min(1, "At least one file is required")
+      .max(5, "You can upload up to 5 files")
+      .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
+      .refine(
+        (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
+        "Only PDF files are allowed"
+      ),
   })
   .refine(
     (data) => {

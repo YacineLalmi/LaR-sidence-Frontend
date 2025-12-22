@@ -33,10 +33,10 @@ export default function InputSelectField<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full gap-[12px]">
           {!!label && (
             <FormLabel>
-              {label} <span className={cn(" text-xl", required ? "text-red-500" : "text-transparent")}>*</span>
+              {label} <span className={cn(" text-[16px]", required ? "text-red-500" : "text-transparent")}>*</span>
             </FormLabel>
           )}
           <Select onValueChange={val => field.onChange(val)} defaultValue={field.value}>

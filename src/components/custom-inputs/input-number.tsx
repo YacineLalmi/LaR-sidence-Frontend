@@ -35,7 +35,7 @@ export default function InputNumberField<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full gap-[12px]">
           {!!label && (
             <FormLabel>
               {label} <span className={cn(" text-xl", required ? "text-red-500" : "text-transparent")}>*</span>

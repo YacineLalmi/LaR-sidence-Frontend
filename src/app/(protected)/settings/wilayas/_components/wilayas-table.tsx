@@ -5,22 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
 import React, { useCallback, useState } from "react";
-import Status from "@/components/ui/status";
 import { useTranslations } from "next-intl";
 import { User } from "@/schemas/users/user.schema";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
+import UpdateWilayaDialog from "./update-dialog";
+import { Wilaya } from "@/schemas/wilayas/wilaya.schema";
+import { ResponseMetaData } from "@/lib/definitions";
 
 interface Props {
-  data: any;
+  data: {
+    items: Wilaya[];
+    meta?: ResponseMetaData;
+  };
 }
 
 export default function WilayasTable({ data }: Props) {
   const t = useTranslations();
 
-  const columns: ColumnDef<User>[] = [
+  const columns: ColumnDef<Wilaya>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -69,11 +73,7 @@ export default function WilayasTable({ data }: Props) {
       id: "actions",
       cell: (row) => (
         <div className="flex items-center gap-2">
-          <Link href={`/settings/wilayas/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
+          <UpdateWilayaDialog wilaya={row.row.original} />
           <Button
             variant="ghost"
             size="sm"
