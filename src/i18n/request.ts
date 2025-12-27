@@ -12,6 +12,8 @@ async function loadMessages(locale: string) {
   const clients = (await import(`./messages/clients/${locale}.json`)).default;
   const settings = (await import(`./messages/settings/${locale}.json`)).default;
   const offers = (await import(`./messages/offers/${locale}.json`)).default;
+  const calendar = (await import(`./messages/calendar/${locale}.json`)).default;
+  const demands = (await import(`./messages/demands/${locale}.json`)).default;
   const settingUsers = (await import(`./messages/settings/users/${locale}.json`)).default;
   const settingWilayas = (await import(`./messages/settings/wilayas/${locale}.json`)).default;
   const settingCommune = (await import(`./messages/settings/communes/${locale}.json`)).default;
@@ -33,6 +35,8 @@ async function loadMessages(locale: string) {
     biens,
     offers,
     clients,
+    calendar,
+    demands,
     settings: {
       ...settings,
       users: settingUsers,

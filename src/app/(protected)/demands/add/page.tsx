@@ -1,15 +1,13 @@
-import React from "react";
 import { getTranslations } from "next-intl/server";
 import { DemandsService } from "@/services/demands.service";
-import DemandsTable from "./_components/DemandsTable";
+import CreateDemandForm from "./_components/create-form";
 import { ClientsService } from "@/services/clients.service";
 import { BienService } from "@/services/Bien.service";
 import { UserService } from "@/services/users.service";
 
-export default async function Demands({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
-  const queryParams = await searchParams;
+export default async function AddDemandPage() {
+  const t = await getTranslations();
 
-  const demands = await DemandsService.findAll(queryParams);
   const types = await DemandsService.typesList().catch(() => []);
   const status = await DemandsService.statusList().catch(() => []);
   const priorities = await DemandsService.prioritiesList().catch(() => []);
@@ -18,16 +16,13 @@ export default async function Demands({ searchParams }: { searchParams: Promise<
   const biens = await BienService.list();
   const agents = await UserService.agentList().catch(() => []);
 
-  const t = await getTranslations();
-
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <h1 className="text-2xl font-bold">{t("demands.title")}</h1>
+        <h1 className="text-2xl font-bold">{t("demands.form.createTitle")}</h1>
       </div>
       <div>
-        <DemandsTable
-          data={demands}
+        <CreateDemandForm
           types={types}
           status={status}
           priorities={priorities}
@@ -40,3 +35,4 @@ export default async function Demands({ searchParams }: { searchParams: Promise<
     </div>
   );
 }
+
