@@ -2,9 +2,7 @@ import z from "zod";
 
 export const CommuneFormSchema = z.object({
   name: z.string().trim().min(1).max(100),
-  longitude: z.number().nullable(),
-  latitude: z.number().nullable(),
-  post_code: z.string(),
+  post_code: z.number(),
   wilaya_id: z.string(),
 });
 

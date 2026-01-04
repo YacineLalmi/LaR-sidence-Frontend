@@ -1,14 +1,14 @@
-import { ClientsService } from "@/services/clients.service";
+import { ClientService } from "@/services/clients.service";
 import React from "react";
-import UpdateClientForm from "./_components/update-form";
+import UpdateClientForm from "./_components/update-client-form";
 
-export default async function UpdateForm({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const clientTypes = await ClientsService.typesList();
-  const clientStatus = await ClientsService.statusList();
-  const clientSources = await ClientsService.sourcesList();
-  const client = await ClientsService.findOne(id);
-  const genders = [
+export default async function UpdateForm({ params }: { params: Promise<{ id: string }> }) {
+  const id = (await params).id;
+  const clientTypes = await ClientService.typesList();
+  const clientStatus = await ClientService.statusList();
+  const clientSources = await ClientService.sourcesList();
+  const client = await ClientService.findOne(id);
+  const civilities = [
     {
       id: "F",
       name: "Female",
@@ -17,6 +17,10 @@ export default async function UpdateForm({ params }: { params: { id: string } })
       id: "M",
       name: "Male",
     },
+    {
+      id: "C",
+      name: "Company",
+    },
   ];
 
   return (
@@ -24,7 +28,7 @@ export default async function UpdateForm({ params }: { params: { id: string } })
       types={clientTypes}
       status={clientStatus}
       sources={clientSources}
-      genders={genders}
+      civilities={civilities}
       client={client}
     />
   );

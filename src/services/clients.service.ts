@@ -16,10 +16,10 @@ const END_POINTS = {
   sourcesList: "/lists/clients/sources",
   findOne: (id: string) => `/clients/${id}`,
   update: (id: string) => `/clients/${id}`,
-  delete: (id: string) => `/clients/${id}`,
+  delete: (id: number) => `/clients/${id}`,
 };
 
-export const ClientsService = {
+export const ClientService = {
   create: async (data: ClientForm) => {
     const formData = new FormData();
     for (const key in data) {
@@ -33,7 +33,7 @@ export const ClientsService = {
       if (key === "phone_numbers") {
         const files = (data as any)[key] as File[];
         files.forEach((file: File, index: number) => {
-          formData.append(`${key}[${index}]`, data.phone_numbers[index].phoneNumber);
+          formData.append(`${key}[${index}]`, data.phone_numbers[index]);
         });
         continue;
       }
@@ -80,14 +80,13 @@ export const ClientsService = {
     };
   },
 
-  list: async (needle: string) => {
+  list: async (needle?: string) => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
       query: {
-        needle: needle,
+        needle: needle || "",
       },
     });
-
 
     console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
@@ -146,7 +145,7 @@ export const ClientsService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

@@ -1,0 +1,33 @@
+{
+  "title": "Configuration des Caractéristiques Additionnelles des biens",
+  "deleteText": "Voulez-vous supprimer la characteristics avec l'ID {id}",
+  "form": {
+    "add": "Créer un Caractéristiques Additionnelles de bien",
+    "update": "modifier un Caractéristiques Additionnelles de bien",
+    "created": "Caractéristique Additionnelle créé avec succès",
+    "updated": "Caractéristique Additionnelle modifié avec succès",
+    "failedCreation": "Échec de la création de Caractéristique Additionnelle",
+    "failedUpdate": "Échec de la modification de Caractéristique Additionnelle",
+    "buttonText": "Créer un Caractéristiques Additionnelles",
+    "label": {
+      "code": "Code de Caractéristique Additionnelle",
+      "name": " Nom de Caractéristique Additionnelle",
+      "description": "Description de Caractéristique Additionnelle",
+      "isActive": "Caractéristique Additionnelle actif"
+    },
+    "placeholder": {
+      "code": "Insérer le code du Caractéristique Additionnelle",
+      "name": "Insérer le nom du Caractéristique Additionnelle",
+      "description": "Description de le aractéristique  Additionnelle",
+      "isActive": "Le Caractéristique Additionnelle est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "createdAt": "created_at"
+  }
+}

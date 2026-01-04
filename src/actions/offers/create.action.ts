@@ -2,12 +2,12 @@
 
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
-import { ClientForm } from "@/schemas/clients/client-form.schema";
-import { OffersService } from "@/services/offers.service";
+import { OfferForm } from "@/schemas/offers/offer-form.schema";
+import { OfferService } from "@/services/offer.service";
 
-export async function createOfferAction(data: ClientForm): Promise<FormState> {
+export async function createOfferAction(data: OfferForm): Promise<FormState> {
   try {
-    await OffersService.create(data);
+    await OfferService.create(data);
     return { isOk: true };
   } catch (error) {
     const result = handleServerActionError(error);

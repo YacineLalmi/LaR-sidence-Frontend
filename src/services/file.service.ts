@@ -7,7 +7,7 @@ const END_POINTS = {
 };
 
 export const FileService = {
-  findOne: async (id: string) => {
+  getFileBlob: async (id: string) => {
     const response = await ApiService.get<FileBlob>({
       endpoint: END_POINTS.getFileBlob(id),
     });

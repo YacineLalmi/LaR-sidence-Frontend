@@ -1,62 +1,12 @@
-
 import { getCookie } from "@/lib/server.helper";
 import { getRequestConfig } from "next-intl/server";
-
-// Helper function to load all message files for a locale
-async function loadMessages(locale: string) {
-  const common = (await import(`./messages/common/${locale}.json`)).default;
-  const login = (await import(`./messages/login/${locale}.json`)).default;
-  const biens = (await import(`./messages/biens/${locale}.json`)).default;
-  const clients = (await import(`./messages/clients/${locale}.json`)).default;
-  const settings = (await import(`./messages/settings/${locale}.json`)).default;
-  const offers = (await import(`./messages/offers/${locale}.json`)).default;
-  const settingUsers = (await import(`./messages/settings/users/${locale}.json`)).default;
-  const settingWilayas = (await import(`./messages/settings/wilayas/${locale}.json`)).default;
-  const settingCommune = (await import(`./messages/settings/communes/${locale}.json`)).default;
-  const settingsRoles = (await import(`./messages/settings/roles/${locale}.json`)).default;
-  const settingProfile = (await import(`./messages/settings/profile/${locale}.json`)).default;
-  const settingColors = (await import(`./messages/settings/colors/${locale}.json`)).default;
-  const settingClientSources = (await import(`./messages/settings/client-sources/${locale}.json`)).default;
-  const settingClientStatus = (await import(`./messages/settings/client-status/${locale}.json`)).default;
-  const settingClientTypes = (await import(`./messages/settings/client-types/${locale}.json`)).default;
-  const settingOfferStatus = (await import(`./messages/settings/offer-status/${locale}.json`)).default;
-  const settingOfferTypes = (await import(`./messages/settings/offer-types/${locale}.json`)).default;
-  const settingBienTypes = (await import(`./messages/settings/bien-types/${locale}.json`)).default;
-  const settingTransactionTypes = (await import(`./messages/settings/transaction-types/${locale}.json`)).default;
-  const settingBienStatus = (await import(`./messages/settings/bien-status/${locale}.json`)).default;
-  const settingBienAdditionalCharacteristics= (await import(`./messages/settings/bien-additional-characteristics/${locale}.json`)).default;
-
-  return {
-    common,
-    login,
-    biens,
-    offers,
-    clients,
-    settings: {
-      ...settings,
-      users: settingUsers,
-      wilayas: settingWilayas,
-      communes: settingCommune,
-      roles: settingsRoles,
-      profile: settingProfile,
-      colors: settingColors,
-      clientStatus: settingClientStatus,
-      clientSources: settingClientSources,
-      clientTypes: settingClientTypes,
-      bienTypes: settingBienTypes,
-      transactionTypes: settingTransactionTypes,
-      bienStatus: settingBienStatus,
-      offerStatus: settingOfferStatus,
-      offerTypes: settingOfferTypes,
-      bienAdditionalcharacteristics: settingBienAdditionalCharacteristics,
-    },
-  };
-}
+import fs from "fs";
+import path from "path";
 
 export default getRequestConfig(async () => {
   const locale = (await getCookie("lang")) ?? "fr";
-
-  const messages = await loadMessages(locale);
+  const messagesDir = path.join(process.cwd(), "src/i18n/messages");
+  const messages = await loadMessagesRecursively(messagesDir, locale);
 
   return {
     locale,
@@ -65,3 +15,24 @@ export default getRequestConfig(async () => {
     now: new Date(),
   };
 });
+
+async function loadMessagesRecursively(baseDir: string, locale: string): Promise<Record<string, any>> {
+  const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+
+  const messages: Record<string, any> = {};
+
+  for (const entry of entries) {
+    const fullPath = path.join(baseDir, entry.name);
+
+    if (entry.isDirectory()) {
+      // Recursively load messages from subdirectory
+      messages[entry.name] = await loadMessagesRecursively(fullPath, locale);
+    } else if (entry.isFile() && entry.name === `${locale}.json`) {
+      // Load the locale file and merge its contents into the current level
+      const fileContent = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+      Object.assign(messages, fileContent);
+    }
+  }
+
+  return messages;
+}

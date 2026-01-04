@@ -1,7 +1,9 @@
 {
-  "title": "Gestion des couleurs",
+  "title": "Configuration des couleurs",
+  "deleteText": "Voulez-vous supprimer la couleur avec l'ID {id}",
   "form": {
-    "title": "Créer une couleur",
+    "add": "Créer une couleur",
+    "update": "Modifier une couleur",
     "created": "Color créée avec succès",
     "updated": "Color modifié avec succès",
     "failedCreation": "Échec de la création de couleur",
@@ -20,7 +22,8 @@
   },
   "columns": {
     "id": "ID",
-    "code": "Code",
+    "backgroundColor": "Couleur de fond",
+    "textColor": "Couleur du texte",
     "name": "Nom",
     "description": "Description",
     "actions": "Actions",

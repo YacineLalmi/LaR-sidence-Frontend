@@ -1,17 +1,19 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import CustomButton from "@/components/ui/custom-button";
 import { ClientSource } from "@/schemas/client-sources/client-source.schema";
+import UpdateClientSourceDialog from "./update-client-source-dialog";
+import DeleteClientSourceDialog from "./delete-client-source-dialog";
 
 interface Props {
   data: {
@@ -21,7 +23,7 @@ interface Props {
 }
 
 export default function ClientSourceTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<ClientSource>[] = [
     {
@@ -48,25 +50,35 @@ export default function ClientSourceTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.clientSources.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.ID)}
+            columnKey="id"
+          />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.clientSources.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.clientSources.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.clientSources.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.clientSources.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -75,24 +87,12 @@ export default function ClientSourceTable({ data }: Props) {
     {
       id: "actions",
       cell: (row) => (
-        <div className="flex items-center gap-2">
-          <Link href={`/settings/clients/sources/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center">
+          <DeleteClientSourceDialog clientSource={row.row.original} />
+          <UpdateClientSourceDialog clientSource={row.row.original} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

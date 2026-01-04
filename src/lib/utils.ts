@@ -5,6 +5,7 @@ import { ErrorCodes } from "./constants";
 import { ExternalToast, toast } from "sonner";
 import { ApiResponse, QueryParams } from "./definitions";
 import { ForbiddenError, NotFoundError, ResponseValidationError, ServerError, UnauthorizedError } from "./errors";
+import { getFileBlob } from "@/actions/files/get-file-blob.action";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -185,3 +186,25 @@ export const loadOptions = async (endPoint: string) => {
     console.error("erroorrrrr", error);
   }
 };
+
+// Helper function to convert base64 to File object
+export async function base64ToFile(base64: string, filename: string, mimeType: string): Promise<File> {
+  const res = await fetch(`data:${mimeType};base64,${base64}`);
+  const blob = await res.blob();
+  return new File([blob], filename, { type: mimeType });
+}
+
+// Helper function to fetch file as File object
+export async function fetchFileAsFileObject(fileId: string, filename: string, mimeType: string): Promise<File | null> {
+  try {
+    const response = await getFileBlob(fileId);
+
+    if (response) {
+      return await base64ToFile(response, filename, mimeType);
+    }
+    return null;
+  } catch (error) {
+    console.error(`Failed to fetch file ${fileId}:`, error);
+    return null;
+  }
+}

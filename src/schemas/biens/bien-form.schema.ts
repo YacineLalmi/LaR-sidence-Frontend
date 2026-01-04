@@ -28,6 +28,7 @@ export const BienFormSchema = z
 
     wilaya_id: z.string().min(1, "La wilaya est requise"),
     commune_id: z.string().min(1, "La commune est requise"),
+    priority_id: z.string().min(1, "La priorité est requise"),
     adresse: z
       .string()
       .min(5, "L'adresse doit contenir au moins 5 caractères")
@@ -37,11 +38,7 @@ export const BienFormSchema = z
       .regex(/^\d{5}$/, "Le code postal doit contenir 5 chiffres")
       .nullable()
       .optional(),
-    coordinates: z
-      .string()
-      .regex(/^-?\d+\.?\d*,\s*-?\d+\.?\d*$/, "Format invalide (ex: 36.7538, 3.0588)")
-      .nullable()
-      .optional(),
+    coordinates: z.string().nullable().optional(),
 
     // Description
     description: z.string().max(5000, "La description ne peut pas dépasser 5000 caractères").nullable().optional(),
@@ -101,7 +98,6 @@ export const BienFormSchema = z
 
     documents: z
       .array(z.instanceof(File))
-      .min(1, "At least one file is required")
       .max(5, "You can upload up to 5 files")
       .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
       .refine(

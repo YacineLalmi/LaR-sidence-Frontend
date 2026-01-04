@@ -2,12 +2,13 @@
 import React from "react";
 import { Input } from "../ui/input";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Control, FieldPath, FieldValues, FormProps } from "react-hook-form";
+import { Control, FieldPath, FieldValues, FormProps, UseFormReturn } from "react-hook-form";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type InputFieldProps<T extends FieldValues> = {
   control: Control<T>;
+  form?: UseFormReturn
   name: FieldPath<T>;
   label?: string;
   placeholder?: string;

@@ -1,31 +1,36 @@
-import { ClientsService } from "@/services/clients.service";
+import { ClientService } from "@/services/clients.service";
 import React from "react";
-import UpdateClientForm from "./_components/update-form";
+import UpfateOfferForm from "./_components/update-offer-form";
+import { getTranslations } from "next-intl/server";
+import { BienService } from "@/services/Bien.service";
+import { OfferTypeService } from "@/services/offer-types.service";
+import { OfferStatusService } from "@/services/offer-status.service";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import NavigationButton from "@/components/ui/navigation-button";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { OfferService } from "@/services/offer.service";
 
-export default async function UpdateForm({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const clientTypes = await ClientsService.typesList();
-  const clientStatus = await ClientsService.statusList();
-  const clientSources = await ClientsService.sourcesList();
-  const client = await ClientsService.findOne(id);
-  const genders = [
-    {
-      id: "F",
-      name: "Female",
-    },
-    {
-      id: "M",
-      name: "Male",
-    },
-  ];
+export default async function UpdateForm({ params }: { params: Promise<{ id: string }> }) {
+  const id = (await params).id;
+  const translation = await getTranslations();
+  const offer = await OfferService.findOne(id);
+  const biens = await BienService.list();
+  const clients = await ClientService.list();
+  const offerTypes = await OfferTypeService.list();
+  const offerStatus = await OfferStatusService.list();
 
   return (
-    <UpdateClientForm
-      types={clientTypes}
-      status={clientStatus}
-      sources={clientSources}
-      genders={genders}
-      client={client}
-    />
+    <Card className="bg-transparent border-none shadow-none px-0">
+      <CardHeader className="px-0 flex flex-col">
+        <NavigationButton
+          title={translation(TRANSLATIONS_KEYS.OFFERS.FORM.TITLE)}
+          backLink={NAVIGATION_KEYS.OFFERS.ROOT}
+        />
+      </CardHeader>
+      <CardContent className="px-0">
+        <UpfateOfferForm offer={offer} types={offerTypes} status={offerStatus} clients={clients} biens={biens} />
+      </CardContent>
+    </Card>
   );
 }

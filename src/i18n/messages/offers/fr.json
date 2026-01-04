@@ -1,5 +1,6 @@
 {
   "title": "Gestion des offres",
+  "deleteText": "Voulez-vous supprimer l'offer avec l'ID {id}",
   "filter": {
     "title": "Filtrer les offres",
     "label": {
@@ -23,28 +24,22 @@
     "failedUpdate": "Échec de la modification d'offre",
     "buttonText": "Créer une offre",
     "label": {
-      "email": "E-mail",
-      "firstName": "Prénom",
-      "lastName": "Nom",
-      "phoneNumber": "Téléphone",
-      "gender": "Genre",
-      "comment": "Commentaire",
+      "bien": "Bien",
       "type": "Type",
-      "source": "Source",
-      "documents": "Documents",
-      "status": "Statut"
+      "client": "Client",
+      "status": "Statut",
+      "proposedPrice": "Prix proposé",
+      "conditions": "Conditions",
+      "comment": "Commentaire"
     },
     "placeholder": {
-      "email": "Entrez votre e-mail",
-      "firstName": "Entrez votre prénom",
-      "lastName": "Entrez votre nom",
-      "phoneNumber": "Entrez le numéro de téléphone",
-      "gender": "Sélectionnez le genre",
-      "type": "Sélectionnez le type",
-      "source": "Sélectionnez la source",
+      "bien": "Sélectionnez un bien",
+      "type": "Sélectionnez un type",
+      "client": "Sélectionnez un client",
       "status": "Sélectionner un statut",
-      "comment": "",
-      "documents": "Télécharger des documents"
+      "proposedPrice": "Inserer le prix proposé",
+      "conditions": "",
+      "comment": ""
     }
   },
   "columns": {

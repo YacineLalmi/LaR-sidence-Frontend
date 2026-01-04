@@ -1,27 +1,31 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import CustomButton from "@/components/ui/custom-button";
+import { ListItem } from "@/schemas/Global.schema";
 import { ClientStatus } from "@/schemas/client-status/client-status.schema";
+import UpdateClientStatusDialog from "./update-client-status-dialog";
+import DeleteClientStatusDialog from "./delete-client-status-dialog";
 
 interface Props {
+  colors: ListItem[];
   data: {
     items: ClientStatus[];
     meta?: ResponseMetaData;
   };
 }
 
-export default function ClientStatusTable({ data }: Props) {
-  const t = useTranslations();
+export default function ClientStatusTable({ data, colors }: Props) {
+  const translation = useTranslations();
 
   const columns: ColumnDef<ClientStatus>[] = [
     {
@@ -48,25 +52,35 @@ export default function ClientStatusTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.clientStatus.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.ID)}
+            columnKey="id"
+          />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.clientStatus.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.clientStatus.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.clientStatus.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.clientStatus.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -76,23 +90,11 @@ export default function ClientStatusTable({ data }: Props) {
       id: "actions",
       cell: (row) => (
         <div className="flex items-center gap-2">
-          <Link href={`/settings/clients/status/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteClientStatusDialog clientStatus={row.row.original} />
+          <UpdateClientStatusDialog clientStatus={row.row.original} colors={colors} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

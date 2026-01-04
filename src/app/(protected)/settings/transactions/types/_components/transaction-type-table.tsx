@@ -1,17 +1,19 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import CustomButton from "@/components/ui/custom-button";
 import { TransactionType } from "@/schemas/transaction-type/transaction-type.schema";
+import UpdateTransactionTypeDialog from "./update-transactions-type-dialog";
+import DeleteTransactionTypeDialog from "./delete-transaction-type-dialog";
 
 interface Props {
   data: {
@@ -21,7 +23,7 @@ interface Props {
 }
 
 export default function TransactionTypeTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<TransactionType>[] = [
     {
@@ -48,25 +50,35 @@ export default function TransactionTypeTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.transactionTypes.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ID)}
+            columnKey="id"
+          />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.transactionTypes.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.transactionTypes.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.transactionTypes.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.transactionTypes.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -75,24 +87,12 @@ export default function TransactionTypeTable({ data }: Props) {
     {
       id: "actions",
       cell: (row) => (
-        <div className="flex items-center gap-2">
-          <Link href={`/settings/transactions/types/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center">
+          <DeleteTransactionTypeDialog transactionType={row.row.original} />
+          <UpdateTransactionTypeDialog transactionType={row.row.original} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

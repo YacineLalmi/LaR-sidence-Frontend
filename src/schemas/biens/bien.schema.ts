@@ -7,21 +7,25 @@ import { UserSchema } from "../users/user.schema";
 import { BienStatusSchema } from "../BienStatus.schema";
 import { BienAdditionalcharacteristicsSchema } from "../bien-additional-characteristics/bien-addtional-characteristics.schema";
 import { FileSchema } from "../file/file.schema";
-import images from "@/lib/images";
 import { FileBlobSchema } from "../file/file-blob.schema";
+import { ClientSchema } from "../clients/client.schema";
+import { BienPrioritySchema } from "../BienPriority.schema";
 
 const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
 
 export const BienSchema = z.object({
-  client_id: z.number(),
-  title: z.string().nullable().optional(),
-  adresse: z.string().nullable().optional(),
-  postal_code: z.string().nullable().optional(),
-  wilaya: WilayaSchema.nullable().optional(),
-  commune: CommuneSchema.nullable().optional(),
-  bien_type: BienTypeSchema.nullable().optional(),
+  id: z.number(),
+  client: ClientSchema,
+  title: z.string(),
+  adresse: z.string(),
+  postal_code: z.string(),
+  coordinates: z.string(),
+  wilaya: WilayaSchema,
+  commune: CommuneSchema,
+  bien_type: BienTypeSchema,
   price: z.number(),
+  monthly_charges: z.number(),
   transaction_type: TransactionTypeSchema,
   bien_status: BienStatusSchema,
   description: z.string().nullable(),
@@ -41,7 +45,7 @@ export const BienSchema = z.object({
   additional_characteristics: z.array(BienAdditionalcharacteristicsSchema),
   documents: z.array(FileSchema),
   images: z.array(FileSchema),
-  first_image: FileBlobSchema.nullable(),
+  priority: BienPrioritySchema,
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime().nullable(),
   deleted_at: z.iso.datetime().nullable(),

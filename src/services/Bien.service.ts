@@ -12,8 +12,8 @@ const END_POINTS = {
   findAll: "/biens",
   list: "/lists/biens",
   findOne: (id: string) => `/biens/${id}`,
-  update: (id: string) => `/biens/${id}`,
-  delete: (id: string) => `/biens/${id}`,
+  update: (id: number) => `/biens/${id}`,
+  delete: (id: number) => `/biens/${id}`,
 };
 
 export const BienService = {
@@ -41,7 +41,6 @@ export const BienService = {
       formData.append(key, value);
     }
 
-    console.log(formData);
     const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.create,
       body: formData,
@@ -86,8 +85,8 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  update: async (data: Bien, id: string) => {
-    const response = await ApiService.put<Bien>({
+  update: async (data: BienForm, id: number) => {
+    const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.update(id),
       body: data,
     });
@@ -97,7 +96,7 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

@@ -1,0 +1,36 @@
+{
+  "title": "Gestion des status des clients",
+  "deleteText": "Voulez-vous supprimer le status avec l'ID {id}",
+  "form": {
+    "add": "Créer un status de client",
+    "update": "Modifier un status de client",
+    "created": "Status créée avec succès",
+    "updated": "Status modifié avec succès",
+    "failedCreation": "Échec de la création de status",
+    "failedUpdate": "Échec de la modification de status",
+    "buttonText": "Créer un status",
+    "label": {
+      "code": "Code de status",
+      "name": " Nom de status",
+      "description": "Description de status",
+      "colorId": "Couleur de status",
+      "isActive": "Status actif"
+    },
+    "placeholder": {
+      "code": "Insérer le code du status",
+      "name": "Insérer le nom du status",
+      "description": "Description de la couleur",
+      "colorId": "Choisir une couleur",
+      "isActive": "Le status est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "colorId": "Couleur",
+    "actions": "Actions",
+    "createdAt": "created_at"
+  }
+}

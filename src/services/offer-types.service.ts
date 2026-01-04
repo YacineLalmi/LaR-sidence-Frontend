@@ -12,7 +12,7 @@ const END_POINTS = {
   list: "/lists/offers/types",
   findOne: (id: string) => `/configurations/offers/types/${id}`,
   update: (id: number) => `/configurations/offers/types/${id}`,
-  delete: (id: string) => `/configurations/offers/types/${id}`,
+  delete: (id: number) => `/configurations/offers/types/${id}`,
 };
 
 export const OfferTypeService = {
@@ -73,7 +73,7 @@ export const OfferTypeService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

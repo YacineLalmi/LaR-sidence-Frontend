@@ -1,0 +1,31 @@
+{
+  "title": "Liste des wilayas",
+  "form": {
+    "add": "Ajouter une wilaya",
+    "update": "Modifier une wilaya",
+    "created": "Wilaya créée avec succès",
+    "updated": "Wilaya modifiée avec succès",
+    "failedCreation": "Échec de la création de la",
+    "failedUpdate": "Échec de la modification de la wilaya",
+    "buttonText": "Créer une wilaya",
+    "label": {
+      "code": "Code de la wilaya",
+      "name": "Nom de la wilaya",
+      "longitude": "Longitude",
+      "latitude": "Latitude"
+    },
+    "placeholder": {
+      "code": "Entrez le code de la wilaya",
+      "name": "Entrez le nom de la wilaya",
+      "longitude": "Entrez la longitude",
+      "latitude": "Entrez la latitude"
+    }
+  },
+  "columns": {
+    "id": "Wilaya ID",
+    "name": "Nom de la wilaya",
+    "code": "Code de la wilaya",
+    "actions": "Actions",
+    "createdAt": "Date de creation"
+  }
+}

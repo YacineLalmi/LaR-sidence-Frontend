@@ -16,10 +16,10 @@ interface Props {
   types: ListItem[];
   status: ListItem[];
   sources: ListItem[];
-  genders: ListItem[];
+  civilities: ListItem[];
 }
 
-export default function ClientFilter({ types, status, sources, genders }: Props) {
+export default function ClientFilter({ types, status, sources, civilities }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const t = useTranslations();
@@ -64,8 +64,8 @@ export default function ClientFilter({ types, status, sources, genders }: Props)
         <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
           <InputSelectField
             control={form.control}
-            name="gender"
-            options={genders}
+            name="civility"
+            options={civilities}
             label={t("clients.filter.label.gender")}
             placeholder={t("clients.filter.placeholder.gender")}
           />

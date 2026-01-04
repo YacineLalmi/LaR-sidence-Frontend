@@ -1,10 +1,9 @@
-
-import { WilayasService } from "@/services/wilayas.service";
+import { WilayaService } from "@/services/wilaya.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const res = await WilayasService.list();
+    const res = await WilayaService.list();
 
     return NextResponse.json(res);
   } catch (error) {

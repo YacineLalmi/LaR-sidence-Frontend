@@ -1,28 +1,31 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
-import { ClientStatus } from "@/schemas/client-status/client-status.schema";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import CustomButton from "@/components/ui/custom-button";
+import { ListItem } from "@/schemas/Global.schema";
 import { OfferStatus } from "@/schemas/offer-status/offer-status.schema";
+import UpdateOfferStatusDialog from "./update-offer-status-dialog";
+import DeleteOfferStatusDialog from "./delete-offer-status-dialog";
 
 interface Props {
+  colors: ListItem[];
   data: {
     items: OfferStatus[];
     meta?: ResponseMetaData;
   };
 }
 
-export default function OfferStatusTable({ data }: Props) {
-  const t = useTranslations();
+export default function OfferStatusTable({ data, colors }: Props) {
+  const translation = useTranslations();
 
   const columns: ColumnDef<OfferStatus>[] = [
     {
@@ -49,25 +52,32 @@ export default function OfferStatusTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.offerStatus.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.ID)} columnKey="id" />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.offerStatus.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.offerStatus.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.offerStatus.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.offerStatus.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -77,23 +87,11 @@ export default function OfferStatusTable({ data }: Props) {
       id: "actions",
       cell: (row) => (
         <div className="flex items-center gap-2">
-          <Link href={`/settings/offers/status/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteOfferStatusDialog offerStatus={row.row.original} />
+          <UpdateOfferStatusDialog offerStatus={row.row.original} colors={colors} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

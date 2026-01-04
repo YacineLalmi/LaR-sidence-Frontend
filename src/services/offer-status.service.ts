@@ -1,8 +1,6 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ClientStatusForm } from "@/schemas/client-status/client-status-form.schema";
-import { ClientStatus, ClientStatusSchema } from "@/schemas/client-status/client-status.schema";
 import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import { OfferStatusForm } from "@/schemas/offer-status/offer-status-form.schema";
 import { OfferStatus, OfferStatusSchema } from "@/schemas/offer-status/offer-status.schema";
@@ -14,7 +12,7 @@ const END_POINTS = {
   list: "/lists/offers/status",
   findOne: (id: string) => `/configurations/offers/status/${id}`,
   update: (id: number) => `/configurations/offers/status/${id}`,
-  delete: (id: string) => `/configurations/offers/status/${id}`,
+  delete: (id: number) => `/configurations/offers/status/${id}`,
 };
 
 export const OfferStatusService = {
@@ -75,7 +73,7 @@ export const OfferStatusService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

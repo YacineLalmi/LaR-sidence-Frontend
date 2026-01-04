@@ -1,18 +1,18 @@
-import { CommunesService } from "@/services/communes.service";
+import { CommuneService } from "@/services/commune.service";
 import { NextResponse } from "next/server";
 
 type Params = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export async function GET(req: Request, { params }: Params) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // Assuming your service has a method to fetch communes by wilaya ID
-    const communes = await CommunesService.list(id);
+    const communes = await CommuneService.list(id);
 
     if (!communes) {
       return NextResponse.json({ error: "Wilaya not found" }, { status: 404 });

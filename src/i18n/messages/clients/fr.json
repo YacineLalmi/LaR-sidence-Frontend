@@ -1,5 +1,6 @@
 {
   "title": "Gestion des clients",
+  "deleteText": "Voulez-vous supprimer le client avec l'ID {id}",
   "filter": {
     "title": "Filtrer les client",
     "label": {
@@ -24,27 +25,37 @@
     "buttonText": "Créer un client",
     "label": {
       "email": "E-mail",
+      "mobile": "Mobile",
       "firstName": "Prénom",
       "lastName": "Nom",
-      "phoneNumber": "Téléphone",
-      "gender": "Genre",
+      "phoneNumber": "Téléphone 0{index}",
+      "civility": "Civilité",
       "comment": "Commentaire",
+      "companyName": "Nom de l’entreprise",
+      "ai": "AI",
+      "tradeRegistration": "Registre du commerce",
+      "taxIdentification": "Numéro d’identification fiscale",
       "type": "Type",
       "source": "Source",
       "documents": "Documents",
       "status": "Statut"
     },
     "placeholder": {
-      "email": "Entrez votre e-mail",
-      "firstName": "Entrez votre prénom",
-      "lastName": "Entrez votre nom",
+      "email": "Entrez l’adresse e-mail",
+      "mobile": "Entrez le numéro de mobile",
+      "firstName": "Entrez le prénom",
+      "lastName": "Entrez le nom",
       "phoneNumber": "Entrez le numéro de téléphone",
-      "gender": "Sélectionnez le genre",
+      "civility": "Sélectionnez la civilité",
       "type": "Sélectionnez le type",
       "source": "Sélectionnez la source",
-      "status": "Sélectionner un statut",
-      "comment": "",
-      "documents": "Télécharger des documents"
+      "status": "Sélectionnez un statut",
+      "comment": "Entrez un commentaire",
+      "companyName": "Entrez le nom de l’entreprise",
+      "ai": "Entrez l’IA",
+      "tradeRegistration": "Entrez le numéro du registre du commerce",
+      "taxIdentification": "Entrez le numéro d’identification fiscale",
+      "documents": "Téléversez des documents"
     }
   },
   "columns": {
@@ -52,9 +63,10 @@
     "email": "E-mail",
     "firstName": "Prénom",
     "lastName": "Nom",
-    "gender": "Genre",
+    "civility": "Civilité",
     "phoneNumber": "Numéro de téléphone",
     "status": "Statut",
-    "createdAt": "Créé le"
+    "createdAt": "Créé le",
+    "actions": "Actions"
   }
 }

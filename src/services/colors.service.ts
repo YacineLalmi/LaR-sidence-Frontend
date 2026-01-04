@@ -14,7 +14,7 @@ const END_POINTS = {
   list: "/lists/colors",
   findOne: (id: string) => `/configurations/colors/${id}`,
   update: (id: number) => `/configurations/colors/${id}`,
-  delete: (id: string) => `/configurations/colors/${id}`,
+  delete: (id: number) => `/configurations/colors/${id}`,
 };
 
 export const ColorService = {
@@ -75,7 +75,7 @@ export const ColorService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

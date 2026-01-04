@@ -1,0 +1,29 @@
+{
+  "title": "Liste des Communes",
+  "form": {
+    "add": "Ajouter une commune",
+    "update": "Modifier une commune",
+    "created": "Commune créée avec succès",
+    "updated": "Commune modifiée avec succès",
+    "failedCreation": "Échec de la création de la commune",
+    "failedUpdate": "Échec de la modification de la commune",
+    "buttonText": "Créer une commune",
+    "label": {
+      "code": "Code de la commune",
+      "name": "Nom de la commune",
+      "wilaya_id": "Wilaya"
+    },
+    "placeholder": {
+      "code": "Entrez le code de la commune",
+      "name": "Entrez le nom de la commune",
+      "wilaya_id": "Entrez la wilaya"
+    }
+  },
+  "columns": {
+    "id": "Commune ID",
+    "name": "Nom de la commune",
+    "postCode": "Code postal",
+    "actions": "Actions",
+    "createdAt": "Date de creation"
+  }
+}

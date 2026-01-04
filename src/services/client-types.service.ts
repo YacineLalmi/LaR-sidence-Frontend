@@ -14,7 +14,7 @@ const END_POINTS = {
   list: "/lists/clients/types",
   findOne: (id: string) => `/configurations/clients/types/${id}`,
   update: (id: number) => `/configurations/clients/types/${id}`,
-  delete: (id: string) => `/configurations/clients/types/${id}`,
+  delete: (id: number) => `/configurations/clients/types/${id}`,
 };
 
 export const ClientTypeService = {
@@ -75,7 +75,7 @@ export const ClientTypeService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

@@ -1,7 +1,8 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { BienPriority, BienPrioritySchema, BienPriorityForm, BienPriorityFormSchema } from "@/schemas/BienPriority.schema";
+import { BienPriorityForm } from "@/schemas/bien-priority/bien-priority-form.schema";
+import { BienPriority, BienPrioritySchema } from "@/schemas/bien-priority/bien-priotiry.schema";
 import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
 import z from "zod";
 

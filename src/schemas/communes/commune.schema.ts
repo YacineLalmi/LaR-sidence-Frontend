@@ -6,8 +6,6 @@ export const CommuneSchema = z.object({
   name: z.string(),
   post_code: z.number(),
   wilaya: WilayaSchema,
-  longitude: z.number().nullable().optional(),
-  latitude: z.number().nullable().optional(),
   created_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
   updated_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),
   deleted_at: z.union([z.string(), z.iso.datetime()]).nullable().optional(),

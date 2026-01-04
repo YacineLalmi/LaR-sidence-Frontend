@@ -5,15 +5,15 @@ import { OfferTypeSchema } from "./offer-type.schema";
 import { BienSchema } from "../biens/bien.schema";
 
 export const OfferSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   bien: BienSchema,
   client: ClientSchema,
   type: OfferTypeSchema,
   status: OfferStatusSchema,
   status_id: z.string().nullable().optional(),
   proposed_price: z.number(),
-  conditions: z.string().nullable().optional(),
-  comments: z.string().nullable().optional(),
+  conditions: z.string().nullable(),
+  comment: z.string().nullable(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime().nullable(),
   deleted_at: z.iso.datetime().nullable(),

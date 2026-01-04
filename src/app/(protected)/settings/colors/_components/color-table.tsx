@@ -1,18 +1,17 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
-import { ClientSource } from "@/schemas/client-sources/client-source.schema";
 import { Color } from "@/schemas/colors/color.schema";
+import UpdateColorDialog from "./update-color-dialog";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import DeleteColorDialog from "./delete-color-dialog";
 
 interface Props {
   data: {
@@ -22,7 +21,7 @@ interface Props {
 }
 
 export default function ColorTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<Color>[] = [
     {
@@ -49,25 +48,47 @@ export default function ColorTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.colors.columns.id")} columnKey="id" />;
+        return <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.ID)} columnKey="id" />;
       },
     },
     {
-      accessorKey: "code",
-      header: t("settings.colors.columns.code"),
+      accessorKey: "background_color",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.BACKGROUND_COLOR),
+      cell: ({ row }) => (
+        <span
+          style={{ color: row.original.background_color, backgroundColor: "lightgrey" }}
+          className="p-1 rounded-2xl"
+        >
+          {row.original.background_color}
+        </span>
+      ),
+    },
+    {
+      accessorKey: "text_color",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.TEXT_COLOR),
+      cell: ({ row }) => (
+        <span style={{ color: row.original.text_color, backgroundColor: "lightgrey" }} className="p-1 rounded-2xl">
+          {row.original.text_color}
+        </span>
+      ),
     },
     {
       accessorKey: "name",
-      header: t("settings.colors.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.colors.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.colors.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -77,23 +98,11 @@ export default function ColorTable({ data }: Props) {
       id: "actions",
       cell: (row) => (
         <div className="flex items-center gap-2">
-          <Link href={`/settings/colors/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteColorDialog color={row.row.original} />
+          <UpdateColorDialog color={row.row.original} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

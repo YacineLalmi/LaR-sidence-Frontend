@@ -1,16 +1,17 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import UpdateOfferTypeDialog from "./update-offer-type-dialog";
+import DeleteOfferBienDialog from "./delete-offer-type-dialog";
+import DeleteOfferTypeDialog from "./delete-offer-type-dialog";
 import { OfferType } from "@/schemas/offer-type/offer-type.schema";
 
 interface Props {
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export default function OfferTypeTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<OfferType>[] = [
     {
@@ -48,25 +49,32 @@ export default function OfferTypeTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.offerTypes.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.ID)} columnKey="id" />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.offerTypes.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.offerTypes.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.offerTypes.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.offerTypes.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -75,24 +83,12 @@ export default function OfferTypeTable({ data }: Props) {
     {
       id: "actions",
       cell: (row) => (
-        <div className="flex items-center gap-2">
-          <Link href={`/settings/offers/types/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center">
+          <DeleteOfferTypeDialog offerType={row.row.original} />
+          <UpdateOfferTypeDialog offerType={row.row.original} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

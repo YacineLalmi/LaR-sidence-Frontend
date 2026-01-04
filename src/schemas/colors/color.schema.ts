@@ -2,7 +2,8 @@ import z from "zod";
 
 export const ColorSchema = z.object({
   id: z.number(),
-  code: z.string().max(6),
+  background_color: z.string().max(7),
+  text_color: z.string().max(7),
   name: z.string().max(50),
   description: z.string().max(255).nullable(),
   created_at: z.iso.datetime(),

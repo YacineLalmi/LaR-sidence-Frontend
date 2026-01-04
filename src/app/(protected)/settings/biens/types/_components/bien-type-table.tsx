@@ -1,17 +1,17 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
 import { BienType } from "@/schemas/bien-type/bien-type.schema";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import UpdateBienTypeDialog from "./update-bien-type-dialog";
+import DeleteBienTypeDialog from "./delete-bien-type-dialog";
 
 interface Props {
   data: {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function BienTypeTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<BienType>[] = [
     {
@@ -48,25 +48,32 @@ export default function BienTypeTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={t("settings.colors.columns.id")} columnKey="id" />;
+        return (
+          <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.ID)} columnKey="id" />
+        );
       },
     },
     {
       accessorKey: "code",
-      header: t("settings.colors.columns.code"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: t("settings.colors.columns.name"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.NAME),
     },
     {
       accessorKey: "description",
-      header: t("settings.colors.columns.description"),
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "created_at",
       header: () => {
-        return <SortingButton columnName={t("settings.colors.columns.createdAt")} columnKey="created_at" />;
+        return (
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.CREATED_AT)}
+            columnKey="created_at"
+          />
+        );
       },
       cell: ({ row }) => {
         return format(new Date(row.getValue("created_at")), "P");
@@ -75,24 +82,12 @@ export default function BienTypeTable({ data }: Props) {
     {
       id: "actions",
       cell: (row) => (
-        <div className="flex items-center gap-2">
-          <Link href={`/settings/biens/types/${row.row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="cursor-pointer"
-            title="supprimer"
-            // onClick={() => handleDelete(row.row.original)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+        <div className="flex items-center">
+          <DeleteBienTypeDialog bienType={row.row.original} />
+          <UpdateBienTypeDialog bienType={row.row.original} />
         </div>
       ),
-      header: "Actions",
+      header: translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.COLUMNS.ACTIONS),
     },
   ];
   return <DataTable data={data} columns={columns} />;

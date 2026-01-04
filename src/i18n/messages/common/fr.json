@@ -18,10 +18,15 @@
     "notfound": "La ressource demandée est introuvable",
     "unknown": "Erreur inconnue",
     "forbidden": "Vous n’avez pas le privilège d’effectuer cette action",
-    "unauthorized": "Vous n’êtes pas autorisé à effectuer cette action"
+    "unauthorized": "Vous n’êtes pas autorisé à effectuer cette action",
+    "loadingFile": "Chargement des docments a été echoé"
   },
   "success": {
     "operationcompleted": "Opération réussie!"
   },
-  "tryagain": "Réessayez!"
+  "tryagain": "Réessayez!",
+  "loading": "Chargement...",
+  "deleteConfirmationText": "Êtes-vous sûr de vouloir effectuer cette action ? Cette action est irréversible.",
+  "confimrationButtonText": "Confirmer",
+  "cancelButtonText": "Annuler"
 }

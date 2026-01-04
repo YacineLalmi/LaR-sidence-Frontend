@@ -8,6 +8,7 @@ import { UseFormReturn } from "react-hook-form";
 import Section from "./section";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
 import { ListItem } from "@/schemas/Global.schema";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {
   form: UseFormReturn<BienForm>;
@@ -16,9 +17,9 @@ interface Props {
 }
 
 export default function AdditionalCharacteristics({ form, isPending = false, bienAdditionalcharacteristics }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
   return (
-    <Section header={t("biens.create.form.additionalCharacteristics.header")}>
+    <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.ADDITIONAL_CHARACTERISTICS)}>
       <div className="space-y-4 grid grid-cols-3">
         {bienAdditionalcharacteristics.map((feature) => (
           <FormField
