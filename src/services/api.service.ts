@@ -88,7 +88,7 @@ class ApiService {
   }
 }
 
-const baseUrl: string = process.env.BACKEND_API_URL || "http://localhost:8000";
+const baseUrl: string = process.env.BACKEND_API_URL || "http://localhost:8000/api";
 const defaultConfig: HttpOptions = {
   headers: {
     "content-type": "application/json",
