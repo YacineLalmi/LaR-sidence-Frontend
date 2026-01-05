@@ -14,7 +14,7 @@ import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { OfferStatusForm, OfferStatusFormSchema } from "@/schemas/offer-status/offer-status-form.schema";
 import { createOfferStatusAction } from "@/actions/offer-status/create.action";
 

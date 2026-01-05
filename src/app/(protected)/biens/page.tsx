@@ -1,5 +1,5 @@
 import React from "react";
-import { BienService } from "@/services/Bien.service";
+import { BienService } from "@/services/bien.service";
 import { getTranslations } from "next-intl/server";
 import BienTable from "./_components/bien-table";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";

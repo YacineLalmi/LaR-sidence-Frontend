@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import { ResponseMetaData } from "@/lib/definitions";
 import { Commune } from "@/schemas/communes/commune.schema";
 import EditCommuneDialog from "./update-commune-dialog";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 

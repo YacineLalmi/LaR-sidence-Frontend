@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 import { ClientSourceService } from "@/services/client-source.service";
 import { ClientStatusService } from "@/services/client-status.service";
 import { ClientTypeService } from "@/services/client-types.service";

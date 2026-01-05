@@ -10,11 +10,11 @@ import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
 import { DemandForm, DemandFormSchema } from "@/schemas/demands/demand-form.schema";
 import { Demand } from "@/schemas/demands/demand.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -145,7 +145,6 @@ export default function UpdateDemandForm({
               label={t("demands.form.label.budget")}
               disabled={isPending}
               placeholder={t("demands.form.placeholder.budget")}
-              type="number"
             />
             <InputSelectField
               control={form.control}
@@ -186,4 +185,3 @@ export default function UpdateDemandForm({
     </Form>
   );
 }
-

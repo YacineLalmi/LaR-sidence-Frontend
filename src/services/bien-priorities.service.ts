@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienPriorityForm } from "@/schemas/bien-priority/bien-priority-form.schema";
 import { BienPriority, BienPrioritySchema } from "@/schemas/bien-priority/bien-priotiry.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import z from "zod";
 
 const END_POINTS = {

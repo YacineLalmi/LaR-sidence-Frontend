@@ -14,7 +14,7 @@ import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { EventForm, EventFormSchema } from "@/schemas/events/event-form.schema";
 import { createEventAction } from "@/actions/events/create.action";
 import { EventsService } from "@/services/events.service";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { customToast } from "@/lib/utils";
 import { Plus } from "lucide-react";
 

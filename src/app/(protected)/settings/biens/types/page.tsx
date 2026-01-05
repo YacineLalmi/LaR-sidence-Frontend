@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BienTypeService } from "@/services/BienType.service";
+import { BienTypeService } from "@/services/bien-type.service";
 import BienTypeTable from "./_components/bien-type-table";
 import CreateBienTypeDialog from "./_components/create-bien-type-dialog";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

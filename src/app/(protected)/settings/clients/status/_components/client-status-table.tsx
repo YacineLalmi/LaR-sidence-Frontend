@@ -11,7 +11,7 @@ import SortingButton from "@/components/ui/sorting-button";
 import { ResponseMetaData } from "@/lib/definitions";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import CustomButton from "@/components/ui/custom-button";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { ClientStatus } from "@/schemas/client-status/client-status.schema";
 import UpdateClientStatusDialog from "./update-client-status-dialog";
 import DeleteClientStatusDialog from "./delete-client-status-dialog";

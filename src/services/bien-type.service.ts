@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienTypeForm } from "@/schemas/bien-type/bien-type-form.schema";
 import { BienType, BienTypeSchema } from "@/schemas/bien-type/bien-type.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import z from "zod";
 
 const END_POINTS = {

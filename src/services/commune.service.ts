@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { CommuneForm } from "@/schemas/communes/commune-form.schema";
 import { Commune, CommuneSchema } from "@/schemas/communes/commune.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import z from "zod";
 
 const END_POINTS = {

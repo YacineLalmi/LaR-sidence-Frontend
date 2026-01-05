@@ -1,7 +1,7 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { WilayaForm } from "@/schemas/wilayas/wilaya-form.schema";
 import { Wilaya, WilayaSchema } from "@/schemas/wilayas/wilaya.schema";
 import z from "zod";

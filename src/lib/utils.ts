@@ -162,7 +162,7 @@ export const handleServerActionError = (error: any) => {
       errorMessage: error.message,
       errorCode: ErrorCodes.RESOURCE_NOT_FOUND,
     };
-  } else if (error?.cause?.code === "UND_ERR_CONNECT_TIMEOUT" || error?.cause?.code === "EHOSTUNREACH") {
+  } else if (["ECONNREFUSED", "UND_ERR_CONNECT_TIMEOUT", "EHOSTUNREACH"].includes(error?.cause?.code)) {
     return {
       errorMessage: "Erreur de connexion : impossible de se connecter au serveur",
       errorCode: ErrorCodes.CONNECTION_ERROR,

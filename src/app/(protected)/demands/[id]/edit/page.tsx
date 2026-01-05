@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { DemandsService } from "@/services/demands.service";
-import UpdateDemandForm from "./_components/update-form";
-import { ClientsService } from "@/services/clients.service";
-import { BienService } from "@/services/Bien.service";
-import { UserService } from "@/services/users.service";
+import { ClientService } from "@/services/client.service";
+import { BienService } from "@/services/bien.service";
+import { UserService } from "@/services/user.service";
 import { notFound } from "next/navigation";
+import UpdateDemandForm from "../_components/update-form";
 
 export default async function EditDemandPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,7 +16,7 @@ export default async function EditDemandPage({ params }: { params: Promise<{ id:
     const status = await DemandsService.statusList().catch(() => []);
     const priorities = await DemandsService.prioritiesList().catch(() => []);
     const sources = await DemandsService.sourcesList().catch(() => []);
-    const clients = await ClientsService.list();
+    const clients = await ClientService.list();
     const biens = await BienService.list();
     const agents = await UserService.agentList().catch(() => []);
 
@@ -43,4 +43,3 @@ export default async function EditDemandPage({ params }: { params: Promise<{ id:
     notFound();
   }
 }
-

@@ -7,7 +7,7 @@ import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import Section from "./section";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {

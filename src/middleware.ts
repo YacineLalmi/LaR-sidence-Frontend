@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clearCookies, getCookie, refreshTokens, removeCookie, setCookie } from "./lib/server.helper";
-import { UserService } from "./services/users.service";
+import { UserService } from "./services/user.service";
 import { addHours } from "date-fns";
 import { Profile } from "./schemas/users/profile.schema";
 

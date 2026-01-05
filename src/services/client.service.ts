@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ClientForm } from "@/schemas/clients/client-form.schema";
 import { Client, ClientSchema } from "@/schemas/clients/client.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { da } from "date-fns/locale";
 import z from "zod";
 

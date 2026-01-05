@@ -1,6 +1,6 @@
 import SearchField from "@/components/ui/search";
 import React from "react";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import OffersFilter from "./offer-filter";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom-button";

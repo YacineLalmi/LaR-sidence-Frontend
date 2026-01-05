@@ -4,7 +4,7 @@ import { validateResponseData } from "@/lib/utils";
 import z from "zod";
 import { Event, EventSchema } from "@/schemas/events/event.schema";
 import { EventType, EventTypeSchema } from "@/schemas/events/event-type.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { EventForm } from "@/schemas/events/event-form.schema";
 
 const END_POINTS = {

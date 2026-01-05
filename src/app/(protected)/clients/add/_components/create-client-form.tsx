@@ -12,7 +12,7 @@ import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { customToast } from "@/lib/utils";
 import { ClientForm, ClientFormSchema } from "@/schemas/clients/client-form.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";

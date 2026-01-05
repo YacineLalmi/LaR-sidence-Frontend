@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ClientSourceForm } from "@/schemas/client-sources/client-source-form.schema";
 import { ClientSource, ClientSourceSchema } from "@/schemas/client-sources/client-source.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import z from "zod";
 
 const END_POINTS = {

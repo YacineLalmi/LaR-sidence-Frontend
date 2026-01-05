@@ -1,4 +1,4 @@
-import { BienStatusService } from "@/services/BienStatus.service";
+import { BienStatusService } from "@/services/bien-status.service";
 import { TransactionTypeService } from "@/services/transaction-type.service";
 import { NextResponse } from "next/server";
 

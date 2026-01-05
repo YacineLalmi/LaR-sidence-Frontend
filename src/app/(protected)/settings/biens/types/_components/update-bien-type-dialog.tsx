@@ -14,8 +14,8 @@ import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { BienTypeForm, BienTypeFormSchema } from "@/schemas/bien-type/bien-type-form.schema";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
-import { BienType } from "@/schemas/BienType.schema";
 import { updateBienTypeAction } from "@/actions/bien-types/update.action";
+import { BienType } from "@/schemas/bien-type/bien-type.schema";
 
 interface Props {
   bienType: BienType;

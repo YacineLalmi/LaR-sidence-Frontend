@@ -1,5 +1,5 @@
 import { RoleService } from "@/services/role.service";
-import { UserService } from "@/services/users.service";
+import { UserService } from "@/services/user.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {

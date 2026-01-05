@@ -15,9 +15,9 @@ import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { BienStatusForm, BienStatusFormSchema } from "@/schemas/bien-status/bien-status-form.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { ListItem } from "@/schemas/Global.schema";
-import { BienStatus } from "@/schemas/BienStatus.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { updateBienStatusAction } from "@/actions/bien-status/update.action";
+import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
 
 interface Props {
   colors: ListItem[];

@@ -1,7 +1,7 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { OfferStatusForm } from "@/schemas/offer-status/offer-status-form.schema";
 import { OfferStatus, OfferStatusSchema } from "@/schemas/offer-status/offer-status.schema";
 import z from "zod";

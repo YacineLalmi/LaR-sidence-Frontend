@@ -10,7 +10,7 @@ import { Form } from "@/components/ui/form";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { customToast } from "@/lib/utils";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { OfferForm, OfferFormSchema } from "@/schemas/offers/offer-form.schema";
 import { Offer } from "@/schemas/offers/offer.schema";
 import { zodResolver } from "@hookform/resolvers/zod";

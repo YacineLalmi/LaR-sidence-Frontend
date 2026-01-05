@@ -38,7 +38,7 @@ export function InputDateTimeField<T extends FieldValues>({
     <FormField
       name={name}
       control={control}
-      render={({ field }) => {
+      render={({ field }: { field: any }) => {
         // Initialize date and time from field value
         React.useEffect(() => {
           if (field.value) {
@@ -116,4 +116,3 @@ export function InputDateTimeField<T extends FieldValues>({
     />
   );
 }
-

@@ -1,7 +1,7 @@
 import SearchField from "@/components/ui/search";
 import React from "react";
 import ClientFilter from "./ClientFilter";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import Link from "next/link";
 import { Plus } from "lucide-react";

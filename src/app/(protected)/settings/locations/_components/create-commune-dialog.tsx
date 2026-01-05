@@ -14,7 +14,7 @@ import CustomButton from "@/components/ui/custom-button";
 import { CommuneForm, CommuneFormSchema } from "@/schemas/communes/commune-form.schema";
 import { createCommuneAction } from "@/actions/commune/create.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {

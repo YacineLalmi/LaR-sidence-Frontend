@@ -5,7 +5,7 @@ import { ClientStatusForm } from "@/schemas/client-status/client-status-form.sch
 import { ClientStatus, ClientStatusSchema } from "@/schemas/client-status/client-status.schema";
 import { ClientTypeForm } from "@/schemas/client-types/client-type-form.schema";
 import { ClientType, ClientTypeSchema } from "@/schemas/client-types/client-type.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import z from "zod";
 
 const END_POINTS = {

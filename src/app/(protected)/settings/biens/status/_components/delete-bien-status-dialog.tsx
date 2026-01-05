@@ -4,7 +4,7 @@ import CustomButton from "@/components/ui/custom-button";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { customToast } from "@/lib/utils";
-import { BienStatus } from "@/schemas/BienStatus.schema";
+import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
 import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

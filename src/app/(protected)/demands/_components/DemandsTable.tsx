@@ -10,7 +10,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { ResponseMetaData } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import DemandsHeader from "./DemandsHeader";
 import DemandDelete from "./DemandDelete";
 import { useRouter } from "next/navigation";

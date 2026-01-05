@@ -17,11 +17,11 @@ import {
   TransactionTypeFormSchema,
 } from "@/schemas/transaction-type/transaction-type-form.schema";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
-import { BienTransaction } from "@/schemas/BienTransaction.schema";
 import { updateTransactionTypeAction } from "@/actions/transaction-type/update.action";
+import { TransactionType } from "@/schemas/transaction-type/transaction-type.schema";
 
 interface Props {
-  transactionType: BienTransaction;
+  transactionType: TransactionType;
 }
 
 export default function UpdateTransactionTypeDialog({ transactionType }: Props) {

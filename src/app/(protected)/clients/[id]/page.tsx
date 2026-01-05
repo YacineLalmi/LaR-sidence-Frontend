@@ -1,4 +1,4 @@
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 import React from "react";
 import UpdateClientForm from "./_components/update-client-form";
 

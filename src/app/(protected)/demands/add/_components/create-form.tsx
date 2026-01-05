@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
 import { DemandForm, DemandFormSchema } from "@/schemas/demands/demand-form.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -26,15 +26,7 @@ interface Props {
   agents: ListItem[];
 }
 
-export default function CreateDemandForm({
-  types,
-  status,
-  priorities,
-  sources,
-  clients,
-  biens,
-  agents,
-}: Props) {
+export default function CreateDemandForm({ types, status, priorities, sources, clients, biens, agents }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
   const t = useTranslations();
@@ -142,7 +134,6 @@ export default function CreateDemandForm({
               label={t("demands.form.label.budget")}
               disabled={isPending}
               placeholder={t("demands.form.placeholder.budget")}
-              type="number"
             />
             <InputSelectField
               control={form.control}
@@ -183,4 +174,3 @@ export default function CreateDemandForm({
     </Form>
   );
 }
-

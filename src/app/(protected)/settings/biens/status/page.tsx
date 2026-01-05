@@ -1,5 +1,5 @@
 import React from "react";
-import { BienStatusService } from "@/services/BienStatus.service";
+import { BienStatusService } from "@/services/bien-status.service";
 import BienStatusTable from "./_components/bien-status-table";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import NavigationButton from "@/components/ui/navigation-button";

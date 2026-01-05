@@ -1,8 +1,8 @@
 import React from "react";
-import { BienTypeService } from "@/services/BienType.service";
-import { BienStatusService } from "@/services/BienStatus.service";
+import { BienTypeService } from "@/services/bien-type.service";
+import { BienStatusService } from "@/services/bien-status.service";
 import { TransactionTypeService } from "@/services/transaction-type.service";
-import { UserService } from "@/services/users.service";
+import { UserService } from "@/services/user.service";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { BienPriorityService } from "@/services/bien-priorities.service";
 import { WilayaService } from "@/services/wilaya.service";
@@ -10,7 +10,7 @@ import { BienAdditionalcharacteristicsService } from "@/services/bien-additional
 import CreateBienForm from "./_components/create-bien-form";
 import NavigationButton from "@/components/ui/navigation-button";
 import { getTranslations } from "next-intl/server";
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 
 export default async function BienStatusAddPage() {
   const bienTypes = await BienTypeService.list();

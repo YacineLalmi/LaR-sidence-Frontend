@@ -3,7 +3,7 @@
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
 import { UserForm } from "@/schemas/users/user-form.schema";
-import { UserService } from "@/services/users.service";
+import { UserService } from "@/services/user.service";
 
 export async function updateUserAction(id: string, data: UserForm): Promise<FormState> {
   try {

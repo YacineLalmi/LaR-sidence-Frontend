@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import Section from "./section";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";

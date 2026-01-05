@@ -3,7 +3,7 @@
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
 import { ClientForm } from "@/schemas/clients/client-form.schema";
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 
 export async function createClientAction(data: ClientForm): Promise<FormState> {
   try {

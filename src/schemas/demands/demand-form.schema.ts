@@ -9,15 +9,8 @@ export const DemandFormSchema = z.object({
   agent_id: z.string().min(1, "L'agent est requis"),
   status_id: z.string().min(1, "Le statut est requis"),
   priority_id: z.string().min(1, "La priorité est requise"),
-  budget: z.union([z.number(), z.string()]).transform((val) => {
-    if (typeof val === 'string') {
-      const num = parseFloat(val.replace(/[^\d.-]/g, ''));
-      return isNaN(num) ? 0 : num;
-    }
-    return val;
-  }).nullable().optional(),
+  budget: z.string().nullable().optional(),
   comment: z.string().nullable().optional(),
 });
 
 export type DemandForm = z.infer<typeof DemandFormSchema>;
-

@@ -1,7 +1,7 @@
 "use server";
 
-import { ListItem } from "@/schemas/Global.schema";
-import { ClientService } from "@/services/clients.service";
+import { ListItem } from "@/schemas/global.schema";
+import { ClientService } from "@/services/client.service";
 
 export async function searchClientAction(needle?: string): Promise<ListItem[]> {
   try {

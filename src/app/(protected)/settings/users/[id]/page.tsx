@@ -1,4 +1,4 @@
-import { UserService } from "@/services/users.service";
+import { UserService } from "@/services/user.service";
 import React from "react";
 import UpdateUserForm from "./update-form";
 import { RoleService } from "@/services/role.service";

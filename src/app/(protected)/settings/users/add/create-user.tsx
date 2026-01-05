@@ -6,7 +6,7 @@ import InputTextField from "@/components/custom-inputs/input-text";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { UserForm, UserFormSchema } from "@/schemas/users/user-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";

@@ -1,4 +1,4 @@
-import { BienTypeService } from "@/services/BienType.service";
+import { BienTypeService } from "@/services/bien-type.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {

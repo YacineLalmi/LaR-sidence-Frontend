@@ -1,8 +1,8 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 import OffersTable from "./_components/offer-table";
-import { BienService } from "@/services/Bien.service";
+import { BienService } from "@/services/bien.service";
 import { OfferService } from "@/services/offer.service";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { OfferTypeService } from "@/services/offer-types.service";

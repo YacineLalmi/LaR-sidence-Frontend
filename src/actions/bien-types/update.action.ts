@@ -3,7 +3,7 @@
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
 import { BienTypeForm } from "@/schemas/bien-type/bien-type-form.schema";
-import { BienTypeService } from "@/services/BienType.service";
+import { BienTypeService } from "@/services/bien-type.service";
 
 export async function updateBienTypeAction(data: BienTypeForm, id: number): Promise<FormState> {
   try {

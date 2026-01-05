@@ -3,7 +3,7 @@ import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ColorForm } from "@/schemas/colors/color-form.schema";
 import { Color, ColorSchema } from "@/schemas/colors/color.schema";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { OfferForm } from "@/schemas/offers/offer-form.schema";
 import { Offer, OfferSchema } from "@/schemas/offers/offer.schema";
 import z from "zod";

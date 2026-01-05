@@ -13,7 +13,7 @@ import FormDialog from "@/components/form-dialog/form-dialog";
 import CustomButton from "@/components/ui/custom-button";
 import { CommuneForm, CommuneFormSchema } from "@/schemas/communes/commune-form.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { Commune } from "@/schemas/communes/commune.schema";
 import { updateCommuneAction } from "@/actions/commune/update.action";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";

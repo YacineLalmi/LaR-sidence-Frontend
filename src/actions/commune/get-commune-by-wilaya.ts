@@ -1,6 +1,6 @@
 "use server";
 
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { CommuneService } from "@/services/commune.service";
 
 export async function getCommuneByWilaya(wilaya_id: string): Promise<ListItem[]> {

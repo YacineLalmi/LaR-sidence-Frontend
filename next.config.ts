@@ -1,6 +1,11 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import path from "path";
 
 const nextConfig = {
+  webpack: (config: any) => {
+    config.resolve.alias['@'] = path.resolve(__dirname);
+    return config;
+  },
   // CRITICAL: Add allowedDevOrigins at the root level
   allowedDevOrigins: ["167.86.118.9:8080", "167.86.118.9", "localhost:8080", "localhost"],
 

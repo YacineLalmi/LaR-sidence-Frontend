@@ -1,5 +1,5 @@
 import React from "react";
-import { UserService } from "@/services/users.service";
+import { UserService } from "@/services/user.service";
 import UsersTable from "./_components/UsersTable";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import NavigationButton from "@/components/ui/navigation-button";

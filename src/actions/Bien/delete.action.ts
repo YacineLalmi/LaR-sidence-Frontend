@@ -2,9 +2,7 @@
 
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
-import { BienService } from "@/services/Bien.service";
-import { ClientService } from "@/services/clients.service";
-import { OfferStatusService } from "@/services/offer-status.service";
+import { BienService } from "@/services/bien.service";
 
 export async function deleteClientAction(id: number): Promise<FormState> {
   try {

@@ -4,15 +4,11 @@ import { CommuneSchema } from "../communes/commune.schema";
 import { BienTypeSchema } from "../bien-type/bien-type.schema";
 import { TransactionTypeSchema } from "../transaction-type/transaction-type.schema";
 import { UserSchema } from "../users/user.schema";
-import { BienStatusSchema } from "../BienStatus.schema";
 import { BienAdditionalcharacteristicsSchema } from "../bien-additional-characteristics/bien-addtional-characteristics.schema";
 import { FileSchema } from "../file/file.schema";
-import { FileBlobSchema } from "../file/file-blob.schema";
 import { ClientSchema } from "../clients/client.schema";
 import { BienPrioritySchema } from "../BienPriority.schema";
-
-const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
+import { BienStatusSchema } from "../bien-status/bien-status.schema";
 
 export const BienSchema = z.object({
   id: z.number(),

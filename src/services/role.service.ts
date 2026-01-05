@@ -1,7 +1,7 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { RoleForm } from "@/schemas/role.schema";
 import { RoleDetails, RoleDetailsSchema } from "@/schemas/roles/role.schema";
 import { Role, RoleSchema } from "@/schemas/roles/roles.schema";

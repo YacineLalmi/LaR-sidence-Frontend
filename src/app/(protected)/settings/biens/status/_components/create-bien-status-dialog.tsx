@@ -16,7 +16,7 @@ import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { createBienStatusAction } from "@/actions/bien-status/create.action";
 import { BienStatusForm, BienStatusFormSchema } from "@/schemas/bien-status/bien-status-form.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 
 interface Props {
   colors: ListItem[];

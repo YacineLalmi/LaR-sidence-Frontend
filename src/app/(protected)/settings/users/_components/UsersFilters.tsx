@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
 import { loadOptions, parseDateRange } from "@/lib/utils";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { UserFilterForm, UserFilterFormSchema } from "@/schemas/users/user-filter-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";

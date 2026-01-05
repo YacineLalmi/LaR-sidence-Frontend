@@ -15,7 +15,7 @@ import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import CustomButton from "@/components/ui/custom-button";
 import UpdateBienStatusDialog from "./update-bien-status-dialog";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { useRouter } from "next/navigation";
 import { customToast } from "@/lib/utils";
 import { deleteBienStatusAction } from "@/actions/bien-status/delete.action";

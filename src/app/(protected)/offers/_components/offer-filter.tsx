@@ -5,7 +5,7 @@ import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
 import { ClientFilterForm, ClientFilterFormSchema } from "@/schemas/clients/client-filter-form.schema";
-import { ListItem } from "@/schemas/Global.schema";
+import { ListItem } from "@/schemas/global.schema";
 import { OfferFilterForm, OfferFilterFormSchema } from "@/schemas/offers/offer-filter-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";

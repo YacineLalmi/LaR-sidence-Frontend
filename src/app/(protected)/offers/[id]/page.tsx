@@ -1,8 +1,8 @@
-import { ClientService } from "@/services/clients.service";
+import { ClientService } from "@/services/client.service";
 import React from "react";
 import UpfateOfferForm from "./_components/update-offer-form";
 import { getTranslations } from "next-intl/server";
-import { BienService } from "@/services/Bien.service";
+import { BienService } from "@/services/bien.service";
 import { OfferTypeService } from "@/services/offer-types.service";
 import { OfferStatusService } from "@/services/offer-status.service";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

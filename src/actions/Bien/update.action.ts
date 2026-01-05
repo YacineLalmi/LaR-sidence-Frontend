@@ -1,6 +1,6 @@
 "use server";
 import { FormState } from "@/lib/definitions";
-import { BienService } from "@/services/Bien.service";
+import { BienService } from "@/services/bien.service";
 import { handleServerActionError } from "@/lib/utils";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
 

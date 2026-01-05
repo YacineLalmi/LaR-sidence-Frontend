@@ -1,7 +1,7 @@
 import ApiService from "./api.service";
 import { QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
-import { ListItem, ListItemSchema } from "@/schemas/Global.schema";
+import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { TransactionTypeForm } from "@/schemas/transaction-type/transaction-type-form.schema";
 import { TransactionType, TransactionTypeSchema } from "@/schemas/transaction-type/transaction-type.schema";
 import z from "zod";
