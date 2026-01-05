@@ -36,7 +36,7 @@ export default function InputTextArea<T extends FieldValues>({
             </FormLabel>
           )}
           <FormControl>
-            <Textarea placeholder="Enter a description..." className="resize-none" rows={100} {...field} />
+            <Textarea placeholder={placeholder || "Enter a description..."} className="resize-none" rows={rows} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

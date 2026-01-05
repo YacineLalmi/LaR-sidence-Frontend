@@ -1,0 +1,89 @@
+{
+  "title": "Calendar",
+  "view": {
+    "month": "Month",
+    "week": "Week"
+  },
+  "actions": {
+    "addEvent": "Add event",
+    "createEvent": "Create event",
+    "editEvent": "Edit event",
+    "deleteEvent": "Delete event",
+    "cancel": "Cancel",
+    "publish": "Publish",
+    "save": "Save",
+    "confirm": "Confirm"
+  },
+  "form": {
+    "title": {
+      "label": "Event title",
+      "placeholder": "Enter event title"
+    },
+    "startDate": {
+      "label": "Start date/time",
+      "placeholder": "Select start date and time"
+    },
+    "endDate": {
+      "label": "End date/time",
+      "placeholder": "Select end date and time"
+    },
+    "type": {
+      "label": "Event type",
+      "placeholder": "Select an option"
+    },
+    "agent": {
+      "label": "Participating agents",
+      "placeholder": "Select an option"
+    },
+    "bien": {
+      "label": "Related property",
+      "placeholder": "Select an option"
+    },
+    "client": {
+      "label": "Related client",
+      "placeholder": "Select an option"
+    },
+    "visitorName": {
+      "label": "Visitor's name and surname",
+      "placeholder": "Enter visitor's name and surname"
+    },
+    "visitorPhone": {
+      "label": "Visitor's phone",
+      "placeholder": "Enter visitor's phone"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Enter event description"
+    },
+    "addField": "Add a field"
+  },
+  "delete": {
+    "title": "Delete this event",
+    "message": "Are you sure you want to delete this event?"
+  },
+  "filter": {
+    "title": "Filters",
+    "apply": "Apply filters",
+    "agent": {
+      "label": "Agent",
+      "placeholder": "Select an agent"
+    },
+    "date": {
+      "label": "Date",
+      "placeholder": "Select a date"
+    },
+    "type": {
+      "label": "Event type",
+      "placeholder": "Select an event type"
+    },
+    "bien": {
+      "label": "Property",
+      "placeholder": "Select a property"
+    }
+  },
+  "week": {
+    "prefix": "Week of"
+  },
+  "more": "more"
+}
+

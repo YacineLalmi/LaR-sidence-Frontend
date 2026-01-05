@@ -1,0 +1,85 @@
+{
+  "title": "Gestions des demandes",
+  "filter": {
+    "title": "Filtres",
+    "label": {
+      "status": "Statut de la demande",
+      "type": "Type de demande",
+      "client": "Client",
+      "agent": "Agent attribué",
+      "bien": "Bien concerné",
+      "source": "Source de la demande"
+    },
+    "placeholder": {
+      "status": "Sélectionner une option",
+      "type": "Sélectionner une option",
+      "client": "Sélectionner une option",
+      "agent": "Sélectionner une option",
+      "bien": "Sélectionner une option",
+      "source": "Sélectionner une option"
+    },
+    "submit": "Appliquer filtres"
+  },
+  "form": {
+    "createTitle": "Créer une demande",
+    "editTitle": "Modifier une demande",
+    "buttonText": "Créer une demande",
+    "publish": "Publier",
+    "sections": {
+      "generalInformation": "Informations Générales",
+      "internalComments": "Commentaires Internes"
+    },
+    "label": {
+      "title": "Titre de la Demande",
+      "type": "Type de Demande",
+      "agent": "Agent attribué",
+      "client": "Client Concerné",
+      "bien": "Bien Concerné",
+      "status": "Statut de la Demande",
+      "budget": "Budget",
+      "priority": "Priorité",
+      "source": "Source de la Demande",
+      "comment": "Commentaire"
+    },
+    "placeholder": {
+      "title": "Entrez le titre de la demande",
+      "type": "Sélectionner une option",
+      "agent": "Sélectionner une option",
+      "client": "Sélectionner une option",
+      "bien": "Sélectionner une option",
+      "status": "Sélectionner une option",
+      "budget": "Entrez le budget",
+      "priority": "Sélectionner une option",
+      "source": "Sélectionner une option",
+      "comment": "Entrez vos commentaires"
+    }
+  },
+  "columns": {
+    "demandId": "Demande ID",
+    "title": "Titre de la Demande",
+    "type": "Type de Demande",
+    "client": "Client",
+    "budget": "Budget",
+    "dateAdded": "Date d'Ajout",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "print": "Imprimer",
+    "deleteSelection": "Supprimer la sélection"
+  },
+  "delete": {
+    "title": "Supprimer cette demande",
+    "description": "Êtes-vous sûr de vouloir supprimer cette demande ? Cette action est irréversible."
+  },
+  "detail": {
+    "title": "Fiche demande",
+    "demandId": "Demande ID",
+    "createdAt": "Créé le",
+    "updatedAt": "Modifié le"
+  }
+}
+

@@ -1,4 +1,4 @@
-import { Building2, Home, LogOut, Mails, Shield, User2, Users } from "lucide-react";
+import { Building2, CalendarDays, FileText, Home, LogOut, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -22,11 +22,15 @@ const items = [
     url: "/",
     icon: Home,
   },
-  
   {
     title: "Biens",
     url: "/biens",
     icon: Building2,
+  },
+  {
+    title: "Calendrier",
+    url: "/calendar",
+    icon: CalendarDays,
   },
   {
     title: "Offers",
@@ -37,6 +41,11 @@ const items = [
     title: "Clients",
     url: "/clients",
     icon: User2,
+  },
+  {
+    title: "Demandes",
+    url: "/demands",
+    icon: FileText,
   },
 ];
 

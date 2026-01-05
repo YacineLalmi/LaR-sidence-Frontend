@@ -1,0 +1,85 @@
+{
+  "title": "Demand Management",
+  "filter": {
+    "title": "Filters",
+    "label": {
+      "status": "Demand Status",
+      "type": "Demand Type",
+      "client": "Client",
+      "agent": "Assigned Agent",
+      "bien": "Related Property",
+      "source": "Demand Source"
+    },
+    "placeholder": {
+      "status": "Select an option",
+      "type": "Select an option",
+      "client": "Select an option",
+      "agent": "Select an option",
+      "bien": "Select an option",
+      "source": "Select an option"
+    },
+    "submit": "Apply filters"
+  },
+  "form": {
+    "createTitle": "Create a demand",
+    "editTitle": "Modify a demand",
+    "buttonText": "Create a demand",
+    "publish": "Publish",
+    "sections": {
+      "generalInformation": "General Information",
+      "internalComments": "Internal Comments"
+    },
+    "label": {
+      "title": "Demand Title",
+      "type": "Demand Type",
+      "agent": "Assigned Agent",
+      "client": "Related Client",
+      "bien": "Related Property",
+      "status": "Demand Status",
+      "budget": "Budget",
+      "priority": "Priority",
+      "source": "Demand Source",
+      "comment": "Comment"
+    },
+    "placeholder": {
+      "title": "Enter the demand title",
+      "type": "Select an option",
+      "agent": "Select an option",
+      "client": "Select an option",
+      "bien": "Select an option",
+      "status": "Select an option",
+      "budget": "Enter the budget",
+      "priority": "Select an option",
+      "source": "Select an option",
+      "comment": "Enter your comments"
+    }
+  },
+  "columns": {
+    "demandId": "Demand ID",
+    "title": "Demand Title",
+    "type": "Demand Type",
+    "client": "Client",
+    "budget": "Budget",
+    "dateAdded": "Date Added",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "print": "Print",
+    "deleteSelection": "Delete selection"
+  },
+  "delete": {
+    "title": "Delete this demand",
+    "description": "Are you sure you want to delete this demand? This action is irreversible."
+  },
+  "detail": {
+    "title": "Demand details",
+    "demandId": "Demand ID",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  }
+}
+
