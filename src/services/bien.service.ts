@@ -18,13 +18,20 @@ const END_POINTS = {
 
 export const BienService = {
   create: async (data: BienForm) => {
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
     for (const key in data) {
       if (key === "images" || key === "documents") {
         const files = (data as any)[key] as File[];
         files.forEach((file: File, index: number) => {
           formData.append(`${key}[${index}]`, file);
+        });
+        continue;
+      }
+      if (key === "addtional_characteristics") {
+        const characteristics = (data as any)[key] as number[];
+        characteristics.forEach((characteristic: number, index: number) => {
+          formData.append(`${key}[${index}]`, characteristic.toString());
         });
         continue;
       }
@@ -40,6 +47,8 @@ export const BienService = {
       const value = (data as any)[key];
       formData.append(key, value);
     }
+
+    console.log(formData);
 
     const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.create,
