@@ -1,47 +1,54 @@
-# ------------------------
-# Stage 1: Base Image
-# ------------------------
-FROM node:22.21.1-alpine3.23 AS base
-USER root
+FROM node:20-alpine AS base
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# ------------------------
-# Stage 2: Dependencies
-# ------------------------
+# ============================================
+# Dependencies Stage
+# ============================================
 FROM base AS deps
 COPY package.json package-lock.json* ./
 RUN npm ci
 
-# ------------------------
-# Stage 3: Build the App
-# ------------------------
-FROM base AS build
-WORKDIR /app
+# ============================================
+# Builder Stage
+# ============================================
+FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-# ------------------------
-# Stage 4: Production Runner
-# ------------------------
+# ============================================
+# Production Runner Stage
+# ============================================
 FROM base AS runner
 WORKDIR /app
+
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Create non-root user (RHEL way)
-RUN groupadd -r nodejs \
-  && useradd -r -g nodejs nodejs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# Copy only what’s needed for runtime
-COPY --from=build /app/public ./public
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package.json ./package.json
+# Copy public assets
+COPY --from=builder /app/public ./public
 
-RUN chmod -R 777 ./.next
+# Copy standalone build
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-USER nodejs
-ENV NODE_TLS_REJECT_UNAUTHORIZED 0
-# EXPOSE 3000
+# Copy i18n messages directory
+COPY --from=builder --chown=nextjs:nodejs /app/src/i18n ./src/i18n
 
-CMD ["npm", "start"]
+# Also copy any other runtime dependencies
+# COPY --from=builder --chown=nextjs:nodejs /app/other-runtime-files ./other-runtime-files
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "server.js"]

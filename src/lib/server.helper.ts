@@ -6,7 +6,7 @@ import { addHours, differenceInSeconds } from "date-fns";
 // Get encryption key and ensure it's 32 bytes (256 bits) for AES-256-GCM
 function getEncryptionKey(): Buffer {
   const envKey = process.env.ENCRYPTION_KEY;
-  
+
   if (envKey) {
     // Try to parse as hex first
     try {
@@ -28,7 +28,7 @@ function getEncryptionKey(): Buffer {
     } catch {
       // Not valid hex, treat as string
     }
-    
+
     // Treat as string and pad/truncate to 32 bytes
     const keyBuffer = Buffer.from(envKey, "utf-8");
     const key32 = Buffer.alloc(32);
@@ -36,7 +36,7 @@ function getEncryptionKey(): Buffer {
     // If the string is shorter, pad with zeros
     return key32;
   }
-  
+
   // Default key: Must be exactly 32 bytes (256 bits) for AES-256-GCM
   // Using a 32-character string that equals 32 bytes in UTF-8
   const defaultKey = "ThisMustBeA32ByteKeyForAES256!!"; // Exactly 32 bytes
@@ -53,19 +53,13 @@ export async function encrypt(text: string): Promise<string> {
   try {
     // Convert Buffer to Uint8Array for crypto.subtle
     const keyBytes = new Uint8Array(ENCRYPTION_KEY_BYTES);
-    
+
     // Verify key length is 32 bytes (256 bits) for AES-256-GCM
     if (keyBytes.length !== 32) {
       throw new Error(`Invalid encryption key length: expected 32 bytes, got ${keyBytes.length}`);
     }
-    
-    const key = await crypto.subtle.importKey(
-      "raw",
-      keyBytes,
-      { name: "AES-GCM", length: 256 },
-      false,
-      ["encrypt"]
-    );
+
+    const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
 
     const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV recommended for AES-GCM
 
@@ -85,23 +79,17 @@ export async function decrypt(cipherText: string): Promise<string> {
     const [ivHex, encryptedHex] = cipherText.split(":");
     const iv = new Uint8Array(Buffer.from(ivHex, "hex"));
     const encryptedBytes = new Uint8Array(Buffer.from(encryptedHex, "hex"));
-    
+
     // Convert Buffer to Uint8Array for crypto.subtle
     const keyBytes = new Uint8Array(ENCRYPTION_KEY_BYTES);
-    
+
     // Verify key length is 32 bytes (256 bits) for AES-256-GCM
     if (keyBytes.length !== 32) {
       throw new Error(`Invalid decryption key length: expected 32 bytes, got ${keyBytes.length}`);
     }
-    
-    const key = await crypto.subtle.importKey(
-      "raw",
-      keyBytes,
-      { name: "AES-GCM", length: 256 },
-      false,
-      ["decrypt"]
-    );
-    
+
+    const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+
     const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, encryptedBytes);
 
     return new TextDecoder().decode(decrypted);
@@ -110,15 +98,14 @@ export async function decrypt(cipherText: string): Promise<string> {
     throw new Error(`Decryption failed: ${error?.message || "Unknown error"}`);
   }
 }
-
 export async function setCookie({
   key,
   value,
   expires = addHours(new Date(), 1),
   maxAge = Infinity,
   httpOnly = true,
-  sameSite = "strict",
-  secure = true,
+  sameSite = "lax",
+  secure,
 }: {
   key: string;
   value: string;
@@ -130,12 +117,22 @@ export async function setCookie({
 }) {
   const cookieStore = await require("next/headers").cookies();
   const encryptedValue = await encrypt(value);
+
+  const isProd = process.env.NODE_ENV === "production";
+
+  console.log({
+    env: process.env.NODE_ENV,
+    secure: secure ?? isProd,
+    sameSite,
+  });
+
   cookieStore.set(key, encryptedValue, {
-    httpOnly: httpOnly,
-    sameSite: sameSite,
-    secure: secure,
-    maxAge: maxAge,
-    expires: expires,
+    httpOnly,
+    sameSite,
+    secure: secure ?? isProd,
+    maxAge,
+    expires,
+    path: "/",
   });
 }
 

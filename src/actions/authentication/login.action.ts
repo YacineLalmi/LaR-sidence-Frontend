@@ -15,6 +15,7 @@ export async function loginAction(data: LoginFormData): Promise<FormState> {
       value: response.access_token,
       expires: response.access_token_expires_at,
       maxAge: differenceInSeconds(response.access_token_expires_at, new Date()),
+      sameSite: "lax",
     });
 
     await setCookie({
@@ -22,6 +23,7 @@ export async function loginAction(data: LoginFormData): Promise<FormState> {
       value: response.refresh_token,
       expires: response.refresh_token_expires_at,
       maxAge: differenceInSeconds(response.refresh_token_expires_at, new Date()),
+      sameSite: "lax",
     });
 
     return {
