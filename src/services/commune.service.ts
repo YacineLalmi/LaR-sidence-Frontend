@@ -14,7 +14,7 @@ const END_POINTS = {
   listByWilaya: (wilayaId: string) => `/lists/wilayas/${wilayaId}/communes`,
   findOne: (id: string) => `/configurations/communes/${id}`,
   update: (id: string) => `/configurations/communes/${id}`,
-  delete: (id: string) => `/configurations/communes/${id}`,
+  delete: (id: number) => `/configurations/communes/${id}`,
 };
 
 export const CommuneService = {
@@ -103,7 +103,7 @@ export const CommuneService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

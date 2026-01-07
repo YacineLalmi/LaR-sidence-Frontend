@@ -5,6 +5,7 @@ export const TRANSLATIONS_KEYS = {
       TITLE: "settings.locations.title",
       WILAYAS: {
         TITLE: "settings.locations.wilayas.title",
+        DELETE_TEXT: "settings.locations.wilayas.deleteText",
         FORM: {
           ADD: "settings.locations.wilayas.form.add",
           UPDATE: "settings.locations.wilayas.form.update",
@@ -36,6 +37,7 @@ export const TRANSLATIONS_KEYS = {
       },
       COMMUNES: {
         TITLE: "settings.locations.communes.title",
+        DELETE_TEXT: "settings.locations.communes.deleteText",
         FORM: {
           ADD: "settings.locations.communes.form.add",
           UPDATE: "settings.locations.communes.form.update",
@@ -503,6 +505,7 @@ export const TRANSLATIONS_KEYS = {
   },
   BIENS: {
     MANAGEMENT: "biens.management",
+    DELETE_TEXT: "biens.deleteText",
     FORM: {
       ROOT: "biens.form",
       CREATE: "biens.form.create",

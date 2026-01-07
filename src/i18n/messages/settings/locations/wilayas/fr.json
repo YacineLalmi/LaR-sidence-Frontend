@@ -1,5 +1,6 @@
 {
   "title": "Liste des wilayas",
+  "deleteText": "Voulez-vous supprimer la wilaya avec l'ID {id}",
   "form": {
     "add": "Ajouter une wilaya",
     "update": "Modifier une wilaya",

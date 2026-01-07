@@ -12,6 +12,7 @@ import { Wilaya } from "@/schemas/wilayas/wilaya.schema";
 import { ResponseMetaData } from "@/lib/definitions";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import DeleteWilayaDialog from "./delete-wilaya-dialog";
 
 interface Props {
   data: {
@@ -55,10 +56,10 @@ export default function WilayasTable({ data }: Props) {
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <CustomButton Icon={Trash2} variant="ghost" className="!p-0" />
-          <UpdateWilayaDialog wilaya={row.row.original} />
+          <DeleteWilayaDialog wilaya={row.original} />
+          <UpdateWilayaDialog wilaya={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.WILAYAS.COLUMNS.ACTIONS),

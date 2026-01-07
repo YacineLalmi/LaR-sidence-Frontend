@@ -14,6 +14,7 @@ import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
+import DeleteBienDialog from "./delete-bien-dialog";
 
 interface Props {
   data: any;
@@ -112,12 +113,12 @@ export default function BienTable({ data }: Props) {
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center">
-          <Link href={`/biens/${row.row.original.id}`}>
+          <DeleteBienDialog bien={row.original} />
+          <Link href={`/biens/${row.original.id}`}>
             <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
           </Link>
-          <CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0" />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ACTIONS),

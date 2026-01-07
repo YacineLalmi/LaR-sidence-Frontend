@@ -2,7 +2,7 @@ import z from "zod";
 
 export const CommuneFormSchema = z.object({
   name: z.string().trim().min(1).max(100),
-  post_code: z.number(),
+  post_code: z.string(),
   wilaya_id: z.string(),
 });
 

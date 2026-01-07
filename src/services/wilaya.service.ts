@@ -12,7 +12,7 @@ const END_POINTS = {
   list: "/lists/wilayas",
   findOne: (id: string) => `/configurations/wilayas/${id}`,
   update: (id: string) => `/configurations/wilayas/${id}`,
-  delete: (id: string) => `/configurations/wilayas/${id}`,
+  delete: (id: number) => `/configurations/wilayas/${id}`,
 };
 
 export const WilayaService = {
@@ -73,7 +73,7 @@ export const WilayaService = {
     return validatedResponseData;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });

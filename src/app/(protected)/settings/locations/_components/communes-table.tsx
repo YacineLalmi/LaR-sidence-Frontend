@@ -12,6 +12,7 @@ import EditCommuneDialog from "./update-commune-dialog";
 import { ListItem } from "@/schemas/global.schema";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import DeleteCommuneDialog from "./delete-commune-dialog";
 
 interface Props {
   wilayas: ListItem[];
@@ -56,10 +57,10 @@ export default function CommuneTable({ data, wilayas }: Props) {
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <CustomButton Icon={Trash2} variant="ghost" className="!p-0" />
-          <EditCommuneDialog commune={row.row.original} wilayas={wilayas} />
+          <DeleteCommuneDialog commune={row.original} />
+          <EditCommuneDialog commune={row.original} wilayas={wilayas} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.COMMUNES.COLUMNS.ACTIONS),

@@ -2,11 +2,11 @@
 
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/utils";
-import { BienService } from "@/services/bien.service";
+import { WilayaService } from "@/services/wilaya.service";
 
-export async function deleteBienAction(id: number): Promise<FormState> {
+export async function deleteWilayaAction(id: number): Promise<FormState> {
   try {
-    await BienService.delete(id);
+    await WilayaService.delete(id);
     return { isOk: true };
   } catch (error) {
     const result = handleServerActionError(error);

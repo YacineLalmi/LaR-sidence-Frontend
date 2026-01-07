@@ -1,5 +1,6 @@
 {
   "title": "Liste des Communes",
+  "deleteText": "Voulez-vous supprimer la commune avec l'ID {id}",
   "form": {
     "add": "Ajouter une commune",
     "update": "Modifier une commune",

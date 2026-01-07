@@ -1,5 +1,6 @@
 {
   "management": "Gestion des biens",
+  "deleteText": "Voulez-vous supprimer le bien avec l'ID {id}",
   "form": {
     "create": "Créer un bien",
     "edit": "Modifier un bien",
