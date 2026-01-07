@@ -25,7 +25,6 @@ export default function CreateOfferTypeDialog() {
   const form = useForm<OfferTypeForm>({
     resolver: zodResolver(OfferTypeFormSchema),
     defaultValues: {
-      code: "",
       name: "",
       description: "",
       is_active: true,
@@ -71,14 +70,6 @@ export default function CreateOfferTypeDialog() {
     >
       <Form {...form}>
         <form id="create-offer-type-form" onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid gap-[12px]">
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

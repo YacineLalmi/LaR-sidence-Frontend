@@ -19,6 +19,7 @@ const END_POINTS = {
 
 export const ColorService = {
   create: async (data: ColorForm) => {
+    console.log("cooooollloor", data);
     const response = await ApiService.post<Color>({
       endpoint: END_POINTS.create,
       body: data,

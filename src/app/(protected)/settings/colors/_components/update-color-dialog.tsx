@@ -31,7 +31,8 @@ export default function UpdateColorDialog({ color }: Props) {
   const form = useForm<ColorForm>({
     resolver: zodResolver(ColorFormSchema),
     defaultValues: {
-      code: `#${color.background_color}`,
+      background_color: color.background_color,
+      text_color: color.text_color,
       name: color.name,
       description: color.description,
     },
@@ -78,19 +79,46 @@ export default function UpdateColorDialog({ color }: Props) {
           <div className="grid grid-cols-2 gap-2">
             <InputTextField
               control={form.control}
-              name="code"
-              label={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.CODE)}
+              name="background_color"
+              label={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.BACKGROUND_COLOR)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.PLACEHOLDER.CODE)}
+              placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.PLACEHOLDER.BACKGROUND_COLOR)}
             />
             <FormField
               control={form.control}
-              name="code"
+              name="background_color"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>
-                    {translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.CODE)}{" "}
+                    {translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.BACKGROUND_COLOR)}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative ">
+                      <Input required disabled={isPending} type="color" {...field} />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <InputTextField
+              control={form.control}
+              name="text_color"
+              label={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.TEXT_COLOR)}
+              disabled={isPending}
+              required
+              placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.PLACEHOLDER.TEXT_COLOR)}
+            />
+            <FormField
+              control={form.control}
+              name="text_color"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>
+                    {translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.FORM.LABEL.TEXT_COLOR)}
                     <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>

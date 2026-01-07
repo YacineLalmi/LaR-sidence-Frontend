@@ -28,7 +28,6 @@ export default function CreateBienCharacteristicsDialog() {
   const form = useForm<BienAdditionalcharacteristicsForm>({
     resolver: zodResolver(BienAdditionalcharacteristicsFormSchema),
     defaultValues: {
-      code: "",
       name: "",
       description: "",
       is_active: true,
@@ -81,14 +80,6 @@ export default function CreateBienCharacteristicsDialog() {
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.CHARACTERISTICS.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.CHARACTERISTICS.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

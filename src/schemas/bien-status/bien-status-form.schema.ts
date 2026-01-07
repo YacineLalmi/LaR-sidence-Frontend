@@ -1,7 +1,6 @@
 import z from "zod";
 
 export const BienStatusFormSchema = z.object({
-  code: z.string().max(50),
   name: z.string().max(100),
   description: z.string().max(255).nullable(),
   color_id: z.string(),

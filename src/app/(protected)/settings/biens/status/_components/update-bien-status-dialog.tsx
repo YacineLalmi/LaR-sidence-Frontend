@@ -33,7 +33,6 @@ export default function UpdateBienStatusDialog({ colors, bienStatus }: Props) {
   const form = useForm<BienStatusForm>({
     resolver: zodResolver(BienStatusFormSchema),
     defaultValues: {
-      code: bienStatus.code,
       name: bienStatus.name,
       description: bienStatus.description,
       color_id: bienStatus.color.id.toString(),
@@ -84,26 +83,11 @@ export default function UpdateBienStatusDialog({ colors, bienStatus }: Props) {
         >
           <InputTextField
             control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.LABEL.CODE)}
-          />
-          <InputTextField
-            control={form.control}
             name="name"
             label={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.LABEL.NAME)}
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.PLACEHOLDER.NAME)}
-          />
-          <InputTextArea
-            control={form.control}
-            name="description"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.LABEL.DESCRIPTION)}
-            disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
           <InputSelectField
             control={form.control}
@@ -113,6 +97,13 @@ export default function UpdateBienStatusDialog({ colors, bienStatus }: Props) {
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.PLACEHOLDER.COLOR_ID)}
+          />
+          <InputTextArea
+            control={form.control}
+            name="description"
+            label={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.LABEL.DESCRIPTION)}
+            disabled={isPending}
+            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
         </form>
       </Form>

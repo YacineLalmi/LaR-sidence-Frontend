@@ -10,12 +10,14 @@
     "failedUpdate": "Échec de la modification de couleur",
     "buttonText": "Créer une couleur",
     "label": {
-      "code": "Code couleur",
+      "backgroundColor": "Code couleur du badge",
+      "textColor": "Code couleur du texte",
       "name": " Nom de la couleur",
       "description": "Description de la couleur"
     },
     "placeholder": {
-      "code": "Code couleur",
+      "backgroundColor": "Code couleur du badge",
+      "textColor": "Code couleur du texte",
       "name": "Nom de la couleur",
       "description": "Description de la couleur"
     }

@@ -33,7 +33,6 @@ export default function UpdateTransactionTypeDialog({ transactionType }: Props) 
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionTypeFormSchema),
     defaultValues: {
-      code: transactionType.code,
       name: transactionType.name,
       description: transactionType.description,
       is_active: transactionType.is_active,
@@ -66,7 +65,7 @@ export default function UpdateTransactionTypeDialog({ transactionType }: Props) 
 
   return (
     <FormDialog
-      formId="create-transaction-type-form"
+      formId="update-transaction-type-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -77,18 +76,10 @@ export default function UpdateTransactionTypeDialog({ transactionType }: Props) 
     >
       <Form {...form}>
         <form
-          id="create-transaction-type-form"
+          id="update-transaction-type-form"
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

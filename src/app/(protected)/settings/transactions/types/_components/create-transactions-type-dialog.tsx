@@ -28,7 +28,6 @@ export default function CreateTransactionTypeDialog() {
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionTypeFormSchema),
     defaultValues: {
-      code: "",
       name: "",
       description: "",
       is_active: true,
@@ -78,14 +77,6 @@ export default function CreateTransactionTypeDialog() {
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

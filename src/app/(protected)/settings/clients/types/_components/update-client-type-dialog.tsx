@@ -30,7 +30,6 @@ export default function UpdateClientTypeDialog({ clientType }: Props) {
   const form = useForm<ClientTypeForm>({
     resolver: zodResolver(ClientTypeFormSchema),
     defaultValues: {
-      code: clientType.code,
       name: clientType.name,
       description: clientType.description,
       is_active: clientType.is_active,
@@ -63,7 +62,7 @@ export default function UpdateClientTypeDialog({ clientType }: Props) {
 
   return (
     <FormDialog
-      formId="create-client-type-form"
+      formId="update-client-type-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -74,18 +73,10 @@ export default function UpdateClientTypeDialog({ clientType }: Props) {
     >
       <Form {...form}>
         <form
-          id="create-client-type-form"
+          id="update-client-type-form"
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

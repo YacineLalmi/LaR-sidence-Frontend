@@ -482,12 +482,14 @@ export const TRANSLATIONS_KEYS = {
         FAILED_UPDATE: "settings.colors.form.failedUpdate",
         BUTTON_TEXT: "settings.colors.form.buttonText",
         LABEL: {
-          CODE: "settings.colors.form.label.code",
+          BACKGROUND_COLOR: "settings.colors.form.label.backgroundColor",
+          TEXT_COLOR: "settings.colors.form.label.textColor",
           NAME: "settings.colors.form.label.name",
           DESCRIPTION: "settings.colors.form.label.description",
         },
         PLACEHOLDER: {
-          CODE: "settings.colors.form.placeholder.code",
+          BACKGROUND_COLOR: "settings.colors.form.placeholder.backgroundColor",
+          TEXT_COLOR: "settings.colors.form.placeholder.textColor",
           NAME: "settings.colors.form.placeholder.name",
           DESCRIPTION: "settings.colors.form.placeholder.description",
         },

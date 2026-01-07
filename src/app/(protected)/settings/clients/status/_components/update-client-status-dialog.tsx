@@ -33,7 +33,6 @@ export default function UpdateClientStatusDialog({ colors, clientStatus }: Props
   const form = useForm<ClientStatusForm>({
     resolver: zodResolver(ClientStatusFormSchema),
     defaultValues: {
-      code: clientStatus.code,
       name: clientStatus.name,
       description: clientStatus.description,
       color_id: clientStatus.color.id.toString(),
@@ -67,7 +66,7 @@ export default function UpdateClientStatusDialog({ colors, clientStatus }: Props
 
   return (
     <FormDialog
-      formId="create-bien-status-form"
+      formId="update-client-status-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -78,18 +77,10 @@ export default function UpdateClientStatusDialog({ colors, clientStatus }: Props
     >
       <Form {...form}>
         <form
-          id="create-bien-status-form"
+          id="update-client-status-form"
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.LABEL.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"
@@ -97,13 +88,6 @@ export default function UpdateClientStatusDialog({ colors, clientStatus }: Props
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.PLACEHOLDER.NAME)}
-          />
-          <InputTextArea
-            control={form.control}
-            name="description"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.LABEL.DESCRIPTION)}
-            disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
           <InputSelectField
             control={form.control}
@@ -113,6 +97,13 @@ export default function UpdateClientStatusDialog({ colors, clientStatus }: Props
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.PLACEHOLDER.COLOR_ID)}
+          />
+          <InputTextArea
+            control={form.control}
+            name="description"
+            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.LABEL.DESCRIPTION)}
+            disabled={isPending}
+            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
         </form>
       </Form>

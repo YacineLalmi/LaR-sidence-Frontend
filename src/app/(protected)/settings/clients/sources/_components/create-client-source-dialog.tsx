@@ -25,7 +25,6 @@ export default function CreateClientSourceDialog() {
   const form = useForm<ClientSourceForm>({
     resolver: zodResolver(ClientSourceFormSchema),
     defaultValues: {
-      code: "",
       name: "",
       description: "",
       is_active: true,
@@ -58,7 +57,7 @@ export default function CreateClientSourceDialog() {
 
   return (
     <FormDialog
-      formId="create-bien-type-form"
+      formId="create-client-source-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.ADD)}
@@ -70,15 +69,11 @@ export default function CreateClientSourceDialog() {
       preventOutsideClick={true}
     >
       <Form {...form}>
-        <form id="create-bien-type-form" onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid gap-[12px]">
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.FORM.PLACEHOLDER.CODE)}
-          />
+        <form
+          id="create-client-source-form"
+          onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+          className="grid gap-[12px]"
+        >
           <InputTextField
             control={form.control}
             name="name"

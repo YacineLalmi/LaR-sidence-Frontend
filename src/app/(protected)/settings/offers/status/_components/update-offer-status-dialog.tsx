@@ -33,7 +33,6 @@ export default function UpdateOfferStatusDialog({ colors, offerStatus }: Props) 
   const form = useForm<OfferStatusForm>({
     resolver: zodResolver(OfferStatusFormSchema),
     defaultValues: {
-      code: offerStatus.code,
       name: offerStatus.name,
       description: offerStatus.description,
       color_id: offerStatus.color.id.toString(),
@@ -67,7 +66,7 @@ export default function UpdateOfferStatusDialog({ colors, offerStatus }: Props) 
 
   return (
     <FormDialog
-      formId="create-bien-status-form"
+      formId="update-offer-status-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -78,18 +77,10 @@ export default function UpdateOfferStatusDialog({ colors, offerStatus }: Props) 
     >
       <Form {...form}>
         <form
-          id="create-bien-status-form"
+          id="update-offer-status-form"
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.LABEL.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"
@@ -97,13 +88,6 @@ export default function UpdateOfferStatusDialog({ colors, offerStatus }: Props) 
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.PLACEHOLDER.NAME)}
-          />
-          <InputTextArea
-            control={form.control}
-            name="description"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.LABEL.DESCRIPTION)}
-            disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
           <InputSelectField
             control={form.control}
@@ -113,6 +97,13 @@ export default function UpdateOfferStatusDialog({ colors, offerStatus }: Props) 
             disabled={isPending}
             required
             placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.PLACEHOLDER.COLOR_ID)}
+          />
+          <InputTextArea
+            control={form.control}
+            name="description"
+            label={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.LABEL.DESCRIPTION)}
+            disabled={isPending}
+            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.FORM.PLACEHOLDER.DESCRIPTION)}
           />
         </form>
       </Form>

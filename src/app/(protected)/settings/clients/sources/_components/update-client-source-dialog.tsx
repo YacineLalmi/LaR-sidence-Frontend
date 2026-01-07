@@ -30,7 +30,6 @@ export default function UpdateClientSourceDialog({ clientSource }: Props) {
   const form = useForm<ClientSourceForm>({
     resolver: zodResolver(ClientSourceFormSchema),
     defaultValues: {
-      code: clientSource.code,
       name: clientSource.name,
       description: clientSource.description,
       is_active: clientSource.is_active,
@@ -63,7 +62,7 @@ export default function UpdateClientSourceDialog({ clientSource }: Props) {
 
   return (
     <FormDialog
-      formId="create-client-type-form"
+      formId="update-client-source-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -74,18 +73,10 @@ export default function UpdateClientSourceDialog({ clientSource }: Props) {
     >
       <Form {...form}>
         <form
-          id="create-client-type-form"
+          id="update-client-source-form"
           onSubmit={form.handleSubmit(onSubmit, onInvalid)}
           className="grid gap-[12px]"
         >
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.FORM.PLACEHOLDER.CODE)}
-          />
           <InputTextField
             control={form.control}
             name="name"

@@ -19,8 +19,8 @@ export default async function BienType({ searchParams }: { searchParams: Promise
     <Card className="bg-transparent border-none shadow-none px-0">
       <CardHeader className="px-0 flex flex-col">
         <NavigationButton
-          title={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}
-          backLink={NAVIGATION_KEYS.SETTINGS.BIENS.ROOT}
+          title={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.TITLE)}
+          backLink={NAVIGATION_KEYS.SETTINGS.TRANSACTIONS.ROOT}
         />
         {/* <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}</h1> */}
         <div className="flex w-full justify-between gap-2">

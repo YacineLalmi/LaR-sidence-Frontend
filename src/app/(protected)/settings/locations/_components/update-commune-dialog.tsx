@@ -34,7 +34,7 @@ export default function EditCommuneDialog({ wilayas, commune }: Props) {
     defaultValues: {
       wilaya_id: commune.wilaya.id.toString(),
       name: commune.name,
-      post_code: commune.post_code,
+      post_code: commune.post_code.toString(),
     },
   });
 

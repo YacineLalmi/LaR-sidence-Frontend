@@ -30,7 +30,6 @@ export default function UpdateOfferTypeDialog({ offerType }: Props) {
   const form = useForm<OfferTypeForm>({
     resolver: zodResolver(OfferTypeFormSchema),
     defaultValues: {
-      code: offerType.code,
       name: offerType.name,
       description: offerType.description,
       is_active: offerType.is_active,
@@ -63,7 +62,7 @@ export default function UpdateOfferTypeDialog({ offerType }: Props) {
 
   return (
     <FormDialog
-      formId="create-offer-type-form"
+      formId="update-offer-type-form"
       isOpen={isOpen}
       onOpenChange={handleDialogOpen}
       submitButtonText={translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
@@ -73,15 +72,7 @@ export default function UpdateOfferTypeDialog({ offerType }: Props) {
       preventOutsideClick={true}
     >
       <Form {...form}>
-        <form id="create-offer-type-form" onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid gap-[12px]">
-          <InputTextField
-            control={form.control}
-            name="code"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.FORM.LABEL.CODE)}
-            disabled={isPending}
-            required
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TYPES.FORM.PLACEHOLDER.CODE)}
-          />
+        <form id="update-offer-type-form" onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid gap-[12px]">
           <InputTextField
             control={form.control}
             name="name"
