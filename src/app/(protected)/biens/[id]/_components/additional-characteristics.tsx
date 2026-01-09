@@ -18,7 +18,7 @@ interface Props {
 
 export default function AdditionalCharacteristics({ form, isPending = false, bienAdditionalcharacteristics }: Props) {
   const translation = useTranslations();
-  console.log("ad car", form.getValues("addtional_characteristics"));
+  console.log("ad car", form.getValues("additional_characteristics"));
   return (
     <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.ADDITIONAL_CHARACTERISTICS)}>
       <div className="space-y-4 grid grid-cols-3">
@@ -26,7 +26,7 @@ export default function AdditionalCharacteristics({ form, isPending = false, bie
           <FormField
             key={feature.id}
             control={form.control}
-            name="addtional_characteristics"
+            name="additional_characteristics"
             render={({ field }) => (
               <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                 <FormControl>

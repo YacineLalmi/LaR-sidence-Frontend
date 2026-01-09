@@ -1,6 +1,6 @@
 "use client";
 
-import { createWilayaAction } from "@/actions/wilayas/create.action";
+import { createWilayaAction } from "@/actions/wilayas/create-wilaya.action";
 import InputTextField from "@/components/custom-inputs/input-text";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";

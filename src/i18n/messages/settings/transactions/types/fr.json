@@ -24,10 +24,12 @@
   },
   "columns": {
     "id": "ID",
-    "code": "Code",
-    "name": "Nom",
-    "description": "Description",
+    "name": "Nom et Prénom",
+    "phone": "Nom",
+    "email": "Description",
     "actions": "Actions",
-    "createdAt": "created_at"
+    "createdAt": "Date d'Ajout",
+    "status": "Etat",
+    "role": "Rôle"
   }
 }

@@ -80,7 +80,7 @@ export default function UpdateBienForm({
       rooms_number: bien.rooms_number,
       bathrooms_number: bien.bathrooms_number,
       availability_date: new Date(bien.availability_date),
-      addtional_characteristics: bien.additional_characteristics.map((item) => item.id),
+      additional_characteristics: bien.additional_characteristics.map((item) => item.id),
       images: [],
       comment: bien.comment,
       exclusivity: bien.exclusivity,

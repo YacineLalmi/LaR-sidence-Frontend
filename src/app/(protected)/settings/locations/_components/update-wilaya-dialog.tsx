@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Edit } from "lucide-react";
-import { updateWilayaAction } from "@/actions/wilayas/update.action";
+import { updateWilayaAction } from "@/actions/wilayas/update-wilaya.action";
 import { Wilaya } from "@/schemas/wilayas/wilaya.schema";
 import FormDialog from "@/components/form-dialog/form-dialog";
 import CustomButton from "@/components/ui/custom-button";

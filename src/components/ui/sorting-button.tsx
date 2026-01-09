@@ -24,7 +24,7 @@ export default function SortingButton({ columnName, columnKey }: Props) {
     router.push(`?${params.toString()}`);
   }, [sort]);
   return (
-    <Button variant="ghost" onClick={handleSorting} className="cursor-pointer">
+    <Button variant="ghost" onClick={handleSorting} className="!px-0 cursor-pointer font-bold text-[14px] text-wrap">
       {columnName}
       <ArrowUpDown />
     </Button>

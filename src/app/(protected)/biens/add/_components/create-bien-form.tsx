@@ -75,7 +75,7 @@ export default function CreateBienForm({
       rooms_number: 0,
       bathrooms_number: 0,
       availability_date: new Date(),
-      addtional_characteristics: [],
+      additional_characteristics: [],
       images: [],
       comment: "",
       exclusivity: false,

@@ -6,12 +6,15 @@ import { getTranslations } from "next-intl/server";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import SearchField from "@/components/ui/search";
+import CreateRoleDialog from "./_components/create-role-dialog";
+import { PermissionService } from "@/services/permission.service";
 
 export default async function Roles({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const data = await RoleService.findAll(queryParams);
+  const roles = await RoleService.findAll(queryParams);
+  const permissions = await PermissionService.findAll();
   return (
     <Card className="bg-transparent border-none shadow-none px-0">
       <CardHeader className="px-0 flex flex-col">
@@ -19,13 +22,13 @@ export default async function Roles({ searchParams }: { searchParams: Promise<{ 
           title={translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.TITLE)}
           backLink={NAVIGATION_KEYS.SETTINGS.ROOT}
         />
-        {/* <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}</h1> */}
         <div className="flex w-full justify-between gap-2">
           <SearchField />
+          <CreateRoleDialog permissions={permissions} />
         </div>
       </CardHeader>
       <CardContent className="px-0">
-        <RolesTable data={data} />
+        <RolesTable data={roles} permissions={permissions} />
       </CardContent>
     </Card>
   );

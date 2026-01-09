@@ -1,40 +1,48 @@
 {
-  "title": "Gestion des utilisateurs",
+  "title": "Gestion des Utilisateurs",
+  "createAUser": "Ajouter un utilisateur",
+  "editAUser": "Modifie le utilisateur",
+  "deleteAUser": "Voulez-vous supprimer l'utilisateur avec l'ID {id}",
   "filter": {
     "title": "Filtrer les utilisateurs",
     "label": {
       "role": "Rôle",
-      "status": "Statut",
-      "createdBetween": "Créé entre"
+      "status": "Etat"
     },
     "placeholder": {
       "role": "Sélectionner un rôle",
-      "status": "Sélectionner un statut",
-      "createdBetween": "Sélectionner une période"
+      "status": "Sélectionner un état"
     }
   },
   "form": {
     "title": "Créer un utilisateur",
-    "created": "Utilisateur créé avec succès",
-    "updated": "Utilisateur modifié avec succès",
-    "failedCreation": "Échec de la création de l’utilisateur",
-    "failedUpdate": "Échec de la modification de l’utilisateur",
-    "buttonText": "Créer un utilisateur",
     "label": {
       "email": "E-mail",
       "firstName": "Prénom",
       "lastName": "Nom",
-      "isActive": "Actif",
       "username": "Nom d’utilisateur",
-      "roles": "Rôles"
+      "phonenumber": "Téléphone",
+      "role": "Rôles",
+      "status": "Etat"
     },
     "placeholder": {
       "email": "Entrez votre e-mail",
       "firstName": "Entrez votre prénom",
       "lastName": "Entrez votre nom",
-      "isActive": "Sélectionnez le statut",
       "username": "Entrez votre nom d’utilisateur",
-      "roles": "Sélectionnez les Rôles"
+      "phonenumber": "Entrez votre le numéro de Téléphone",
+      "role": "Sélectionnez les Rôles",
+      "status": "Sélectionnez l'état"
     }
+  },
+  "columns": {
+    "id": "ID Utilisateur",
+    "name": "Nom et Prénom",
+    "phonenumber": "Téléphone",
+    "email": "E-mail",
+    "createdAt": "Date d'Ajout",
+    "role": "Rôle",
+    "status": "Etat",
+    "actions": "Actions"
   }
 }

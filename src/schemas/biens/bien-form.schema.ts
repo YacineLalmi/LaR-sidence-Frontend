@@ -87,7 +87,7 @@ export const BienFormSchema = z
     exclusivity_start: z.date().nullable().optional(),
     exclusivity_end: z.date().nullable().optional(),
 
-    addtional_characteristics: z.array(z.number().int()),
+    additional_characteristics: z.array(z.number().int()),
 
     images: z
       .array(z.instanceof(File))

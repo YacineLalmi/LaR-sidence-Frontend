@@ -1,31 +1,30 @@
 {
   "title": "Gestion des roles",
-  "filters": {
-    "label": {
-      "role": "Rôle",
-      "status": "Statut",
-      "createdBetween": "Créé entre"
-    },
-    "placeholder": {
-      "role": "Sélectionner un rôle",
-      "status": "Sélectionner un statut",
-      "createdBetween": "Sélectionner une période"
-    }
-  },
+  "createRole": "Ajouter un rôle",
+  "editRole": "Modifie le utilisateur",
+  "deleteRole": "Voulez-vous supprimer le rôle avec l'ID {id}",
   "form": {
     "title": "Créer un rôle",
     "success": "Rôle créé avec succès",
     "faild": "Échec de la création du Rôle",
     "buttonText": "Créer un rôle",
-    "labels": {
-      "name": "Code",
+    "label": {
       "displayName": "Nom",
-      "description": "Description"
+      "description": "Description",
+      "permissions": "Permissions"
     },
-    "placeholders": {
-      "name": "Entrez le code du rôle",
+    "placeholder": {
       "displayName": "Entrez le nom du rôle",
-      "description": "Entrez la description du rôle"
+      "description": "Entrez la description du rôle",
+      "permissions": "Selectionner les permissions du rôle"
     }
+  },
+  "columns": {
+    "id": "ID Rôle",
+    "name": "Nom du rôle",
+    "description": "Description",
+    "permissions": "Permissions",
+    "createdAt": "Date d'Ajout",
+    "actions": "Actions"
   }
 }

@@ -1,10 +1,10 @@
 import { LucideIcon, Loader2 } from "lucide-react";
-import React from "react";
+import React, { MouseEvent } from "react";
 import { Button } from "./button";
 
 interface Props {
   text?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   Icon?: LucideIcon;
   className?: string;
   disabled?: boolean;

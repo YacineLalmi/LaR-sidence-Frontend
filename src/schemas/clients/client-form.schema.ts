@@ -1,6 +1,6 @@
 import z from "zod";
 
-const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_DOCUMENT_SIZE = 5 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
 
 export const ClientFormSchema = z.object({
@@ -22,11 +22,11 @@ export const ClientFormSchema = z.object({
   documents: z
     .array(z.instanceof(File))
     .max(5, "You can upload up to 5 files")
-    .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
-    .refine(
-      (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
-      "Only PDF files are allowed"
-    ),
+    .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less"),
+  // .refine(
+  //   (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
+  //   "Only PDF files are allowed"
+  // ),
 });
 
 export type ClientForm = z.infer<typeof ClientFormSchema>;

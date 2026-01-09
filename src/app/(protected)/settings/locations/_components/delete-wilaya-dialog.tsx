@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteWilayaAction } from "@/actions/wilayas/delete.action";
+import { deleteWilayaAction } from "@/actions/wilayas/delete-wilaya.action";
 import CustomButton from "@/components/ui/custom-button";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";

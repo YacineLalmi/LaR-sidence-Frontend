@@ -68,42 +68,49 @@ export const TRANSLATIONS_KEYS = {
     },
     USERS: {
       TITLE: "settings.users.title",
+      DELETE_USER: "settings.users.deleteAUser",
+      CREATE_USER: "settings.users.createAUser",
       FILTER: {
         TITLE: "settings.users.filter.title",
         LABEL: {
           ROLE: "settings.users.filter.label.role",
           STATUS: "settings.users.filter.label.status",
-          CREATED_BETWEEN: "settings.users.filter.label.createdBetween",
         },
         PLACEHOLDER: {
           ROLE: "settings.users.filter.placeholder.role",
           STATUS: "settings.users.filter.placeholder.status",
-          CREATED_BETWEEN: "settings.users.filter.placeholder.createdBetween",
         },
       },
       FORM: {
         TITLE: "settings.users.form.title",
-        CREATED: "settings.users.form.created",
-        UPDATED: "settings.users.form.updated",
-        FAILED_CREATION: "settings.users.form.failedCreation",
-        FAILED_UPDATE: "settings.users.form.failedUpdate",
-        BUTTON_TEXT: "settings.users.form.buttonText",
         LABEL: {
           EMAIL: "settings.users.form.label.email",
           FIRST_NAME: "settings.users.form.label.firstName",
           LAST_NAME: "settings.users.form.label.lastName",
-          IS_ACTIVE: "settings.users.form.label.isActive",
           USERNAME: "settings.users.form.label.username",
-          ROLES: "settings.users.form.label.roles",
+          PHONENUMBER: "settings.users.form.label.phonenumber",
+          ROLE: "settings.users.form.label.role",
+          STATUS: "settings.users.form.label.status",
         },
         PLACEHOLDER: {
           EMAIL: "settings.users.form.placeholder.email",
           FIRST_NAME: "settings.users.form.placeholder.firstName",
           LAST_NAME: "settings.users.form.placeholder.lastName",
-          IS_ACTIVE: "settings.users.form.placeholder.isActive",
           USERNAME: "settings.users.form.placeholder.username",
-          ROLES: "settings.users.form.placeholder.roles",
+          PHONENUMBER: "settings.users.form.label.phonenumber",
+          ROLE: "settings.users.form.placeholder.role",
+          STATUS: "settings.users.form.placeholder.status",
         },
+      },
+      COLUMNS: {
+        ID: "settings.users.columns.id",
+        FULL_NAME: "settings.users.columns.name",
+        PHONENUMBER: "settings.users.columns.phonenumber",
+        EMAIL: "settings.users.columns.email",
+        CREATED_AT: "settings.users.columns.createdAt",
+        ROLE: "settings.users.columns.role",
+        STATUS: "settings.users.columns.status",
+        ACTIONS: "settings.users.columns.actions",
       },
     },
     BIENS: {
@@ -441,33 +448,32 @@ export const TRANSLATIONS_KEYS = {
     },
     ROLES: {
       TITLE: "settings.roles.title",
-      FILTERS: {
-        LABEL: {
-          ROLE: "settings.roles.filters.label.role",
-          STATUS: "settings.roles.filters.label.status",
-          CREATED_BETWEEN: "settings.roles.filters.label.createdBetween",
-        },
-        PLACEHOLDER: {
-          ROLE: "settings.roles.filters.placeholder.role",
-          STATUS: "settings.roles.filters.placeholder.status",
-          CREATED_BETWEEN: "settings.roles.filters.placeholder.createdBetween",
-        },
-      },
+      DELETE_ROLE: "settings.roles.deleteRole",
+      EDIT_ROLE: "settings.roles.editRole",
+      CREATE_ROLE: "settings.roles.createRole",
       FORM: {
         TITLE: "settings.roles.form.title",
         SUCCESS: "settings.roles.form.success",
         FAILED: "settings.roles.form.faild",
         BUTTON_TEXT: "settings.roles.form.buttonText",
-        LABELS: {
-          NAME: "settings.roles.form.labels.name",
-          DISPLAY_NAME: "settings.roles.form.labels.displayName",
-          DESCRIPTION: "settings.roles.form.labels.description",
+        LABEL: {
+          DISPLAY_NAME: "settings.roles.form.label.displayName",
+          DESCRIPTION: "settings.roles.form.label.description",
+          PERMISSIONS: "settings.roles.form.label.permissions",
         },
-        PLACEHOLDERS: {
-          NAME: "settings.roles.form.placeholders.name",
-          DISPLAY_NAME: "settings.roles.form.placeholders.displayName",
-          DESCRIPTION: "settings.roles.form.placeholders.description",
+        PLACEHOLDER: {
+          DISPLAY_NAME: "settings.roles.form.placeholder.displayName",
+          DESCRIPTION: "settings.roles.form.placeholder.description",
+          PERMISSIONS: "settings.roles.form.placeholder.permissions",
         },
+      },
+      COLUMNS: {
+        ID: "settings.roles.columns.id",
+        NAME: "settings.roles.columns.name",
+        DESCRIPTION: "settings.roles.columns.description",
+        PERMISSIONS: "settings.roles.columns.permissions",
+        CREATED_AT: "settings.roles.columns.createdAt",
+        ACTIONS: "settings.roles.columns.actions",
       },
     },
     COLORS: {

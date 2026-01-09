@@ -1,4 +1,10 @@
 "use client";
+import { getBienStatusList } from "@/actions/bien-status/get-bien-status-list.action";
+import { getBienTypeLit } from "@/actions/bien-types/get-bien-type-list.action";
+import { getCommuneByWilaya } from "@/actions/commune/get-commune-by-wilaya";
+import { getTransactionTypeList } from "@/actions/transaction-type/get-transaction-type-list.action";
+import { getAgentList } from "@/actions/users/get-agents-list.action";
+import { getWilayaList } from "@/actions/wilayas/get-wilaya-list.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import { Button } from "@/components/ui/button";
 import FilterDrawer from "@/components/ui/filter-drawer";
@@ -27,18 +33,8 @@ export default function BienFilter() {
     defaultValues: {},
   });
 
-  const selectedWilayaId = form.watch("wilaya_id");
+  const selectedWilayaId = form.watch("wilaya_id") || "";
 
-  const loadOptions = useCallback(async (optionsEndPoint: string): Promise<ListItem[]> => {
-    try {
-      return await fetch(optionsEndPoint, { cache: "force-cache", next: { revalidate: 300 } }).then((res) =>
-        res.json()
-      );
-    } catch (error) {
-      console.error("erroorrrrr", error);
-    }
-    return [];
-  }, []);
   async function onSubmit(values: BienFilterForm) {
     const params = new URLSearchParams();
 
@@ -54,23 +50,23 @@ export default function BienFilter() {
   const t = useTranslations();
 
   useEffect(() => {
-    loadOptions("/api/lists/wilayas").then((data) => {
+    getWilayaList().then((data) => {
       setWilayas(data);
       form.setValue("wilaya_id", searchParams.get("wilaya_id") || undefined);
     });
-    loadOptions("/api/lists/agents").then((data) => {
+    getAgentList().then((data) => {
       setAgents(data);
       form.setValue("agent_id", searchParams.get("agent_id") || undefined);
     });
-    loadOptions("/api/lists/biens/types").then((data) => {
+    getBienTypeLit().then((data) => {
       setBienTypes(data);
       form.setValue("bien_type_id", searchParams.get("bien_type_id") || undefined);
     });
-    loadOptions("/api/lists/transactions/types").then((data) => {
+    getTransactionTypeList().then((data) => {
       setTransactionTypes(data);
       form.setValue("transaction_type_id", searchParams.get("transaction_type_id") || undefined);
     });
-    loadOptions("/api/lists/biens/status").then((data) => {
+    getBienStatusList().then((data) => {
       setStatus(data);
       form.setValue("status_id", searchParams.get("status_id") || undefined);
     });
@@ -89,7 +85,7 @@ export default function BienFilter() {
   useEffect(() => {
     setCommunes([]);
     form.resetField("commune_id");
-    loadOptions(`/api/lists/wilayas/${selectedWilayaId}/communes`).then((data) => {
+    getCommuneByWilaya(selectedWilayaId).then((data) => {
       setCommunes(data);
       form.setValue("commune_id", searchParams.get("commune_id") || undefined);
     });
@@ -147,9 +143,7 @@ export default function BienFilter() {
             options={agents}
             placeholder={t("biens.filter.placeholder.agent")}
           />
-          <Button type="submit" >
-            {t("biens.filter.submit")}
-          </Button>
+          <Button type="submit">{t("biens.filter.submit")}</Button>
         </form>
       </Form>
     </FilterDrawer>

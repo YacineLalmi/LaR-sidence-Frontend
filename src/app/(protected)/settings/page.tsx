@@ -22,6 +22,11 @@ export default async function Settings() {
           icon={UsersRound}
         />
         <SettingCard
+          link={NAVIGATION_KEYS.SETTINGS.ROLES.ROOT}
+          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.ROLES.TITLE)}
+          icon={Shield}
+        />
+        <SettingCard
           link={NAVIGATION_KEYS.SETTINGS.BIENS.ROOT}
           title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.BIENS.TITLE)}
           icon={Building2}

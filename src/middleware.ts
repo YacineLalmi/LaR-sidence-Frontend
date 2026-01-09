@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clearCookies, getCookie, refreshTokens, removeCookie, setCookie } from "./lib/server.helper";
-import { UserService } from "./services/user.service";
-import { addHours } from "date-fns";
-import { Profile } from "./schemas/users/profile.schema";
+import { getCookie, refreshTokens, removeCookie, setCookie } from "./lib/server.helper";
 
 const adminRoutes = ["/dashboard", "/settings/users", "/settings", "/"];
 const agentRoutes = ["/dashboard", "/"];

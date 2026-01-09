@@ -25,7 +25,7 @@ export default function AdditionalCharacteristics({ form, isPending = false, bie
           <FormField
             key={feature.id}
             control={form.control}
-            name="addtional_characteristics"
+            name="additional_characteristics"
             render={({ field }) => (
               <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                 <FormControl>
