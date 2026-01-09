@@ -15,7 +15,7 @@ export default async function Colors({ searchParams }: { searchParams: Promise<{
 
   const data = await ColorService.findAll(queryParams);
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
         <NavigationButton
           title={translation(TRANSLATIONS_KEYS.SETTINGS.COLORS.TITLE)}

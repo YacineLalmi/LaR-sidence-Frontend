@@ -21,7 +21,7 @@ export default async function UpdateForm({ params }: { params: Promise<{ id: str
   const offerStatus = await OfferStatusService.list();
 
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
         <NavigationButton
           title={translation(TRANSLATIONS_KEYS.OFFERS.FORM.TITLE)}

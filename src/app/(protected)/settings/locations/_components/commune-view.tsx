@@ -22,7 +22,7 @@ export default async function CommuneView({ searchParams }: Props) {
   const data = await CommuneService.findByWilaya(selectedWilayaId, queryParams);
   const wilayas = await WilayaService.list();
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col ">
         <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.COMMUNES.TITLE)}</h1>
         <div className="flex w-full justify-between gap-2">

@@ -17,7 +17,7 @@ interface Props {
 export default function ClientsView<T>({ filters, table }: Props) {
   const t = useTranslations();
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex justify-between">
         <div className="flex w-full gap-2">
           <SearchField />

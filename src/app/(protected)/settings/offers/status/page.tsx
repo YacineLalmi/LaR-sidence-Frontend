@@ -18,7 +18,7 @@ export default async function OfferStatus({ searchParams }: { searchParams: Prom
   const data = await OfferStatusService.findAll(queryParams);
 
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
         <NavigationButton
           title={translation(TRANSLATIONS_KEYS.SETTINGS.OFFERS.STATUS.TITLE)}

@@ -20,7 +20,7 @@ export default async function WilayaView({ searchParams }: Props) {
   };
   const data = await WilayaService.findAll(queryParams);
   return (
-    <Card className="bg-transparent border-none shadow-none px-0">
+    <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
         <h1 className="text-[24px] font-bold">
           {wilayaTranslation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.WILAYAS.TITLE)}
