@@ -31,7 +31,7 @@ export default function UpdateClientTypeDialog({ clientType }: Props) {
     resolver: zodResolver(ClientTypeFormSchema),
     defaultValues: {
       name: clientType.name,
-      description: clientType.description,
+      description: clientType.description || "",
       is_active: clientType.is_active,
     },
   });

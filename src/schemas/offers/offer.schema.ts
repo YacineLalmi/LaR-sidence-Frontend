@@ -1,8 +1,8 @@
 import z from "zod";
 import { ClientSchema } from "../clients/client.schema";
-import { OfferStatusSchema } from "./offer-status.schema";
-import { OfferTypeSchema } from "./offer-type.schema";
 import { BienSchema } from "../biens/bien.schema";
+import { OfferStatusSchema } from "../offer-status/offer-status.schema";
+import { OfferTypeSchema } from "../offer-type/offer-type.schema";
 
 export const OfferSchema = z.object({
   id: z.number(),

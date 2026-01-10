@@ -22,6 +22,7 @@ import { BienForm, BienFormSchema } from "@/schemas/biens/bien-form.schema";
 import { createBienAction } from "@/actions/Bien/create.action";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { Loader } from "lucide-react";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 
 interface Props {
   bienTypes: ListItem[];
@@ -94,7 +95,7 @@ export default function CreateBienForm({
       console.log("Response:", response);
       setIsPending(false);
       if (response.isOk) {
-        router.push("/biens");
+        router.push(NAVIGATION_KEYS.BIENS.ROOT);
         customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
       } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     } catch (error) {

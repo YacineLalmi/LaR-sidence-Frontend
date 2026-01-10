@@ -1,6 +1,6 @@
 import z from "zod";
 
-const MAX_DOCUMENT_SIZE = 5 * 1024; // 5MB
+const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
 
 export const ClientFormSchema = z.object({

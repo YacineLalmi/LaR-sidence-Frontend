@@ -1,6 +1,8 @@
 {
   "title": "Gestion des clients",
-  "deleteText": "Voulez-vous supprimer le client avec l'ID {id}",
+  "deleteClient": "Voulez-vous supprimer le client avec l'ID {id}",
+  "addClient": "Ajouter un client",
+  "editClient": "Modifier un client",
   "filter": {
     "title": "Filtrer les client",
     "label": {
@@ -17,12 +19,8 @@
     }
   },
   "form": {
-    "title": "Créer un client",
-    "created": "Client créé avec succès",
-    "updated": "Client modifié avec succès",
-    "failedCreation": "Échec de la création de client",
-    "failedUpdate": "Échec de la modification de client",
-    "buttonText": "Créer un client",
+    "addClient": "Ajouter un client",
+    "editClient": "Modifier un client",
     "label": {
       "email": "E-mail",
       "mobile": "Mobile",
@@ -67,6 +65,7 @@
     "phoneNumber": "Numéro de téléphone",
     "status": "Statut",
     "createdAt": "Créé le",
+    "document": "Fiche",
     "actions": "Actions"
   }
 }

@@ -48,7 +48,7 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
       mobile: client.mobile,
       phone_numbers: client.phone_numbers,
       documents: [],
-      comment: client.comment,
+      comment: client.comment || "",
       company_name: client.company_name,
       trade_register: client.trade_register,
       tax_identification: client.tax_identification,
@@ -200,7 +200,7 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
                   <InputTextField
                     control={form.control}
                     name={`phone_numbers.${index}`}
-                    label={`${translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.PHONE_NUMBER, { index: ++index })}`}
+                    label={`${translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.PHONE_NUMBER, { index: index + 1 })}`}
                     placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.PHONE_NUMBER)}
                     RightIcon={Trash2}
                     RightIconOnClick={() => {
@@ -264,7 +264,7 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
           </Section>
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
+          {translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
         </Button>
       </form>
     </Form>

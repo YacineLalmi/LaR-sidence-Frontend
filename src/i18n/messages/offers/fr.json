@@ -1,6 +1,8 @@
 {
   "title": "Gestion des offres",
-  "deleteText": "Voulez-vous supprimer l'offer avec l'ID {id}",
+  "deleteOffer": "Voulez-vous supprimer l'offer avec l'ID {id}",
+  "addOffer": "Ajouter un Offer",
+  "editOffer": "Modifier un Offer",
   "filter": {
     "title": "Filtrer les offres",
     "label": {
@@ -17,12 +19,8 @@
     }
   },
   "form": {
-    "title": "Créer une offre",
-    "created": "Offre créée avec succès",
-    "updated": "Offre modifiée avec succès",
-    "failedCreation": "Échec de la création d'offre",
-    "failedUpdate": "Échec de la modification d'offre",
-    "buttonText": "Créer une offre",
+    "addOffer": "Ajouter un Offer",
+    "editOffer": "Modifier un Offer",
     "label": {
       "bien": "Bien",
       "type": "Type",
@@ -47,6 +45,7 @@
     "bien": "Bien",
     "client": "Client",
     "type": "Type",
+    "proposedPrice": "Prix",
     "status": "Statut",
     "createdAt": "Créé le"
   }

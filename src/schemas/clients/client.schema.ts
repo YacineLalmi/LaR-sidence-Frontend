@@ -15,7 +15,7 @@ export const ClientSchema = z.object({
   type: ClientTypeSchema,
   source: ClientSourceSchema,
   status: ClientStatusSchema,
-  comment: z.string().nullable().optional(),
+  comment: z.string().nullable(),
   company_name: z.string().nullable(),
   trade_register: z.string().nullable(),
   tax_identification: z.string().nullable(),

@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Offer } from "@/schemas/offers/offer.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, File, Trash2 } from "lucide-react";
+import { Edit, File, Image, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { ResponseMetaData } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
 import DeleteOfferDialog from "./delete-offer-dialog";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { ImageFetcher } from "@/components/ui/image-fetcher";
+import { StatusBadge } from "@/components/ui/status-badge";
+import CustomButton from "@/components/ui/custom-button";
+import OfferDocumentDialog from "./offer-document-dialog";
 
 interface Props {
   data: {
@@ -20,7 +25,7 @@ interface Props {
 }
 
 export default function OffersTable({ data }: Props) {
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const columns: ColumnDef<Offer>[] = [
     {
@@ -48,19 +53,24 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: t("offers.columns.id"),
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.ID),
     },
     {
-      accessorKey: "bien",
-      header: t("offers.columns.bien"),
+      id: "bien",
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.BIEN),
       cell: ({ row }) => {
-        const bien = row.original.bien;
-        return bien?.title || "-";
+        const firstImageId = row.original.bien.images?.[0]?.id;
+        return (
+          <div className="flex items-center gap-2">
+            {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
+            <div>{row.original.bien.title}</div>
+          </div>
+        );
       },
     },
     {
       accessorKey: "client",
-      header: t("offers.columns.client"),
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.CLIENT),
       cell: ({ row }) => {
         const client = row.original.client;
         if (!client) return "-";
@@ -71,15 +81,19 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "type",
-      header: t("offers.columns.type"),
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.TYPE),
       cell: ({ row }) => {
         const type = row.original.type;
         return type?.name || "-";
       },
     },
     {
+      accessorKey: "proposed_price",
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.PROPOSED_PRICE),
+    },
+    {
       accessorKey: "created_at",
-      header: t("offers.columns.createdAt"),
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.CREATED_AT),
       cell: ({ row }) => {
         const date = row.original.created_at;
         if (!date) return "-";
@@ -88,30 +102,21 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "status",
-      header: t("offers.columns.status"),
-      cell: ({ row }) => {
-        const status = row.original.status;
-        return status?.name || "-";
-      },
+      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.STATUS),
+      cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
       id: "document",
-      cell: (row) => (
-        <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-          <File className="h-4 w-4" />
-        </Button>
-      ),
+      cell: ({ row }) => <OfferDocumentDialog offer={row.original} />,
       header: "Fiche",
     },
     {
       id: "actions",
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <DeleteOfferDialog offer={row.original} />
           <Link href={`/offers/${row.original.id}`}>
-            <Button variant="ghost" size="sm" className="cursor-pointer" title="modifier">
-              <Edit className="h-4 w-4" />
-            </Button>
+            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
           </Link>
         </div>
       ),

@@ -10,6 +10,8 @@
   "submit": "Soumettre",
   "add": "Ajouter",
   "apply": "Appliquer",
+  "edit": "Modifier",
+  "print": "Imprimer",
   "description": "Description",
   "selectAPeriod": "Sélectionner une période",
   "noDataFound": "Aucune donnée trouvée",

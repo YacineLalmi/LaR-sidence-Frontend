@@ -166,7 +166,7 @@ export default function CreateClientForm({ types, status, sources, civilities }:
                   <InputTextField
                     control={form.control}
                     name={`phone_numbers.${index}`}
-                    label={`${translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.PHONE_NUMBER, { index: ++index })}`}
+                    label={`${translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.PHONE_NUMBER, { index: index + 1 })}`}
                     placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.PHONE_NUMBER)}
                     RightIcon={Trash2}
                     RightIconOnClick={() => {

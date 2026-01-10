@@ -15,9 +15,13 @@ import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
 import DeleteBienDialog from "./delete-bien-dialog";
+import { ResponseMetaData } from "@/lib/definitions";
 
 interface Props {
-  data: any;
+  data: {
+    items: Bien[];
+    meta?: ResponseMetaData;
+  };
 }
 
 export default function BienTable({ data }: Props) {
@@ -65,10 +69,10 @@ export default function BienTable({ data }: Props) {
       },
     },
     {
-      accessorKey: "bien_type.name",
+      id: "bien_type.name",
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.BIEN_TYPE),
       cell: ({ row }) => {
-        return row.original.bien_type?.name || "N/A";
+        return row.original.type.name;
       },
     },
     {
@@ -92,15 +96,9 @@ export default function BienTable({ data }: Props) {
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ADRESSE),
     },
     {
-      accessorKey: "bien_status.name",
+      id: "bien.status",
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.BIEN_STATUS),
-      cell: ({ row }) => {
-        <StatusBadge
-          bgColor={row.original.bien_status.color.background_color || "555"}
-          textColor={row.original.bien_status.color.text_color || "555"}
-          text={row.original.bien_status?.name || "N/A"}
-        />;
-      },
+      cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
       id: "fiche",
@@ -125,10 +123,5 @@ export default function BienTable({ data }: Props) {
     },
   ];
 
-  return (
-    <div className="flex flex-col gap-5">
-      <BienHeader />
-      <DataTable data={data} columns={columns} rowClassName="leading-14" />
-    </div>
-  );
+  return <DataTable data={data} columns={columns} rowClassName="leading-14" />;
 }

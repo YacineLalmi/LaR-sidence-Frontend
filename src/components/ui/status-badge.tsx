@@ -1,14 +1,18 @@
+import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
 import React from "react";
 
-export const StatusBadge = ({ text = "Inactif", bgColor = "bg-red-50", textColor = "text-red-500" }) => {
-  console.log("status text", text);
-  console.log("status bg color", bgColor);
-  console.log("status text color", textColor);
+interface Props {
+  status: BienStatus;
+}
+export const StatusBadge = ({ status }: Props) => {
   return (
-    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full`} style={{ backgroundColor: bgColor }}>
-      <div className={`w-2 h-2 rounded-full`} style={{ backgroundColor: textColor }} />
-      <span className={`text-sm font-medium`} style={{ color: textColor }}>
-        {text}
+    <div
+      className={`inline-flex items-center gap-2 px-2 py-1 rounded-full`}
+      style={{ backgroundColor: status.color.background_color }}
+    >
+      <div className={`w-2 h-2 rounded-full`} style={{ backgroundColor: status.color.text_color }} />
+      <span className={`text-sm font-medium`} style={{ color: status.color.text_color }}>
+        {status.name}
       </span>
     </div>
   );

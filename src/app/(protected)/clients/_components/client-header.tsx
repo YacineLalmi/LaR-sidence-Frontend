@@ -25,7 +25,7 @@ export default function ClientHeader({ types, status, sources, civilities }: Pro
         <ClientFilter types={types} status={status} sources={sources} civilities={civilities} />
       </div>
       <Link href={NAVIGATION_KEYS.CLIENTS.ADD}>
-        <CustomButton text={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.BUTTON_TEXT)} Icon={Plus} />
+        <CustomButton text={translation(TRANSLATIONS_KEYS.CLIENTS.ADD_CLIENT)} Icon={Plus} />
       </Link>
     </div>
   );

@@ -512,7 +512,7 @@ export const TRANSLATIONS_KEYS = {
     },
   },
   BIENS: {
-    MANAGEMENT: "biens.management",
+    TITLE: "biens.title",
     DELETE_TEXT: "biens.deleteText",
     FORM: {
       ROOT: "biens.form",
@@ -648,7 +648,9 @@ export const TRANSLATIONS_KEYS = {
   },
   CLIENTS: {
     TITLE: "clients.title",
-    DELETE_TEXT: "clients.deleteText",
+    DELETE_CLIENT: "clients.deleteClient",
+    ADD_CLIENT: "clients.addClient",
+    EDIT_CLIENT: "clients.editClient",
     FILTER: {
       TITLE: "clients.filter.title",
       LABEL: {
@@ -665,12 +667,8 @@ export const TRANSLATIONS_KEYS = {
       },
     },
     FORM: {
-      TITLE: "clients.form.title",
-      CREATED: "clients.form.created",
-      UPDATED: "clients.form.updated",
-      FAILED_CREATION: "clients.form.failedCreation",
-      FAILED_UPDATE: "clients.form.failedUpdate",
-      BUTTON_TEXT: "clients.form.buttonText",
+      ADD_CLIENT: "clients.form.addClient",
+      EDIT_CLIENT: "clients.form.editClient",
       LABEL: {
         EMAIL: "clients.form.label.email",
         MOBILE: "clients.form.label.mobile",
@@ -715,12 +713,16 @@ export const TRANSLATIONS_KEYS = {
       PHONE_NUMBER: "clients.columns.phoneNumber",
       STATUS: "clients.columns.status",
       CREATED_AT: "clients.columns.createdAt",
+      DOCUMENT: "clients.columns.document",
       ACTIONS: "clients.columns.actions",
     },
+    DOCUMENT: {},
   },
   OFFERS: {
     TITLE: "offers.title",
-    DELETE_TEXT: "offers.deleteText",
+    DELETE_OFFER: "offers.deleteOffer",
+    ADD_OFFER: "offers.addOffer",
+    EDIT_OFFER: "offers.editOffer",
     FILTER: {
       TITLE: "offers.filter.title",
       LABEL: {
@@ -737,12 +739,8 @@ export const TRANSLATIONS_KEYS = {
       },
     },
     FORM: {
-      TITLE: "offers.form.title",
-      CREATED: "offers.form.created",
-      UPDATED: "offers.form.updated",
-      FAILED_CREATION: "offers.form.failedCreation",
-      FAILED_UPDATE: "offers.form.failedUpdate",
-      BUTTON_TEXT: "offers.form.buttonText",
+      ADD_OFFER: "offers.form.addOffer",
+      EDIT_OFFER: "offers.form.editOffer",
       LABEL: {
         BIEN: "offers.form.label.bien",
         CLIENT: "offers.form.label.client",
@@ -767,6 +765,7 @@ export const TRANSLATIONS_KEYS = {
       BIEN: "offers.columns.bien",
       CLIENT: "offers.columns.client",
       TYPE: "offers.columns.type",
+      PROPOSED_PRICE: "offers.columns.proposedPrice",
       STATUS: "offers.columns.status",
       CREATED_AT: "offers.columns.createdAt",
     },
@@ -784,6 +783,8 @@ export const TRANSLATIONS_KEYS = {
     SUBMIT: "common.submit",
     ADD: "common.add",
     APPLY: "common.apply",
+    EDIT: "common.edit",
+    PRINT: "common.print",
     DESCRIPTION: "common.description",
     SELECT_A_PERIOD: "common.selectAPeriod",
     NO_DATA_FOUND: "common.noDataFound",

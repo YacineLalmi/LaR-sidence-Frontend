@@ -1,3 +1,4 @@
+import { deleteClientAction } from "@/actions/clients/delete.action";
 import { deleteColorAction } from "@/actions/colors/delete.action";
 import CustomButton from "@/components/ui/custom-button";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
@@ -22,7 +23,7 @@ export default function DeleteClientDialog({ client }: Props) {
   async function onConfirm(id: number) {
     setIsPending(true);
     try {
-      const response = await deleteColorAction(id);
+      const response = await deleteClientAction(id);
       setIsPending(false);
       if (response.isOk) {
         setIsDeleteOpen(false);
@@ -35,7 +36,7 @@ export default function DeleteClientDialog({ client }: Props) {
   }
   return (
     <DeleteConfirmationDialog
-      title={translation(TRANSLATIONS_KEYS.CLIENTS.DELETE_TEXT, { id: client.id })}
+      title={translation(TRANSLATIONS_KEYS.CLIENTS.DELETE_CLIENT, { id: client.id })}
       isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}

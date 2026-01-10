@@ -4,7 +4,7 @@ import { Button } from "./button";
 
 interface Props {
   text?: string;
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e:MouseEvent<HTMLButtonElement>) => void;
   Icon?: LucideIcon;
   className?: string;
   disabled?: boolean;

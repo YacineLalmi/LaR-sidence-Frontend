@@ -25,7 +25,7 @@ export default function OffersHeader({ types, status, clients, biens }: Props) {
         <OffersFilter types={types} status={status} biens={biens} clients={clients} />
       </div>
       <Link href={NAVIGATION_KEYS.OFFERS.ADD}>
-        <CustomButton text={translation(TRANSLATIONS_KEYS.OFFERS.FORM.BUTTON_TEXT)} Icon={Plus} />
+        <CustomButton text={translation(TRANSLATIONS_KEYS.OFFERS.ADD_OFFER)} Icon={Plus} />
       </Link>
     </div>
   );

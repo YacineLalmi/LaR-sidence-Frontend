@@ -119,7 +119,6 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
             name="conditions"
             label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMDITIONS)}
             disabled={isPending}
-            required
             placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMDITIONS)}
           />
           <InputTextArea
@@ -127,7 +126,6 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
             name="comment"
             label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMMENT)}
             disabled={isPending}
-            required
             placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMMENT)}
           />
         </div>

@@ -22,7 +22,7 @@ export default async function OfferAdd() {
     <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
         <NavigationButton
-          title={translation(TRANSLATIONS_KEYS.OFFERS.FORM.TITLE)}
+          title={translation(TRANSLATIONS_KEYS.OFFERS.FORM.ADD_OFFER)}
           backLink={NAVIGATION_KEYS.OFFERS.ROOT}
         />
       </CardHeader>

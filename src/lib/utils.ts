@@ -191,7 +191,7 @@ export const loadOptions = async (endPoint: string) => {
 export async function base64ToFile(base64: string, filename: string, mimeType: string): Promise<File> {
   const res = await fetch(`data:${mimeType};base64,${base64}`);
   const blob = await res.blob();
-  return new File([blob], filename, { type: mimeType });
+  return new File([blob], filename, { type: mimeType, lastModified: Date.now() });
 }
 
 // Helper function to fetch file as File object

@@ -23,6 +23,7 @@ import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { Bien } from "@/schemas/biens/bien.schema";
 import { getFileBlob } from "@/actions/files/get-file-blob.action";
 import { updateBienAction } from "@/actions/Bien/update.action";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 
 interface Props {
   bien: Bien;
@@ -51,7 +52,7 @@ export default function UpdateBienForm({
   const [activeStep, setActiveStep] = useState<number>(1);
   const [isLoadingFiles, setIsLoadingFiles] = useState<boolean>(true);
 
-  const commonTranslation = useTranslations();
+  const translation = useTranslations();
   const router = useRouter();
   const form = useForm<BienForm>({
     resolver: zodResolver(BienFormSchema),
@@ -59,9 +60,9 @@ export default function UpdateBienForm({
     defaultValues: {
       client_id: bien.client.id.toString(),
       title: bien.title,
-      bien_type_id: bien.bien_type.id.toString(),
+      bien_type_id: bien.type.id.toString(),
       transaction_type_id: bien.transaction_type.id.toString(),
-      bien_status_id: bien.bien_status.id.toString(),
+      bien_status_id: bien.status.id.toString(),
       agent_id: bien.agent.id.toString(),
       price: bien.price,
       monthly_charges: bien.monthly_charges,
@@ -113,7 +114,7 @@ export default function UpdateBienForm({
         form.setValue("documents", validDocuments as any);
       } catch (error) {
         console.error("Error loading files:", error);
-        customToast.error(commonTranslation("errors.loadingfiles"));
+        customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.LOADING_FILES));
       } finally {
         setIsLoadingFiles(false);
       }
@@ -131,12 +132,11 @@ export default function UpdateBienForm({
       console.log("Response:", response);
       setIsPending(false);
       if (response.isOk) {
-        router.push("/biens");
-        customToast.success(commonTranslation("success.operationcompleted"));
-      } else customToast.error(response.errorMessage || commonTranslation("errors.somethingwrong"));
+        router.push(NAVIGATION_KEYS.BIENS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
+      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     } catch (error) {
-      console.log(error);
-      customToast.error(commonTranslation("errors.somethingwrong"));
+      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     }
     setIsPending(false);
   }
@@ -166,7 +166,7 @@ export default function UpdateBienForm({
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">{commonTranslation("loading")}</p>
+          <p className="text-gray-600">{translation(TRANSLATIONS_KEYS.COMMON.LOADING)}</p>
         </div>
       </div>
     );
@@ -225,7 +225,7 @@ export default function UpdateBienForm({
               className="border-1 cursor-pointer w-52 p-5"
               onClick={() => setActiveStep((prev) => prev - 1)}
             >
-              {commonTranslation("previous")}
+              {translation(TRANSLATIONS_KEYS.COMMON.PREVIOUS)}
             </Button>
           )}
           {activeStep < sampleSteps.length && (
@@ -234,12 +234,12 @@ export default function UpdateBienForm({
               className="border-1 cursor-pointer w-52 p-5"
               onClick={() => setActiveStep((prev) => prev + 1)}
             >
-              {commonTranslation("next")}
+              {translation(TRANSLATIONS_KEYS.COMMON.NEXT)}
             </Button>
           )}
           {activeStep === sampleSteps.length && (
             <Button className="border-1 cursor-pointer w-52 p-5" type="submit" disabled={isPending}>
-              {commonTranslation("submit")}
+              {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
             </Button>
           )}
         </div>

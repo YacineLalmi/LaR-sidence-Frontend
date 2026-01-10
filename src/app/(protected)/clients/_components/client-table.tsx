@@ -13,6 +13,8 @@ import CustomButton from "@/components/ui/custom-button";
 import DeleteClientDialog from "./delete-client-dialog";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { StatusBadge } from "@/components/ui/status-badge";
+import ClientDocumentDialog from "./client-document-dialog";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 
 interface Props {
   data: {
@@ -71,20 +73,19 @@ export default function ClientTable({ data }: Props) {
     {
       accessorKey: "status.name",
       header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.STATUS),
-      cell: ({ row }) => (
-        <StatusBadge
-          text={row.original.status.name}
-          bgColor={row.original.status.color.background_color}
-          textColor={row.original.status.color.text_color}
-        />
-      ),
+      cell: ({ row }) => <StatusBadge status={row.original.status} />,
+    },
+    {
+      id: "document",
+      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.DOCUMENT),
+      cell: ({ row }) => <ClientDocumentDialog client={row.original} />,
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <DeleteClientDialog client={row.row.original} />
-          <Link href={`/clients/${row.row.original.id}`}>
+          <DeleteClientDialog client={row.original} />
+          <Link href={NAVIGATION_KEYS.CLIENTS.EDIT(row.original.id)}>
             <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
           </Link>
         </div>
