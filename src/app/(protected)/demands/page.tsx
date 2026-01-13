@@ -1,33 +1,38 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
 import { DemandsService } from "@/services/demands.service";
-import DemandsTable from "./_components/DemandsTable";
+import DemandsTable from "./_components/demands-table";
 import { BienService } from "@/services/bien.service";
 import { UserService } from "@/services/user.service";
 import { ClientService } from "@/services/client.service";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import DemandsHeader from "./_components/demands-header";
+import { DemandTypeService } from "@/services/demand-type.service";
+import { DemandStatusService } from "@/services/demand-status.service";
+import { DemandSourceService } from "@/services/demand-source.service";
+import { DemandPriorityService } from "@/services/demand-priorities.service";
 
 export default async function Demands({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
 
   const demands = await DemandsService.findAll(queryParams);
-  const types = await DemandsService.typesList().catch(() => []);
-  const status = await DemandsService.statusList().catch(() => []);
-  const priorities = await DemandsService.prioritiesList().catch(() => []);
-  const sources = await DemandsService.sourcesList().catch(() => []);
+  console.log("demandssss", demands);
+  const types = await DemandTypeService.list().catch(() => []);
+  const status = await DemandStatusService.list().catch(() => []);
+  const priorities = await DemandPriorityService.list().catch(() => []);
+  const sources = await DemandSourceService.list().catch(() => []);
   const clients = await ClientService.list();
   const biens = await BienService.list();
   const agents = await UserService.agentList().catch(() => []);
 
-  const t = await getTranslations();
+  const translation = await getTranslations();
 
   return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <h1 className="text-2xl font-bold">{t("demands.title")}</h1>
-      </div>
-      <div>
-        <DemandsTable
-          data={demands}
+    <Card className="bg-transparent border-none shadow-none p-0">
+      <CardHeader className="px-0 flex flex-col">
+        <h1 className="text-[32px] font-bold">{translation(TRANSLATIONS_KEYS.DEMANDS.TITLE)}</h1>
+        <DemandsHeader
           types={types}
           status={status}
           priorities={priorities}
@@ -36,7 +41,10 @@ export default async function Demands({ searchParams }: { searchParams: Promise<
           biens={biens}
           agents={agents}
         />
-      </div>
-    </div>
+      </CardHeader>
+      <CardContent className="px-0">
+        <DemandsTable data={demands} />
+      </CardContent>
+    </Card>
   );
 }

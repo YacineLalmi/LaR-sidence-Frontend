@@ -55,7 +55,6 @@ export default function CreateClientForm({ types, status, sources, civilities }:
 
   async function onSubmit(values: ClientForm) {
     setIsPending(true);
-    console.log(values);
     try {
       const response = await createClientAction(values);
       setIsPending(false);
@@ -87,6 +86,7 @@ export default function CreateClientForm({ types, status, sources, civilities }:
               disabled={isPending}
               required
             />
+            
             {form.watch("civility") === "C" ? (
               <div className="grid grid-cols-2 gap-3">
                 <InputTextField

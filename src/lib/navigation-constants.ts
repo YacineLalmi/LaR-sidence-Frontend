@@ -27,6 +27,7 @@ export const NAVIGATION_KEYS = {
   DEMANDS: {
     ROOT: "/demands",
     ADD: "/demands/ajouter",
+    EDIT: (id: string | number) => `/demands/${id}`,
   },
 
   // Offers routes

@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { customToast } from "@/lib/utils";
@@ -6,7 +7,7 @@ import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import GeneralInformation from "./general-information";
 import Localisation from "./localisation";
@@ -51,7 +52,6 @@ export default function CreateBienForm({
   const router = useRouter();
   const form = useForm<BienForm>({
     resolver: zodResolver(BienFormSchema),
-    mode: "onChange",
     defaultValues: {
       client_id: undefined,
       title: "",
@@ -89,10 +89,10 @@ export default function CreateBienForm({
   // 2. Define a submit handler.
   async function onSubmit(values: BienForm) {
     setIsPending(true);
-    console.log("Form values:", values);
+
     try {
       const response = await createBienAction(values);
-      console.log("Response:", response);
+
       setIsPending(false);
       if (response.isOk) {
         router.push(NAVIGATION_KEYS.BIENS.ROOT);

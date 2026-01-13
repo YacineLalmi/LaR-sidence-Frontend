@@ -5,7 +5,7 @@ import { handleServerActionError } from "@/lib/utils";
 import { DemandForm } from "@/schemas/demands/demand-form.schema";
 import { DemandsService } from "@/services/demands.service";
 
-export async function updateDemandAction(data: DemandForm, id: string): Promise<FormState> {
+export async function updateDemandAction(data: DemandForm, id: number): Promise<FormState> {
   try {
     await DemandsService.update(data, id);
     return { isOk: true };
@@ -17,4 +17,3 @@ export async function updateDemandAction(data: DemandForm, id: string): Promise<
     };
   }
 }
-

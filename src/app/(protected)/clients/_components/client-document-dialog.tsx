@@ -3,11 +3,9 @@
 import React, { useState } from "react";
 import { X, FileText, FileSearch } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/custom-button";
 import { Client } from "@/schemas/clients/client.schema";
 import { getFileBlob } from "@/actions/files/get-file-blob.action";
-import { FileBlob } from "@/schemas/file/file-blob.schema";
 import { File } from "@/schemas/file/file.schema";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { format } from "date-fns";

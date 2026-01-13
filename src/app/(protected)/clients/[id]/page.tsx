@@ -8,8 +8,8 @@ import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { getTranslations } from "next-intl/server";
 
 export default async function UpdateForm({ params }: { params: Promise<{ id: string }> }) {
-  const translation = await getTranslations();
   const id = (await params).id;
+  const translation = await getTranslations();
   const clientTypes = await ClientService.typesList();
   const clientStatus = await ClientService.statusList();
   const clientSources = await ClientService.sourcesList();

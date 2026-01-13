@@ -62,6 +62,7 @@
     "budget": "Budget",
     "dateAdded": "Date d'Ajout",
     "status": "Statut",
+    "fiche": "Fiche",
     "actions": "Actions"
   },
   "actions": {
@@ -82,4 +83,3 @@
     "updatedAt": "Modifié le"
   }
 }
-

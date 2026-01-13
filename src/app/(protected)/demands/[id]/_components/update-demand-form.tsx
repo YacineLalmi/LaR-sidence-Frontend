@@ -1,14 +1,18 @@
 "use client";
 
 import { createDemandAction } from "@/actions/demands/create.action";
+import { updateDemandAction } from "@/actions/demands/update.action";
 import Section from "@/app/(protected)/biens/add/_components/section";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { customToast } from "@/lib/utils";
 import { DemandForm, DemandFormSchema } from "@/schemas/demands/demand-form.schema";
+import { Demand } from "@/schemas/demands/demand.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -17,6 +21,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
+  demand: Demand;
   types: ListItem[];
   status: ListItem[];
   priorities: ListItem[];
@@ -26,42 +31,47 @@ interface Props {
   agents: ListItem[];
 }
 
-export default function CreateDemandForm({ types, status, priorities, sources, clients, biens, agents }: Props) {
+export default function UpdateDemandForm({
+  types,
+  status,
+  priorities,
+  sources,
+  clients,
+  biens,
+  agents,
+  demand,
+}: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
-  const t = useTranslations();
+  const translation = useTranslations();
 
   const form = useForm<DemandForm>({
     resolver: zodResolver(DemandFormSchema),
     defaultValues: {
-      title: "",
-      type_id: "",
-      client_id: "",
-      source_id: "",
-      bien_id: "",
-      agent_id: "",
-      status_id: "",
-      priority_id: "",
-      budget: undefined,
-      comment: "",
+      title: demand.title,
+      type_id: demand.type.id.toString(),
+      client_id: demand.client.id.toString(),
+      source_id: demand.source.id.toString(),
+      bien_id: demand.bien.id.toString(),
+      agent_id: demand.agent.id.toString(),
+      status_id: demand.status.id.toString(),
+      priority_id: demand.priority.id.toString(),
+      budget: demand.budget,
+      comment: demand.comment,
     },
   });
 
   async function onSubmit(values: DemandForm) {
     setIsPending(true);
     try {
-      const response = await createDemandAction(values);
+      const response = await updateDemandAction(values, demand.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push("/demands");
-        customToast.success(t("common.success.operationcompleted"));
-      } else {
-        customToast.error(response.errorMessage || t("common.errors.somethingwrong"));
-      }
+        router.push(NAVIGATION_KEYS.DEMANDS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
+      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     } catch (error) {
-      console.log(error);
-      customToast.error(t("common.errors.somethingwrong"));
-      setIsPending(false);
+      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     }
   }
 
@@ -74,101 +84,101 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-2 gap-5">
         <div className="grid grid-cols-1 gap-3">
-          <Section header={t("demands.form.sections.generalInformation")}>
+          <Section header={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}>
             <InputTextField
               control={form.control}
               name="title"
-              label={t("demands.form.label.title")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}
               disabled={isPending}
               required
-              placeholder={t("demands.form.placeholder.title")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.TITLE)}
             />
             <InputSelectField
               control={form.control}
               name="type_id"
-              label={t("demands.form.label.type")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TYPE)}
               options={types}
-              placeholder={t("demands.form.placeholder.type")}
-              disabled={isPending}
-              required
-            />
-            <InputSelectField
-              control={form.control}
-              name="agent_id"
-              label={t("demands.form.label.agent")}
-              options={agents}
-              placeholder={t("demands.form.placeholder.agent")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.TYPE)}
               disabled={isPending}
               required
             />
             <InputSelectField
               control={form.control}
               name="client_id"
-              label={t("demands.form.label.client")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.CLIENT)}
               options={clients}
-              placeholder={t("demands.form.placeholder.client")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.CLIENT)}
               disabled={isPending}
               required
             />
             <InputSelectField
               control={form.control}
               name="bien_id"
-              label={t("demands.form.label.bien")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.BIEN)}
               options={biens}
-              placeholder={t("demands.form.placeholder.bien")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.BIEN)}
               disabled={isPending}
               required
             />
             <InputSelectField
               control={form.control}
               name="status_id"
-              label={t("demands.form.label.status")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.STATUS)}
               options={status}
-              placeholder={t("demands.form.placeholder.status")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.STATUS)}
               disabled={isPending}
               required
             />
             <InputTextField
               control={form.control}
               name="budget"
-              label={t("demands.form.label.budget")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.BUDGET)}
               disabled={isPending}
-              placeholder={t("demands.form.placeholder.budget")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.BUDGET)}
             />
+          </Section>
+        </div>
+        <div>
+          <Section header={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}>
             <InputSelectField
               control={form.control}
               name="priority_id"
-              label={t("demands.form.label.priority")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.PRIORITY)}
               options={priorities}
-              placeholder={t("demands.form.placeholder.priority")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.PRIORITY)}
+              disabled={isPending}
+              required
+            />
+            <InputSelectField
+              control={form.control}
+              name="agent_id"
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.AGENT)}
+              options={agents}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.AGENT)}
               disabled={isPending}
               required
             />
             <InputSelectField
               control={form.control}
               name="source_id"
-              label={t("demands.form.label.source")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.SOURCE)}
               options={sources}
-              placeholder={t("demands.form.placeholder.source")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.SOURCE)}
               disabled={isPending}
               required
             />
-          </Section>
-        </div>
-        <div>
-          <Section header={t("demands.form.sections.internalComments")}>
             <InputTextArea
               control={form.control}
               name="comment"
-              label={t("demands.form.label.comment")}
+              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.COMMENT)}
               disabled={isPending}
-              placeholder={t("demands.form.placeholder.comment")}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.COMMENT)}
               rows={10}
             />
           </Section>
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto" type="submit" disabled={isPending}>
-          {t("demands.form.publish")}
+          {translation("demands.form.publish")}
         </Button>
       </form>
     </Form>
