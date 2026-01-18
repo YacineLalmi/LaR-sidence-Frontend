@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ForgotPasswordDataForm, ForgotPasswordDataFormSchema } from "@/schemas/auth/forget-password-form.schema";
 import { forgotPasswordAction } from "@/actions/authentication/forget-password.action";
+import CustomButton from "@/components/ui/custom-button";
+import { ArrowLeft } from "lucide-react";
 
 export function ForgetPasswordForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
