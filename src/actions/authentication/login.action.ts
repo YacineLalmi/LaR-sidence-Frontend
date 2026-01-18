@@ -2,14 +2,14 @@
 
 import { handleServerActionError } from "@/lib/utils";
 import { FormState } from "@/lib/definitions";
-import { authService } from "@/services/auth.service";
+import { AuthService } from "@/services/auth.service";
 import { differenceInSeconds } from "date-fns";
-import { LoginFormData } from "@/schemas/auth.schema";
 import { setCookie } from "@/lib/server.helper";
+import { LoginFormData } from "@/schemas/auth/auth.schema";
 
 export async function loginAction(data: LoginFormData): Promise<FormState> {
   try {
-    const response = await authService.login(data);
+    const response = await AuthService.login(data);
     await setCookie({
       key: "access_token",
       value: response.access_token,

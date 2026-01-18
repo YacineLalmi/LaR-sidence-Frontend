@@ -17,28 +17,36 @@ import { useTranslations } from "next-intl";
 import InputPasswordField from "@/components/custom-inputs/input-password-field";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/actions/authentication/login.action";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-export function LoginForm() {
+import { ResetPasswordDataForm, ResetPasswordDataFormSchema } from "@/schemas/auth/reset-password-form.schema";
+import { ResetPasswordAction } from "@/actions/authentication/reset-password.action";
+
+export function ResetPasswordForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const translation = useTranslations();
   const router = useRouter();
+  const searchParams = new URLSearchParams(window.location.search);
+  const token = searchParams.get("token") || "";
+  const email = searchParams.get("email") || "";
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(LoginFormDataSchema),
+  const form = useForm<ResetPasswordDataForm>({
+    resolver: zodResolver(ResetPasswordDataFormSchema),
     defaultValues: {
-      username: "",
+      email: email,
+      token: token,
       password: "",
+      password_confirmation: "",
     },
   });
 
-  async function onSubmit(values: LoginFormData) {
+  async function onSubmit(values: ResetPasswordDataForm) {
+    console.log(values);
     setIsPending(true);
     try {
-      const response = await loginAction(values);
+      const response = await ResetPasswordAction(values);
       if (response.isOk) {
         router.push(NAVIGATION_KEYS.DASHBOARD);
         customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
@@ -53,28 +61,27 @@ export function LoginForm() {
   return (
     <Card className="w-full bg-transparent shadow-none border-0">
       <CardHeader>
-        <CardTitle className="flex justify-center items-center mb-[36px] ">
-          <Image src={logo} alt="ss" width={117} className="rounded-[16px]" />
+        <CardTitle className="flex justify-center items-center mb-[36px] text-[36px] ">
+          Réinitialiser votre mot de passe
         </CardTitle>
-        <CardDescription className="flex flex-col tracking-widest  text-black">
-          <span className="text-[36px] font-bold">{translation(TRANSLATIONS_KEYS.LOGIN.WELCOME)}</span>
-          <span>Connectez-vous</span>
+        <CardDescription className="flex flex-col tracking-widest  text-black text-[16px] text-center mb-[36px]">
+          Veuillez saisir un nouveau mot de passe pour votre compte.
         </CardDescription>
       </CardHeader>
       <CardContent className="my-0">
         <Form {...form}>
-          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
-            <InputTextField
-              control={form.control}
-              name="username"
-              label={translation(TRANSLATIONS_KEYS.LOGIN.USERNAME.LABEL)}
-              disabled={isPending}
-              required
-              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.USERNAME.PLACEHOLDER)}
-            />
+          <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[36px]">
             <InputPasswordField
               control={form.control}
               name="password"
+              label={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.LABEL)}
+              disabled={isPending}
+              required
+              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.PLACEHOLDER)}
+            />
+            <InputPasswordField
+              control={form.control}
+              name="password_confirmation"
               label={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.LABEL)}
               disabled={isPending}
               required
@@ -84,21 +91,12 @@ export function LoginForm() {
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col gap-2 mt-[24px]">
-        <div className="flex justify-between my-2 w-full">
-          <div className="flex items-center gap-3">
-            <Checkbox id="saveme" />
-            <Label htmlFor="saveme">Se souvenir de moi</Label>
-          </div>
-          <Link href={NAVIGATION_KEYS.AUTH.FORGET_PASSWORD} className=" flex justify-end">
-            {translation(TRANSLATIONS_KEYS.LOGIN.FORGOT_YOUR_PASSWORD)}
-          </Link>
-        </div>
         <Button
           type="submit"
           className="w-full rounded-4xl text-xl p-6 font-light flex justify-center cursor-pointer"
-          form="login-form"
+          form="reset-password-form"
         >
-          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS.LOGIN.SUBMIT)}
+          {isPending ? <MirageLoader /> : "Réinitialiser le mot de passe"}
         </Button>
       </CardFooter>
     </Card>

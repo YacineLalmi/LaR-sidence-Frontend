@@ -1,11 +1,8 @@
-import { ErrorCodes } from "@/lib/constants";
 import { z } from "zod";
 
 export const LoginFormDataSchema = z.object({
-  username: z.string({
-    message: ErrorCodes.REQUIRED_FIELD,
-  }),
-  password: z.string().min(8, { message: ErrorCodes.TOO_SHORT }),
+  username: z.string().min(1, { message: "Le nom d'utilisateur est requis" }),
+  password: z.string().min(8, { message: "Le mot de passe doit contenir au moins 8 caractères" }),
 });
 
 export type LoginFormData = z.infer<typeof LoginFormDataSchema>;

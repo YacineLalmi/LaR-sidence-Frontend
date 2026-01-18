@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useEffect } from "react";
 import carousel1 from "@/assests/images/carousel-1.jpg";
 import carousel2 from "@/assests/images/carousel-2.jpg";
 import carousel3 from "@/assests/images/carousel.jpg";
+import carousel4 from "@/assests/images/carousel-3.jpg";
+import carousel5 from "@/assests/images/carousel-4.jpg";
+import carousel6 from "@/assests/images/carousel-5.jpg";
 import Image from "next/image";
 
 const carouselData = [
@@ -28,9 +30,27 @@ const carouselData = [
     title: "Luxury Interiors",
     description: "Experience elegant interior designs that transform spaces into luxurious sanctuaries.",
   },
+  {
+    id: 4,
+    image: carousel4,
+    title: "Luxury Interiors",
+    description: "Experience elegant interior designs that transform spaces into luxurious sanctuaries.",
+  },
+  {
+    id: 5,
+    image: carousel5,
+    title: "Luxury Interiors",
+    description: "Experience elegant interior designs that transform spaces into luxurious sanctuaries.",
+  },
+  {
+    id: 6,
+    image: carousel6,
+    title: "Luxury Interiors",
+    description: "Experience elegant interior designs that transform spaces into luxurious sanctuaries.",
+  },
 ];
 
-export default function Component() {
+export default function CustomCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);

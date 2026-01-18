@@ -6,13 +6,10 @@ import Profile from "./components/profile";
 
 export default function NavBar() {
   return (
-    <Card className="rounded-none w-full bg-transparent border-none shadow-none">
-      <CardContent className="flex justify-between items-center">
-        <CustomBreadCrumb />
-        <div className="flex gap-3 items-center">
-          <Settings />
-          <Profile />
-        </div>
+    <Card className="rounded-none w-full bg-transparent border-none shadow-none mt-4 p-0">
+      <CardContent className="flex justify-end items-center">
+        <Settings />
+        <Profile />
       </CardContent>
     </Card>
   );

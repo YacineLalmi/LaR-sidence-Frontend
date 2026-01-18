@@ -2,7 +2,11 @@
 
 export const NAVIGATION_KEYS = {
   // Unprotected routes
-  LOGIN: "/login",
+  AUTH: {
+    LOGIN: "/login",
+    FORGET_PASSWORD: "/password/forget",
+    RESET_PASSWORD: "/password/reset",
+  },
 
   // Main protected routes
   DASHBOARD: "/dashboard",
@@ -36,6 +40,14 @@ export const NAVIGATION_KEYS = {
     ADD: "/offers/add",
     DETAIL: (id: string | number) => `/offers/${id}`,
     EDIT: (id: string | number) => `/offers/${id}`,
+  },
+
+  // Events routes
+  EVENTS: {
+    ROOT: "/events",
+    ADD: "/events/add",
+    DETAIL: (id: string | number) => `/events/${id}`,
+    EDIT: (id: string | number) => `/events/${id}`,
   },
 
   // Settings routes

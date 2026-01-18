@@ -10,7 +10,7 @@ export default async function ProtectedPagesLayout({ children }: { children: Rea
         <SideBar />
         <SidebarInset className="bg-transparent">
           <NavBar />
-          <main className="px-5">{children}</main>
+          <main className="px-5 -mt-4">{children}</main>
         </SidebarInset>
       </SidebarProvider>
     </div>

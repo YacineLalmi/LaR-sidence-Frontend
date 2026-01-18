@@ -106,28 +106,28 @@ export const customToast = {
   success: (message: string, options: ExternalToast = {}) => {
     return toast.success(message, {
       ...options,
-      duration: 5000,
+      duration: 3000,
       cancel: { label: "x", onClick: () => console.log(this) },
     });
   },
   info: (message: string, options: ExternalToast = {}) => {
     return toast.info(message, {
       ...options,
-      duration: 5000,
+      duration: 3000,
       cancel: { label: "x", onClick: () => console.log(this) },
     });
   },
   warning: (message: string, options: ExternalToast = {}) => {
     return toast.warning(message, {
       ...options,
-      duration: 5000,
+      duration: 3000,
       cancel: { label: "x", onClick: () => console.log(this) },
     });
   },
   error: (message: string, options: ExternalToast = {}) => {
     return toast.error(message, {
       ...options,
-      duration: Infinity,
+      duration: 5000,
       cancel: { label: "x", onClick: () => console.log(this) },
     });
   },
@@ -139,9 +139,6 @@ export function hasIntersection<T>(arr1: T[], arr2: T[]): boolean {
 }
 
 export const handleServerActionError = (error: any) => {
-  console.log("Errrrorror CCOOOODE", error.code);
-  console.log("Errrrorror message", error.message);
-  console.log("Errrrorror message", error?.cause?.code);
   if (error instanceof ResponseValidationError) {
     return {
       errorMessage: error.message,

@@ -1,28 +1,22 @@
 import z from "zod";
-import { EventTypeSchema } from "./event-type.schema";
-import { ListItemSchema } from "../global.schema";
+import { ClientSchema } from "../clients/client.schema";
+import { BienSchema } from "../biens/bien.schema";
+import { UserSchema } from "../users/user.schema";
+import { EventTypeSchema } from "../event-types/event-type.schema";
 
 export const EventSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   title: z.string(),
-  description: z.string().nullable().optional(),
-  start_date: z.union([z.string(), z.date()]).transform((val) => (typeof val === "string" ? new Date(val) : val)),
-  end_date: z.union([z.string(), z.date()]).transform((val) => (typeof val === "string" ? new Date(val) : val)),
-  type_id: z.string().nullable().optional(),
-  type: EventTypeSchema.nullable().optional(),
-  agent_id: z.string().nullable().optional(),
-  agent: ListItemSchema.nullable().optional(),
-  bien_id: z.string().nullable().optional(),
-  bien: ListItemSchema.nullable().optional(),
-  client_id: z.string().nullable().optional(),
-  client: ListItemSchema.nullable().optional(),
-  created_at: z.union([z.string(), z.date()]).optional().nullable(),
-  updated_at: z.union([z.string(), z.date()]).optional().nullable(),
-  deleted_at: z.union([z.string(), z.date()]).optional().nullable(),
+  description: z.string().nullable(),
+  start_date: z.string(),
+  end_date: z.string(),
+  type: EventTypeSchema,
+  agent: UserSchema,
+  bien: BienSchema,
+  client: ClientSchema,
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime().nullable(),
+  deleted_at: z.iso.datetime().nullable(),
 });
 
 export type Event = z.infer<typeof EventSchema>;
-
-
-
-

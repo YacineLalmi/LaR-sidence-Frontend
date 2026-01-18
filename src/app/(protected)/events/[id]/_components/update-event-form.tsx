@@ -1,0 +1,154 @@
+"use client";
+
+import { createEventAction } from "@/actions/events/create-event.action";
+import InputSelectField from "@/components/custom-inputs/input-select";
+import InputTextField from "@/components/custom-inputs/input-text";
+import InputTextArea from "@/components/custom-inputs/input-textarea";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { customToast } from "@/lib/utils";
+import { EventForm, EventFormSchema } from "@/schemas/events/event-form.schema";
+import { ListItem } from "@/schemas/global.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { InputDateTimeField } from "@/components/custom-inputs/input-datetime";
+import { Event } from "@/schemas/events/event.schema";
+import { updateEventAction } from "@/actions/events/update-event.action";
+
+interface Props {
+  eventTypes: ListItem[];
+  agents: ListItem[];
+  biens: ListItem[];
+  clients: ListItem[];
+  event: Event;
+}
+interface Props {}
+export default function UpdateEventForm({ eventTypes, agents, biens, clients, event }: Props) {
+  const [isPending, setIsPending] = useState<boolean>(false);
+
+  const router = useRouter();
+  const translation = useTranslations();
+
+  const form = useForm<EventForm>({
+    resolver: zodResolver(EventFormSchema),
+    defaultValues: {
+      title: event.title,
+      description: event.description,
+      start_date: new Date(event.start_date),
+      end_date: new Date(event.end_date),
+      type_id: event.type.id.toString(),
+      agent_id: event.agent.id.toString(),
+      bien_id: event.bien.id.toString(),
+      client_id: event.client.id.toString(),
+    },
+  });
+
+  async function onSubmit(values: EventForm) {
+    console.log(values);
+    setIsPending(true);
+    try {
+      const response = await updateEventAction(values, event.id);
+      setIsPending(false);
+      if (response.isOk) {
+        router.push(NAVIGATION_KEYS.CLIENTS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
+      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+    } catch (error) {
+      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+    }
+  }
+
+  async function onInvalid(values: any) {
+    const [field, error] = Object.entries(values)[0] as [string, { message: string }];
+    customToast.error(`${field}: ${error.message}`);
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-2 gap-5">
+        <div className="grid gap-3">
+          <InputTextField
+            control={form.control}
+            name="title"
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TITLE.LABEL)}
+            disabled={isPending}
+            required
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TITLE.PLACEHOLDER)}
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <InputDateTimeField
+              control={form.control}
+              name="start_date"
+              label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.LABEL)}
+              disabled={isPending}
+              required
+              placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.PLACEHOLDER)}
+            />
+            <InputDateTimeField
+              control={form.control}
+              name="end_date"
+              label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.LABEL)}
+              disabled={isPending}
+              required
+              placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.PLACEHOLDER)}
+            />
+          </div>
+          <InputSelectField
+            control={form.control}
+            name="type_id"
+            options={eventTypes}
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TYPE.LABEL)}
+            disabled={isPending}
+            required
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TYPE.PLACEHOLDER)}
+          />
+          <InputSelectField
+            control={form.control}
+            name="agent_id"
+            options={agents}
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.AGENT.LABEL)}
+            disabled={isPending}
+            required
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.AGENT.PLACEHOLDER)}
+          />
+          <InputSelectField
+            control={form.control}
+            name="bien_id"
+            options={biens}
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.BIEN.LABEL)}
+            disabled={isPending}
+            required
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.BIEN.PLACEHOLDER)}
+          />
+          <InputSelectField
+            control={form.control}
+            name="client_id"
+            options={clients}
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.CLIENT.LABEL)}
+            disabled={isPending}
+            required
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.CLIENT.PLACEHOLDER)}
+          />
+        </div>
+        <div>
+          <InputTextArea
+            control={form.control}
+            name="description"
+            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.DESCRIPTION.LABEL)}
+            disabled={isPending}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.DESCRIPTION.LABEL)}
+          />
+        </div>
+        <Button className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto" type="submit">
+          {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
+        </Button>
+      </form>
+    </Form>
+  );
+}

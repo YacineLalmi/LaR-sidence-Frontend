@@ -1,4 +1,4 @@
-import { Building2, CalendarDays, FileText, Home, LogOut, Mails, User2 } from "lucide-react";
+import { Building2, CalendarDays, FileText, Home, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,6 +15,7 @@ import Image from "next/image";
 import logo from "@/assests/images/logo-black.png";
 import Settings from "../navbar/components/settings";
 import Link from "next/link";
+import Logout from "./_components/logout";
 
 const items = [
   {
@@ -29,7 +30,7 @@ const items = [
   },
   {
     title: "Calendrier",
-    url: "/calendar",
+    url: "/events",
     icon: CalendarDays,
   },
   {
@@ -90,10 +91,7 @@ export function SideBar() {
 
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton asChild>
-            <a href="/settings">
-              <LogOut />
-              <span>Se déconnecter</span>
-            </a>
+            <Logout />
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarFooter>

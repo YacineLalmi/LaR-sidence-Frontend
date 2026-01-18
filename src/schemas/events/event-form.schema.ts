@@ -2,7 +2,7 @@ import z from "zod";
 
 export const EventFormSchema = z.object({
   title: z.string().min(1, "Le titre est obligatoire"),
-  description: z.string().min(1, "La description est obligatoire"),
+  description: z.string().nullable(),
   start_date: z.date(),
   end_date: z.date(),
   type_id: z.string().min(1, "Le type d'événement est obligatoire"),
@@ -12,7 +12,3 @@ export const EventFormSchema = z.object({
 });
 
 export type EventForm = z.infer<typeof EventFormSchema>;
-
-
-
-

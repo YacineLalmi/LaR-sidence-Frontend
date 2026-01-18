@@ -1,6 +1,6 @@
 "use server";
 
-import { authService } from "@/services/auth.service";
+import { AuthService } from "@/services/auth.service";
 import { addHours, differenceInSeconds } from "date-fns";
 
 // Get encryption key and ensure it's 32 bytes (256 bits) for AES-256-GCM
@@ -160,7 +160,7 @@ export async function refreshTokens(): Promise<void> {
   if (!refresh_token) {
     throw new Error();
   } else {
-    const responseData = await authService.refresh(refresh_token);
+    const responseData = await AuthService.refresh(refresh_token);
 
     await setCookie({
       key: "access_token",

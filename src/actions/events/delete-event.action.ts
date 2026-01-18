@@ -1,0 +1,18 @@
+"use server";
+
+import { FormState } from "@/lib/definitions";
+import { handleServerActionError } from "@/lib/utils";
+import { EventService } from "@/services/event.service";
+
+export async function deleteEventAction(id: number): Promise<FormState> {
+  try {
+    await EventService.delete(id);
+    return { isOk: true };
+  } catch (error) {
+    const result = handleServerActionError(error);
+    return {
+      isOk: false,
+      ...result,
+    };
+  }
+}
