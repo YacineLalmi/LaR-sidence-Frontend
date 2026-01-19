@@ -56,7 +56,7 @@ export default function UpdateEventForm({ eventTypes, agents, biens, clients, ev
       const response = await updateEventAction(values, event.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.CLIENTS.ROOT);
+        router.push(NAVIGATION_KEYS.EVENTS.ROOT);
         customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
       } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     } catch (error) {
