@@ -52,7 +52,7 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
     try {
       const response = await createEventAction(values);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.CLIENTS.ROOT);
+        router.push(NAVIGATION_KEYS.EVENTS.ROOT);
         customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
       } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
     } catch (error) {
