@@ -37,7 +37,6 @@ export default function DeleteCommuneDialog({ commune }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.COMMUNES.DELETE_TEXT, { id: commune.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

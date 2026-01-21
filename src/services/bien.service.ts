@@ -18,7 +18,6 @@ const END_POINTS = {
 
 export const BienService = {
   create: async (data: BienForm) => {
-    // console.log(data);
     const formData = new FormData();
     for (const key in data) {
       if (key === "images" || key === "documents") {
@@ -48,8 +47,6 @@ export const BienService = {
       formData.append(key, value);
     }
 
-    console.log(formData);
-
     const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.create,
       body: formData,
@@ -65,9 +62,7 @@ export const BienService = {
       endpoint: END_POINTS.findAll,
       query: queryParams,
     });
-    console.log("response", response);
     const validatedResponseData = validateResponseData<Bien[]>(response.data, z.array(BienSchema));
-    console.log("validated data", validateResponseData);
     return {
       items: validatedResponseData,
       meta: response.meta,

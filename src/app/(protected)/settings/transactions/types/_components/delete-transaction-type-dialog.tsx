@@ -36,7 +36,6 @@ export default function DeleteTransactionTypeDialog({ transactionType }: Props) 
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.DELETE_TEXT, { id: transactionType.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

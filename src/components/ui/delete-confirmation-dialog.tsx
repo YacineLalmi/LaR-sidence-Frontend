@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +24,6 @@ interface Props {
   trigger: any;
   isOpen: boolean;
   setIsOpen: any;
-  isPending: boolean;
 }
 
 export function DeleteConfirmationDialog({
@@ -36,8 +35,19 @@ export function DeleteConfirmationDialog({
   trigger,
   isOpen,
   setIsOpen,
-  isPending,
 }: Props) {
+  const [isPending, setIsPending] = useState<boolean>(false);
+
+  const handleConfirmClick = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsPending(true);
+      await onConfirm(e).finally(() => setIsPending(false));
+    },
+    [onConfirm]
+  );
+
   const translation = useTranslations();
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -47,13 +57,13 @@ export function DeleteConfirmationDialog({
           <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto">
             <TriangleAlert size={50} strokeWidth={1} color="red" />
           </div>
-          {title && <AlertDialogTitle className="text-xl font-semibold text-gray-900">{title}</AlertDialogTitle>}
+          {title && <AlertDialogTitle className="text-xl font-semibold text-gray-900 text-center">{title}</AlertDialogTitle>}
           <AlertDialogDescription className="text-red-500 text-base text-center">
             {description ? description : translation(TRANSLATIONS_KEYS.COMMON.DELETE_CONFIRMATION_TEXT)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex-row gap-3 sm:justify-center">
-          <AlertDialogCancel 
+          <AlertDialogCancel
             disabled={isPending}
             className="mt-0 px-8 py-2.5 border-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -61,7 +71,7 @@ export function DeleteConfirmationDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={isPending}
-            onClick={onConfirm}
+            onClick={handleConfirmClick}
             className="bg-black hover:bg-gray-800 text-white px-8 py-2.5 rounded-lg font-medium cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}

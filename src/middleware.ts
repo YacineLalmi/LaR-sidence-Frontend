@@ -1,67 +1,81 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookie, refreshTokens, removeCookie, setCookie } from "./lib/server.helper";
-
-const adminRoutes = ["/dashboard", "/settings/users", "/settings", "/"];
-const agentRoutes = ["/dashboard", "/"];
-const protectedRoutes = new Set([...adminRoutes, ...agentRoutes]);
-const publicRoutes = ["/login"];
+import { clearCookies, getCookie, removeCookie, setCookie } from "./lib/server.helper";
+import { checkRoutePermission, isPublicRoute } from "./lib/utiles/route.utile";
+import { COOKIES_KEYS } from "./constants/cookies-keys";
+import { refreshTokenAction } from "./actions/authentication/refresh.action";
+import { getProfilePermissionsAction } from "./actions/Profile/get-profile-permissions.action";
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isAdminRoute = adminRoutes.includes(path);
-  const isAgentRoute = agentRoutes.includes(path);
-  const isProtectedRoute = protectedRoutes.has(path);
-  const isPublicRoute = publicRoutes.includes(path);
 
-  let access_token: string | null = null;
-  try {
-    access_token = await getCookie("access_token");
-  } catch (error) {
-    // If decryption fails (e.g., old cookies with wrong key), clear all cookies
-    console.error("Failed to decrypt access_token, clearing cookies:", error);
-    await removeCookie("access_token");
-    await removeCookie("refresh_token");
-    await removeCookie("eo_rmnsutoifirna");
-  }
-
-  if (!access_token) {
-    if (isProtectedRoute) {
-      try {
-        await refreshTokens();
-      } catch (error) {
-        await removeCookie("access_token");
-        await removeCookie("refresh_token");
-        await removeCookie("eo_rmnsutoifirna");
-        return NextResponse.redirect(new URL("/login", req.nextUrl));
-      }
-    } else return NextResponse.next();
-  } else {
-    try {
-      const encoded_user_information = await getCookie("eo_rmnsutoifirna");
-      if (!encoded_user_information) {
-        // const user_information = await UserService.profile();
-        // await setCookie({
-        //   key: "eo_rmnsutoifirna",
-        //   value: JSON.stringify(user_information),
-        //   expires: addHours(new Date(), 1),
-        //   maxAge: 60 * 60,
-        // });
-      }
-    } catch (error) {
-      // If decryption fails, clear the cookie and continue
-      console.error("Failed to decrypt user information:", error);
-      await removeCookie("eo_rmnsutoifirna");
+  console.log("-----------------")
+  console.log("one");
+  // Handle public routes
+  if (isPublicRoute(path)) {
+    console.log("two");
+    const access_token = await getCookie("access_token").catch(() => null);
+    // If logged in, redirect away from public routes (like /login)
+    if (access_token) {
+      console.log("three");
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
     }
-
-    if (isPublicRoute) return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-    if (path === "/") return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-
-    // Everything is OK
     return NextResponse.next();
   }
+  console.log("four");
+  // ========== AUTHENTICATION CHECK ==========
+
+  const access_token = await getCookie(COOKIES_KEYS.ACCESS_TOKEN);
+
+  // If no access token, try to refresh
+  if (!access_token) {
+    console.log("five");
+    // Check if refresh token exists
+    const refresh_token = await getCookie(COOKIES_KEYS.REFRESH_TOKEN);
+    console.log("six");
+    // No refresh token - clear everything and redirect to login
+    if (!refresh_token) {
+      console.log("seven");
+      await clearCookies();
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
+
+    // Try to refresh the token
+    try {
+      const refreshResult = await refreshTokenAction(refresh_token);
+
+      if (!refreshResult.isOk) {
+        throw new Error("Token refresh failed");
+      }
+    } catch (error) {
+      console.error("Failed to refresh token:", error);
+      await clearCookies();
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
+  }
+  console.log("eight");
+  // ========== PERMISSION CHECK ==========
+  try {
+    const permissions = await getProfilePermissionsAction();
+     console.log("nine")
+    // Check if user has permission to access this route
+    const hasPermission = checkRoutePermission(path, permissions);
+     console.log("ten")
+    if (!hasPermission) {
+      console.log("eleven")
+      // Redirect to forbidden page or first allowed route
+      return NextResponse.redirect(new URL("/forbidden", req.nextUrl));
+    }
+    console.log("tweleve")
+    // All checks passed - allow access
+    return NextResponse.next();
+  } catch {
+    console.log("therteen")
+    await clearCookies();
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
+  }
+
 }
 
-// Routes Middleware should not run on
 export const config = {
-  matcher: ["/((?!api|_next/static|ERROR|_next/image|.*\\.png$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon\\.ico|.*\\.png$|.*\\.json$).*)"],
 };

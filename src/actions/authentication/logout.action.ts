@@ -1,8 +1,7 @@
 "use server";
 
-import { handleServerActionError } from "@/lib/utils";
 import { FormState } from "@/lib/definitions";
-import { clearCookies, setCookie } from "@/lib/server.helper";
+import { clearCookies, handleServerActionError, setCookie } from "@/lib/server.helper";
 import { AuthService } from "@/services/auth.service";
 
 export async function logoutAction(): Promise<FormState> {
@@ -13,7 +12,7 @@ export async function logoutAction(): Promise<FormState> {
       isOk: true,
     };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

@@ -43,7 +43,6 @@ class ApiService {
 
     const response = await fetch(url, config);
 
-    console.log("response", response);
     const apiResponse = await handleApiResponse<Data>(response);
 
     return apiResponse;
@@ -78,12 +77,13 @@ class ApiService {
     });
   }
 
-  async delete({ endpoint, query, options = {} }: RequestOptions) {
+  async delete({ endpoint, query, options = {}, body }: RequestOptions) {
     return this.request({
       endpoint,
       method: "DELETE",
       options,
       query,
+      body,
     });
   }
 }

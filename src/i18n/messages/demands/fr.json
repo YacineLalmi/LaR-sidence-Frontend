@@ -7,17 +7,20 @@
       "type": "Type de demande",
       "client": "Client",
       "agent": "Agent attribué",
-      "bien": "Bien concerné",
-      "source": "Source de la demande"
+      "budgetMin": "Budget min",
+      "budgetMax": "Budget max",
+      "createdBetween": "Date d'ajout"
     },
     "placeholder": {
       "status": "Sélectionner une option",
       "type": "Sélectionner une option",
       "client": "Sélectionner une option",
       "agent": "Sélectionner une option",
-      "bien": "Sélectionner une option",
-      "source": "Sélectionner une option"
+      "budgetMin": "Entrez le budget minimum",
+      "budgetMax": "Entrez le budget maximum",
+      "createdBetween": "Sélectionner une plage de dates"
     },
+    "clear": "Réinitialiser filtres",
     "submit": "Appliquer filtres"
   },
   "form": {

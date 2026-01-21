@@ -50,7 +50,6 @@ export default function UpdateEventForm({ eventTypes, agents, biens, clients, ev
   });
 
   async function onSubmit(values: EventForm) {
-    console.log(values);
     setIsPending(true);
     try {
       const response = await updateEventAction(values, event.id);

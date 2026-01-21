@@ -48,7 +48,6 @@ export const ClientTypeService = {
       endpoint: END_POINTS.list,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;

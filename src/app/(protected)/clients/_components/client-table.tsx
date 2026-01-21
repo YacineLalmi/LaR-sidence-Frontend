@@ -15,6 +15,7 @@ import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { StatusBadge } from "@/components/ui/status-badge";
 import ClientDocumentDialog from "./client-document-dialog";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { format } from "date-fns";
 
 interface Props {
   data: {
@@ -69,6 +70,7 @@ export default function ClientTable({ data }: Props) {
     {
       accessorKey: "created_at",
       header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.CREATED_AT),
+      cell: ({ row }) => format(new Date(row.original.created_at), "dd/MM/yyyy HH:mm"),
     },
     {
       accessorKey: "status.name",

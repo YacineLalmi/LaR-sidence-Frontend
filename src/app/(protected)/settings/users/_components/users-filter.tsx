@@ -65,7 +65,6 @@ export default function UsersFilters({ roles }: Props) {
       params.delete("is_active");
       router.push(`?${params.toString()}`);
       setIsOpen(false);
-      console.log("cleared");
     },
     [router, setIsOpen]
   );

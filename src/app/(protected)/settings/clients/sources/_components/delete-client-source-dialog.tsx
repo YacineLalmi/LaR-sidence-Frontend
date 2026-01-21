@@ -35,7 +35,6 @@ export default function DeleteClientSourceDialog({ clientSource }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.DELETE_TEXT, { id: clientSource.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

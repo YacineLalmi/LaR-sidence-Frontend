@@ -1,7 +1,7 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
+import { handleServerActionError } from "@/lib/server.helper";;
 import { CommuneService } from "@/services/commune.service";
 
 export async function deleteCommuneAction(id: number): Promise<FormState> {
@@ -9,7 +9,7 @@ export async function deleteCommuneAction(id: number): Promise<FormState> {
     await CommuneService.delete(id);
     return { isOk: true };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

@@ -7,7 +7,7 @@ export async function getFileBlob(fileId: string): Promise<FileBlob | null> {
   try {
     return await FileService.getFileBlob(fileId);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 }

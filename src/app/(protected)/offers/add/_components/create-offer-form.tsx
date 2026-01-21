@@ -44,7 +44,7 @@ export default function CreateOfferForm({ types, status, biens, clients }: Props
 
   async function onSubmit(values: OfferForm) {
     setIsPending(true);
-    console.log(values);
+    
     try {
       const response = await createOfferAction(values);
       setIsPending(false);

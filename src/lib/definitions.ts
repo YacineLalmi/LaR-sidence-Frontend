@@ -1,4 +1,4 @@
-import { ErrorCodes } from "./constants";
+import { ErrorCodes } from "@/constants/error-codes";
 
 export interface ApiResponse<T = any> {
   status: boolean;

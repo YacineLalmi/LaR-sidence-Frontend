@@ -7,7 +7,7 @@ export async function getClientStatusList(): Promise<ListItem[]> {
   try {
     return await ClientStatusService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

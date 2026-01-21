@@ -78,7 +78,6 @@ export default function CustomPagination({ currentPage, totalPages, prefix }: Pr
     [prefix]
   );
 
-  console.log("getPageNumbers()", getPageNumbers());
   return (
     <Pagination>
       <PaginationContent>

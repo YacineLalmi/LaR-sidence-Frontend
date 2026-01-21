@@ -35,7 +35,6 @@ export default function DeleteBienTypeDialog({ bienType }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.DELETE_TEXT, { id: bienType.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

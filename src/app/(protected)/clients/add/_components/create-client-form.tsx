@@ -69,7 +69,7 @@ export default function CreateClientForm({ types, status, sources, civilities }:
 
   async function onInvalid(values: any) {
     const [field, error] = Object.entries(values)[0] as [string, { message: string }];
-    customToast.error(`${field}: ${error.message}`);
+    // customToast.error(`${field}: ${error.message}`);
   }
 
   return (
@@ -86,7 +86,7 @@ export default function CreateClientForm({ types, status, sources, civilities }:
               disabled={isPending}
               required
             />
-            
+
             {form.watch("civility") === "C" ? (
               <div className="grid grid-cols-2 gap-3">
                 <InputTextField
@@ -182,7 +182,12 @@ export default function CreateClientForm({ types, status, sources, civilities }:
                 type="button"
                 variant="default"
                 size="sm"
-                onClick={() => setPhoneNumbers([...phoneNumbers, ""])}
+                onClick={() => {
+                  setPhoneNumbers((prev) => {
+                    form.setValue("phone_numbers", [...prev, ""]);
+                    return [...prev, ""];
+                  });
+                }}
                 className="mt-2"
               >
                 <Plus className="h-4 w-4 mr-2" />

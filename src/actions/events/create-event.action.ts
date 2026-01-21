@@ -1,8 +1,8 @@
 "use server";
 import { FormState } from "@/lib/definitions";
 import { EventService } from "@/services/event.service";
-import { handleServerActionError } from "@/lib/utils";
 import { EventForm } from "@/schemas/events/event-form.schema";
+import { handleServerActionError } from "@/lib/server.helper";
 
 export async function createEventAction(data: EventForm): Promise<FormState> {
   try {
@@ -12,7 +12,7 @@ export async function createEventAction(data: EventForm): Promise<FormState> {
     };
   } catch (error) {
     console.error("Create event error:", error);
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       errorMessage: result.errorMessage,

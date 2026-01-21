@@ -19,7 +19,6 @@ const END_POINTS = {
 
 export const ColorService = {
   create: async (data: ColorForm) => {
-    console.log("cooooollloor", data);
     const response = await ApiService.post<Color>({
       endpoint: END_POINTS.create,
       body: data,
@@ -49,7 +48,6 @@ export const ColorService = {
       endpoint: END_POINTS.list,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;

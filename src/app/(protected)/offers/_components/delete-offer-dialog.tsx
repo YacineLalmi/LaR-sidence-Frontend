@@ -36,7 +36,6 @@ export default function DeleteOfferDialog({ offer }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.OFFERS.DELETE_OFFER, { id: offer.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

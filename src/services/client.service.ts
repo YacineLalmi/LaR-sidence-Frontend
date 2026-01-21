@@ -49,19 +49,11 @@ export const ClientService = {
       const value = (data as any)[key];
       formData.append(key, value);
     }
-
-    // const adjustedData = {
-    //   ...data,
-    //   phone_numbers: data.phone_numbers.map((item) => item.phoneNumber),
-    // };
-    // console.log("first", adjustedData);
-    console.log("client creation", formData);
     const response = await ApiService.post<Client>({
       endpoint: END_POINTS.create,
       body: formData,
     });
 
-    console.log(response.data?.phone_numbers);
     const validatedResponseData = validateResponseData<Client>(response.data, ClientSchema);
 
     return validatedResponseData;
@@ -89,7 +81,6 @@ export const ClientService = {
       },
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;

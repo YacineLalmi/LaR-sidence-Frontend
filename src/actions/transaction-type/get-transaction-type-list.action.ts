@@ -7,7 +7,7 @@ export async function getTransactionTypeList(): Promise<ListItem[]> {
   try {
     return await TransactionTypeService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

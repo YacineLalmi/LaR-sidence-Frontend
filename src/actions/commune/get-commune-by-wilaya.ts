@@ -7,7 +7,7 @@ export async function getCommuneByWilaya(wilaya_id: string): Promise<ListItem[]>
   try {
     return await CommuneService.listByWilaya(wilaya_id);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

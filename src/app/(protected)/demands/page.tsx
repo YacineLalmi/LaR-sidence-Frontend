@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import { DemandsService } from "@/services/demands.service";
+import { DemandService } from "@/services/demand.service";
 import DemandsTable from "./_components/demands-table";
 import { BienService } from "@/services/bien.service";
 import { UserService } from "@/services/user.service";
@@ -16,8 +16,9 @@ import { DemandPriorityService } from "@/services/demand-priorities.service";
 export default async function Demands({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
 
-  const demands = await DemandsService.findAll(queryParams);
-  console.log("demandssss", demands);
+  console.log("queryParams", queryParams);
+
+  const demands = await DemandService.findAll(queryParams);
   const types = await DemandTypeService.list().catch(() => []);
   const status = await DemandStatusService.list().catch(() => []);
   const priorities = await DemandPriorityService.list().catch(() => []);

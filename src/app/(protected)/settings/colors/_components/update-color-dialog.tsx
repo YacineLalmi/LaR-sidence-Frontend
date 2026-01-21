@@ -39,7 +39,7 @@ export default function UpdateColorDialog({ color }: Props) {
   });
 
   async function onSubmit(values: ColorForm) {
-    console.log(values);
+    
     setIsPending(true);
     try {
       const response = await updateColorAction(values, color.id);

@@ -8,7 +8,7 @@ export async function searchClientAction(needle?: string): Promise<ListItem[]> {
     const value = needle || "";
     return await ClientService.list(value);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

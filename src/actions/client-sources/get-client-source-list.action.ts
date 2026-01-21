@@ -7,7 +7,7 @@ export async function getClientSourceList(): Promise<ListItem[]> {
   try {
     return await ClientSourceService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

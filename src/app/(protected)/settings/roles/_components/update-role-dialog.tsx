@@ -95,7 +95,7 @@ export default function UpdateRoleDialog({ permissions, role }: Props) {
   };
 
   async function onSubmit(values: RoleForm) {
-    console.log(values);
+    
     setIsPending(true);
     try {
       const response = await updateRoleAction(values, role.id);

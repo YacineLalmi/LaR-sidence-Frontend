@@ -4,7 +4,6 @@ import { ListItem } from "@/schemas/global.schema";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { loadOptions } from "@/lib/utils";
 import Section from "./section";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
@@ -23,7 +22,6 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
   const [communes, setCommunes] = useState<ListItem[]>([]);
 
   React.useEffect(() => {
-    console.log(selectedWilayaId);
     if (!!selectedWilayaId) {
       getCommuneByWilaya(selectedWilayaId)
         .then((res) => setCommunes(res))

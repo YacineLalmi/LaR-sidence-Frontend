@@ -1,9 +1,9 @@
 "use server";
 
-import { handleServerActionError } from "@/lib/utils";
 import { FormState } from "@/lib/definitions";
 import { AuthService } from "@/services/auth.service";
 import { ResetPasswordDataForm } from "@/schemas/auth/reset-password-form.schema";
+import { handleServerActionError } from "@/lib/server.helper";
 
 export async function ResetPasswordAction(data: ResetPasswordDataForm): Promise<FormState> {
   try {
@@ -13,7 +13,7 @@ export async function ResetPasswordAction(data: ResetPasswordDataForm): Promise<
       isOk: true,
     };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

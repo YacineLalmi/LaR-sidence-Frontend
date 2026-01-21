@@ -1,6 +1,5 @@
 "use client";
 
-import { createClientAction } from "@/actions/clients/create.action";
 import { updateClientAction } from "@/actions/clients/update.action";
 import Section from "@/app/(protected)/biens/add/_components/section";
 import InputFileLarge2 from "@/components/custom-inputs/input-file-large-2";
@@ -60,12 +59,11 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
 
   useEffect(() => {
     const loadFiles = async () => {
-      console.log("loading Files");
       setAreFilesLoading(true);
       try {
         // Fetch documents
         const documentPromises = client.documents.map((doc) =>
-          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type)
+          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
         );
         const documents = await Promise.all(documentPromises);
         const validDocuments = documents.filter((doc): doc is File => doc !== null);
@@ -89,7 +87,6 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
 
   async function onSubmit(values: ClientForm) {
     setIsPending(true);
-    console.log("submitted values", values);
     try {
       const response = await updateClientAction(values, client.id);
       setIsPending(false);
@@ -216,7 +213,12 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
                 type="button"
                 variant="default"
                 size="sm"
-                onClick={() => setPhoneNumbers([...phoneNumbers, ""])}
+                onClick={() => {
+                  setPhoneNumbers((prev) => {
+                    form.setValue("phone_numbers", [...prev, ""]);
+                    return [...prev, ""];
+                  });
+                }}
                 className="mt-2"
               >
                 <Plus className="h-4 w-4 mr-2" />

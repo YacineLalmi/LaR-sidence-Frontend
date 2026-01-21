@@ -1,6 +1,6 @@
 "use server";
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
+import { handleServerActionError } from "@/lib/server.helper";
 import { BienForm } from "@/schemas/biens/bien-form.schema";
 import { BienService } from "@/services/bien.service";
 
@@ -12,7 +12,7 @@ export async function createBienAction(data: BienForm): Promise<FormState> {
     };
   } catch (error) {
     console.error("Create bien error:", error);
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       errorMessage: result.errorMessage,

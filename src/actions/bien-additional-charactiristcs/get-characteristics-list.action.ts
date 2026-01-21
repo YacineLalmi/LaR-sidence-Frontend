@@ -7,7 +7,7 @@ export async function getCharacteristics(): Promise<ListItem[]> {
   try {
     return await BienAdditionalcharacteristicsService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

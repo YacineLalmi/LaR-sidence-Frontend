@@ -1,7 +1,7 @@
 import SearchField from "@/components/ui/search";
 import React from "react";
 import { ListItem } from "@/schemas/global.schema";
-import DemandsFilter from "./DemandsFilter";
+import DemandsFilter from "./demands-filters";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom-button";
 import { getTranslations } from "next-intl/server";

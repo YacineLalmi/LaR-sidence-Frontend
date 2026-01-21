@@ -34,7 +34,7 @@ export default function CreateColorDialog() {
   });
 
   async function onSubmit(values: ColorForm) {
-    console.log(values);
+    
     setIsPending(true);
     try {
       const response = await createColorAction(values);

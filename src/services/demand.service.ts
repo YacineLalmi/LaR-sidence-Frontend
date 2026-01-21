@@ -11,9 +11,10 @@ const END_POINTS = {
   findOne: (id: string) => `/demands/${id}`,
   update: (id: number) => `/demands/${id}`,
   delete: (id: number) => `/demands/${id}`,
+  deleteMany: "/demands/bulk-delete",
 };
 
-export const DemandsService = {
+export const DemandService = {
   create: async (data: DemandForm) => {
     const response = await ApiService.post<Demand>({
       endpoint: END_POINTS.create,
@@ -63,6 +64,13 @@ export const DemandsService = {
   delete: async (id: number) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+  deleteMany: async (ids: number[]) => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany,
+      body: { ids },
     });
   },
 };

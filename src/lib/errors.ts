@@ -1,4 +1,4 @@
-import { ErrorCodes } from "./constants";
+import { ErrorCodes } from "@/constants/error-codes";
 
 export class UnauthorizedError extends Error {
   constructor(message: string = "You are not authorized to perform this action.") {

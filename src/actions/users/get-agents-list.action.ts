@@ -7,7 +7,7 @@ export async function getAgentList(): Promise<ListItem[]> {
   try {
     return await UserService.agentList();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

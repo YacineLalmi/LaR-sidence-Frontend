@@ -1,7 +1,7 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
+import { handleServerActionError } from "@/lib/server.helper";
 import { ClientForm } from "@/schemas/clients/client-form.schema";
 import { ClientService } from "@/services/client.service";
 
@@ -10,7 +10,7 @@ export async function updateClientAction(data: ClientForm, id: number): Promise<
     await ClientService.update(data, id);
     return { isOk: true };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

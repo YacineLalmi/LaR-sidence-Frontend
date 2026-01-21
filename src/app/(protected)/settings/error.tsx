@@ -2,9 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import ErrorCard from "@/components/error/error-card";
-import { ErrorCodes } from "@/lib/constants";
 import ForbiddenImage from "@/assests/images/403.svg";
 import NotFoundImage from "@/assests/images/404.svg";
+import { ErrorCodes } from "@/constants/error-codes";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations();

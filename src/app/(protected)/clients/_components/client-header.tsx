@@ -1,6 +1,6 @@
 import SearchField from "@/components/ui/search";
 import React from "react";
-import ClientFilter from "./ClientFilter";
+import ClientFilters from "./client-filters";
 import { ListItem } from "@/schemas/global.schema";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import Link from "next/link";
@@ -22,7 +22,7 @@ export default function ClientHeader({ types, status, sources, civilities }: Pro
     <div className="flex items-center gap-2 justify-between w-full p-0">
       <div className="flex w-full gap-2">
         <SearchField />
-        <ClientFilter types={types} status={status} sources={sources} civilities={civilities} />
+        <ClientFilters types={types} status={status} sources={sources} civilities={civilities} />
       </div>
       <Link href={NAVIGATION_KEYS.CLIENTS.ADD}>
         <CustomButton text={translation(TRANSLATIONS_KEYS.CLIENTS.ADD_CLIENT)} Icon={Plus} />

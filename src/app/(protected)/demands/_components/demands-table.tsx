@@ -4,10 +4,10 @@ import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Demand } from "@/schemas/demands/demand.schema";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { Edit, Eye, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ResponseMetaData } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,9 @@ import DeleteDemandDialog from "./delete-demand-dialog";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import DemandDocumentDialog from "./demand-document-dialog";
+import DeleteDemandsDialog from "./delete-demands-dialog";
+import { customToast } from "@/lib/utils";
+import { deleteDemandsAction } from "@/actions/demands/delete-demands.action";
 
 interface Props {
   data: {
@@ -26,8 +29,6 @@ interface Props {
 
 export default function DemandsTable({ data }: Props) {
   const translation = useTranslations();
-  const router = useRouter();
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
   const formatBudget = (budget: number | string | null | undefined) => {
     if (!budget) return "-";
@@ -136,7 +137,7 @@ export default function DemandsTable({ data }: Props) {
   ];
 
   return (
-    <DataTable data={data} columns={columns} />
+    <DataTable data={data} columns={columns} onDeleteMultiple={deleteDemandsAction} />
     // {selectedRows.length > 0 && (
     //   <div className="flex justify-end mt-4">
     //     <Button

@@ -47,7 +47,6 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
   });
 
   async function onSubmit(values: EventForm) {
-    console.log(values);
     setIsPending(true);
     try {
       const response = await createEventAction(values);

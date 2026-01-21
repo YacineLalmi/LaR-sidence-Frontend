@@ -9,7 +9,7 @@ export const ClientFormSchema = z.object({
   civility: z.string(),
   email: z.email(),
   mobile: z.string(),
-  phone_numbers: z.array(z.string().regex(/^\d{10}$/)),
+  phone_numbers: z.array(z.string().regex(/^\d{12}$/, { message: "Le format du numéro de téléphone est incorrect" })),
   test: z.array(z.string()).min(1).optional(),
   comment: z.string().nullable(),
   company_name: z.string().nullable(),

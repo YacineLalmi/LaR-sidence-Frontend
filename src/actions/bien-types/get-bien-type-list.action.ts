@@ -7,7 +7,7 @@ export async function getBienTypeLit(): Promise<ListItem[]> {
   try {
     return await BienTypeService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

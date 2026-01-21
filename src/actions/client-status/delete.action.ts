@@ -1,7 +1,7 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
+import { handleServerActionError } from "@/lib/server.helper";
 import { ClientStatusService } from "@/services/client-status.service";
 
 export async function deleteClientStatusAction(id: number): Promise<FormState> {
@@ -9,7 +9,7 @@ export async function deleteClientStatusAction(id: number): Promise<FormState> {
     await ClientStatusService.delete(id);
     return { isOk: true };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

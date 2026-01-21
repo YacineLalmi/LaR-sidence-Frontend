@@ -18,12 +18,10 @@ const END_POINTS = {
 
 export const UserService = {
   create: async (data: UserForm) => {
-    console.log("before formed", data);
     const formedData = {
       ...data,
       is_active: data.is_active === "0" ? false : true,
     };
-    console.log("Create User Data", formedData);
     const response = await ApiService.post<User>({
       endpoint: END_POINTS.create,
       body: formedData,
@@ -40,7 +38,6 @@ export const UserService = {
       query: QueryParams,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<User[]>(response.data, z.array(UserSchema));
 
     return {
@@ -54,7 +51,6 @@ export const UserService = {
       endpoint: END_POINTS.agentsList,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
@@ -75,7 +71,6 @@ export const UserService = {
       endpoint: END_POINTS.profile,
     });
 
-    console.log(response);
     const validatedResponseData = validateResponseData<User>(response.data, UserSchema);
 
     return validatedResponseData;

@@ -23,8 +23,6 @@ export const CommuneService = {
       endpoint: END_POINTS.create,
       body: data,
     });
-
-    console.log(response);
     const validatedResponseData = validateResponseData<Commune>(response.data, CommuneSchema);
 
     return validatedResponseData;
@@ -64,7 +62,6 @@ export const CommuneService = {
       endpoint,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
@@ -76,7 +73,6 @@ export const CommuneService = {
       endpoint,
     });
 
-    console.log("response", response);
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;

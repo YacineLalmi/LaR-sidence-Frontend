@@ -1,7 +1,10 @@
 "use server";
 
+import { ErrorCodes } from "@/constants/error-codes";
 import { AuthService } from "@/services/auth.service";
 import { addHours, differenceInSeconds } from "date-fns";
+import { ForbiddenError, NotFoundError, ResponseValidationError, UnauthorizedError } from "./errors";
+import { refreshTokenAction } from "@/actions/authentication/refresh.action";
 
 // Get encryption key and ensure it's 32 bytes (256 bits) for AES-256-GCM
 function getEncryptionKey(): Buffer {
@@ -120,12 +123,6 @@ export async function setCookie({
 
   const isProd = process.env.NODE_ENV === "production";
 
-  console.log({
-    env: process.env.NODE_ENV,
-    secure: secure ?? isProd,
-    sameSite,
-  });
-
   cookieStore.set(key, encryptedValue, {
     httpOnly,
     sameSite,
@@ -154,26 +151,47 @@ export async function clearCookies(): Promise<void> {
   cookieStore.getAll().forEach((cookie: any) => cookieStore.delete(cookie.name));
 }
 
-export async function refreshTokens(): Promise<void> {
+export async function refreshTokens(): Promise<boolean> {
   // Has no access token
   const refresh_token = await getCookie("refresh_token");
   if (!refresh_token) {
-    throw new Error();
+    return false;
   } else {
-    const responseData = await AuthService.refresh(refresh_token);
-
-    await setCookie({
-      key: "access_token",
-      value: responseData.access_token,
-      expires: responseData.access_token_expires_at,
-      maxAge: differenceInSeconds(responseData.access_token_expires_at, new Date()),
-    });
-
-    await setCookie({
-      key: "refresh_token",
-      value: responseData.refresh_token,
-      expires: responseData.refresh_token_expires_at,
-      maxAge: differenceInSeconds(responseData.refresh_token_expires_at, new Date()),
-    });
+    await refreshTokenAction(refresh_token);
+    return true;
   }
 }
+
+export const handleServerActionError = async (error: any) => {
+  if (error instanceof ResponseValidationError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.RESPONSE_VALIDATION_ERROR,
+    };
+  } else if (error instanceof UnauthorizedError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.UNAUTHORIZED,
+    };
+  } else if (error instanceof ForbiddenError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.FORBIDDEN,
+    };
+  } else if (error instanceof NotFoundError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.RESOURCE_NOT_FOUND,
+    };
+  } else if (["ECONNREFUSED", "UND_ERR_CONNECT_TIMEOUT", "EHOSTUNREACH"].includes(error?.cause?.code)) {
+    return {
+      errorMessage: "Erreur de connexion : impossible de se connecter au serveur",
+      errorCode: ErrorCodes.CONNECTION_ERROR,
+    };
+  }
+
+  return {
+    errorMessage: "Erreur inconnue",
+    errorCode: ErrorCodes.UKNOWN_ERROR,
+  };
+};

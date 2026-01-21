@@ -18,7 +18,6 @@ interface Props {
 
 export default function AdditionalCharacteristics({ form, isPending = false, bienAdditionalcharacteristics }: Props) {
   const translation = useTranslations();
-  console.log("ad car", form.getValues("additional_characteristics"));
   return (
     <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.ADDITIONAL_CHARACTERISTICS)}>
       <div className="space-y-4 grid grid-cols-3">

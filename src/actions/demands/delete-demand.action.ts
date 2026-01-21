@@ -1,19 +1,18 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
-import { DemandsService } from "@/services/demands.service";
+import { handleServerActionError } from "@/lib/server.helper";;
+import { DemandService } from "@/services/demand.service";
 
 export async function deleteDemandAction(id: number): Promise<FormState> {
   try {
-    await DemandsService.delete(id);
+    await DemandService.delete(id);
     return { isOk: true };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,
     };
   }
 }
-

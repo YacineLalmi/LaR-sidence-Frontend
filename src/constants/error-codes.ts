@@ -14,9 +14,3 @@ export enum ErrorCodes {
   RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND",
   CONNECTION_ERROR = "CONNECTION_ERROR",
 }
-
-export const COOKIES_KEYS = {
-  ACCESS_TOKEN: "access_token",
-  REFRESH_TOKEN: "refresh_token",
-  USER_INFORMATION: "eo_rmnsutoifirna",
-};

@@ -7,7 +7,7 @@ export async function getClientTypeList(): Promise<ListItem[]> {
   try {
     return await ClientTypeService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

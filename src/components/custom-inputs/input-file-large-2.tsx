@@ -46,8 +46,9 @@ export default function InputFileLarge2<T extends FieldValues>({
         const handleFilesChange = (newFiles: File[]) => {
           field.onChange(newFiles);
         };
-
+        console.log("running")
         const removeFile = (index: number) => {
+          console.log("removing", index)
           const updatedFiles = files.filter((_, i) => i !== index);
           handleFilesChange(updatedFiles);
         };

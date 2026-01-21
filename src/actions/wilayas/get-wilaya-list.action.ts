@@ -7,7 +7,7 @@ export async function getWilayaList(): Promise<ListItem[]> {
   try {
     return await WilayaService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

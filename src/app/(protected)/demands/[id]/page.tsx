@@ -4,7 +4,7 @@ import NavigationButton from "@/components/ui/navigation-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import UpdateDemandForm from "./_components/update-demand-form";
-import { DemandsService } from "@/services/demands.service";
+import { DemandService } from "@/services/demand.service";
 import { DemandTypeService } from "@/services/demand-type.service";
 import { DemandStatusService } from "@/services/demand-status.service";
 import { DemandPriorityService } from "@/services/demand-priorities.service";
@@ -16,7 +16,7 @@ import { UserService } from "@/services/user.service";
 export default async function DemandDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
   const translation = await getTranslations();
-  const demand = await DemandsService.findOne(id);
+  const demand = await DemandService.findOne(id);
   const types = await DemandTypeService.list().catch(() => []);
   const status = await DemandStatusService.list().catch(() => []);
   const priorities = await DemandPriorityService.list().catch(() => []);

@@ -1,8 +1,7 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/utils";
-import { BienTypeService } from "@/services/bien-type.service";
+import { handleServerActionError } from "@/lib/server.helper";
 import { ColorService } from "@/services/colors.service";
 
 export async function deleteColorAction(id: number): Promise<FormState> {
@@ -10,7 +9,7 @@ export async function deleteColorAction(id: number): Promise<FormState> {
     await ColorService.delete(id);
     return { isOk: true };
   } catch (error) {
-    const result = handleServerActionError(error);
+    const result = await handleServerActionError(error);
     return {
       isOk: false,
       ...result,

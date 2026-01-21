@@ -7,7 +7,7 @@ export async function getBienStatusList(): Promise<ListItem[]> {
   try {
     return await BienStatusService.list();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }

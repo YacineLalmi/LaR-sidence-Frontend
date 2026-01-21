@@ -38,7 +38,6 @@ export default function DeleteWilayaDialog({ wilaya }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.WILAYAS.DELETE_TEXT, { id: wilaya.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

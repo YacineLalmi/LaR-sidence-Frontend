@@ -1,17 +1,19 @@
+import { validateResponseData } from "@/lib/utils";
 import ApiService from "./api.service";
-import { PasswordResetForm } from "@/schemas/profile/PasswordReset.schema";
+import z from "zod";
 
 const END_POINTS = {
-  passwordReset: "/profile/resetPassword",
+  permissions: "/profile/permissions",
 };
 
 export const ProfileService = {
-  passwordReset: async (data: PasswordResetForm) => {
-    const response = await ApiService.post({
-      endpoint: END_POINTS.passwordReset,
-      body: data,
+  permissions: async (): Promise<string[]> => {
+    const response = await ApiService.get<string[]>({
+      endpoint: END_POINTS.permissions,
     });
 
-    return response;
+    const validatedResponseData = validateResponseData<string[]>(response.data, z.array(z.string()));
+
+    return validatedResponseData;
   },
 };

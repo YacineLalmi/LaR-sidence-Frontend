@@ -4,7 +4,7 @@ import { Button } from "./button";
 
 interface Props {
   text?: string;
-  onClick?: (e:MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   Icon?: LucideIcon;
   className?: string;
   disabled?: boolean;
@@ -36,7 +36,7 @@ const CustomButton: React.FC<Props> = ({
       onClick={onClick}
       disabled={isDisabled}
       variant={variant}
-      className={`${baseStyles} ${isDisabled ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed" : ""} ${className}`}
+      className={`${baseStyles} disabled:bg-gray-300 disabled:cursor-not-allowed ${className}`}
     >
       {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : Icon && <Icon />}
       {text}

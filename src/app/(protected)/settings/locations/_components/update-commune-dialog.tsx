@@ -28,7 +28,6 @@ export default function EditCommuneDialog({ wilayas, commune }: Props) {
   const translation = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  console.log("Choosen commune", commune);
   const form = useForm<CommuneForm>({
     resolver: zodResolver(CommuneFormSchema),
     defaultValues: {

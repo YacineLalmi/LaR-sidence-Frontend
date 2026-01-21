@@ -91,7 +91,6 @@ export default function BienFilter() {
     });
 
     return () => {
-      console.log("resetting communes");
       setCommunes([]);
       form.resetField("commune_id");
     };

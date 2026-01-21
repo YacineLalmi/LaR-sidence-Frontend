@@ -35,7 +35,6 @@ export default function DeleteCientTypeDialog({ clientType }: Props) {
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.DELETE_TEXT, { id: clientType.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {

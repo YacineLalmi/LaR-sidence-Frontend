@@ -150,7 +150,7 @@ export default function CreateRoleDialog({ permissions }: Props) {
   };
 
   async function onSubmit(values: RoleForm) {
-    console.log(values);
+    
     setIsPending(true);
     try {
       const response = await createRoleAction(values);

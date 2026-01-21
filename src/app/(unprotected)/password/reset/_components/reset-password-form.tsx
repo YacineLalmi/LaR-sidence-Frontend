@@ -43,7 +43,7 @@ export function ResetPasswordForm() {
   });
 
   async function onSubmit(values: ResetPasswordDataForm) {
-    console.log(values);
+    
     setIsPending(true);
     try {
       const response = await ResetPasswordAction(values);

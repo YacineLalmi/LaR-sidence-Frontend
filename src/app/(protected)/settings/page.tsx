@@ -46,11 +46,11 @@ export default async function Settings() {
           title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TITLE)}
           icon={Building2}
         />
-        <SettingCard
+        {/* <SettingCard
           link={NAVIGATION_KEYS.SETTINGS.PROFILE.ROOT}
           title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.PROFILE.TITLE)}
           icon={BadgeCheck}
-        />
+        /> */}
         <SettingCard
           link={NAVIGATION_KEYS.SETTINGS.COLORS.ROOT}
           title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.COLORS.TITLE)}

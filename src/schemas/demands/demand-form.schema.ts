@@ -9,7 +9,7 @@ export const DemandFormSchema = z.object({
   agent_id: z.string().min(1, "L'agent est requis"),
   status_id: z.string().min(1, "Le statut est requis"),
   priority_id: z.string().min(1, "La priorité est requise"),
-  budget: z.string().nullable().optional(),
+  budget: z.string().regex(/^\d+$/, "Le budget doit être un nombre entier positif"),
   comment: z.string().nullable().optional(),
 });
 

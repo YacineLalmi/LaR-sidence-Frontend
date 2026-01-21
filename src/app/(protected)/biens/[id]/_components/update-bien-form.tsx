@@ -108,7 +108,6 @@ export default function UpdateBienForm({
         const documents = await Promise.all(documentPromises);
         const validDocuments = documents.filter((doc): doc is File => doc !== null);
 
-        console.log("fetched images", validImages);
         // Set form values with File objects
         form.setValue("images", validImages as any);
         form.setValue("documents", validDocuments as any);
@@ -126,10 +125,8 @@ export default function UpdateBienForm({
   // 2. Define a submit handler.
   async function onSubmit(values: BienForm) {
     setIsPending(true);
-    console.log("Form values:", values);
     try {
       const response = await updateBienAction(values, bien.id);
-      console.log("Response:", response);
       setIsPending(false);
       if (response.isOk) {
         router.push(NAVIGATION_KEYS.BIENS.ROOT);

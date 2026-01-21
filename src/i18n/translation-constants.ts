@@ -769,6 +769,7 @@ export const TRANSLATIONS_KEYS = {
       ROOT: "demands.filter",
       TITLE: "demands.filter.title",
       SUBMIT: "demands.filter.submit",
+      CLEAR: "demands.filter.clear",
       LABEL: {
         ROOT: "demands.filter.label",
         STATUS: "demands.filter.label.status",
@@ -777,6 +778,9 @@ export const TRANSLATIONS_KEYS = {
         AGENT: "demands.filter.label.agent",
         BIEN: "demands.filter.label.bien",
         SOURCE: "demands.filter.label.source",
+        BUDGET_MIN: "demands.filter.label.budgetMin",
+        BUDGET_MAX: "demands.filter.label.budgetMax",
+        CREATED_BETWEEN: "demands.filter.label.createdBetween",
       },
       PLACEHOLDER: {
         ROOT: "demands.filter.placeholder",
@@ -786,6 +790,9 @@ export const TRANSLATIONS_KEYS = {
         AGENT: "demands.filter.placeholder.agent",
         BIEN: "demands.filter.placeholder.bien",
         SOURCE: "demands.filter.placeholder.source",
+        BUDGET_MIN: "demands.filter.placeholder.budgetMin",
+        BUDGET_MAX: "demands.filter.placeholder.budgetMax",
+        CREATED_BETWEEN: "demands.filter.placeholder.createdBetween",
       },
     },
     COLUMNS: {
@@ -885,7 +892,11 @@ export const TRANSLATIONS_KEYS = {
     PRINT: "common.print",
     DESCRIPTION: "common.description",
     SELECT_A_PERIOD: "common.selectAPeriod",
+    FROM: "common.from",
+    TO: "common.to",
     NO_DATA_FOUND: "common.noDataFound",
+    DELETE_SELECTION: "common.deleteSelection",
+    DELETE_SELECTION_MESSAGE: "common.deleteSelectionMessage",
     ERRORS: {
       SOMETHING_WRONG: "common.errors.somethingwrong",
       NOT_FOUND: "common.errors.notfound",

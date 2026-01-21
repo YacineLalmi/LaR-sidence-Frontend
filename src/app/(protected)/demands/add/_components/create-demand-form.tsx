@@ -1,7 +1,9 @@
 "use client";
 
-import { createDemandAction } from "@/actions/demands/create.action";
+import { createDemandAction } from "@/actions/demands/create-demand.action";
 import Section from "@/app/(protected)/biens/add/_components/section";
+import InputNumberField from "@/components/custom-inputs/input-number";
+import { InputSearchField } from "@/components/custom-inputs/input-search";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
@@ -44,7 +46,7 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
       agent_id: "",
       status_id: "",
       priority_id: "",
-      budget: undefined,
+      budget: "",
       comment: "",
     },
   });
@@ -65,14 +67,14 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
 
   async function onInvalid(values: any) {
     const [field, error] = Object.entries(values)[0] as [string, { message: string }];
-    customToast.error(`${field}: ${error.message}`);
+    // customToast.error(`${field}: ${error.message}`);
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-2 gap-5">
         <div className="grid grid-cols-1 gap-3">
-          <Section header={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}>
+          <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.GENERAL_INFORMATION)}>
             <InputTextField
               control={form.control}
               name="title"
@@ -90,23 +92,23 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
               disabled={isPending}
               required
             />
-            <InputSelectField
+            <InputSearchField
               control={form.control}
               name="client_id"
               label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.CLIENT)}
-              options={clients}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.CLIENT)}
               disabled={isPending}
               required
+              options={clients}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.CLIENT)}
             />
-            <InputSelectField
+            <InputSearchField
               control={form.control}
               name="bien_id"
               label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.BIEN)}
-              options={biens}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.BIEN)}
               disabled={isPending}
               required
+              options={biens}
+              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.BIEN)}
             />
             <InputSelectField
               control={form.control}
@@ -126,44 +128,42 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
             />
           </Section>
         </div>
-        <div>
-          <Section header={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}>
-            <InputSelectField
-              control={form.control}
-              name="priority_id"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.PRIORITY)}
-              options={priorities}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.PRIORITY)}
-              disabled={isPending}
-              required
-            />
-            <InputSelectField
-              control={form.control}
-              name="agent_id"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.AGENT)}
-              options={agents}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.AGENT)}
-              disabled={isPending}
-              required
-            />
-            <InputSelectField
-              control={form.control}
-              name="source_id"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.SOURCE)}
-              options={sources}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.SOURCE)}
-              disabled={isPending}
-              required
-            />
-            <InputTextArea
-              control={form.control}
-              name="comment"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.COMMENT)}
-              disabled={isPending}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.COMMENT)}
-              rows={10}
-            />
-          </Section>
+        <div className="grid grid-cols-1 gap-3 content-start my-3">
+          <InputSelectField
+            control={form.control}
+            name="priority_id"
+            label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.PRIORITY)}
+            options={priorities}
+            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.PRIORITY)}
+            disabled={isPending}
+            required
+          />
+          <InputSelectField
+            control={form.control}
+            name="agent_id"
+            label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.AGENT)}
+            options={agents}
+            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.AGENT)}
+            disabled={isPending}
+            required
+          />
+          <InputSelectField
+            control={form.control}
+            name="source_id"
+            label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.SOURCE)}
+            options={sources}
+            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.SOURCE)}
+            disabled={isPending}
+            required
+          />
+          <InputTextArea
+            control={form.control}
+            name="comment"
+            label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.COMMENT)}
+            disabled={isPending}
+            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.COMMENT)}
+            className="bg-gray-200 border-gray-200 h-36"
+          />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto" type="submit" disabled={isPending}>
           {translation("demands.form.publish")}

@@ -37,7 +37,6 @@ export default function DeleteBienCharacteristicsDialog({ bienCharacteristics }:
   return (
     <DeleteConfirmationDialog
       title={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.CHARACTERISTICS.DELETE_TEXT, { id: bienCharacteristics.id })}
-      isPending={isPending}
       isOpen={isDeleteOpen}
       setIsOpen={setIsDeleteOpen}
       onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {
