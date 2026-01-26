@@ -7,15 +7,15 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit, FileSearch2, Image, Trash2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import BienHeader from "./BienHeader";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
 import DeleteBienDialog from "./delete-bien-dialog";
 import { ResponseMetaData } from "@/lib/definitions";
+import BienPriceHistoryDialog from "./bien-price-history-dialog";
+import { formatMoney } from "@/lib/utils";
 
 interface Props {
   data: {
@@ -82,6 +82,7 @@ export default function BienTable({ data }: Props) {
     {
       accessorKey: "price",
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.PRICE),
+      cell: ({ row }) => formatMoney(row.original.price),
     },
     {
       accessorKey: "availability_date",
@@ -115,8 +116,9 @@ export default function BienTable({ data }: Props) {
         <div className="flex items-center">
           <DeleteBienDialog bien={row.original} />
           <Link href={`/biens/${row.original.id}`}>
-            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
+            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0 size-7" />
           </Link>
+          <BienPriceHistoryDialog prices={row.original.prices} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ACTIONS),

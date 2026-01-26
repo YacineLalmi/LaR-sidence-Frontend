@@ -2,18 +2,19 @@
 
 import { COOKIES_KEYS } from "@/constants/cookies-keys";
 import { getCookie, setCookie } from "@/lib/server.helper";
-import { handleServerActionError } from "@/lib/server.helper";;
+import { handleServerActionError } from "@/lib/server.helper";
 import { ProfileService } from "@/services/profile.service";
 import { addMinutes, differenceInSeconds } from "date-fns";
 
 export async function getProfilePermissionsAction(): Promise<string[]> {
   try {
     const existingPermissions = await getCookie(COOKIES_KEYS.USER_PERMISSIONS);
+    console.log("permissions exists", existingPermissions);
     if (existingPermissions) {
       return JSON.parse(existingPermissions) as string[];
     }
     const response = await ProfileService.permissions();
-
+    console.log("permissions gotten", response);
     await setCookie({
       key: COOKIES_KEYS.USER_PERMISSIONS,
       value: JSON.stringify(response),

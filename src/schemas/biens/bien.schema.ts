@@ -9,6 +9,7 @@ import { FileSchema } from "../file/file.schema";
 import { ClientSchema } from "../clients/client.schema";
 import { BienPrioritySchema } from "../BienPriority.schema";
 import { BienStatusSchema } from "../bien-status/bien-status.schema";
+import { PriceSchema } from "../price/price.schema";
 
 export const BienSchema = z.object({
   id: z.number(),
@@ -21,6 +22,7 @@ export const BienSchema = z.object({
   commune: CommuneSchema,
   type: BienTypeSchema,
   price: z.number(),
+  prices: z.array(PriceSchema),
   monthly_charges: z.number(),
   transaction_type: TransactionTypeSchema,
   status: BienStatusSchema,

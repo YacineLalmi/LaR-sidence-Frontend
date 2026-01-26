@@ -16,6 +16,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import ClientDocumentDialog from "./client-document-dialog";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { format } from "date-fns";
+import ClientInteractionHistoryDialog from "./client-interaction-history-dialog";
 
 interface Props {
   data: {
@@ -85,11 +86,12 @@ export default function ClientTable({ data }: Props) {
     {
       id: "actions",
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <DeleteClientDialog client={row.original} />
           <Link href={NAVIGATION_KEYS.CLIENTS.EDIT(row.original.id)}>
-            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
+            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0 size-7" />
           </Link>
+          <ClientInteractionHistoryDialog interactions={row.original.interactions} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.ACTIONS),

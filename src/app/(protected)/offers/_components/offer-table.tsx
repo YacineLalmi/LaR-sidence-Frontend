@@ -16,6 +16,7 @@ import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
 import CustomButton from "@/components/ui/custom-button";
 import OfferDocumentDialog from "./offer-document-dialog";
+import OfferVisitHistoryDialog from "./offer-visit-history-dialog";
 
 interface Props {
   data: {
@@ -116,8 +117,9 @@ export default function OffersTable({ data }: Props) {
         <div className="flex items-center">
           <DeleteOfferDialog offer={row.original} />
           <Link href={`/offers/${row.original.id}`}>
-            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
+            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0 size-7" />
           </Link>
+          <OfferVisitHistoryDialog visits={row.original.visits} />
         </div>
       ),
       header: "Actions",

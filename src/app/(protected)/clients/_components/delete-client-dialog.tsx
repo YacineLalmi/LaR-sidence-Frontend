@@ -44,7 +44,7 @@ export default function DeleteClientDialog({ client }: Props) {
         e.stopPropagation();
         onConfirm(client.id);
       }}
-      trigger={<CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0" />}
+      trigger={<CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0 size-7" />}
     />
   );
 }

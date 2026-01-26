@@ -3,6 +3,7 @@ import { ClientTypeSchema } from "../client-types/client-type.schema";
 import { ClientSourceSchema } from "../client-sources/client-source.schema";
 import { ClientStatusSchema } from "../client-status/client-status.schema";
 import { FileSchema } from "../file/file.schema";
+import { InteractionSchema } from "../interaction/interaction";
 
 export const ClientSchema = z.object({
   id: z.number(),
@@ -21,6 +22,7 @@ export const ClientSchema = z.object({
   tax_identification: z.string().nullable(),
   ai: z.string().nullable(),
   documents: z.array(FileSchema),
+  interactions: z.array(InteractionSchema),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime().nullable().optional(),
   deleted_at: z.iso.datetime().nullable().optional(),

@@ -43,7 +43,7 @@ export default function DeleteBienDialog({ bien }: Props) {
         e.stopPropagation();
         onConfirm(bien.id);
       }}
-      trigger={<CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0" />}
+      trigger={<CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0 size-7" />}
     />
   );
 }

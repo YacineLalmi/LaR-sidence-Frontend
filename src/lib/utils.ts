@@ -59,6 +59,7 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
 export function validateResponseData<ParsedBody>(data: any, Schema: ZodSchema): ParsedBody {
   const result = Schema.safeParse(data);
   if (!result.success) {
+    console.error(result.error.issues);
     const errorMessage = result.error.issues[0].message;
     let firstErrorMsg = errorMessage;
     throw new ResponseValidationError(firstErrorMsg);
@@ -122,4 +123,19 @@ export async function fetchFileAsFileObject(fileId: string, filename: string, mi
     console.error(`Failed to fetch file ${fileId}:`, error);
     return null;
   }
+}
+
+/**
+ * Format number to Algerian Dinar (DZD) format
+ * @param amount - The amount to format
+ * @param showDecimals - Whether to show decimal places
+ * @returns Formatted string with DA suffix
+ */
+export function formatMoney(amount: number, showDecimals: boolean = false): string {
+  const formatted = amount.toLocaleString('fr-DZ', {
+    minimumFractionDigits: showDecimals ? 2 : 0,
+    maximumFractionDigits: showDecimals ? 2 : 0,
+  });
+  
+  return `${formatted} DA`;
 }
