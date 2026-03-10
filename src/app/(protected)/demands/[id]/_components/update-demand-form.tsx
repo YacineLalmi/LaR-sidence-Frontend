@@ -48,7 +48,7 @@ export default function UpdateDemandForm({
   const form = useForm<DemandForm>({
     resolver: zodResolver(DemandFormSchema),
     defaultValues: {
-      title: demand.title,
+      // title: demand.title,
       type_id: demand.type.id.toString(),
       client_id: demand.client.id.toString(),
       source_id: demand.source.id.toString(),
@@ -85,14 +85,14 @@ export default function UpdateDemandForm({
       <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-2 gap-5">
         <div className="grid grid-cols-1 gap-3">
           <Section header={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}>
-            <InputTextField
+            {/* <InputTextField
               control={form.control}
               name="title"
               label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}
               disabled={isPending}
               required
               placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.TITLE)}
-            />
+            /> */}
             <InputSelectField
               control={form.control}
               name="type_id"

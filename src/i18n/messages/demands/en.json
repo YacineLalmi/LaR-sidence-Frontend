@@ -59,6 +59,7 @@
     "title": "Demand Title",
     "type": "Demand Type",
     "client": "Client",
+    "agent": "Agent",
     "budget": "Budget",
     "dateAdded": "Date Added",
     "status": "Status",
@@ -82,4 +83,3 @@
     "updatedAt": "Updated at"
   }
 }
-

@@ -801,6 +801,7 @@ export const TRANSLATIONS_KEYS = {
       TITLE: "demands.columns.title",
       TYPE: "demands.columns.type",
       CLIENT: "demands.columns.client",
+      AGENT: "demands.columns.agent",
       BUDGET: "demands.columns.budget",
       DATE_ADDED: "demands.columns.dateAdded",
       STATUS: "demands.columns.status",

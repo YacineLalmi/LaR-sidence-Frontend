@@ -54,7 +54,7 @@ export default function CreateBienForm({
     resolver: zodResolver(BienFormSchema),
     defaultValues: {
       client_id: undefined,
-      title: "",
+      // title: "",
       bien_type_id: undefined,
       transaction_type_id: undefined,
       bien_status_id: undefined,

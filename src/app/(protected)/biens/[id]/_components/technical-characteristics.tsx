@@ -37,7 +37,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         name="developed_surface"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.DEVELOPED_SURFACE)}
         disabled={isPending}
-        required
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.DEVELOPED_SURFACE)}
       />
       <InputNumberField

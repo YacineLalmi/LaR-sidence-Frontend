@@ -56,14 +56,12 @@ export default function BienTable({ data }: Props) {
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ID),
     },
     {
-      accessorKey: "title",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.TITLE),
+      id: "bien.id",
       cell: ({ row }) => {
         const firstImageId = row.original.images?.[0]?.id;
         return (
           <div className="flex items-center gap-2">
             {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
-            <div>{row.getValue("title")}</div>
           </div>
         );
       },
@@ -95,6 +93,7 @@ export default function BienTable({ data }: Props) {
     {
       accessorKey: "adresse",
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ADRESSE),
+      cell: ({ row }) => <div className="w-32 leading-5 text-wrap">{row.original.adresse}</div>,
     },
     {
       id: "bien.status",

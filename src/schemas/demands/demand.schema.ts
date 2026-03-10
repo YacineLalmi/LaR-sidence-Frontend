@@ -9,7 +9,7 @@ import { BienPrioritySchema } from "../bien-priority/bien-priotiry.schema";
 
 export const DemandSchema = z.object({
   id: z.number(),
-  title: z.string(),
+  title: z.string().nullable().optional(),
   type: ClientTypeSchema,
   client: ClientSchema,
   source: ClientSourceSchema,

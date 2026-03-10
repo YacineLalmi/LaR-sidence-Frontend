@@ -14,7 +14,7 @@ import { PriceSchema } from "../price/price.schema";
 export const BienSchema = z.object({
   id: z.number(),
   client: ClientSchema,
-  title: z.string(),
+  title: z.string().nullable().optional(),
   adresse: z.string(),
   postal_code: z.string(),
   coordinates: z.string(),
@@ -29,7 +29,7 @@ export const BienSchema = z.object({
   description: z.string().nullable(),
   habitable_surface: z.number(),
   total_surface: z.number(),
-  developed_surface: z.number(),
+  developed_surface: z.number().nullable().optional(),
   floor_number: z.number(),
   rooms_number: z.number(),
   bedrooms_number: z.number(),

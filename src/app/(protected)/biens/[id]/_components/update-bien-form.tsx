@@ -59,7 +59,7 @@ export default function UpdateBienForm({
     mode: "onChange",
     defaultValues: {
       client_id: bien.client.id.toString(),
-      title: bien.title,
+      // title: bien.title,
       bien_type_id: bien.type.id.toString(),
       transaction_type_id: bien.transaction_type.id.toString(),
       bien_status_id: bien.status.id.toString(),
@@ -103,7 +103,7 @@ export default function UpdateBienForm({
 
         // Fetch documents
         const documentPromises = bien.documents.map((doc) =>
-          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type)
+          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
         );
         const documents = await Promise.all(documentPromises);
         const validDocuments = documents.filter((doc): doc is File => doc !== null);
@@ -124,6 +124,7 @@ export default function UpdateBienForm({
 
   // 2. Define a submit handler.
   async function onSubmit(values: BienForm) {
+    console.log(values);
     setIsPending(true);
     try {
       const response = await updateBienAction(values, bien.id);

@@ -62,6 +62,7 @@
     "title": "Titre de la Demande",
     "type": "Type de Demande",
     "client": "Client",
+    "agent": "Agent",
     "budget": "Budget",
     "dateAdded": "Date d'Ajout",
     "status": "Statut",

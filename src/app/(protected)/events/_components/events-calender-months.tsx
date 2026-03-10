@@ -146,7 +146,7 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       style={{ backgroundColor: bgColor, color: textColor }}
                       className="rounded-md px-2 py-1.5 text-xs cursor-pointer hover:opacity-90 transition-opacity shadow-sm border border-black/10 opacity-60"
                     >
-                      <div className="font-semibold truncate">{event.title}</div>
+                      {/* <div className="font-semibold truncate">{event.title}</div> */}
                       <div className="text-[10px] opacity-90 mt-0.5">
                         {startTime} - {endTime}
                       </div>
@@ -242,7 +242,7 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       style={{ backgroundColor: bgColor, color: textColor }}
                       className="rounded-md px-2 py-1.5 text-xs cursor-pointer hover:opacity-90 transition-opacity shadow-sm border border-black/10"
                     >
-                      <div className="font-semibold truncate">{event.title}</div>
+                      {/* <div className="font-semibold truncate">{event.title}</div> */}
                       <div className="text-[10px] opacity-90 mt-0.5">
                         {startTime} - {endTime}
                       </div>
@@ -330,7 +330,7 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       style={{ backgroundColor: bgColor, color: textColor }}
                       className="rounded-md px-2 py-1.5 text-xs cursor-pointer hover:opacity-90 transition-opacity shadow-sm border border-black/10 opacity-60"
                     >
-                      <div className="font-semibold truncate">{event.title}</div>
+                      {/* <div className="font-semibold truncate">{event.title}</div> */}
                       <div className="text-[10px] opacity-90 mt-0.5">
                         {startTime} - {endTime}
                       </div>

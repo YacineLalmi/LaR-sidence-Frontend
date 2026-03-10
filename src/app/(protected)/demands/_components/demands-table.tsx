@@ -5,19 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Demand } from "@/schemas/demands/demand.schema";
 import { ColumnDef, RowSelectionState } from "@tanstack/react-table";
-import { Edit, Eye, Plus, Trash2 } from "lucide-react";
+import { Edit } from "lucide-react";
 import Link from "next/link";
 import React, { useCallback, useState } from "react";
 import { ResponseMetaData } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/components/ui/status-badge";
 import DeleteDemandDialog from "./delete-demand-dialog";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import DemandDocumentDialog from "./demand-document-dialog";
-import DeleteDemandsDialog from "./delete-demands-dialog";
-import { customToast } from "@/lib/utils";
 import { deleteDemandsAction } from "@/actions/demands/delete-demands.action";
 
 interface Props {
@@ -79,10 +76,10 @@ export default function DemandsTable({ data }: Props) {
         return id ? id.toString().padStart(6, "0") : "-";
       },
     },
-    {
-      accessorKey: "title",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.TITLE),
-    },
+    // {
+    //   accessorKey: "title",
+    //   header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.TITLE),
+    // },
     {
       accessorKey: "type",
       header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.TYPE),
@@ -99,6 +96,17 @@ export default function DemandsTable({ data }: Props) {
         if (!client) return "-";
         const firstName = client.first_name || "";
         const lastName = client.last_name || "";
+        return `${firstName} ${lastName}`.trim() || "-";
+      },
+    },
+    {
+      accessorKey: "agent",
+      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.AGENT),
+      cell: ({ row }) => {
+        const agent = row.original.agent;
+        if (!agent) return "-";
+        const firstName = agent.first_name || "";
+        const lastName = agent.last_name || "";
         return `${firstName} ${lastName}`.trim() || "-";
       },
     },
@@ -136,20 +144,5 @@ export default function DemandsTable({ data }: Props) {
     },
   ];
 
-  return (
-    <DataTable data={data} columns={columns} onDeleteMultiple={deleteDemandsAction} />
-    // {selectedRows.length > 0 && (
-    //   <div className="flex justify-end mt-4">
-    //     <Button
-    //       variant="destructive"
-    //       onClick={() => {
-    //         // Handle bulk delete
-    //         alert(`Delete ${selectedRows.length} items`);
-    //       }}
-    //     >
-    //       {translation("demands.actions.deleteSelection")}
-    //     </Button>
-    //   </div>
-    // )}
-  );
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteDemandsAction} />;
 }

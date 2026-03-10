@@ -66,7 +66,6 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.POSTAL_CODE)}
         disabled={isPending}
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.POSTAL_CODE)}
-        required
       />
 
       <InputTextField

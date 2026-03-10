@@ -99,7 +99,7 @@ export default function EventsCalenderWeeks({ events, startDate, onEventClick }:
                       style={{ backgroundColor: bgColor, color: textColor }}
                       className="rounded-md p-3 cursor-pointer hover:opacity-90 transition-opacity shadow-smborder-black/10"
                     >
-                      <div className="font-semibold text-sm mb-1.5 leading-tight">{event.title}</div>
+                      {/* <div className="font-semibold text-sm mb-1.5 leading-tight">{event.title}</div> */}
                       <div className="text-xs opacity-90 mb-2">
                         {formatTime(new Date(event.start_date))} - {formatTime(new Date(event.end_date))}
                       </div>

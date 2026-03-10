@@ -9,10 +9,10 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 export const BienFormSchema = z
   .object({
     client_id: z.string(),
-    title: z
-      .string()
-      .min(3, "Le titre doit contenir au moins 3 caractères")
-      .max(255, "Le titre ne peut pas dépasser 255 caractères"),
+    // title: z
+    //   .string()
+    //   .min(3, "Le titre doit contenir au moins 3 caractères")
+    //   .max(255, "Le titre ne peut pas dépasser 255 caractères"),
     bien_type_id: z.string().min(1, "Le type de bien est requis"),
     transaction_type_id: z.string().min(1, "Le type de transaction est requis"),
     bien_status_id: z.string().min(1, "Le statut est requis"),
@@ -55,7 +55,9 @@ export const BienFormSchema = z
     developed_surface: z
       .number()
       .positive("La surface développée doit être positive")
-      .max(999999, "La surface développée est trop grande"),
+      .max(999999, "La surface développée est trop grande")
+      .nullable()
+      .optional(),
     floor_number: z
       .number()
       .int("Le nombre d'étages doit être un entier")
@@ -92,17 +94,17 @@ export const BienFormSchema = z
     images: z
       .array(z.instanceof(File))
       .min(1, "At least one file is required")
-      .max(5, "You can upload up to 5 files")
+      // .max(10, "You can upload up to 5 files")
       .refine((files) => files.every((file) => file.size <= MAX_IMAGE_SIZE), "Each file must be 5MB or less")
       .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only PDF files are allowed"),
 
     documents: z
       .array(z.instanceof(File))
-      .max(5, "You can upload up to 5 files")
+      // .max(10, "You can upload up to 10 files")
       .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
       .refine(
         (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
-        "Only PDF files are allowed"
+        "Only PDF files are allowed",
       ),
   })
   .refine(
@@ -112,7 +114,7 @@ export const BienFormSchema = z
     {
       message: "La surface habitable ne peut pas dépasser la surface totale",
       path: ["habitable_surface"],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -121,7 +123,7 @@ export const BienFormSchema = z
     {
       message: "Le nombre de chambres ne peut pas dépasser le nombre de pièces",
       path: ["bedrooms_number"],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -133,7 +135,7 @@ export const BienFormSchema = z
     {
       message: "Les dates d'exclusivité sont requises si l'exclusivité est activée",
       path: ["exclusivity_start"],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -145,7 +147,7 @@ export const BienFormSchema = z
     {
       message: "La date de fin d'exclusivité doit être après la date de début",
       path: ["exclusivity_end"],
-    }
+    },
   );
 
 export type BienForm = z.infer<typeof BienFormSchema>;

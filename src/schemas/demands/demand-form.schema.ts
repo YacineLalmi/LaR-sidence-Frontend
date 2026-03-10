@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const DemandFormSchema = z.object({
-  title: z.string().min(1, "Le titre est requis").max(255),
+  // title: z.string().min(1, "Le titre est requis").max(255),
   type_id: z.string().min(1, "Le type de demande est requis"),
   client_id: z.string().min(1, "Le client est requis"),
   source_id: z.string().min(1, "La source est requise"),

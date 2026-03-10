@@ -2,7 +2,6 @@
 
 import { createDemandAction } from "@/actions/demands/create-demand.action";
 import Section from "@/app/(protected)/biens/add/_components/section";
-import InputNumberField from "@/components/custom-inputs/input-number";
 import { InputSearchField } from "@/components/custom-inputs/input-search";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
@@ -38,7 +37,7 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
   const form = useForm<DemandForm>({
     resolver: zodResolver(DemandFormSchema),
     defaultValues: {
-      title: "",
+      // title: "",
       type_id: "",
       client_id: "",
       source_id: "",
@@ -75,14 +74,14 @@ export default function CreateDemandForm({ types, status, priorities, sources, c
       <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8 grid grid-cols-2 gap-5">
         <div className="grid grid-cols-1 gap-3">
           <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.GENERAL_INFORMATION)}>
-            <InputTextField
+            {/* <InputTextField
               control={form.control}
               name="title"
               label={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.LABELS.TITLE)}
               disabled={isPending}
               required
               placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.INPUTS.PLACEHOLDERS.TITLE)}
-            />
+            /> */}
             <InputSelectField
               control={form.control}
               name="type_id"

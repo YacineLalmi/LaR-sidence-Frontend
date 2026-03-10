@@ -42,14 +42,14 @@ export default function GeneralInformation({
         options={clients}
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.CLIENT)}
       />
-      <InputTextField
+      {/* <InputTextField
         control={form.control}
         name="title"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.TITLE)}
         disabled={isPending}
         required
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.TITLE)}
-      />
+      /> */}
 
       <InputSelectField
         control={form.control}
@@ -105,7 +105,6 @@ export default function GeneralInformation({
         name="monthly_charges"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.MONTHLY_CHARGES)}
         disabled={isPending}
-        required
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.MONTHLY_CHARGES)}
       />
     </Section>
