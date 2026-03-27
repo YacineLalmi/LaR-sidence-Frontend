@@ -4,9 +4,8 @@ import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Bien } from "@/schemas/biens/bien.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, FileSearch2, Image, Trash2 } from "lucide-react";
+import { Edit, Image } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { useTranslations } from "next-intl";
 import CustomButton from "@/components/ui/custom-button";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
@@ -16,6 +15,7 @@ import DeleteBienDialog from "./delete-bien-dialog";
 import { ResponseMetaData } from "@/lib/definitions";
 import BienPriceHistoryDialog from "./bien-price-history-dialog";
 import { formatMoney } from "@/lib/utils";
+import FicheBienDialog from "./bien-document-dialog";
 
 interface Props {
   data: {
@@ -102,11 +102,7 @@ export default function BienTable({ data }: Props) {
     },
     {
       id: "fiche",
-      cell: (row) => (
-        <div className="flex items-center gap-1">
-          <CustomButton Icon={FileSearch2} size="icon" variant="ghost" className="!p-0" />
-        </div>
-      ),
+      cell: ({ row }) => <FicheBienDialog bien={row.original} />,
       header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.FICHE),
     },
     {

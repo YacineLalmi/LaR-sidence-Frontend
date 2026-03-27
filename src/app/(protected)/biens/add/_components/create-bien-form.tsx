@@ -19,7 +19,7 @@ import LinkedDocuments from "./linked-document";
 import Exclusivity from "./exclusivity";
 import Description from "./description";
 import Commentaire from "./commentaire";
-import { BienForm, BienFormSchema } from "@/schemas/biens/bien-form.schema";
+import { BienForm, BienFormInput, BienFormOutput, BienFormSchema } from "@/schemas/biens/bien-form.schema";
 import { createBienAction } from "@/actions/Bien/create.action";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { Loader } from "lucide-react";
@@ -34,6 +34,10 @@ interface Props {
   priorities: ListItem[];
   clients: ListItem[];
   bienAdditionalcharacteristics: ListItem[];
+  clientTypes: ListItem[];
+  clientStatus: ListItem[];
+  clientSources: ListItem[];
+  civilities: ListItem[];
 }
 export default function CreateBienForm({
   agents,
@@ -44,23 +48,27 @@ export default function CreateBienForm({
   priorities,
   bienAdditionalcharacteristics,
   clients,
+  clientTypes,
+  clientStatus,
+  clientSources,
+  civilities,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
 
   const translation = useTranslations();
   const router = useRouter();
-  const form = useForm<BienForm>({
+  const form = useForm<BienFormInput, any, BienFormOutput>({
     resolver: zodResolver(BienFormSchema),
     defaultValues: {
-      client_id: undefined,
+      client_id: null,
       // title: "",
       bien_type_id: undefined,
       transaction_type_id: undefined,
       bien_status_id: undefined,
       agent_id: undefined,
-      price: 0,
-      monthly_charges: 0,
+      price: "",
+      monthly_charges: "",
       wilaya_id: undefined,
       commune_id: undefined,
       priority_id: undefined,
@@ -68,13 +76,13 @@ export default function CreateBienForm({
       postal_code: "",
       coordinates: "",
       description: "",
-      habitable_surface: 0,
-      total_surface: 0,
-      developed_surface: 0,
-      floor_number: 0,
-      bedrooms_number: 0,
-      rooms_number: 0,
-      bathrooms_number: 0,
+      habitable_surface: "",
+      total_surface: "",
+      developed_surface: "",
+      floor_number: "",
+      bedrooms_number: "",
+      rooms_number: "",
+      bathrooms_number: "",
       availability_date: new Date(),
       additional_characteristics: [],
       images: [],
@@ -140,6 +148,10 @@ export default function CreateBienForm({
               form={form}
               transactionsTypes={transactionsTypes}
               isPending={isPending}
+              clientTypes={clientTypes}
+              clientStatus={clientStatus}
+              clientSources={clientSources}
+              civilities={civilities}
             />
             <div>
               <Localisation form={form} wilayas={wilayas} />

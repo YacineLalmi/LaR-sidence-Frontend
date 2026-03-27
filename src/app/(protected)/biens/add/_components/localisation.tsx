@@ -3,15 +3,15 @@ import InputTextField from "@/components/custom-inputs/input-text";
 import { ListItem } from "@/schemas/global.schema";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import { Control, UseFormReturn } from "react-hook-form";
 import Section from "./section";
-import { BienForm } from "@/schemas/biens/bien-form.schema";
+import { BienFormInput, BienFormOutput } from "@/schemas/biens/bien-form.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { CommuneService } from "@/services/commune.service";
 import { getCommuneByWilaya } from "@/actions/commune/get-commune-by-wilaya";
 
 interface Props {
-  form: UseFormReturn<BienForm>;
+  form: UseFormReturn<BienFormInput, any, BienFormOutput>;
   isPending?: boolean;
   wilayas: ListItem[];
 }
@@ -32,7 +32,7 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
     <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.LOCALISATION)}>
       <div className="flex gap-5">
         <InputSelectField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="wilaya_id"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.WILAYA)}
           options={wilayas}
@@ -41,7 +41,7 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
           required
         />
         <InputSelectField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="commune_id"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.COMMUNE)}
           options={communes}
@@ -52,7 +52,7 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
       </div>
 
       <InputTextField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="adresse"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.ADDRESS)}
         disabled={isPending}
@@ -61,16 +61,15 @@ export default function Localisation({ form, isPending = false, wilayas }: Props
       />
 
       <InputTextField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="postal_code"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.POSTAL_CODE)}
         disabled={isPending}
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.POSTAL_CODE)}
-        required
       />
 
       <InputTextField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="coordinates"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.GPS_COORDINATES)}
         disabled={isPending}

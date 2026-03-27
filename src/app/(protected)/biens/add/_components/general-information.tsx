@@ -1,24 +1,26 @@
 "use client";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import InputTextField from "@/components/custom-inputs/input-text";
 import { ListItem } from "@/schemas/global.schema";
 import { useTranslations } from "next-intl";
-import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { Control, UseFormReturn } from "react-hook-form";
 import Section from "./section";
 import InputNumberField from "@/components/custom-inputs/input-number";
-import { BienForm } from "@/schemas/biens/bien-form.schema";
+import { BienFormInput, BienFormOutput } from "@/schemas/biens/bien-form.schema";
 import { InputSearchField } from "@/components/custom-inputs/input-search";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {
-  form: UseFormReturn<BienForm>;
+  form: UseFormReturn<BienFormInput, any, BienFormOutput>;
   isPending?: boolean;
   bienTypes: ListItem[];
   transactionsTypes: ListItem[];
   status: ListItem[];
   agents: ListItem[];
   clients: ListItem[];
+  clientTypes: ListItem[];
+  clientStatus: ListItem[];
+  clientSources: ListItem[];
+  civilities: ListItem[];
 }
 
 export default function GeneralInformation({
@@ -31,10 +33,12 @@ export default function GeneralInformation({
   clients,
 }: Props) {
   const translation = useTranslations();
+
   return (
     <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.GENERAL_INFORMATION)}>
+      {/* Client row: search field + add button */}
       <InputSearchField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="client_id"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.CLIENT)}
         disabled={isPending}
@@ -42,17 +46,10 @@ export default function GeneralInformation({
         options={clients}
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.CLIENT)}
       />
-      {/* <InputTextField
-        control={form.control}
-        name="title"
-        label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.TITLE)}
-        disabled={isPending}
-        required
-        placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.TITLE)}
-      /> */}
 
+      {/* Rest of the form */}
       <InputSelectField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="bien_type_id"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.BIEN_TYPE)}
         options={bienTypes}
@@ -60,9 +57,8 @@ export default function GeneralInformation({
         disabled={isPending}
         required
       />
-
       <InputSelectField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="transaction_type_id"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.TRANSACTION_TYPE)}
         options={transactionsTypes}
@@ -70,9 +66,8 @@ export default function GeneralInformation({
         disabled={isPending}
         required
       />
-
       <InputSelectField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="bien_status_id"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.BIEN_STATUS)}
         options={status}
@@ -80,9 +75,8 @@ export default function GeneralInformation({
         disabled={isPending}
         required
       />
-
       <InputSelectField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="agent_id"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.AGENT)}
         options={agents}
@@ -90,18 +84,16 @@ export default function GeneralInformation({
         disabled={isPending}
         required
       />
-
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="price"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.PRICE)}
         disabled={isPending}
         required
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.PRICE)}
       />
-
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="monthly_charges"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.MONTHLY_CHARGES)}
         disabled={isPending}

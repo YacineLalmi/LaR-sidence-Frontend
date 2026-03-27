@@ -4,14 +4,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { Control, UseFormReturn } from "react-hook-form";
 import Section from "./section";
-import { BienForm } from "@/schemas/biens/bien-form.schema";
+import { BienFormInput, BienFormOutput } from "@/schemas/biens/bien-form.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {
-  form: UseFormReturn<BienForm>;
+  form: UseFormReturn<BienFormInput, any, BienFormOutput>;
   isPending?: boolean;
   bienAdditionalcharacteristics: ListItem[];
 }
@@ -24,7 +24,7 @@ export default function AdditionalCharacteristics({ form, isPending = false, bie
         {bienAdditionalcharacteristics.map((feature) => (
           <FormField
             key={feature.id}
-            control={form.control}
+            control={form.control as Control<BienFormInput, any, any>}
             name="additional_characteristics"
             render={({ field }) => (
               <FormItem className="flex flex-row items-center space-x-3 space-y-0">
@@ -34,7 +34,7 @@ export default function AdditionalCharacteristics({ form, isPending = false, bie
                     onCheckedChange={(checked) => {
                       return checked
                         ? field.onChange([...field.value, +feature.id])
-                        : field.onChange(field.value?.filter((value) => value !== +feature.id));
+                        : field.onChange(field.value?.filter((value: number) => value !== +feature.id));
                     }}
                     className="data-[state=checked]:bg-primary data-[state=checked]:border-primary  rounded-full p-0.5 h-5 w-5"
                   />

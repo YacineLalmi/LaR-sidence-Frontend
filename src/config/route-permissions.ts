@@ -93,6 +93,11 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     requireAuthentication: true,
   },
   {
+    path: "/events/[id]",
+    permissions: [PERMISSIONS.UPDATE_EVENT],
+    requireAuthentication: true,
+  },
+  {
     path: "/settings",
     permissions: [
       PERMISSIONS.VIEW_USERS,

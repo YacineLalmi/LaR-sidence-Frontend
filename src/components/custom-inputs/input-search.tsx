@@ -136,7 +136,7 @@ export function InputSearchField<T extends FieldValues>({
       onFieldChange(item.id);
       onSelect?.(item);
     },
-    [onSelect]
+    [onSelect],
   );
 
   const handleInputChange = useCallback(
@@ -144,10 +144,10 @@ export function InputSearchField<T extends FieldValues>({
       setQuery(value);
       setSelectedItem(null);
       setShowResults(true);
-      onFieldChange("");
+      onFieldChange(null);
       onChange?.(value);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleCreateSuccess = useCallback(
@@ -160,7 +160,7 @@ export function InputSearchField<T extends FieldValues>({
         setQuery(newItem.name);
       }
     },
-    [onCreateSuccess]
+    [onCreateSuccess],
   );
 
   // Default option renderer
@@ -247,7 +247,7 @@ export function InputSearchField<T extends FieldValues>({
                 <div
                   className={cn(
                     "rounded-lg border border-border bg-card absolute z-10 mt-2 w-full shadow-lg max-h-60 overflow-y-auto",
-                    dropdownClassName
+                    dropdownClassName,
                   )}
                 >
                   {filteredResults.map((option) => (

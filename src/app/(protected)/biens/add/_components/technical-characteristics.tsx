@@ -2,13 +2,13 @@ import { InputDateField } from "@/components/custom-inputs/input-date";
 import InputNumberField from "@/components/custom-inputs/input-number";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { Control, UseFormReturn } from "react-hook-form";
 import Section from "./section";
-import { BienForm } from "@/schemas/biens/bien-form.schema";
+import { BienFormInput, BienFormOutput } from "@/schemas/biens/bien-form.schema";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 
 interface Props {
-  form: UseFormReturn<BienForm>;
+  form: UseFormReturn<BienFormInput, any, BienFormOutput>;
   isPending?: boolean;
 }
 
@@ -17,7 +17,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
   return (
     <Section header={translation(TRANSLATIONS_KEYS.BIENS.FORM.TECHNICAL_CHARACTERISTICS)}>
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="total_surface"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.TOTAL_SURFACE)}
         disabled={isPending}
@@ -25,7 +25,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.TOTAL_SURFACE)}
       />
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="habitable_surface"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.HABITAL_SURFACE)}
         disabled={isPending}
@@ -33,7 +33,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.HABITAL_SURFACE)}
       />
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="developed_surface"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.DEVELOPED_SURFACE)}
         disabled={isPending}
@@ -41,7 +41,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.DEVELOPED_SURFACE)}
       />
       <InputNumberField
-        control={form.control}
+        control={form.control as Control<BienFormInput, any, any>}
         name="floor_number"
         label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.FLOOR_NUMBER)}
         disabled={isPending}
@@ -50,7 +50,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
       />
       <div className="grid grid-cols-2 gap-5">
         <InputNumberField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="rooms_number"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.ROOMS)}
           disabled={isPending}
@@ -58,7 +58,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.ROOMS)}
         />
         <InputNumberField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="bathrooms_number"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.BATHROOMS)}
           disabled={isPending}
@@ -66,7 +66,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.BATHROOMS)}
         />
         <InputNumberField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="bedrooms_number"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.BEDROOMS)}
           disabled={isPending}
@@ -74,7 +74,7 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           placeholder={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.PLACEHOLDERS.BEDROOMS)}
         />
         <InputDateField
-          control={form.control}
+          control={form.control as Control<BienFormInput, any, any>}
           name="availability_date"
           label={translation(TRANSLATIONS_KEYS.BIENS.FORM.INPUTS.LABELS.AVAILABILITY_DATE)}
           disabled={isPending}

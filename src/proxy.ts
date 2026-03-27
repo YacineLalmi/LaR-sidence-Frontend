@@ -5,7 +5,7 @@ import { COOKIES_KEYS } from "./constants/cookies-keys";
 import { refreshTokenAction } from "./actions/authentication/refresh.action";
 import { getProfilePermissionsAction } from "./actions/Profile/get-profile-permissions.action";
 
-export default async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   console.log("-----------------")

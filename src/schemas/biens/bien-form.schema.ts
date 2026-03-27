@@ -1,4 +1,6 @@
 import z from "zod";
+import { inputNumberFieldSchema } from "../global/price-field.schema";
+import { inputFilesValidation } from "../global/file-field.schema";
 
 const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
@@ -8,7 +10,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 
 export const BienFormSchema = z
   .object({
-    client_id: z.string(),
+    client_id: z.string().nullable(),
     // title: z
     //   .string()
     //   .min(3, "Le titre doit contenir au moins 3 caractères")
@@ -17,15 +19,8 @@ export const BienFormSchema = z
     transaction_type_id: z.string().min(1, "Le type de transaction est requis"),
     bien_status_id: z.string().min(1, "Le statut est requis"),
     agent_id: z.string().nullable().optional(),
-    price: z.number().positive("Le prix doit être positif").max(999999999999999, "Le prix est trop élevé"),
-
-    monthly_charges: z
-      .number()
-      .positive("Les charges mensuelles doivent être positives")
-      .max(999999999999999, "Les charges sont trop élevées")
-      .nullable()
-      .optional(),
-
+    price: inputNumberFieldSchema(),
+    monthly_charges: inputNumberFieldSchema().optional(),
     wilaya_id: z.string().min(1, "La wilaya est requise"),
     commune_id: z.string().min(1, "La commune est requise"),
     priority_id: z.string().min(1, "La priorité est requise"),
@@ -44,40 +39,14 @@ export const BienFormSchema = z
     description: z.string().max(5000, "La description ne peut pas dépasser 5000 caractères").nullable().optional(),
 
     // Property Characteristics
-    habitable_surface: z
-      .number()
-      .positive("La surface habitable doit être positive")
-      .max(999999, "La surface habitable est trop grande"),
-    total_surface: z
-      .number()
-      .positive("La surface totale doit être positive")
-      .max(999999, "La surface totale est trop grande"),
-    developed_surface: z
-      .number()
-      .positive("La surface développée doit être positive")
-      .max(999999, "La surface développée est trop grande")
-      .nullable()
+    habitable_surface: inputNumberFieldSchema(),
+    total_surface: inputNumberFieldSchema(),
+    developed_surface: inputNumberFieldSchema()
       .optional(),
-    floor_number: z
-      .number()
-      .int("Le nombre d'étages doit être un entier")
-      .min(0, "Le nombre d'étages ne peut pas être négatif")
-      .max(200, "Le nombre d'étages est trop élevé"),
-    rooms_number: z
-      .number()
-      .int("Le nombre de pièces doit être un entier")
-      .positive("Le nombre de pièces doit être positif")
-      .max(100, "Le nombre de pièces est trop élevé"),
-    bedrooms_number: z
-      .number()
-      .int("Le nombre de chambres doit être un entier")
-      .min(0, "Le nombre de chambres ne peut pas être négatif")
-      .max(50, "Le nombre de chambres est trop élevé"),
-    bathrooms_number: z
-      .number()
-      .int("Le nombre de salles de bain doit être un entier")
-      .min(0, "Le nombre de salles de bain ne peut pas être négatif")
-      .max(50, "Le nombre de salles de bain est trop élevé"),
+    floor_number: inputNumberFieldSchema(),
+    rooms_number: inputNumberFieldSchema(),
+    bedrooms_number: inputNumberFieldSchema(),
+    bathrooms_number: inputNumberFieldSchema(),
     availability_date: z.date({
       error: "La date de disponibilité est requise",
     }),
@@ -91,21 +60,23 @@ export const BienFormSchema = z
 
     additional_characteristics: z.array(z.number().int()),
 
-    images: z
-      .array(z.instanceof(File))
-      .min(1, "At least one file is required")
-      // .max(10, "You can upload up to 5 files")
-      .refine((files) => files.every((file) => file.size <= MAX_IMAGE_SIZE), "Each file must be 5MB or less")
-      .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only PDF files are allowed"),
+    images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
+    documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
+    // images: z
+    //   .array(z.instanceof(File))
+    //   .min(1, "At least one file is required")
+    //   // .max(10, "You can upload up to 5 files")
+    //   .refine((files) => files.every((file) => file.size <= MAX_IMAGE_SIZE), "Each file must be 5MB or less")
+    //   .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only PDF files are allowed"),
 
-    documents: z
-      .array(z.instanceof(File))
-      // .max(10, "You can upload up to 10 files")
-      .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
-      .refine(
-        (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
-        "Only PDF files are allowed",
-      ),
+    // documents: z
+    //   .array(z.instanceof(File))
+    //   // .max(10, "You can upload up to 10 files")
+    //   .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
+    //   .refine(
+    //     (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
+    //     "Only PDF files are allowed",
+    //   ),
   })
   .refine(
     (data) => {
@@ -151,3 +122,5 @@ export const BienFormSchema = z
   );
 
 export type BienForm = z.infer<typeof BienFormSchema>;
+export type BienFormInput = z.input<typeof BienFormSchema>;
+export type BienFormOutput = z.output<typeof BienFormSchema>;
