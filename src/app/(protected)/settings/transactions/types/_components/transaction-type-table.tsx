@@ -3,29 +3,35 @@
 import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
-import React from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
-import { ResponseMetaData } from "@/lib/definitions";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import CustomButton from "@/components/ui/custom-button";
-import { TransactionType } from "@/schemas/transaction-type/transaction-type.schema";
-import UpdateTransactionTypeDialog from "./update-transactions-type-dialog";
+import { PaginatedResponse } from "@/lib/definitions";
+import { BienType } from "@/schemas/bien-type/bien-type.schema";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { useCallback } from "react";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
+import { deleteClassificationsAction } from "@/actions/classification/delete-classifications.action";
+import { ListItem } from "@/schemas/global.schema";
+import { formatId } from "@/lib/utils";
 import DeleteTransactionTypeDialog from "./delete-transaction-type-dialog";
+import UpdateTransactionTypeDialog from "./update-transaction-type-dialog";
 
 interface Props {
-  data: {
-    items: TransactionType[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Classification>;
+  colors: ListItem[];
 }
 
-export default function TransactionTypeTable({ data }: Props) {
+export default function TransactionTypeTable({ data, colors }: Props) {
   const translation = useTranslations();
+  const locale = useLocale() as "fr" | "en" | "ar";
 
-  const columns: ColumnDef<TransactionType>[] = [
+  const onDeleteMultiple = useCallback(async (ids: string[]) => {
+    return await deleteClassificationsAction(CATEGORIES.TYPE, SCOPES.TRANSACTION, ids);
+  }, []);
+
+  const columns: ColumnDef<Classification>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -52,30 +58,35 @@ export default function TransactionTypeTable({ data }: Props) {
       header: () => {
         return (
           <SortingButton
-            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ID)}
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ID)}
             columnKey="id"
           />
         );
       },
+      cell: ({ row }) => <span>{formatId(row.original.id)}</span>,
     },
     {
       accessorKey: "code",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CODE),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.NAME),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.NAME),
+      cell: ({ row }) => <span className="font-medium">{row.original.name[locale]}</span>,
     },
     {
       accessorKey: "description",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.DESCRIPTION),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.DESCRIPTION),
+      cell: ({ row }) => (
+        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+      ),
     },
     {
       accessorKey: "created_at",
       header: () => {
         return (
           <SortingButton
-            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CREATED_AT)}
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.CREATED_AT)}
             columnKey="created_at"
           />
         );
@@ -86,14 +97,14 @@ export default function TransactionTypeTable({ data }: Props) {
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center">
-          <DeleteTransactionTypeDialog transactionType={row.row.original} />
-          <UpdateTransactionTypeDialog transactionType={row.row.original} />
+          <DeleteTransactionTypeDialog classification={row.original} />
+          <UpdateTransactionTypeDialog classification={row.original} colors={colors} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.ACTIONS),
     },
   ];
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={onDeleteMultiple} />;
 }

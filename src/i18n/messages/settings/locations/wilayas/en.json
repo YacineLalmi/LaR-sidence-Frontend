@@ -1,0 +1,32 @@
+{
+  "title": "List of wilayas",
+  "deleteText": "Do you want to delete the wilaya with ID {id}?",
+  "createText": "Create a wilaya",
+  "form": {
+    "title": {
+      "create": "Add a wilaya",
+      "edit": "Edit a wilaya"
+    },
+    "message": {
+      "created": "Wilaya created successfully",
+      "updated": "Wilaya updated successfully",
+      "failedCreation": "Failed to create the wilaya",
+      "failedUpdate": "Failed to update the wilaya"
+    },
+    "label": {
+      "code": "Wilaya code",
+      "name": "Wilaya name"
+    },
+    "placeholder": {
+      "code": "Enter the wilaya code",
+      "name": "Enter the wilaya name"
+    }
+  },
+  "columns": {
+    "id": "Wilaya ID",
+    "name": "Wilaya name",
+    "code": "Wilaya code",
+    "actions": "Actions",
+    "createdAt": "Creation date"
+  }
+}

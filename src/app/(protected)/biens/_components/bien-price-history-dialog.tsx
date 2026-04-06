@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { History, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import CustomButton from "@/components/ui/custom-button";
-import { Visit } from "@/schemas/visit/visit.schema";
 import PriceCard from "./price-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Price } from "@/schemas/price/price.schema";
 
 interface Props {
-  prices: Price[];
+  prices: Price[] | undefined;
 }
 
 // ============================================================================
@@ -17,6 +16,7 @@ interface Props {
 
 export default function BienPriceHistoryDialog({ prices }: Props) {
   const [open, setOpen] = useState(false);
+  if (!prices) return;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -28,7 +28,7 @@ export default function BienPriceHistoryDialog({ prices }: Props) {
 
       <DialogContent showCloseButton={false} className="max-w-2xl max-h-[90vh] p-0 gap-2">
         <DialogHeader className="px-6 py-4 border-b">
-          <DialogTitle className="text-xl font-normal text-amber-600">Historique des visites</DialogTitle>
+          <DialogTitle className="text-xl font-normal text-amber-600">Historique des prix</DialogTitle>
         </DialogHeader>
         <CustomButton
           Icon={X}

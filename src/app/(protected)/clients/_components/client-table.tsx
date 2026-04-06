@@ -5,24 +5,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import { ResponseMetaData } from "@/lib/definitions";
+import { PaginatedResponse } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
 import { Client } from "@/schemas/clients/client.schema";
 import CustomButton from "@/components/ui/custom-button";
 import DeleteClientDialog from "./delete-client-dialog";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { StatusBadge } from "@/components/ui/status-badge";
 import ClientDocumentDialog from "./client-document-dialog";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { format } from "date-fns";
 import ClientInteractionHistoryDialog from "./client-interaction-history-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
+import { deleteClientsAction } from "@/actions/clients/delete-clients.action";
+import { formatId } from "@/lib/utils";
 
 interface Props {
-  data: {
-    items: Client[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Client>;
 }
 
 export default function ClientTable({ data }: Props) {
@@ -54,33 +52,40 @@ export default function ClientTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.ID),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.ID),
+      cell: ({ row }) => formatId(row.original.id),
     },
     {
       accessorKey: "first_name",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.FIRST_NAME),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.FIRST_NAME),
+      cell: ({ row }) => (
+        <span>{row.original.civility === "company" ? row.original.company_name : row.original.first_name}</span>
+      ),
     },
     {
       accessorKey: "last_name",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.LAST_NAME),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.LAST_NAME),
+      cell: ({ row }) => (
+        <span>{row.original.civility === "company" ? row.original.trade_register : row.original.last_name}</span>
+      ),
     },
     {
       accessorKey: "civility",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.CIVILITY),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.CIVILITY),
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.CREATED_AT),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.CREATED_AT),
       cell: ({ row }) => format(new Date(row.original.created_at), "dd/MM/yyyy HH:mm"),
     },
     {
-      accessorKey: "status.name",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.STATUS),
+      accessorKey: "status",
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.STATUS),
       cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
       id: "document",
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.DOCUMENT),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.DOCUMENT),
       cell: ({ row }) => <ClientDocumentDialog client={row.original} />,
     },
     {
@@ -88,14 +93,14 @@ export default function ClientTable({ data }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteClientDialog client={row.original} />
-          <Link href={NAVIGATION_KEYS.CLIENTS.EDIT(row.original.id)}>
+          <Link href={ROUTES.CLIENTS.EDIT(row.original.id)}>
             <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0 size-7" />
           </Link>
           <ClientInteractionHistoryDialog interactions={row.original.interactions} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.CLIENTS.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.ACTIONS),
     },
   ];
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteClientsAction} />;
 }

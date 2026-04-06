@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { RefreshCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import errorImage from "@/assests/images/Error.svg";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export default function ErrorCard({
   reset,
@@ -21,12 +22,12 @@ export default function ErrorCard({
       <CardContent>
         <Image src={image} alt="eefs" width={350} />
       </CardContent>
-      <h2 className="font-bold text-2xl">{t("common.errors.somethingwrong")}</h2>
-      <span>{message || t("common.errors.unknown")}</span>
+      <h2 className="font-bold text-2xl">{t(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG)}</h2>
+      <span>{message || t(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.UNKNOWN)}</span>
       <CardFooter>
         <Button className=" p-5 cursor-pointer" onClick={() => reset()}>
           <RefreshCcw />
-          {t("common.errors.unknown")}
+          {t(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.UNKNOWN)}
         </Button>
       </CardFooter>
     </Card>

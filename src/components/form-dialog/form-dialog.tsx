@@ -37,7 +37,8 @@ export default function FormDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        {children}
+
+        {isOpen && children}
         <DialogFooter>
           <Button className="border-1 cursor-pointer w-36 p-5 ml-auto" type="submit" form={formId} disabled={isPending}>
             {submitButtonText}

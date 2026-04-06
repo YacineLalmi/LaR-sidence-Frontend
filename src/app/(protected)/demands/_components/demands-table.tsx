@@ -1,31 +1,27 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Demand } from "@/schemas/demands/demand.schema";
-import { ColumnDef, RowSelectionState } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
-import { ResponseMetaData } from "@/lib/definitions";
-import { useTranslations } from "next-intl";
+import { PaginatedResponse } from "@/lib/definitions";
+import { useLocale, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui/status-badge";
 import DeleteDemandDialog from "./delete-demand-dialog";
 import CustomButton from "@/components/ui/custom-button";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import DemandDocumentDialog from "./demand-document-dialog";
 import { deleteDemandsAction } from "@/actions/demands/delete-demands.action";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 interface Props {
-  data: {
-    items: Demand[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Demand>;
 }
 
 export default function DemandsTable({ data }: Props) {
   const translation = useTranslations();
+  const locale = useLocale() as "fr" | "en" | "ar";
 
   const formatBudget = (budget: number | string | null | undefined) => {
     if (!budget) return "-";
@@ -70,7 +66,7 @@ export default function DemandsTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation("demands.columns.demandId"),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DEMAND_ID),
       cell: ({ row }) => {
         const id = row.original.id;
         return id ? id.toString().padStart(6, "0") : "-";
@@ -78,19 +74,19 @@ export default function DemandsTable({ data }: Props) {
     },
     // {
     //   accessorKey: "title",
-    //   header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.TITLE),
+    //   header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.TITLE),
     // },
     {
       accessorKey: "type",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.TYPE),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.TYPE),
       cell: ({ row }) => {
         const type = row.original.type;
-        return type?.name || "-";
+        return type?.name[locale] || "-";
       },
     },
     {
       accessorKey: "client",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.CLIENT),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.CLIENT),
       cell: ({ row }) => {
         const client = row.original.client;
         if (!client) return "-";
@@ -101,7 +97,7 @@ export default function DemandsTable({ data }: Props) {
     },
     {
       accessorKey: "agent",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.AGENT),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.AGENT),
       cell: ({ row }) => {
         const agent = row.original.agent;
         if (!agent) return "-";
@@ -112,23 +108,23 @@ export default function DemandsTable({ data }: Props) {
     },
     {
       accessorKey: "budget",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.BUDGET),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.BUDGET),
       cell: ({ row }) => formatBudget(row.original.budget),
     },
     {
       accessorKey: "created_at",
-      header: translation("demands.columns.dateAdded"),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DATE_ADDED),
       cell: ({ row }) => formatDate(row.original.created_at),
     },
     {
       accessorKey: "status",
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.STATUS),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.STATUS),
       cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
       id: "fiche",
       cell: ({ row }) => <DemandDocumentDialog demand={row.original} />,
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.FICHE),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.FICHE),
     },
     {
       id: "actions",
@@ -140,7 +136,7 @@ export default function DemandsTable({ data }: Props) {
           <DeleteDemandDialog demand={row.original} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.DEMANDS.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.ACTIONS),
     },
   ];
 

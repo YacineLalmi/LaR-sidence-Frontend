@@ -1,51 +1,387 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, ChevronLeft, ChevronRight, MapPin, MessageCircle, FileText, FileSearch } from "lucide-react";
 import CustomButton from "@/components/ui/custom-button";
 import { Bien } from "@/schemas/biens/bien.schema";
-
-// Mock data based on your image
-const PROPERTY_DATA = {
-  id: "#20462",
-  title: "Villa vue de mer",
-  type: "Villa",
-  status: "Libre",
-  transaction: "Vente",
-  price: "75.000.000.00DA",
-  charges: "(nul)",
-  exclusivity: "Non",
-  agent: "Abdeljalil hachemi",
-  wilaya: "Alger",
-  commune: "Hydra",
-  zip: "16000",
-  address: "141 cite belle vue",
-  description: "Située dans un quartier résidentiel prisé, cette villa offre une vue dégagée sur la mer...",
-  creationDate: "13/05/2022",
-  // Page 2 data
-  livingArea: "200 m²",
-  totalArea: "350 m²",
-  devArea: "350 m²",
-  floors: "2",
-  rooms: "8",
-  bathrooms: "2",
-  bedrooms: "3",
-  availability: "13/05/2022",
-  priority: "Moyenne",
-  features: ["Climatisation", "Chauffage central", "Parking", "Jardin", "Piscine"],
-  comment: "Bien très demandé, idéalement situé à proximité du centre-ville...",
-};
+import { useLocale } from "next-intl";
 
 interface Props {
   bien: Bien;
 }
+
 export default function FicheBienDialog({ bien }: Props) {
   const [open, setOpen] = useState(false);
-
   const [page, setPage] = useState(1);
+  const locale = useLocale() as "fr" | "en" | "ar";
+
+  const handlePrint = () => {
+    // Create a new window for printing
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    // Get the computed styles
+    const styles = Array.from(document.styleSheets)
+      .map((styleSheet) => {
+        try {
+          return Array.from(styleSheet.cssRules)
+            .map((rule) => rule.cssText)
+            .join("\n");
+        } catch (e) {
+          return "";
+        }
+      })
+      .join("\n");
+
+    // Write the HTML content
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fiche Bien - ${bien.title}</title>
+        <style>
+          ${styles}
+          
+          /* Print-specific styles */
+          @media print {
+            @page {
+              margin: 1.5cm;
+              size: A4;
+            }
+            
+            body {
+              margin: 0;
+              padding: 20px;
+            }
+            
+            .no-print {
+              display: none !important;
+            }
+            
+            .print-container {
+              max-width: 100% !important;
+            }
+            
+            .page-break {
+              page-break-after: always;
+            }
+          }
+          
+          /* Additional styling for print layout */
+          .print-container {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #F5F2EB;
+            padding: 30px;
+          }
+          
+          .print-header {
+            border-bottom: 2px solid #C5A267;
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+          }
+          
+          .print-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #C5A267;
+            font-family: serif;
+            margin: 0;
+          }
+          
+          .print-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 30px;
+          }
+          
+          .print-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          }
+          
+          .print-field {
+            border-bottom: 1px solid #e4e4e7;
+            padding-bottom: 8px;
+          }
+          
+          .print-label {
+            font-size: 11px;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            margin-bottom: 4px;
+          }
+          
+          .print-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #18181b;
+          }
+          
+          .print-value-bold {
+            font-weight: 700;
+            color: #18181b;
+          }
+          
+          .print-section-title {
+            font-size: 11px;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 20px;
+          }
+          
+          .print-description {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #3f3f46;
+            font-weight: 500;
+          }
+          
+          .print-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+          }
+          
+          .print-list li {
+            font-size: 13px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 4px;
+          }
+          
+          .print-address {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+          }
+          
+          .print-documents {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+          }
+          
+          .print-doc-item {
+            font-size: 12px;
+            color: #52525b;
+            padding: 4px 8px;
+            background-color: white;
+            border: 1px solid #e4e4e7;
+            border-radius: 6px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-container">
+          <!-- Page 1 -->
+          <div>
+            <div class="print-header">
+              <h1 class="print-title">Fiche Bien</h1>
+            </div>
+            
+            <div class="print-grid">
+              <!-- Left Column -->
+              <div class="print-column">
+                <div class="print-field">
+                  <div class="print-label">ID du bien</div>
+                  <div class="print-value print-value-bold">${bien.id}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Titre du bien</div>
+                  <div class="print-value print-value-bold">${bien.title || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Type de bien</div>
+                  <div class="print-value print-value-bold">${bien.type?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Statut du bien</div>
+                  <div class="print-value print-value-bold">${bien.status?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Type de transaction</div>
+                  <div class="print-value print-value-bold">${bien.transaction_type?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Prix de vente</div>
+                  <div class="print-value print-value-bold">${bien.price?.toLocaleString()} DA</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Charges mensuelles</div>
+                  <div class="print-value">${bien.monthly_charges.toLocaleString()} DA</div>
+                </div>
+              </div>
+              
+              <!-- Right Column -->
+              <div class="print-column">
+                <div class="print-field">
+                  <div class="print-label">Exclusivité</div>
+                  <div class="print-value print-value-bold">${bien.exclusivity ? "Oui" : "Non"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Agent responsable</div>
+                  <div class="print-value print-value-bold">${bien.agent?.first_name || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Wilaya</div>
+                  <div class="print-value print-value-bold">${bien.wilaya?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Commune</div>
+                  <div class="print-value print-value-bold">${bien.commune?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Code postale</div>
+                  <div class="print-value print-value-bold">${bien.postal_code || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Adresse</div>
+                  <div class="print-value print-value-bold">${bien.adresse || "N/A"}</div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                  <div class="print-label">Description</div>
+                  <div class="print-description">${bien.description || "Aucune description"}</div>
+                </div>
+                
+                <div class="print-field" style="margin-top: 20px;">
+                  <div class="print-label">Date de Création</div>
+                  <div class="print-value">${bien.created_at || "N/A"}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Page 2 -->
+          <div class="page-break"></div>
+          <div>
+            <div class="print-header">
+              <h1 class="print-title">Fiche Bien (Suite)</h1>
+            </div>
+            
+            <div class="print-grid">
+              <!-- Left Column -->
+              <div class="print-column">
+                <div class="print-field">
+                  <div class="print-label">Surface Habitable (m²)</div>
+                  <div class="print-value print-value-bold">${bien.habitable_surface}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Surface Totale (m²)</div>
+                  <div class="print-value print-value-bold">${bien.total_surface}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Surface Développée (m²)</div>
+                  <div class="print-value print-value-bold">${bien.developed_surface || "N/A"}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Nombre d'Etages</div>
+                  <div class="print-value print-value-bold">${bien.floor_number}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Nombre de Pièces</div>
+                  <div class="print-value print-value-bold">${bien.rooms_number}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Nombre de Salles de Bain</div>
+                  <div class="print-value print-value-bold">${bien.bathrooms_number}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Nombre de Chambres</div>
+                  <div class="print-value print-value-bold">${bien.bedrooms_number}</div>
+                </div>
+                
+                <div class="print-field">
+                  <div class="print-label">Date de Disponibilité</div>
+                  <div class="print-value print-value-bold">${bien.availability_date || "N/A"}</div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                  <div class="print-section-title">Caractéristiques Additionnelles</div>
+                  <ul class="print-list">
+                    ${
+                      bien.characteristics && bien.characteristics.length > 0
+                        ? bien.characteristics.map((f) => `<li>• ${f.name[locale]}</li>`).join("")
+                        : "<li>Aucune caractéristique</li>"
+                    }
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Right Column -->
+              <div class="print-column">
+                <div class="print-field">
+                  <div class="print-label">Priorité</div>
+                  <div class="print-value print-value-bold">${bien.priority?.name[locale] || "N/A"}</div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                  <div class="print-section-title">Documents du Bien</div>
+                  <div class="print-documents">
+                    ${
+                      bien.documents && bien.documents.length > 0
+                        ? bien.documents
+                            .map((doc) => `<div class="print-doc-item">${doc.original_name || "Document"}</div>`)
+                            .join("")
+                        : '<div class="print-doc-item">Aucun document</div>'
+                    }
+                  </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                  <div class="print-section-title">Commentaire</div>
+                  <div class="print-description">${bien.comment || "Aucun commentaire"}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
+            };
+          };
+        </script>
+      </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -101,7 +437,9 @@ export default function FicheBienDialog({ bien }: Props) {
               <Button variant="outline" className="border-zinc-300 rounded-xl px-8 h-12">
                 Modifier
               </Button>
-              <Button className="bg-black hover:bg-zinc-800 text-white rounded-xl px-8 h-12">Imprimer</Button>
+              <Button className="bg-black hover:bg-zinc-800 text-white rounded-xl px-8 h-12" onClick={handlePrint}>
+                Imprimer
+              </Button>
             </div>
           </div>
         </div>
@@ -112,6 +450,7 @@ export default function FicheBienDialog({ bien }: Props) {
 
 /** ─── PAGE 1 CONTENT ─── **/
 function PageOne({ data }: { data: Bien }) {
+  const locale = useLocale() as "fr" | "en" | "ar";
   return (
     <div className="grid grid-cols-2 gap-12">
       {/* Left Column */}
@@ -132,19 +471,19 @@ function PageOne({ data }: { data: Bien }) {
         </div>
         <DataField label="ID du bien" value={data.id.toString()} bold />
         <DataField label="Titre du bien" value={data.title || "N/A"} bold />
-        <DataField label="Type de bien" value={data.type.name} bold />
-        <DataField label="Statut du bien" value={data.status.name} bold />
-        <DataField label="Type de transaction" value={data.transaction_type.name} bold />
-        <DataField label="Prix de vente" value={data.price.toString()} bold />
+        <DataField label="Type de bien" value={data.type?.name[locale]} bold />
+        <DataField label="Statut du bien" value={data.status?.name[locale]} bold />
+        <DataField label="Type de transaction" value={data.transaction_type?.name[locale]} bold />
+        <DataField label="Prix de vente" value={data.price?.toString()} bold />
         <DataField label="Charges mensuelles" value={data.monthly_charges.toString()} />
       </div>
 
       {/* Right Column */}
       <div className="space-y-6">
         <DataField label="Exclusivité" value={data.exclusivity ? "Oui" : "Non"} bold />
-        <DataField label="Agent responsable" value={data.agent.first_name} bold />
-        <DataField label="Wilaya" value={data.wilaya.name} bold />
-        <DataField label="Commune" value={data.commune.name} bold />
+        <DataField label="Agent responsable" value={data.agent?.first_name} bold />
+        <DataField label="Wilaya" value={data.wilaya?.name[locale]} bold />
+        <DataField label="Commune" value={data.commune?.name[locale]} bold />
         <DataField label="Code postale" value={data.postal_code} bold />
         <div className="relative border-b border-zinc-200 pb-2">
           <p className="text-xs text-zinc-400 uppercase font-semibold">Adresse</p>
@@ -164,6 +503,7 @@ function PageOne({ data }: { data: Bien }) {
 
 /** ─── PAGE 2 CONTENT ─── **/
 function PageTwo({ data }: { data: Bien }) {
+  const locale = useLocale() as "fr" | "en" | "ar";
   return (
     <div className="grid grid-cols-2 gap-12">
       {/* Left Column */}
@@ -180,16 +520,14 @@ function PageTwo({ data }: { data: Bien }) {
         <div className="space-y-2">
           <p className="text-xs text-zinc-400 uppercase font-semibold">Caractéristiques Additionnelles</p>
           <ul className="text-sm font-bold space-y-1">
-            {data.additional_characteristics.map((f) => (
-              <li key={f.id}>• {f.name}</li>
-            ))}
+            {data.characteristics && data.characteristics.map((f) => <li key={f.id}>• {f.name[locale]}</li>)}
           </ul>
         </div>
       </div>
 
       {/* Right Column */}
       <div className="space-y-2">
-        <DataField label="Priorité" value={data.priority.name} bold />
+        <DataField label="Priorité" value={data.priority?.name[locale]} bold />
 
         <div>
           <p className="text-xs text-zinc-400 uppercase font-semibold mb-3">Documents du Bien</p>
@@ -211,11 +549,11 @@ function PageTwo({ data }: { data: Bien }) {
 
 /** ─── REUSABLE UI COMPONENTS ─── **/
 
-function DataField({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
+function DataField({ label, value, bold }: { label: string; value?: string | undefined; bold?: boolean }) {
   return (
     <div className="border-b text-xs border-zinc-200">
       <p className="text-zinc-400 uppercase font-semibold">{label}</p>
-      <p className={bold ? "font-bold" : "font-medium"}>{value}</p>
+      <p className={bold ? "font-bold" : "font-medium"}>{value || "N/A"}</p>
     </div>
   );
 }

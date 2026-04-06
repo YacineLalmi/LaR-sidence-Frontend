@@ -1,36 +1,38 @@
-import React from "react";
-
-import { BienTypeService } from "@/services/bien-type.service";
 import BienTypeTable from "./_components/bien-type-table";
-import CreateBienTypeDialog from "./_components/create-bien-type-dialog";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import SearchField from "@/components/ui/search";
-import NavigationButton from "@/components/ui/navigation-button";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
+import { ColorService } from "@/services/colors.service";
+import SettingsView from "@/views/settings.view";
+import { PaginatedResponse } from "@/lib/definitions";
+import { Classification } from "@/schemas/classification/classification.schema";
+import CreateBienTypeDialog from "./_components/create-bien-type-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
 
 export default async function BienType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const data = await BienTypeService.findAll(queryParams);
+  const colors = await ColorService.list();
+
+  let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
+  let responseError: Error | null = null;
+
+  try {
+    result = await ClassificationService(CATEGORIES.TYPE, SCOPES.BIEN).findMany(queryParams);
+  } catch (error: any) {
+    responseError = error;
+  }
   return (
-    <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col">
-        <NavigationButton
-          title={translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}
-          backLink={NAVIGATION_KEYS.SETTINGS.BIENS.ROOT}
-        />
-        {/* <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}</h1> */}
-        <div className="flex w-full justify-between gap-2">
-          <SearchField />
-          <CreateBienTypeDialog />
-        </div>
-      </CardHeader>
-      <CardContent className="px-0">
-        <BienTypeTable data={data} />
-      </CardContent>
-    </Card>
+    <SettingsView
+      title={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.TITLE)}
+      searchField={<SearchField />}
+      createComponent={<CreateBienTypeDialog colors={colors} />}
+      error={responseError}
+      backLink={ROUTES.SETTINGS.ROOT}
+    >
+      <BienTypeTable data={result} colors={colors} />
+    </SettingsView>
   );
 }

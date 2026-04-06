@@ -1,0 +1,45 @@
+{
+  "title": "Configuration des Sources des demandes",
+  "description": "Gérer les sources des demandes utilisées dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer une Source de demande",
+      "update": "Modifier une Source de demande",
+      "delete": "Supprimer une Source de demande"
+    },
+    "messages": {
+      "created": "Source créée avec succès",
+      "updated": "Source modifiée avec succès",
+      "deleted": "Source supprimée avec succès",
+      "failed_creation": "Échec de la création de la Source",
+      "failed_update": "Échec de la modification de la Source",
+      "failed_deletion": "Échec de la suppression de la Source",
+      "delete_confirmation": "Supprimer cette Source (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une Source",
+      "update": "Modifier la Source",
+      "delete": "Supprimer la Source"
+    },
+    "labels": {
+      "code": "Code de Source",
+      "name": "Nom de Source",
+      "description": "Description de Source",
+      "is_active": "Source active"
+    },
+    "placeholders": {
+      "code": "Insérer le code de la Source",
+      "name": "Insérer le nom de la Source",
+      "description": "Description de la Source",
+      "is_active": "La Source est-elle active ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "created_at"
+  }
+}

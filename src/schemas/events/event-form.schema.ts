@@ -7,7 +7,7 @@ export const EventFormSchema = z.object({
   end_date: z.date(),
   type_id: z.string().min(1, "Le type d'événement est obligatoire"),
   agent_id: z.string().min(1, "L'agent est obligatoire"),
-  bien_id: z.string().min(1, "Le bien est obligatoire"),
+  bien_id: z.string().nullable().optional(),
   client_id: z.string().min(1, "Le client est obligatoire"),
 });
 

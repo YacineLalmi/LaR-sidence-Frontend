@@ -4,7 +4,7 @@ import { EventService } from "@/services/event.service";
 import { handleServerActionError } from "@/lib/server.helper";;
 import { EventForm } from "@/schemas/events/event-form.schema";
 
-export async function updateEventAction(data: EventForm, id: number): Promise<FormState> {
+export async function updateEventAction(data: EventForm, id: string): Promise<FormState> {
   try {
     await EventService.update(data, id);
     return {

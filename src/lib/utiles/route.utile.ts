@@ -1,4 +1,4 @@
-import { RouteConfig, ROUTES_PERMISSIONS } from "@/config/route-permissions";
+import { RouteConfig, ROUTES_PERMISSIONS } from "@/config/route.config";
 import { arraysIntersect } from "../utils";
 
 export function isPublicRoute(path: string): boolean {
@@ -26,6 +26,7 @@ function findMatchingRoute(path: string): RouteConfig | null {
 }
 
 export function checkRoutePermission(path: string, userPermissions: string[]): boolean {
+  console.log("User Permissions")
   const matchedRoute = findMatchingRoute(path);
   // Route not defined - deny access by default for security
   if (!matchedRoute) {
@@ -34,7 +35,7 @@ export function checkRoutePermission(path: string, userPermissions: string[]): b
 
   const { permissions: routePermissions } = matchedRoute;
 
-  if (routePermissions.length === 0) return true;
+  if (!routePermissions) return true;
 
   // Protected route - check if user has at least one required permission
   return arraysIntersect(userPermissions, routePermissions);

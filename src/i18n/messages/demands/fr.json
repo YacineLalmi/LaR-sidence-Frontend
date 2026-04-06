@@ -1,38 +1,32 @@
 {
-  "title": "Gestions des demandes",
-  "filter": {
-    "title": "Filtres",
-    "label": {
-      "status": "Statut de la demande",
-      "type": "Type de demande",
-      "client": "Client",
-      "agent": "Agent attribué",
-      "budgetMin": "Budget min",
-      "budgetMax": "Budget max",
-      "createdBetween": "Date d'ajout"
-    },
-    "placeholder": {
-      "status": "Sélectionner une option",
-      "type": "Sélectionner une option",
-      "client": "Sélectionner une option",
-      "agent": "Sélectionner une option",
-      "budgetMin": "Entrez le budget minimum",
-      "budgetMax": "Entrez le budget maximum",
-      "createdBetween": "Sélectionner une plage de dates"
-    },
-    "clear": "Réinitialiser filtres",
-    "submit": "Appliquer filtres"
-  },
+  "title": "Configuration des Demandes",
+  "description": "Gérer les demandes de l'application",
   "form": {
-    "createTitle": "Créer une demande",
-    "editTitle": "Modifier une demande",
-    "buttonText": "Créer une demande",
-    "publish": "Publier",
-    "sections": {
-      "generalInformation": "Informations Générales",
-      "internalComments": "Commentaires Internes"
+    "titles": {
+      "create": "Créer une demande",
+      "update": "Modifier une demande",
+      "delete": "Supprimer une demande"
     },
-    "label": {
+    "messages": {
+      "created": "Demande créée avec succès",
+      "updated": "Demande modifiée avec succès",
+      "deleted": "Demande supprimée avec succès",
+      "failed_creation": "Échec de la création de la demande",
+      "failed_update": "Échec de la modification de la demande",
+      "failed_deletion": "Échec de la suppression de la demande",
+      "delete_confirmation": "Supprimer cette demande (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une demande",
+      "update": "Modifier la demande",
+      "delete": "Supprimer la demande",
+      "publish": "Publier"
+    },
+    "sections": {
+      "general_information": "Informations Générales",
+      "internal_comments": "Commentaires Internes"
+    },
+    "labels": {
       "title": "Titre de la Demande",
       "type": "Type de Demande",
       "agent": "Agent attribué",
@@ -44,27 +38,52 @@
       "source": "Source de la Demande",
       "comment": "Commentaire"
     },
-    "placeholder": {
+    "placeholders": {
       "title": "Entrez le titre de la demande",
-      "type": "Sélectionner une option",
-      "agent": "Sélectionner une option",
-      "client": "Sélectionner une option",
-      "bien": "Sélectionner une option",
-      "status": "Sélectionner une option",
+      "type": "Sélectionnez le type",
+      "agent": "Sélectionnez l'agent",
+      "client": "Sélectionnez le client",
+      "bien": "Sélectionnez le bien",
+      "status": "Sélectionnez le statut",
       "budget": "Entrez le budget",
-      "priority": "Sélectionner une option",
-      "source": "Sélectionner une option",
+      "priority": "Sélectionnez la priorité",
+      "source": "Sélectionnez la source",
       "comment": "Entrez vos commentaires"
     }
   },
+  "filter": {
+    "title": "Filtrer les demandes",
+    "labels": {
+      "status": "Statut de la demande",
+      "type": "Type de demande",
+      "client": "Client",
+      "agent": "Agent attribué",
+      "budget_min": "Budget min",
+      "budget_max": "Budget max",
+      "created_between": "Date d'ajout"
+    },
+    "placeholders": {
+      "status": "Sélectionnez le statut",
+      "type": "Sélectionnez le type",
+      "client": "Sélectionnez le client",
+      "agent": "Sélectionnez l'agent",
+      "budget_min": "Entrez le budget minimum",
+      "budget_max": "Entrez le budget maximum",
+      "created_between": "Sélectionnez une plage de dates"
+    },
+    "buttons": {
+      "clear": "Réinitialiser les filtres",
+      "submit": "Appliquer les filtres"
+    }
+  },
   "columns": {
-    "demandId": "Demande ID",
+    "demand_id": "Demande ID",
     "title": "Titre de la Demande",
     "type": "Type de Demande",
     "client": "Client",
     "agent": "Agent",
     "budget": "Budget",
-    "dateAdded": "Date d'Ajout",
+    "date_added": "Date d'Ajout",
     "status": "Statut",
     "fiche": "Fiche",
     "actions": "Actions"
@@ -74,7 +93,7 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "print": "Imprimer",
-    "deleteSelection": "Supprimer la sélection"
+    "delete_selection": "Supprimer la sélection"
   },
   "delete": {
     "title": "Supprimer cette demande",
@@ -82,8 +101,8 @@
   },
   "detail": {
     "title": "Fiche demande",
-    "demandId": "Demande ID",
-    "createdAt": "Créé le",
-    "updatedAt": "Modifié le"
+    "demand_id": "Demande ID",
+    "created_at": "Créé le",
+    "updated_at": "Modifié le"
   }
 }

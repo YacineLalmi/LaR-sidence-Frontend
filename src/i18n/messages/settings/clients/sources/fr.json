@@ -1,25 +1,37 @@
 {
-  "title": "Configuration des sources des clients",
-  "deleteText": "Voulez-vous supprimer la source avec l'ID {id}",
+  "title": "Configuration des Sources des clients",
+  "description": "Gérer les sources des clients utilisées dans l'application",
   "form": {
-    "add": "Créer une source de client",
-    "update": "Modifier une source de client",
-    "created": "Source créée avec succès",
-    "updated": "Source modifié avec succès",
-    "failedCreation": "Échec de la création de source",
-    "failedUpdate": "Échec de la modification de source",
-    "buttonText": "Créer une source",
-    "label": {
-      "code": "Code de source",
-      "name": " Nom de source",
-      "description": "Description de source",
-      "isActive": "source actif"
+    "titles": {
+      "create": "Créer une Source de client",
+      "update": "Modifier une Source de client",
+      "delete": "Supprimer une Source de client"
     },
-    "placeholder": {
-      "code": "Insérer le code du source",
-      "name": "Insérer le nom du source",
-      "description": "Description de la couleur",
-      "isActive": "La source est-il actif ?"
+    "messages": {
+      "created": "Source créée avec succès",
+      "updated": "Source modifiée avec succès",
+      "deleted": "Source supprimée avec succès",
+      "failed_creation": "Échec de la création de la Source",
+      "failed_update": "Échec de la modification de la Source",
+      "failed_deletion": "Échec de la suppression de la Source",
+      "delete_confirmation": "Supprimer cette Source (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une Source",
+      "update": "Modifier la Source",
+      "delete": "Supprimer la Source"
+    },
+    "labels": {
+      "code": "Code de Source",
+      "name": "Nom de Source",
+      "description": "Description de Source",
+      "is_active": "Source active"
+    },
+    "placeholders": {
+      "code": "Insérer le code de la Source",
+      "name": "Insérer le nom de la Source",
+      "description": "Description de la Source",
+      "is_active": "La Source est-elle active ?"
     }
   },
   "columns": {
@@ -28,6 +40,6 @@
     "name": "Nom",
     "description": "Description",
     "actions": "Actions",
-    "createdAt": "created_at"
+    "created_at": "created_at"
   }
 }

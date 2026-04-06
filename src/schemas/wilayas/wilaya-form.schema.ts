@@ -1,7 +1,8 @@
 import z from "zod";
+import { TranslationFormSchema } from "../global/translation-form.schema";
 
 export const WilayaFormSchema = z.object({
-  name: z.string().trim().min(1).max(100),
+  name: TranslationFormSchema,
   code: z.string().regex(/^\d{1,3}$/, "code must be an integer with up to 3 digits"),
 });
 

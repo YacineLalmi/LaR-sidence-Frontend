@@ -1,48 +1,25 @@
-import { deleteClientTypeAction } from "@/actions/client-types/delete.action";
-import CustomButton from "@/components/ui/custom-button";
-import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import { customToast } from "@/lib/utils";
-import { ClientType } from "@/schemas/client-types/client-type.schema";
-import { Trash2 } from "lucide-react";
+"use client";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import DeleteClassificationDialog from "../../../_components/delete-classification-dialog";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
+import { Classification } from "@/schemas/classification/classification.schema";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 
 interface Props {
-  clientType: ClientType;
+  classification: Classification;
 }
-export default function DeleteCientTypeDialog({ clientType }: Props) {
+export default function DeleteClientTypeDialog({ classification }: Props) {
   const translation = useTranslations();
-  const router = useRouter();
-  const [isPending, setIsPending] = useState<boolean>(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
-
-  async function onConfirm(id: number) {
-    setIsPending(true);
-    try {
-      const response = await deleteClientTypeAction(id);
-      setIsPending(false);
-      if (response.isOk) {
-        setIsDeleteOpen(false);
-        router.refresh();
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
-    } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
-    }
-  }
   return (
-    <DeleteConfirmationDialog
-      title={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.DELETE_TEXT, { id: clientType.id })}
-      isOpen={isDeleteOpen}
-      setIsOpen={setIsDeleteOpen}
-      onConfirm={(e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onConfirm(clientType.id);
-      }}
-      trigger={<CustomButton Icon={Trash2} size="icon" variant="ghost" className="!p-0" />}
+    <DeleteClassificationDialog
+      category={CATEGORIES.TYPE}
+      scope={SCOPES.CLEINT}
+      classification={classification}
+      confirmationMessage={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.FORM.MESSAGES.DELETE_CONFIRMATION, {
+        id: classification.id,
+      })}
+      successMessage={TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.FORM.MESSAGES.DELETED}
+      errorMessage={TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.FORM.MESSAGES.FAILED_DELETION}
     />
   );
 }

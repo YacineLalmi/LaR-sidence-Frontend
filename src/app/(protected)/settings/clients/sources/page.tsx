@@ -1,36 +1,38 @@
-import React from "react";
-
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import SearchField from "@/components/ui/search";
-import NavigationButton from "@/components/ui/navigation-button";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
+import { ColorService } from "@/services/colors.service";
+import SettingsView from "@/views/settings.view";
+import { PaginatedResponse } from "@/lib/definitions";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import CreateClientSourceDialog from "./_components/create-client-source-dialog";
 import ClientSourceTable from "./_components/client-source-table";
-import { ClientSourceService } from "@/services/client-source.service";
+import { ROUTES } from "@/constants/routes";
 
-export default async function ClientType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
+export default async function StatusType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const data = await ClientSourceService.findAll(queryParams);
+  const colors = await ColorService.list();
+
+  let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
+  let responseError: Error | null = null;
+
+  try {
+    result = await ClassificationService(CATEGORIES.SOURCE, SCOPES.CLEINT).findMany(queryParams);
+  } catch (error: any) {
+    responseError = error;
+  }
   return (
-    <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col">
-        <NavigationButton
-          title={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.SOURCES.TITLE)}
-          backLink={NAVIGATION_KEYS.SETTINGS.CLIENTS.ROOT}
-        />
-        {/* <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}</h1> */}
-        <div className="flex w-full justify-between gap-2">
-          <SearchField />
-          <CreateClientSourceDialog />
-        </div>
-      </CardHeader>
-      <CardContent className="px-0">
-        <ClientSourceTable data={data} />
-      </CardContent>
-    </Card>
+    <SettingsView
+      title={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.STATUSES.TITLE)}
+      searchField={<SearchField />}
+      createComponent={<CreateClientSourceDialog colors={colors} />}
+      error={responseError}
+      backLink={ROUTES.SETTINGS.ROOT}
+    >
+      <ClientSourceTable data={result} colors={colors} />
+    </SettingsView>
   );
 }

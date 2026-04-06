@@ -1,0 +1,48 @@
+{
+  "title": "Configuration des status des biens",
+  "description": "Gérer les statutes des bien utilisés dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer un statut",
+      "update": "Modifier un statut",
+      "delete": "Supprimer un statut"
+    },
+    "messages": {
+      "created": "Statut créée avec succès",
+      "updated": "Statut modifiée avec succès",
+      "deleted": "Statut supprimée avec succès",
+      "failed_creation": "Échec de la création de la statut",
+      "failed_update": "Échec de la modification de la statut",
+      "failed_deletion": "Échec de la suppression de la statut",
+      "delete_confirmation": "Supprimer cet statut (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un statut",
+      "update": "Modifier le statut",
+      "delete": "Supprimer le statut"
+    },
+    "labels": {
+      "code": "Code de status",
+      "name": " Nom de status",
+      "description": "Description de status",
+      "colorId": "Couleur de status",
+      "isActive": "Status actif"
+    },
+    "placeholders": {
+      "code": "Insérer le code du status",
+      "name": "Insérer le nom du status",
+      "description": "Description de la couleur",
+      "colorId": "Choisir une couleur",
+      "isActive": "Le status est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "colorId": "Couleur",
+    "actions": "Actions",
+    "created_at": "created_at"
+  }
+}

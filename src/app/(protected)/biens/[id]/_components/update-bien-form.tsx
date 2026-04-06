@@ -6,7 +6,7 @@ import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import GeneralInformation from "./general-information";
 import Localisation from "./localisation";
@@ -18,12 +18,11 @@ import LinkedDocuments from "./linked-document";
 import Exclusivity from "./exclusivity";
 import Description from "./description";
 import Commentaire from "./commentaire";
-import { BienForm, BienFormSchema } from "@/schemas/biens/bien-form.schema";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { BienForm, BienFormInput, BienFormOutput, BienFormSchema } from "@/schemas/biens/bien-form.schema";
 import { Bien } from "@/schemas/biens/bien.schema";
-import { getFileBlob } from "@/actions/files/get-file-blob.action";
-import { updateBienAction } from "@/actions/Bien/update.action";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { updateBienAction } from "@/actions/Bien/update-bien.action";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   bien: Bien;
@@ -34,7 +33,7 @@ interface Props {
   agents: ListItem[];
   priorities: ListItem[];
   clients: ListItem[];
-  bienAdditionalcharacteristics: ListItem[];
+  bienCharacteristics: ListItem[];
 }
 
 export default function UpdateBienForm({
@@ -46,7 +45,7 @@ export default function UpdateBienForm({
   wilayas,
   priorities,
   clients,
-  bienAdditionalcharacteristics,
+  bienCharacteristics,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
@@ -54,34 +53,34 @@ export default function UpdateBienForm({
 
   const translation = useTranslations();
   const router = useRouter();
-  const form = useForm<BienForm>({
+  const form = useForm<BienFormInput, null, BienFormOutput>({
     resolver: zodResolver(BienFormSchema),
     mode: "onChange",
     defaultValues: {
-      client_id: bien.client.id.toString(),
+      client_id: bien.client?.id.toString(),
       // title: bien.title,
-      bien_type_id: bien.type.id.toString(),
-      transaction_type_id: bien.transaction_type.id.toString(),
-      bien_status_id: bien.status.id.toString(),
-      agent_id: bien.agent.id.toString(),
-      price: bien.price,
-      monthly_charges: bien.monthly_charges,
-      wilaya_id: bien.wilaya.id.toString(),
-      commune_id: bien.commune.id.toString(),
-      priority_id: bien.priority.id?.toString(),
+      bien_type_id: bien.type?.id.toString(),
+      transaction_type_id: bien.transaction_type?.id.toString(),
+      bien_status_id: bien.status?.id.toString(),
+      agent_id: bien.agent?.id.toString(),
+      price: bien?.price?.toString(),
+      monthly_charges: bien.monthly_charges.toString(),
+      wilaya_id: bien.wilaya?.id.toString(),
+      commune_id: bien.commune?.id.toString(),
+      priority_id: bien.priority?.id?.toString(),
       adresse: bien.adresse,
       postal_code: bien.postal_code,
       coordinates: bien.coordinates,
       description: bien.description,
-      habitable_surface: bien.habitable_surface,
-      total_surface: bien.total_surface,
-      developed_surface: bien.developed_surface,
-      floor_number: bien.floor_number,
-      bedrooms_number: bien.bedrooms_number,
-      rooms_number: bien.rooms_number,
-      bathrooms_number: bien.bathrooms_number,
+      habitable_surface: bien.habitable_surface.toString(),
+      total_surface: bien.total_surface.toString(),
+      developed_surface: bien.developed_surface?.toString() || "",
+      floor_number: bien.floor_number.toString(),
+      bedrooms_number: bien.bedrooms_number.toString(),
+      rooms_number: bien.rooms_number.toString(),
+      bathrooms_number: bien.bathrooms_number.toString(),
       availability_date: new Date(bien.availability_date),
-      additional_characteristics: bien.additional_characteristics.map((item) => item.id),
+      characteristics: bien.characteristics?.map((item) => +item.id) || [],
       images: [],
       comment: bien.comment,
       exclusivity: bien.exclusivity,
@@ -97,14 +96,14 @@ export default function UpdateBienForm({
       setIsLoadingFiles(true);
       try {
         // Fetch images
-        const imagePromises = bien.images.map((img) => fetchFileAsFileObject(img.id, img.original_name, img.mime_type));
+        const imagePromises =
+          bien.images?.map((img) => fetchFileAsFileObject(img.id, img.original_name, img.mime_type)) || [];
         const images = await Promise.all(imagePromises);
         const validImages = images.filter((img): img is File => img !== null);
 
         // Fetch documents
-        const documentPromises = bien.documents.map((doc) =>
-          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
-        );
+        const documentPromises =
+          bien.documents?.map((doc) => fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type)) || [];
         const documents = await Promise.all(documentPromises);
         const validDocuments = documents.filter((doc): doc is File => doc !== null);
 
@@ -113,7 +112,7 @@ export default function UpdateBienForm({
         form.setValue("documents", validDocuments as any);
       } catch (error) {
         console.error("Error loading files:", error);
-        customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.LOADING_FILES));
+        customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
       } finally {
         setIsLoadingFiles(false);
       }
@@ -130,11 +129,12 @@ export default function UpdateBienForm({
       const response = await updateBienAction(values, bien.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.BIENS.ROOT);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        router.push(ROUTES.BIENS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     }
     setIsPending(false);
   }
@@ -164,7 +164,7 @@ export default function UpdateBienForm({
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">{translation(TRANSLATIONS_KEYS.COMMON.LOADING)}</p>
+          <p className="text-gray-600">{translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING)}</p>
         </div>
       </div>
     );
@@ -197,11 +197,7 @@ export default function UpdateBienForm({
           <div className="col-span-11 grid grid-cols-2 gap-5">
             <TechnicalCharacteristics form={form} isPending={isPending} />
             <div>
-              <AdditionalCharacteristics
-                form={form}
-                isPending={isPending}
-                bienAdditionalcharacteristics={bienAdditionalcharacteristics}
-              />
+              <AdditionalCharacteristics form={form} isPending={isPending} bienCharacteristics={bienCharacteristics} />
               <Images form={form} isPending={isPending} />
             </div>
           </div>
@@ -223,7 +219,7 @@ export default function UpdateBienForm({
               className="border-1 cursor-pointer w-52 p-5"
               onClick={() => setActiveStep((prev) => prev - 1)}
             >
-              {translation(TRANSLATIONS_KEYS.COMMON.PREVIOUS)}
+              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.PREVIOUS)}
             </Button>
           )}
           {activeStep < sampleSteps.length && (
@@ -232,12 +228,12 @@ export default function UpdateBienForm({
               className="border-1 cursor-pointer w-52 p-5"
               onClick={() => setActiveStep((prev) => prev + 1)}
             >
-              {translation(TRANSLATIONS_KEYS.COMMON.NEXT)}
+              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.NEXT)}
             </Button>
           )}
           {activeStep === sampleSteps.length && (
             <Button className="border-1 cursor-pointer w-52 p-5" type="submit" disabled={isPending}>
-              {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
+              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT)}
             </Button>
           )}
         </div>

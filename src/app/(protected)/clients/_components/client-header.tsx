@@ -1,13 +1,12 @@
 import SearchField from "@/components/ui/search";
-import React from "react";
 import ClientFilters from "./client-filters";
 import { ListItem } from "@/schemas/global.schema";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import CustomButton from "@/components/ui/custom-button";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { ROUTES } from "@/constants/routes";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 interface Props {
   types: ListItem[];
@@ -24,8 +23,8 @@ export default function ClientHeader({ types, status, sources, civilities }: Pro
         <SearchField />
         <ClientFilters types={types} status={status} sources={sources} civilities={civilities} />
       </div>
-      <Link href={NAVIGATION_KEYS.CLIENTS.ADD}>
-        <CustomButton text={translation(TRANSLATIONS_KEYS.CLIENTS.ADD_CLIENT)} Icon={Plus} />
+      <Link href={ROUTES.CLIENTS.CREATE}>
+        <CustomButton text={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.BUTTONS.CREATE)} Icon={Plus} />
       </Link>
     </div>
   );

@@ -5,9 +5,9 @@ import DemandsFilter from "./demands-filters";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom-button";
 import { getTranslations } from "next-intl/server";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { Plus } from "lucide-react";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   types: ListItem[];
@@ -36,8 +36,8 @@ export default async function DemandsHeader({ types, status, priorities, sources
             agents={agents}
           />
         </div>
-        <Link href="/demands/add">
-          <CustomButton text={translation(TRANSLATIONS_KEYS.DEMANDS.FORM.BUTTON_TEXT)} Icon={Plus} />
+        <Link href={ROUTES.DEMANDS.CREATE}>
+          <CustomButton text={translation(TRANSLATIONS_KEYS_2.DEMANDS.FORM.BUTTONS.CREATE)} Icon={Plus} />
         </Link>
       </div>
     </>

@@ -1,16 +1,17 @@
 "use client";
+
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { Button } from "@/components/ui/button";
+import CustomButton from "@/components/ui/custom-button"; // Switched to CustomButton
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
-import { ClientFilterForm, ClientFilterFormSchema } from "@/schemas/clients/client-filter-form.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { OfferFilterForm, OfferFilterFormSchema } from "@/schemas/offers/offer-filter-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -23,19 +24,43 @@ interface Props {
 export default function OffersFilter({ types, status, biens, clients }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const t = useTranslations();
-
+  const translation = useTranslations();
   const router = useRouter();
+
+  // 1. Parse query params for initial values (keeps sync with URL)
+  const getInitialValues = (): Partial<OfferFilterForm> => {
+    const params = new URLSearchParams(searchParams);
+    const initialValues: any = {};
+
+    ["bien_id", "type_id", "status_id", "client_id"].forEach((key) => {
+      const val = params.get(key);
+      if (val) initialValues[key] = val;
+    });
+
+    return initialValues;
+  };
+
   const form = useForm<OfferFilterForm>({
     resolver: zodResolver(OfferFilterFormSchema),
-    defaultValues: {},
+    defaultValues: getInitialValues(),
   });
 
-  async function onSubmit(values: ClientFilterForm) {
+  // 2. Sync form when URL changes
+  useEffect(() => {
+    form.reset(getInitialValues());
+  }, [searchParams]);
+
+  // 3. Check if any relevant filters are active
+  const hasActiveFilters = () => {
+    const params = new URLSearchParams(searchParams);
+    return ["bien_id", "type_id", "status_id", "client_id"].some((key) => params.has(key));
+  };
+
+  async function onSubmit(values: OfferFilterForm) {
     const params = new URLSearchParams();
 
     Object.entries(values).forEach(([key, value]) => {
-      if (value) {
+      if (value !== null && value !== undefined && value !== "") {
         params.append(key, value.toString());
       }
     });
@@ -43,57 +68,62 @@ export default function OffersFilter({ types, status, biens, clients }: Props) {
     router.push(`?${params.toString()}`);
     setIsOpen(false);
   }
-  async function onInvalid(values: any) {
-    const [field, error] = Object.entries(values)[0] as [string, { message: string }];
-    customToast.error(`${field}: ${error.message}`);
-  }
 
-  useEffect(() => {
-    return () => {
-      form.reset();
-    };
-  }, [form]);
+  function handleClearFilters() {
+    form.reset({});
+    router.push(window.location.pathname);
+    setIsOpen(false);
+    customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+  }
 
   return (
     <FilterDrawer
-      buttonText={t("common.filter")}
-      title={t("clients.filter.title")}
+      buttonText={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.FILTER)}
+      title={translation(TRANSLATIONS_KEYS_2.OFFERS.FILTER.TITLE)} // Adjusted title key if needed
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
       <Form {...form}>
-        <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
+        <form id="offer-filter-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
           <InputSelectField
             control={form.control}
             name="bien_id"
             options={biens}
-            label={t("clients.filter.label.gender")}
-            placeholder={t("clients.filter.placeholder.gender")}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.BIEN)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.BIEN)}
           />
           <InputSelectField
             control={form.control}
             name="type_id"
             options={types}
-            label={t("clients.filter.label.type")}
-            placeholder={t("clients.filter.placeholder.type")}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.TYPE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.TYPE)}
           />
           <InputSelectField
             control={form.control}
             name="status_id"
             options={status}
-            label={t("clients.filter.label.status")}
-            placeholder={t("clients.filter.placeholder.status")}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.STATUS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.STATUS)}
           />
           <InputSelectField
             control={form.control}
             name="client_id"
             options={clients}
-            label={t("clients.filter.label.source")}
-            placeholder={t("clients.filter.placeholder.source")}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.CLIENT)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.CLIENT)}
           />
-          <Button type="submit" className="w-full mt-5">
-            {t("biens.filter.submit")}
-          </Button>
+
+          <div className="flex flex-col gap-2 mt-5">
+            <CustomButton text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)} type="submit" />
+            <CustomButton
+              text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CLEAR_FILTERS)}
+              type="button"
+              variant="outline"
+              onClick={handleClearFilters}
+              disabled={!hasActiveFilters()}
+            />
+          </div>
         </form>
       </Form>
     </FilterDrawer>

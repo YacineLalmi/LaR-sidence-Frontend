@@ -1,11 +1,11 @@
 "use server";
 
 import { ListItem } from "@/schemas/global.schema";
-import { TransactionTypeService } from "@/services/transaction-type.service";
+import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
 
 export async function getTransactionTypeList(): Promise<ListItem[]> {
   try {
-    return await TransactionTypeService.list();
+    return await ClassificationService(CATEGORIES.TYPE, SCOPES.TRANSACTION).list();
   } catch (error) {
     console.error(error);
     return [];

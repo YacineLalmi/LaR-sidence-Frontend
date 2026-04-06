@@ -3,27 +3,34 @@
 import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import React from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
-import { ResponseMetaData } from "@/lib/definitions";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import { ClientType } from "@/schemas/client-types/client-type.schema";
+import { PaginatedResponse } from "@/lib/definitions";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { useCallback } from "react";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
+import { deleteClassificationsAction } from "@/actions/classification/delete-classifications.action";
+import { ListItem } from "@/schemas/global.schema";
+import { formatId } from "@/lib/utils";
+import DeleteClientTypeDialog from "./delete-client-type-dialog";
 import UpdateClientTypeDialog from "./update-client-type-dialog";
-import DeleteCientTypeDialog from "./delete-client-type-dialog";
 
 interface Props {
-  data: {
-    items: ClientType[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Classification>;
+  colors: ListItem[];
 }
 
-export default function ClientTypeTable({ data }: Props) {
+export default function ClientTypeTable({ data, colors }: Props) {
   const translation = useTranslations();
+  const locale = useLocale() as "fr" | "en" | "ar";
 
-  const columns: ColumnDef<ClientType>[] = [
+  const onDeleteMultiple = useCallback(async (ids: string[]) => {
+    return await deleteClassificationsAction(CATEGORIES.TYPE, SCOPES.CLEINT, ids);
+  }, []);
+
+  const columns: ColumnDef<Classification>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -49,28 +56,36 @@ export default function ClientTypeTable({ data }: Props) {
       accessorKey: "id",
       header: () => {
         return (
-          <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.ID)} columnKey="id" />
+          <SortingButton
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.ID)}
+            columnKey="id"
+          />
         );
       },
+      cell: ({ row }) => <span>{formatId(row.original.id)}</span>,
     },
     {
       accessorKey: "code",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.CODE),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.CODE),
     },
     {
       accessorKey: "name",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.NAME),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.NAME),
+      cell: ({ row }) => <span className="font-medium">{row.original.name[locale]}</span>,
     },
     {
       accessorKey: "description",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.DESCRIPTION),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.DESCRIPTION),
+      cell: ({ row }) => (
+        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+      ),
     },
     {
       accessorKey: "created_at",
       header: () => {
         return (
           <SortingButton
-            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.CREATED_AT)}
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.CREATED_AT)}
             columnKey="created_at"
           />
         );
@@ -81,14 +96,14 @@ export default function ClientTypeTable({ data }: Props) {
     },
     {
       id: "actions",
-      cell: (row) => (
+      cell: ({ row }) => (
         <div className="flex items-center">
-          <DeleteCientTypeDialog clientType={row.row.original} />
-          <UpdateClientTypeDialog clientType={row.row.original} />
+          <DeleteClientTypeDialog classification={row.original} />
+          <UpdateClientTypeDialog classification={row.original} colors={colors} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TYPES.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.ACTIONS),
     },
   ];
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={onDeleteMultiple} />;
 }

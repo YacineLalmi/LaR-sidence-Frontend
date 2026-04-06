@@ -1,17 +1,16 @@
 import z from "zod";
 import { ClientSchema } from "../clients/client.schema";
 import { BienSchema } from "../biens/bien.schema";
-import { OfferStatusSchema } from "../offer-status/offer-status.schema";
-import { OfferTypeSchema } from "../offer-type/offer-type.schema";
 import { VisitSchema } from "../visit/visit.schema";
+import { ClassificationSchema } from "../classification/classification.schema";
 
 export const OfferSchema = z.object({
-  id: z.number(),
-  bien: BienSchema,
-  client: ClientSchema,
-  type: OfferTypeSchema,
-  status: OfferStatusSchema,
-  visits: z.array(VisitSchema),
+  id: z.string(),
+  bien: BienSchema.optional(),
+  client: ClientSchema.optional(),
+  type: ClassificationSchema.optional(),
+  status: ClassificationSchema.optional(),
+  visits: z.array(VisitSchema).optional(),
   status_id: z.string().nullable().optional(),
   proposed_price: z.number(),
   conditions: z.string().nullable(),

@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ListItem, ListItemSchema } from "@/schemas/global.schema";
 import { OfferForm } from "@/schemas/offers/offer-form.schema";
@@ -8,13 +8,14 @@ import z from "zod";
 
 const END_POINTS = {
   create: "/offers",
-  findAll: "/offers",
+  findMany: "/offers",
   list: "/lists/offers",
   typesList: "/lists/offers/types",
   statusList: "/lists/offers/status",
   findOne: (id: string) => `/offers/${id}`,
-  update: (id: number) => `/offers/${id}`,
-  delete: (id: number) => `/offers/${id}`,
+  update: (id: string) => `/offers/${id}`,
+  delete: (id: string) => `/offers/${id}`,
+  deleteMany: `/offers/many`,
 };
 
 export const OfferService = {
@@ -29,26 +30,26 @@ export const OfferService = {
     return validatedResponseData;
   },
 
-  findAll: async (QueryParams: QueryParams) => {
+  findMany: async (QueryParams: QueryParams): Promise<PaginatedResponse<Offer>> => {
     const response = await ApiService.get<Offer[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: QueryParams,
     });
 
     const validatedResponseData = validateResponseData<Offer[]>(response.data, z.array(OfferSchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
 
-  list: async () => {
+  list: async (): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
     });
 
-    
+
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
@@ -59,7 +60,7 @@ export const OfferService = {
       endpoint: END_POINTS.typesList,
     });
 
-    
+
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
@@ -70,7 +71,7 @@ export const OfferService = {
       endpoint: END_POINTS.statusList,
     });
 
-    
+
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
 
     return validatedResponseData;
@@ -86,7 +87,7 @@ export const OfferService = {
     return validatedResponseData;
   },
 
-  update: async (data: OfferForm, id: number) => {
+  update: async (data: OfferForm, id: string) => {
     const response = await ApiService.put<Offer>({
       endpoint: END_POINTS.update(id),
       body: data,
@@ -97,9 +98,16 @@ export const OfferService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+  deleteMany: async (ids: string[]) => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany,
+      body: { ids }
     });
   },
 };

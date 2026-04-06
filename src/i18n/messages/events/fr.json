@@ -1,0 +1,90 @@
+{
+  "title": "Calendrier",
+  "description": "Gérer les événements du calendrier",
+  "view": {
+    "month": "Mois",
+    "week": "Semaine"
+  },
+  "actions": {
+    "add_event": "Ajouter un événement",
+    "create_event": "Créer un événement",
+    "edit_event": "Modifier un événement",
+    "delete_event": "Supprimer cet événement",
+    "cancel": "Annuler",
+    "publish": "Publier",
+    "save": "Sauvegarder",
+    "confirm": "Confirmer"
+  },
+  "form": {
+    "titles": {
+      "create": "Créer un événement",
+      "update": "Modifier un événement",
+      "delete": "Supprimer un événement"
+    },
+    "messages": {
+      "created": "Événement créé avec succès",
+      "updated": "Événement modifié avec succès",
+      "deleted": "Événement supprimé avec succès",
+      "failed_creation": "Échec de la création de l'événement",
+      "failed_update": "Échec de la modification de l'événement",
+      "failed_deletion": "Échec de la suppression de l'événement",
+      "delete_confirmation": "Êtes-vous sûr de vouloir supprimer cet événement ?"
+    },
+    "buttons": {
+      "create": "Créer un événement",
+      "update": "Modifier l'événement",
+      "delete": "Supprimer l'événement",
+      "add_field": "Ajouter un champ"
+    },
+    "labels": {
+      "title": "Titre de l'événement",
+      "start_date": "Date/heure de début",
+      "end_date": "Date/heure de fin",
+      "type": "Type d'événement",
+      "agent": "Agents participants",
+      "bien": "Bien concerné",
+      "client": "Client concerné",
+      "visitor_name": "Nom et prénom du visiteur",
+      "visitor_phone": "Téléphone du visiteur",
+      "description": "Description"
+    },
+    "placeholders": {
+      "title": "Entrez le titre de l'événement",
+      "start_date": "Sélectionnez la date et l'heure de début",
+      "end_date": "Sélectionnez la date et l'heure de fin",
+      "type": "Sélectionnez le type",
+      "agent": "Sélectionnez les agents",
+      "bien": "Sélectionnez le bien",
+      "client": "Sélectionnez le client",
+      "visitor_name": "Entrez le nom et prénom du visiteur",
+      "visitor_phone": "Entrez le téléphone du visiteur",
+      "description": "Entrez la description de l'événement"
+    }
+  },
+  "filter": {
+    "title": "Filtrer les événements",
+    "labels": {
+      "agent": "Agent",
+      "date": "Date",
+      "type": "Type d'événement",
+      "bien": "Bien"
+    },
+    "placeholders": {
+      "agent": "Sélectionnez un agent",
+      "date": "Sélectionnez une date",
+      "type": "Sélectionnez un type d'événement",
+      "bien": "Sélectionnez un bien"
+    },
+    "buttons": {
+      "apply": "Appliquer les filtres"
+    }
+  },
+  "delete": {
+    "title": "Supprimer cet événement",
+    "message": "Êtes-vous sûr de vouloir supprimer cet événement ?"
+  },
+  "week": {
+    "prefix": "Semaine du"
+  },
+  "more": "autres"
+}

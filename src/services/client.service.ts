@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ClientForm } from "@/schemas/clients/client-form.schema";
 import { Client, ClientSchema } from "@/schemas/clients/client.schema";
@@ -9,18 +9,19 @@ import z from "zod";
 
 const END_POINTS = {
   create: "/clients",
-  findAll: "/clients",
+  findMany: "/clients",
   list: "/lists/clients",
   statusList: "/lists/clients/status",
   typesList: "/lists/clients/types",
   sourcesList: "/lists/clients/sources",
   findOne: (id: string) => `/clients/${id}`,
   update: (id: string) => `/clients/${id}`,
-  delete: (id: number) => `/clients/${id}`,
+  delete: (id: string) => `/clients/${id}`,
+  deleteMany: `/clients/many`,
 };
 
 export const ClientService = {
-  create: async (data: ClientForm) => {
+  create: async (data: ClientForm): Promise<Client> => {
     const formData = new FormData();
     for (const key in data) {
       if (key === "documents") {
@@ -59,16 +60,16 @@ export const ClientService = {
     return validatedResponseData;
   },
 
-  findAll: async (QueryParams: QueryParams) => {
+  findMany: async (QueryParams: QueryParams): Promise<PaginatedResponse<Client>> => {
     const response = await ApiService.get<Client[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: QueryParams,
     });
 
     const validatedResponseData = validateResponseData<Client[]>(response.data, z.array(ClientSchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
@@ -126,7 +127,7 @@ export const ClientService = {
     return validatedResponseData;
   },
 
-  update: async (data: ClientForm, id: number) => {
+  update: async (data: ClientForm, id: string) => {
     const formData = new FormData();
     for (const key in data) {
       if (key === "documents") {
@@ -165,9 +166,16 @@ export const ClientService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+  deleteMany: async (ids: string[]) => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany,
+      body: { ids }
     });
   },
 };

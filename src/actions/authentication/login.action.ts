@@ -10,6 +10,7 @@ import { COOKIES_KEYS } from "@/constants/cookies-keys";
 export async function loginAction(data: LoginFormData): Promise<FormState> {
   try {
     const response = await AuthService.login(data);
+    
     await setCookie({
       key: COOKIES_KEYS.ACCESS_TOKEN,
       value: response.access_token,

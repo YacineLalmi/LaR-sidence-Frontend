@@ -2,11 +2,10 @@
 
 import { InputDateRangeField } from "@/components/custom-inputs/input-range";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { ClientFilterForm, ClientFilterFormSchema } from "@/schemas/clients/client-filter-form.schema";
 import { ListItem } from "@/schemas/global.schema";
@@ -14,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format, parse } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -94,7 +93,7 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
   const hasActiveFilters = () => {
     const params = new URLSearchParams(searchParams);
     return Array.from(params.keys()).some((key) =>
-      ["civility", "type_id", "status_id", "source_id", "created_between"].includes(key)
+      ["civility", "type_id", "status_id", "source_id", "created_between"].includes(key),
     );
   };
 
@@ -140,13 +139,13 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
     setIsOpen(false);
 
     // Optional: Show success message
-    customToast.success(translation(TRANSLATIONS_KEYS.COMMON.CLEAR_FILTERS));
+    customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
   }
 
   return (
     <FilterDrawer
-      buttonText={translation(TRANSLATIONS_KEYS.COMMON.FILTER)}
-      title={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.TITLE)}
+      buttonText={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.FILTER)}
+      title={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.TITLE)}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
@@ -156,42 +155,42 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
             control={form.control}
             name="civility"
             options={civilities}
-            label={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.LABEL.GENDER)}
-            placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.PLACEHOLDER.GENDER)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.GENDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.GENDER)}
           />
           <InputSelectField
             control={form.control}
             name="type_id"
             options={types}
-            label={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.LABEL.TYPE)}
-            placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.PLACEHOLDER.TYPE)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.TYPE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.TYPE)}
           />
           <InputSelectField
             control={form.control}
             name="status_id"
             options={status}
-            label={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.LABEL.STATUS)}
-            placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.PLACEHOLDER.STATUS)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.STATUS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.STATUS)}
           />
           <InputSelectField
             control={form.control}
             name="source_id"
             options={sources}
-            label={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.LABEL.SOURCE)}
-            placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.PLACEHOLDER.SOURCE)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.SOURCE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.SOURCE)}
           />
           <InputDateRangeField
             control={form.control}
             name="created_between"
-            label={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.LABEL.SOURCE)}
-            placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FILTER.PLACEHOLDER.SOURCE)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.SOURCE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.SOURCE)}
           />
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-2 mt-5">
-            <CustomButton text={translation(TRANSLATIONS_KEYS.COMMON.APPLY)} type="submit" />
+            <CustomButton text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)} type="submit" />
             <CustomButton
-              text={translation(TRANSLATIONS_KEYS.COMMON.CLEAR_FILTERS)}
+              text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CLEAR_FILTERS)}
               type="button"
               variant="outline"
               onClick={handleClearFilters}

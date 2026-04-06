@@ -1,14 +1,12 @@
 "use client";
 
-import InputNumberField from "@/components/custom-inputs/input-number";
 import { InputDateRangeField } from "@/components/custom-inputs/input-range";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
-import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { DemandFilterForm, DemandFilterFormSchema } from "@/schemas/demands/demand-filters-form.schema";
 import { ListItem } from "@/schemas/global.schema";
@@ -16,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format, parse } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -120,7 +118,7 @@ export default function DemandsFilters({ types, status, priorities, sources, cli
     const params = new URLSearchParams(searchParams);
     // Check for filter-related params
     return Array.from(params.keys()).some((key) =>
-      ["status_id", "type_id", "client_id", "agent_id", "budget_between", "created_between"].includes(key)
+      ["status_id", "type_id", "client_id", "agent_id", "budget_between", "created_between"].includes(key),
     );
   };
 
@@ -177,13 +175,13 @@ export default function DemandsFilters({ types, status, priorities, sources, cli
     setIsOpen(false);
 
     // Optional: Show success message
-    customToast.success(translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.CLEAR));
+    customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
   }
 
   return (
     <FilterDrawer
-      buttonText={translation(TRANSLATIONS_KEYS.COMMON.FILTER)}
-      title={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.TITLE)}
+      buttonText={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.FILTER)}
+      title={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.TITLE)}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
@@ -193,29 +191,29 @@ export default function DemandsFilters({ types, status, priorities, sources, cli
             control={form.control}
             name="status_id"
             options={status}
-            label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.STATUS)}
-            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.STATUS)}
+            label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.STATUS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.STATUS)}
           />
           <InputSelectField
             control={form.control}
             name="type_id"
             options={types}
-            label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.TYPE)}
-            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.TYPE)}
+            label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.TYPE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.TYPE)}
           />
           <InputSelectField
             control={form.control}
             name="client_id"
             options={clients}
-            label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.CLIENT)}
-            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.CLIENT)}
+            label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.CLIENT)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.CLIENT)}
           />
           <InputSelectField
             control={form.control}
             name="agent_id"
             options={agents}
-            label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.AGENT)}
-            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.AGENT)}
+            label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.AGENT)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.AGENT)}
           />
 
           {/* Budget Range Fields */}
@@ -223,28 +221,28 @@ export default function DemandsFilters({ types, status, priorities, sources, cli
             <InputTextField
               control={form.control}
               name="budget_between.from"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.BUDGET_MIN)}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.BUDGET_MIN)}
+              label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.BUDGET_MIN)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.BUDGET_MIN)}
             />
             <InputTextField
               control={form.control}
               name="budget_between.to"
-              label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.BUDGET_MAX)}
-              placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.BUDGET_MAX)}
+              label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.BUDGET_MAX)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.BUDGET_MAX)}
             />
           </div>
           <InputDateRangeField
             control={form.control}
             name="created_between"
-            label={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.LABEL.CREATED_BETWEEN)}
-            placeholder={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.PLACEHOLDER.CREATED_BETWEEN)}
+            label={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.LABELS.CREATED_BETWEEN)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.PLACEHOLDERS.CREATED_BETWEEN)}
           />
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-2 mt-5">
-            <CustomButton text={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.SUBMIT)} type="submit" />
+            <CustomButton text={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.BUTTONS.SUBMIT)} type="submit" />
             <CustomButton
-              text={translation(TRANSLATIONS_KEYS.DEMANDS.FILTER.CLEAR)}
+              text={translation(TRANSLATIONS_KEYS_2.DEMANDS.FILTER.BUTTONS.CLEAR)}
               type="button"
               variant="outline"
               onClick={handleClearFilters}

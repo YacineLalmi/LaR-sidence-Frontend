@@ -1,15 +1,15 @@
 "use client";
 
-import { updateClientAction } from "@/actions/clients/update.action";
-import Section from "@/app/(protected)/biens/add/_components/section";
+import { updateClientAction } from "@/actions/clients/update-client.action";
+import Section from "@/app/(protected)/biens/create/_components/section";
 import InputFileLarge2 from "@/components/custom-inputs/input-file-large-2";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { ROUTES } from "@/constants/routes";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast, fetchFileAsFileObject } from "@/lib/utils";
 import { ClientForm, ClientFormSchema } from "@/schemas/clients/client-form.schema";
 import { Client } from "@/schemas/clients/client.schema";
@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -30,7 +30,7 @@ interface Props {
 }
 export default function UpdateClientForm({ types, status, sources, civilities, client }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [phoneNumbers, setPhoneNumbers] = useState<string[]>(client.phone_numbers);
+  const [phoneNumbers, setPhoneNumbers] = useState<string[]>(client.phone_numbers || []);
   const [areFileLoading, setAreFilesLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
       civility: client.civility,
       last_name: client.last_name,
       first_name: client.first_name,
-      source_id: client.source.id.toString(),
+      source_id: client.source?.id.toString(),
       email: client.email,
       mobile: client.mobile,
       phone_numbers: client.phone_numbers,
@@ -52,8 +52,8 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
       trade_register: client.trade_register,
       tax_identification: client.tax_identification,
       ai: client.ai,
-      status_id: client.status.id.toString(),
-      type_id: client.type.id.toString(),
+      status_id: client.status?.id.toString(),
+      type_id: client.type?.id.toString(),
     },
   });
 
@@ -62,16 +62,18 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
       setAreFilesLoading(true);
       try {
         // Fetch documents
-        const documentPromises = client.documents.map((doc) =>
-          fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
-        );
-        const documents = await Promise.all(documentPromises);
-        const validDocuments = documents.filter((doc): doc is File => doc !== null);
+        if (client.documents) {
+          const documentPromises = client.documents.map((doc) =>
+            fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
+          );
+          const documents = await Promise.all(documentPromises);
+          const validDocuments = documents.filter((doc): doc is File => doc !== null);
 
-        form.setValue("documents", validDocuments as any);
+          form.setValue("documents", validDocuments as any);
+        }
       } catch (error) {
         console.error("Error loading files:", error);
-        customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.LOADING_FILES));
+        customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
       } finally {
         setAreFilesLoading(false);
       }
@@ -91,11 +93,12 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
       const response = await updateClientAction(values, client.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.CLIENTS.ROOT);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        router.push(ROUTES.CLIENTS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     }
   }
 
@@ -112,45 +115,45 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
             <InputSelectField
               control={form.control}
               name="civility"
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.CIVILITY)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY)}
               options={civilities}
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.CIVILITY)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.CIVILITY)}
               disabled={isPending}
               required
             />
-            {form.watch("civility") === "C" ? (
+            {form.watch("civility") === "company" ? (
               <div className="grid grid-cols-2 gap-3">
                 <InputTextField
                   control={form.control}
                   name="company_name"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.COMPANY_NAME)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.COMPANY_NAME)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.COMPANY_NAME)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.COMPANY_NAME)}
                 />
                 <InputTextField
                   control={form.control}
                   name="trade_register"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.TRADE_REGISTRATION)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.TRADE_REGISTRATION)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.TRADE_REGISTRATION)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.TRADE_REGISTRATION)}
                 />
                 <InputTextField
                   control={form.control}
                   name="tax_identification"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.TAX_IDENTIFICATION)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.TAX_IDENTIFICATION)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.TAX_IDENTIFICATION)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.TAX_IDENTIFICATION)}
                 />
                 <InputTextField
                   control={form.control}
                   name="ai"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.AI)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.AI)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.AI)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.AI)}
                 />
               </div>
             ) : (
@@ -158,18 +161,18 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
                 <InputTextField
                   control={form.control}
                   name="first_name"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.FIRST_NAME)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.FIRST_NAME)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.FIRST_NAME)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.FIRST_NAME)}
                 />
                 <InputTextField
                   control={form.control}
                   name="last_name"
-                  label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.LAST_NAME)}
+                  label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.LAST_NAME)}
                   disabled={isPending}
                   required
-                  placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.LAST_NAME)}
+                  placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.LAST_NAME)}
                 />
               </div>
             )}
@@ -177,19 +180,19 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
             <InputTextField
               control={form.control}
               name="email"
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.EMAIL)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.EMAIL)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.EMAIL)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.EMAIL)}
             />
 
             <InputTextField
               control={form.control}
               name="mobile"
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.MOBILE)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.MOBILE)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.MOBILE)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.MOBILE)}
             />
             <div className="grid grid-cols-2 gap-3 items-end">
               {phoneNumbers.map((_, index) => (
@@ -197,8 +200,8 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
                   <InputTextField
                     control={form.control}
                     name={`phone_numbers.${index}`}
-                    label={`${translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.PHONE_NUMBER, { index: index + 1 })}`}
-                    placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.PHONE_NUMBER)}
+                    label={`${translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.PHONE_NUMBER, { index: index + 1 })}`}
+                    placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.PHONE_NUMBER)}
                     RightIcon={Trash2}
                     RightIconOnClick={() => {
                       const newPhones = phoneNumbers.filter((_, i) => i !== index);
@@ -227,9 +230,9 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
             <InputTextArea
               control={form.control}
               name="comment"
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.COMMENT)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.COMMENT)}
               disabled={isPending}
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.COMMENT)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.COMMENT)}
             />
           </Section>
         </div>
@@ -240,33 +243,33 @@ export default function UpdateClientForm({ types, status, sources, civilities, c
               control={form.control}
               name="source_id"
               options={sources}
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.SOURCE)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.SOURCE)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.SOURCE)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.SOURCE)}
             />
             <InputSelectField
               control={form.control}
               name="type_id"
               options={types}
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.TYPE)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.TYPE)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.TYPE)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.TYPE)}
             />
             <InputSelectField
               control={form.control}
               name="status_id"
               options={status}
-              label={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.LABEL.STATUS)}
+              label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.STATUS)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.CLIENTS.FORM.PLACEHOLDER.STATUS)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.STATUS)}
             />
           </Section>
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
+          {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)}
         </Button>
       </form>
     </Form>

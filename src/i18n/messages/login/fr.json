@@ -1,15 +1,32 @@
 {
-  "forgotYourPassword": "Mot de passe oublié ?",
   "welcome": "Bienvenue sur La Résidence",
-  "submit": "Se connecter",
-  "username": {
-    "label": "Nom d'utilisateur",
-    "placeholder": "Entrez votre nom d'utilisateur..."
+  "forgot_your_password": "Mot de passe oublié ?",
+  "remember_me": "Se souvenir de moi",
+  "password_reseting": "Réinitialisation du mot de passe",
+  "messages": {
+    "invalid_credentials": "Nom d'utilisateur ou mot de passe incorrect",
+    "network_error": "Erreur réseau : impossible de se connecter au serveur",
+    "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer plus tard.",
+    "reset_link_sent": "Un lien de réinitialisation a été envoyé à votre adresse e-mail si elle est associée à un compte.",
+    "insert_new_password": "Veuillez insérer votre nouveau mot de passe.",
+    "insert_your_email": "Veuillez insérer votre adresse e-mail pour recevoir un lien de réinitialisation.",
+    "success": "Connexion réussie"
   },
-  "loginSuccess": "Vous vous êtes connecté avec succès",
-  "loginFailed": "Échec de la connexion : une erreur est survenue",
-  "password": {
-    "label": "Mot de passe",
-    "placeholder": "Entrez votre mot de passe..."
+  "buttons": {
+    "login": "Se connecter",
+    "forgot_your_password": "Mot de passe oublié ?",
+    "reset_password": "Réinitialiser le mot de passe"
+  },
+  "labels": {
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "email": "Adresse e-mail",
+    "password_confirmation": "Confirmation du mot de passe"
+  },
+  "placeholders": {
+    "username": "Entrez votre nom d'utilisateur...",
+    "password": "Entrez votre mot de passe...",
+    "email": "Entrez votre adresse e-mail...",
+    "password_confirmation": "Confirmez votre mot de passe..."
   }
 }

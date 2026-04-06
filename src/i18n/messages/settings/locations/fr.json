@@ -1,3 +1,5 @@
 {
-  "title": "Gestion des Lieux"
+  "title": "Gestion des Lieux",
+  "description": "Gérer les lieux utilisés dans l'application",
+  "wilaya_commune": "Gérer les wilayas et communes"
 }

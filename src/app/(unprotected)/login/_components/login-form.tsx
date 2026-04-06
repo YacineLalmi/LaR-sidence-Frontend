@@ -7,7 +7,7 @@ import MirageLoader from "@/components/mirage-loader";
 import logo from "@/assests/images/logo-black.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Form, FormLabel } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { LoginFormData, LoginFormDataSchema } from "@/schemas/auth/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,11 +17,10 @@ import { useTranslations } from "next-intl";
 import InputPasswordField from "@/components/custom-inputs/input-password-field";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/actions/authentication/login.action";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 export function LoginForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const translation = useTranslations();
@@ -41,10 +40,11 @@ export function LoginForm() {
       const response = await loginAction(values);
       if (response.isOk) {
         router.push(NAVIGATION_KEYS.DASHBOARD);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } finally {
       setIsPending(false);
     }
@@ -52,33 +52,36 @@ export function LoginForm() {
 
   return (
     <Card className="w-full bg-transparent shadow-none border-0">
-      <CardHeader>
-        <CardTitle className="flex justify-center items-center mb-[36px] ">
-          <Image src={logo} alt="ss" width={117} className="rounded-[16px]" />
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="flex justify-center items-center mb-6 lg:mb-9">
+          <Image src={logo} alt="logo" width={117} className="rounded-2xl w-24 md:w-28" />
         </CardTitle>
-        <CardDescription className="flex flex-col tracking-widest  text-black">
-          <span className="text-[36px] font-bold">{translation(TRANSLATIONS_KEYS.LOGIN.WELCOME)}</span>
-          <span>Connectez-vous</span>
+        <CardDescription className="flex flex-col tracking-tight sm:tracking-widest text-black">
+          {/* Responsive Title: 2xl on mobile, 4xl on desktop */}
+          <span className="text-lg xs:text-2xl tracking-widest sm:text-3xl xl:text-2xl 2xl:text-3xl 3xl:text-4xl font-bold">
+            {translation(TRANSLATIONS_KEYS_2.LOGIN.WELCOME)}
+          </span>
+          <span className="text-xs md:text-sm lg:text-lg opacity-80">Connectez-vous</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="my-0">
         <Form {...form}>
-          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[24px]">
+          <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
             <InputTextField
               control={form.control}
               name="username"
-              label={translation(TRANSLATIONS_KEYS.LOGIN.USERNAME.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.USERNAME)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.USERNAME.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.USERNAME)}
             />
             <InputPasswordField
               control={form.control}
               name="password"
-              label={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.PASSWORD)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.PASSWORD)}
             />
           </form>
         </Form>
@@ -87,10 +90,15 @@ export function LoginForm() {
         <div className="flex justify-between my-2 w-full">
           <div className="flex items-center gap-3">
             <Checkbox id="saveme" />
-            <Label htmlFor="saveme">Se souvenir de moi</Label>
+            <Label htmlFor="saveme" className="text-xs md:text-sm lg:text-base transition-all">
+              {translation(TRANSLATIONS_KEYS_2.LOGIN.REMEMBER_ME)}
+            </Label>
           </div>
-          <Link href={NAVIGATION_KEYS.AUTH.FORGET_PASSWORD} className=" flex justify-end">
-            {translation(TRANSLATIONS_KEYS.LOGIN.FORGOT_YOUR_PASSWORD)}
+          <Link
+            href={NAVIGATION_KEYS.AUTH.FORGET_PASSWORD}
+            className="text-xs md:text-sm lg:text-base hover:underline transition-all"
+          >
+            {translation(TRANSLATIONS_KEYS_2.LOGIN.FORGOT_YOUR_PASSWORD)}
           </Link>
         </div>
         <Button
@@ -98,7 +106,7 @@ export function LoginForm() {
           className="w-full rounded-4xl text-xl p-6 font-light flex justify-center cursor-pointer"
           form="login-form"
         >
-          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS.LOGIN.SUBMIT)}
+          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS_2.LOGIN.BUTTONS.LOGIN)}
         </Button>
       </CardFooter>
     </Card>

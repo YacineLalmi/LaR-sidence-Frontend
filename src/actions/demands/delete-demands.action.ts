@@ -4,7 +4,7 @@ import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/server.helper";;
 import { DemandService } from "@/services/demand.service";
 
-export async function deleteDemandsAction(ids: number[]): Promise<FormState> {
+export async function deleteDemandsAction(ids: string[]): Promise<FormState> {
   try {
     const res = await DemandService.deleteMany(ids);
     return { isOk: true };

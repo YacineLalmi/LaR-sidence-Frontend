@@ -1,34 +1,63 @@
 {
   "title": "Configuration des couleurs",
-  "deleteText": "Voulez-vous supprimer la couleur avec l'ID {id}",
+  "description": "Gérer les couleurs utilisées dans l'application",
   "form": {
-    "add": "Créer une couleur",
-    "update": "Modifier une couleur",
-    "created": "Color créée avec succès",
-    "updated": "Color modifié avec succès",
-    "failedCreation": "Échec de la création de couleur",
-    "failedUpdate": "Échec de la modification de couleur",
-    "buttonText": "Créer une couleur",
-    "label": {
-      "backgroundColor": "Code couleur du badge",
-      "textColor": "Code couleur du texte",
-      "name": " Nom de la couleur",
-      "description": "Description de la couleur"
+    "title": {
+      "create": "Créer une couleur",
+      "update": "Modifier une couleur",
+      "delete": "Supprimer une couleur"
     },
-    "placeholder": {
-      "backgroundColor": "Code couleur du badge",
-      "textColor": "Code couleur du texte",
-      "name": "Nom de la couleur",
-      "description": "Description de la couleur"
+    "messages": {
+      "created": "Couleur créée avec succès",
+      "updated": "Couleur modifiée avec succès",
+      "deleted": "Couleur supprimée avec succès",
+      "failed_creation": "Échec de la création de la couleur",
+      "failed_update": "Échec de la modification de la couleur",
+      "failed_deletion": "Échec de la suppression de la couleur",
+      "delete_confirmation": "Supprimer cette couleur (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une couleur",
+      "update": "Modifier la couleur",
+      "delete": "Supprimer la couleur"
+    },
+    "labels": {
+      "background_color": "Code couleur du badge",
+      "text_color": "Code couleur du texte",
+      "name": {
+        "fr": "Nom de la couleur",
+        "en": "Nom de la couleur",
+        "ar": "Nom de la couleur"
+      },
+      "description": {
+        "fr": "Description de la couleur",
+        "en": "Description de la couleur",
+        "ar": "Description de la couleur"
+      }
+    },
+    "placeholders": {
+      "background_color": "Code couleur du badge",
+      "text_color": "Code couleur du texte",
+      "name": {
+        "fr": "Inesrter le nom de la couleur en français",
+        "en": "Inesrter le nom de la couleur en anglais",
+        "ar": "أدخل اسم اللون بالعربية"
+      },
+      "description": {
+        "fr": "Inesrter la description de la couleur en français",
+        "en": "Inesrter la description de la couleur en anglais",
+        "ar": "أدخل وصف اللون بالعربية"
+      }
     }
   },
   "columns": {
     "id": "ID",
-    "backgroundColor": "Couleur de fond",
-    "textColor": "Couleur du texte",
+    "background_color": "Couleur de fond",
+    "text_color": "Couleur du texte",
     "name": "Nom",
     "description": "Description",
     "actions": "Actions",
-    "createdAt": "created_at"
+    "created_at": "created_at",
+    "preview": "Aperçu"
   }
 }

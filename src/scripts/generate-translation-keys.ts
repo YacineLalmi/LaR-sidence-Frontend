@@ -65,7 +65,7 @@ function generateTranslationKeys(messagesDir: string, outputPath: string, locale
  * Generated on: ${new Date().toISOString()}
  */
 
-export const TRANSLATIONS_KEYS = {
+export const TRANSLATIONS_KEYS_2 = {
 ${generateKeysFromObject(translations).trimEnd()}
 };
 `;

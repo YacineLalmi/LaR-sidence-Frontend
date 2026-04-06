@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienAdditionalcharacteristicsForm } from "@/schemas/bien-additional-characteristics/bien-additional-characteristics-form.schema";
 import { BienAdditionalcharacteristics, BienAdditionalcharacteristicsSchema } from "@/schemas/bien-additional-characteristics/bien-addtional-characteristics.schema";
@@ -27,7 +27,7 @@ export const BienAdditionalcharacteristicsService = {
     return validatedResponseData;
   },
 
-  findAll: async (queryParams: QueryParams) => {
+  findAll: async (queryParams: QueryParams): Promise<PaginatedResponse<BienAdditionalcharacteristics>> => {
     const response = await ApiService.get<BienAdditionalcharacteristics[]>({
       endpoint: END_POINTS.findAll,
       query: queryParams,
@@ -36,12 +36,12 @@ export const BienAdditionalcharacteristicsService = {
     const validatedResponseData = validateResponseData<BienAdditionalcharacteristics[]>(response.data, z.array(BienAdditionalcharacteristicsSchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
 
-  list: async () => {
+  list: async (): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
     });

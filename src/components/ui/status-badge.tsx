@@ -1,19 +1,28 @@
+"use client";
+
 import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { Locale, useLocale } from "next-intl";
 import React from "react";
 
 interface Props {
-  status: BienStatus;
+  status: Classification | undefined;
 }
 export const StatusBadge = ({ status }: Props) => {
+  const locale = useLocale() as "fr" | "en" | "ar";
+  if (!status) return;
   return (
     <div
       className={`inline-flex items-center gap-1 px-2 py-1 rounded-full w-24`}
-      title={status.name}
-      style={{ backgroundColor: status.color.background_color }}
+      title={status.name[locale]}
+      style={{ backgroundColor: status.color?.background_color || "black" }}
     >
-      <div className={`size-2 rounded-full w-2.5`} style={{ backgroundColor: status.color.text_color }} />
-      <span className={`text-xs font-medium overflow-hidden text-ellipsis w-full`} style={{ color: status.color.text_color }}>
-        {status.name}
+      <div className={`size-2 rounded-full w-2.5`} style={{ backgroundColor: status.color?.text_color || "white" }} />
+      <span
+        className={`text-xs font-medium overflow-hidden text-ellipsis w-full`}
+        style={{ color: status.color?.text_color || "white" }}
+      >
+        {status.name[locale]}
       </span>
     </div>
   );

@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const BienFilterFormSchema = z.object({
-  status_id: z.string().optional(),
+  bien_status_id: z.string().optional(),
   agent_id: z.string().optional(),
   transaction_type_id: z.string().optional(),
   wilaya_id: z.string().optional(),

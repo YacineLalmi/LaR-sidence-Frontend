@@ -1,6 +1,7 @@
 import z from "zod";
 import { inputNumberFieldSchema } from "../global/price-field.schema";
 import { inputFilesValidation } from "../global/file-field.schema";
+import { PostCodeSchema } from "../global/post-code.schema";
 
 const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
@@ -11,10 +12,6 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 export const BienFormSchema = z
   .object({
     client_id: z.string().nullable(),
-    // title: z
-    //   .string()
-    //   .min(3, "Le titre doit contenir au moins 3 caractères")
-    //   .max(255, "Le titre ne peut pas dépasser 255 caractères"),
     bien_type_id: z.string().min(1, "Le type de bien est requis"),
     transaction_type_id: z.string().min(1, "Le type de transaction est requis"),
     bien_status_id: z.string().min(1, "Le statut est requis"),
@@ -28,9 +25,7 @@ export const BienFormSchema = z
       .string()
       .min(5, "L'adresse doit contenir au moins 5 caractères")
       .max(1000, "L'adresse ne peut pas dépasser 1000 caractères"),
-    postal_code: z
-      .string()
-      .regex(/^\d{5}$/, "Le code postal doit contenir 5 chiffres")
+    postal_code: PostCodeSchema
       .nullable()
       .optional(),
     coordinates: z.string().nullable().optional(),
@@ -41,8 +36,7 @@ export const BienFormSchema = z
     // Property Characteristics
     habitable_surface: inputNumberFieldSchema(),
     total_surface: inputNumberFieldSchema(),
-    developed_surface: inputNumberFieldSchema()
-      .optional(),
+    developed_surface: inputNumberFieldSchema().optional(),
     floor_number: inputNumberFieldSchema(),
     rooms_number: inputNumberFieldSchema(),
     bedrooms_number: inputNumberFieldSchema(),
@@ -58,25 +52,10 @@ export const BienFormSchema = z
     exclusivity_start: z.date().nullable().optional(),
     exclusivity_end: z.date().nullable().optional(),
 
-    additional_characteristics: z.array(z.number().int()),
+    characteristics: z.array(z.number().int()),
 
     images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
     documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
-    // images: z
-    //   .array(z.instanceof(File))
-    //   .min(1, "At least one file is required")
-    //   // .max(10, "You can upload up to 5 files")
-    //   .refine((files) => files.every((file) => file.size <= MAX_IMAGE_SIZE), "Each file must be 5MB or less")
-    //   .refine((files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)), "Only PDF files are allowed"),
-
-    // documents: z
-    //   .array(z.instanceof(File))
-    //   // .max(10, "You can upload up to 10 files")
-    //   .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less")
-    //   .refine(
-    //     (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),
-    //     "Only PDF files are allowed",
-    //   ),
   })
   .refine(
     (data) => {

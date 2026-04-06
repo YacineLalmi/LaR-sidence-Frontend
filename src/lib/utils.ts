@@ -14,7 +14,7 @@ export function transformQuery(query: QueryParams | undefined) {
   const params = new URLSearchParams(query);
   const transformed = new URLSearchParams();
 
-  const passthroughKeys = ["page", "perPage", "sort", "needle", "refresh_token"];
+  const passthroughKeys = ["page", "perPage", "sort", "needle", "refresh_token", "include", "startDate", "endDate"];
 
   for (const [key, value] of params.entries()) {
     if (passthroughKeys.includes(key)) {
@@ -131,11 +131,21 @@ export async function fetchFileAsFileObject(fileId: string, filename: string, mi
  * @param showDecimals - Whether to show decimal places
  * @returns Formatted string with DA suffix
  */
-export function formatMoney(amount: number, showDecimals: boolean = false): string {
+export function formatMoney(amount: number | null | undefined, showDecimals: boolean = false): string {
+  if (!amount) return "N/A";
+
   const formatted = amount.toLocaleString('fr-DZ', {
     minimumFractionDigits: showDecimals ? 2 : 0,
     maximumFractionDigits: showDecimals ? 2 : 0,
   });
-  
+
   return `${formatted} DA`;
+}
+
+export function formatId(id: string | undefined) { if (!id) return; else return String(id).padStart(6, "0") }
+
+
+export function onInvalid(values: any) {
+  const [field, error] = Object.entries(values)[0] as [string, { message: string }];
+  customToast.error(`${field}: ${error.message}`);
 }

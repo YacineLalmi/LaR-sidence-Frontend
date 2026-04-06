@@ -5,7 +5,7 @@ import { handleServerActionError } from "@/lib/server.helper";;
 import { WilayaForm } from "@/schemas/wilayas/wilaya-form.schema";
 import { WilayaService } from "@/services/wilaya.service";
 
-export async function updateWilayaAction(data: WilayaForm, id: number): Promise<FormState> {
+export async function updateWilayaAction(data: WilayaForm, id: string): Promise<FormState> {
   try {
     await WilayaService.update(data, id);
     return { isOk: true };

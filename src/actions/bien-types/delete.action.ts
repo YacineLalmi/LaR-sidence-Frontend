@@ -2,7 +2,7 @@
 
 import { FormState } from "@/lib/definitions";
 import { handleServerActionError } from "@/lib/server.helper";
-import { BienTypeService } from "@/services/bien-type.service";
+import { BienTypeService } from "@/services/bien-type.service copy";
 
 export async function deleteBienTypeAction(id: number): Promise<FormState> {
   try {

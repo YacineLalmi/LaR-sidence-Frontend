@@ -152,11 +152,12 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         <span className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-[9px] flex-shrink-0">
-                          {event.agent.first_name.charAt(0)}
+                          {event.agent?.first_name.charAt(0)}
                         </span>
                         <span className="truncate text-[10px]">
-                          {event.agent.first_name} {event.agent.last_name}
+                          {event.agent?.first_name} {event.agent?.last_name}
                         </span>
+                        ?
                       </div>
                     </div>
                   );
@@ -229,8 +230,8 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                 {dayEvents.slice(0, maxVisible).map((event) => {
                   const startTime = formatTime(new Date(event.start_date));
                   const endTime = formatTime(new Date(event.end_date));
-                  const bgColor = event.type?.color?.background_color || "#E5E7EB";
-                  const textColor = event.type?.color?.text_color || "#1F2937";
+                  const bgColor = event.agent?.color?.background_color || "#E5E7EB";
+                  const textColor = event.agent?.color?.text_color || "#1F2937";
 
                   return (
                     <div
@@ -248,10 +249,10 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         <span className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-[9px] flex-shrink-0">
-                          {event.agent.first_name.charAt(0)}
+                          {event.agent?.first_name.charAt(0)}
                         </span>
                         <span className="truncate text-[10px]">
-                          {event.agent.first_name} {event.agent.last_name}
+                          {event.agent?.first_name} {event.agent?.last_name}
                         </span>
                       </div>
                     </div>
@@ -336,10 +337,10 @@ export default function EventsCalendarMonths({ events, startDate }: Props) {
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         <span className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-[9px] flex-shrink-0">
-                          {event.agent.first_name.charAt(0)}
+                          {event.agent?.first_name.charAt(0)}
                         </span>
                         <span className="truncate text-[10px]">
-                          {event.agent.first_name} {event.agent.last_name}
+                          {event.agent?.first_name} {event.agent?.last_name}
                         </span>
                       </div>
                     </div>

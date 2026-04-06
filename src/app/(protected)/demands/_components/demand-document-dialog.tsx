@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FileSearch, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import CustomButton from "@/components/ui/custom-button";
@@ -9,7 +9,9 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import Link from "next/link";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   demand: Demand;
@@ -18,14 +20,226 @@ interface Props {
 export default function DemandDocumentDialog({ demand }: Props) {
   const translation = useTranslations();
   const [open, setOpen] = useState(false);
+  const locale = useLocale() as "fr" | "en" | "ar";
+  const printRef = useRef<HTMLDivElement>(null);
 
-  const getStatusColor = (status: string) => {
-    const colors = {
-      Ouvert: "bg-blue-100 text-blue-700",
-      "En cours": "bg-yellow-100 text-yellow-700",
-      Fermé: "bg-green-100 text-green-700",
+  const handlePrint = () => {
+    const printContent = printRef.current;
+    if (!printContent) return;
+
+    // Create a new window for printing
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    // Get the computed styles
+    const styles = Array.from(document.styleSheets)
+      .map((styleSheet) => {
+        try {
+          return Array.from(styleSheet.cssRules)
+            .map((rule) => rule.cssText)
+            .join("\n");
+        } catch (e) {
+          return "";
+        }
+      })
+      .join("\n");
+
+    // Write the HTML content
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fiche Demande - ${demand.id}</title>
+        <style>
+          ${styles}
+          
+          /* Print-specific styles */
+          @media print {
+            @page {
+              margin: 1.5cm;
+              size: A4;
+            }
+            
+            body {
+              margin: 0;
+              padding: 20px;
+            }
+            
+            .no-print {
+              display: none !important;
+            }
+            
+            .print-container {
+              max-width: 100% !important;
+              box-shadow: none !important;
+            }
+          }
+          
+          /* Additional styling for print layout */
+          .print-container {
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          
+          .print-header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+          }
+          
+          .print-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #d97706;
+            margin: 0;
+          }
+          
+          .print-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          }
+          
+          .print-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+          
+          .print-field {
+            border-bottom: 2px solid #e5e7eb;
+            padding: 8px;
+          }
+          
+          .print-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 6px;
+          }
+          
+          .print-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111827;
+          }
+          
+          .print-value-bold {
+            font-weight: 600;
+            font-size: 16px;
+          }
+          
+          .print-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+          }
+          
+          .print-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #1f2937;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-container">
+          <div class="print-header">
+            <h1 class="print-title">Fiche Demande</h1>
+          </div>
+          
+          <div class="print-grid">
+            <!-- Left Column -->
+            <div class="print-column">
+              <div class="print-field">
+                <div class="print-label">ID de la demande</div>
+                <div class="print-value print-value-bold">#${demand.id}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Type de la Demande</div>
+                <div class="print-value">${demand.type?.name[locale] || "N/A"}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Client Concerné</div>
+                <div class="print-value print-value-bold">${demand.client?.first_name || ""} ${demand.client?.last_name || ""}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Bien Concerné</div>
+                <div class="print-value">${demand.bien?.title || "N/A"}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Statut de la demande</div>
+                <div class="print-status" style="background-color: ${getStatusColor(demand.status?.name[locale])};">
+                  ${demand.status}
+                </div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Budget</div>
+                <div class="print-value print-value-bold">${demand.budget ? demand.budget.toLocaleString() + " DA" : "N/A"}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Priorité</div>
+                <div class="print-value">${demand.priority?.name[locale] || "N/A"}</div>
+              </div>
+              
+              <div class="print-field">
+                <div class="print-label">Agent Attribué</div>
+                <div class="print-value">${demand.agent?.first_name || ""} ${demand.agent?.last_name || ""}</div>
+              </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="print-column">
+              <div class="print-field">
+                <div class="print-label">Source de la demande</div>
+                <div class="print-value print-value-bold">${demand.source?.name[locale] || "N/A"}</div>
+              </div>
+              
+              <div class="print-field" style="min-height: 150px;">
+                <div class="print-label">Commentaires internes</div>
+                <div class="print-description">${demand.comment || "Aucun commentaire"}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() {
+              window.close();
+            };
+          };
+        </script>
+      </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+  };
+
+  // Helper function to get status color
+  const getStatusColor = (status: string | undefined) => {
+    if (!status) {
+      return;
+    }
+    const statusColors: Record<string, string> = {
+      Ouvert: "#dbeafe",
+      "En cours": "#fef9c3",
+      Fermé: "#dcfce7",
+      "En Attente": "#fff9e6",
+      // Add more status colors as needed
     };
-    return colors[status as keyof typeof colors] || "bg-gray-100 text-gray-700";
+    return statusColors[status] || "#f5f5f5";
   };
 
   return (
@@ -44,7 +258,7 @@ export default function DemandDocumentDialog({ demand }: Props) {
           </button>
         </DialogHeader>
 
-        <div className="px-6 pb-6 space-y-5 max-h-[calc(100vh-200px)] overflow-y-auto">
+        <div ref={printRef} className="px-6 pb-6 space-y-5 max-h-[calc(100vh-200px)] overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-4">
               {/* ID */}
@@ -56,21 +270,21 @@ export default function DemandDocumentDialog({ demand }: Props) {
               {/* Type */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Type de la Demande</label>
-                <div className="font-medium text-sm">{demand.type.name}</div>
+                <div className="font-medium text-sm">{demand.type?.name[locale]}</div>
               </div>
 
               {/* Client Name */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Client Concerné</label>
                 <div className="font-semibold text-base">
-                  {demand.client.first_name + " " + demand.client.last_name}
+                  {demand.client?.first_name + " " + demand.client?.last_name}
                 </div>
               </div>
 
               {/* Bien Title */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Bien Concerné</label>
-                <div className="font-medium text-sm">{demand.bien.title}</div>
+                <div className="font-medium text-sm">{demand.bien?.title}</div>
               </div>
 
               {/* Status */}
@@ -90,20 +304,20 @@ export default function DemandDocumentDialog({ demand }: Props) {
               {/* Priority */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Priorité</label>
-                <div className="font-medium text-base">{demand.priority.name}</div>
+                <div className="font-medium text-base">{demand.priority?.name[locale]}</div>
               </div>
 
               {/* Agent */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Agent Attribué</label>
-                <div className="font-medium text-base">{demand.agent.first_name + " " + demand.agent.last_name}</div>
+                <div className="font-medium text-base">{demand.agent?.first_name + " " + demand.agent?.last_name}</div>
               </div>
             </div>
             <div>
               {/* Source */}
               <div className="border-b-2 p-2">
                 <label className="text-xs text-gray-500 block mb-1.5">Source de la demand</label>
-                <div className="font-semibold text-base">{demand.source.name}</div>
+                <div className="font-semibold text-base">{demand.source?.name[locale]}</div>
               </div>
 
               {/* Description */}
@@ -117,10 +331,18 @@ export default function DemandDocumentDialog({ demand }: Props) {
 
         {/* Footer Buttons */}
         <div className="flex gap-3 px-6 pb-6 pt-4 border-t justify-center">
-          <Link href={NAVIGATION_KEYS.DEMANDS.EDIT(demand.id)}>
-            <CustomButton text={translation(TRANSLATIONS_KEYS.COMMON.EDIT)} variant="ghost" className="w-42" />
+          <Link href={ROUTES.DEMANDS.EDIT(demand.id)}>
+            <CustomButton
+              text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.EDIT)}
+              variant="ghost"
+              className="w-42"
+            />
           </Link>
-          <CustomButton text={translation(TRANSLATIONS_KEYS.COMMON.PRINT)} className="w-42" />
+          <CustomButton
+            text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.PRINT)}
+            className="w-42"
+            onClick={handlePrint}
+          />
         </div>
       </DialogContent>
     </Dialog>

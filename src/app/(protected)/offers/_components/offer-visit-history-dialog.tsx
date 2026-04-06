@@ -7,7 +7,7 @@ import VisitCard from "./visit-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {
-  visits: Visit[];
+  visits: Visit[] | undefined;
 }
 
 // ============================================================================
@@ -16,6 +16,8 @@ interface Props {
 
 export default function OfferVisitHistoryDialog({ visits }: Props) {
   const [open, setOpen] = useState(false);
+
+  if (!visits) return;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

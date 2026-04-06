@@ -53,4 +53,9 @@ export interface ResponseMetaData {
   totalRecords: number;
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta?: ResponseMetaData;
+}
+
 export type QueryParams = Record<string, string>;

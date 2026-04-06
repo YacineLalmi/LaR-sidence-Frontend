@@ -1,32 +1,30 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Offer } from "@/schemas/offers/offer.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, File, Image, Trash2 } from "lucide-react";
+import { Edit, Image } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import { ResponseMetaData } from "@/lib/definitions";
-import { useTranslations } from "next-intl";
+import { PaginatedResponse } from "@/lib/definitions";
+import { useLocale, useTranslations } from "next-intl";
 import DeleteOfferDialog from "./delete-offer-dialog";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
 import CustomButton from "@/components/ui/custom-button";
 import OfferDocumentDialog from "./offer-document-dialog";
 import OfferVisitHistoryDialog from "./offer-visit-history-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { formatId } from "@/lib/utils";
+import { deleteOffersAction } from "@/actions/offers/delete-offers.action";
 
 interface Props {
-  data: {
-    items: Offer[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Offer>;
 }
 
 export default function OffersTable({ data }: Props) {
   const translation = useTranslations();
+  const locale = useLocale() as "fr" | "en" | "ar";
 
   const columns: ColumnDef<Offer>[] = [
     {
@@ -54,24 +52,29 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.ID),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.ID),
+      cell: ({ row }) => formatId(row.original.id),
     },
     {
       id: "bien",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.BIEN),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.BIEN),
       cell: ({ row }) => {
-        const firstImageId = row.original.bien.images?.[0]?.id;
-        return (
-          <div className="flex items-center gap-2">
-            {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
-            <div>{row.original.bien.title}</div>
-          </div>
-        );
+        if (row.original.bien?.images?.[0]) {
+          const firstImageId = row.original.bien.images?.[0]?.id;
+          return (
+            <div className="flex items-center gap-2">
+              {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
+              <div>{row.original.bien.title || "ID: " + formatId(row.original.bien.id)}</div>
+            </div>
+          );
+        } else {
+          return row.original?.bien?.title || "ID: " + formatId(row.original?.bien?.id);
+        }
       },
     },
     {
       accessorKey: "client",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.CLIENT),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.CLIENT),
       cell: ({ row }) => {
         const client = row.original.client;
         if (!client) return "-";
@@ -82,19 +85,19 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "type",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.TYPE),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.TYPE),
       cell: ({ row }) => {
         const type = row.original.type;
-        return type?.name || "-";
+        return type?.name[locale] || "-";
       },
     },
     {
       accessorKey: "proposed_price",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.PROPOSED_PRICE),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.PROPOSED_PRICE),
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.CREATED_AT),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.CREATED_AT),
       cell: ({ row }) => {
         const date = row.original.created_at;
         if (!date) return "-";
@@ -103,7 +106,7 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "status",
-      header: translation(TRANSLATIONS_KEYS.OFFERS.COLUMNS.STATUS),
+      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.STATUS),
       cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
@@ -125,5 +128,5 @@ export default function OffersTable({ data }: Props) {
       header: "Actions",
     },
   ];
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteOffersAction} />;
 }

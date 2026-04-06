@@ -1,9 +1,7 @@
 "use server";
 
 import { FormState } from "@/lib/definitions";
-import { handleServerActionError } from "@/lib/server.helper";;
-import { BienTypeService } from "@/services/bien-type.service";
-import { ColorService } from "@/services/colors.service";
+import { handleServerActionError } from "@/lib/server.helper";
 import { OfferTypeService } from "@/services/offer-types.service";
 
 export async function deleteOfferTypeAction(id: number): Promise<FormState> {

@@ -1,1 +1,64 @@
-{}
+{
+  "title": "Configuration des Utilisateurs",
+  "description": "Gérer les utilisateurs de l'application",
+  "form": {
+    "titles": {
+      "create": "Créer un utilisateur",
+      "update": "Modifier un utilisateur",
+      "delete": "Supprimer un utilisateur"
+    },
+    "messages": {
+      "created": "Utilisateur créé avec succès",
+      "updated": "Utilisateur modifié avec succès",
+      "deleted": "Utilisateur supprimé avec succès",
+      "failed_creation": "Échec de la création de l'utilisateur",
+      "failed_update": "Échec de la modification de l'utilisateur",
+      "failed_deletion": "Échec de la suppression de l'utilisateur",
+      "delete_confirmation": "Supprimer cet utilisateur (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un utilisateur",
+      "update": "Modifier l'utilisateur",
+      "delete": "Supprimer l'utilisateur"
+    },
+    "labels": {
+      "email": "E-mail",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "username": "Nom d'utilisateur",
+      "phone_number": "Téléphone",
+      "role": "Rôle",
+      "status": "État"
+    },
+    "placeholders": {
+      "email": "Entrez l'e-mail",
+      "first_name": "Entrez le prénom",
+      "last_name": "Entrez le nom",
+      "username": "Entrez le nom d'utilisateur",
+      "phone_number": "Entrez le numéro de téléphone",
+      "role": "Sélectionnez le rôle",
+      "status": "Sélectionnez l'état"
+    }
+  },
+  "filter": {
+    "title": "Filtrer les utilisateurs",
+    "labels": {
+      "role": "Rôle",
+      "status": "État"
+    },
+    "placeholders": {
+      "role": "Sélectionner un rôle",
+      "status": "Sélectionner un état"
+    }
+  },
+  "columns": {
+    "id": "ID Utilisateur",
+    "name": "Nom et Prénom",
+    "phone_number": "Téléphone",
+    "email": "E-mail",
+    "created_at": "Date d'Ajout",
+    "role": "Rôle",
+    "status": "État",
+    "actions": "Actions"
+  }
+}

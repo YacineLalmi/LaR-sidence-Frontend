@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import { Button } from "./button";
 import { ArrowLeft } from "lucide-react";
 
@@ -17,7 +16,7 @@ export default function NavigationButton({ title, backLink = "/dashboard", backT
           <ArrowLeft />
         </Button>
       </Link>
-      <h1 className="text-[32px] font-bold">{title}</h1>
+      <h1 className="text-xl font-bold">{title}</h1>
     </div>
   );
 }

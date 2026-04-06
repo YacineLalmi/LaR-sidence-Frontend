@@ -1,14 +1,13 @@
 "use client";
 
-import { createOfferAction } from "@/actions/offers/create.action";
-import { updateOfferAction } from "@/actions/offers/update.action";
+import { updateOfferAction } from "@/actions/offers/update-offer.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
+import { ROUTES } from "@/constants/routes";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { ListItem } from "@/schemas/global.schema";
 import { OfferForm, OfferFormSchema } from "@/schemas/offers/offer-form.schema";
@@ -16,7 +15,7 @@ import { Offer } from "@/schemas/offers/offer.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -35,10 +34,10 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
   const form = useForm<OfferForm>({
     resolver: zodResolver(OfferFormSchema),
     defaultValues: {
-      bien_id: offer.bien.id.toString(),
-      client_id: offer.client.id.toString(),
-      status_id: offer.status.id.toString(),
-      type_id: offer.type.id.toString(),
+      bien_id: offer.bien?.id.toString(),
+      client_id: offer.client?.id.toString(),
+      status_id: offer.status?.id.toString(),
+      type_id: offer.type?.id.toString(),
       proposed_price: offer.proposed_price.toString(),
       conditions: offer.conditions,
       comment: offer.comment,
@@ -51,11 +50,12 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
       const response = await updateOfferAction(values, offer.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.OFFERS.ROOT);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        router.push(ROUTES.OFFERS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     }
   }
 
@@ -71,44 +71,44 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
           <InputSelectField
             control={form.control}
             name="bien_id"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.BIEN)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.BIEN)}
             options={biens}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.PLACEHOLDER.BIEN)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.BIEN)}
             disabled={isPending}
             required
           />
           <InputSelectField
             control={form.control}
             name="client_id"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.CLIENT)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.CLIENT)}
             options={clients}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.PLACEHOLDER.CLIENT)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.CLIENT)}
             disabled={isPending}
             required
           />
           <InputSelectField
             control={form.control}
             name="type_id"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.TYPE)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.TYPE)}
             options={types}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.PLACEHOLDER.TYPE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.TYPE)}
             disabled={isPending}
             required
           />
           <InputSelectField
             control={form.control}
             name="status_id"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.STATUS)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.STATUS)}
             options={status}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.PLACEHOLDER.STATUS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.STATUS)}
             disabled={isPending}
             required
           />
           <InputTextField
             control={form.control}
             name="proposed_price"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.PROPOSED_PRICE)}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.PLACEHOLDER.PROPOSED_PRICE)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.PROPOSED_PRICE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.PLACEHOLDERS.PROPOSED_PRICE)}
             disabled={isPending}
             required
           />
@@ -117,20 +117,20 @@ export default function UpfateOfferForm({ types, status, biens, clients, offer }
           <InputTextArea
             control={form.control}
             name="conditions"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMDITIONS)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.CONDITIONS)}
             disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMDITIONS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.CONDITIONS)}
           />
           <InputTextArea
             control={form.control}
             name="comment"
-            label={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMMENT)}
+            label={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.COMMENT)}
             disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS.OFFERS.FORM.LABEL.COMMENT)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.LABELS.COMMENT)}
           />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
+          {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT)}
         </Button>
       </form>
     </Form>

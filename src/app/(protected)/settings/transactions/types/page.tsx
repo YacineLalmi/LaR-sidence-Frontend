@@ -1,36 +1,36 @@
-import React from "react";
-
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import SearchField from "@/components/ui/search";
-import NavigationButton from "@/components/ui/navigation-button";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
-import { TransactionTypeService } from "@/services/transaction-type.service";
-import CreateTransactionTypeDialog from "./_components/create-transactions-type-dialog";
+import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
+import { ColorService } from "@/services/colors.service";
+import SettingsView from "@/views/settings.view";
+import { PaginatedResponse } from "@/lib/definitions";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import CreateTransactionTypeDialog from "./_components/create-transaction-type-dialog";
 import TransactionTypeTable from "./_components/transaction-type-table";
 
 export default async function BienType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const data = await TransactionTypeService.findAll(queryParams);
+  const colors = await ColorService.list();
+
+  let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
+  let responseError: Error | null = null;
+
+  try {
+    result = await ClassificationService(CATEGORIES.TYPE, SCOPES.TRANSACTION).findMany(queryParams);
+  } catch (error: any) {
+    responseError = error;
+  }
   return (
-    <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col">
-        <NavigationButton
-          title={translation(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TYPES.TITLE)}
-          backLink={NAVIGATION_KEYS.SETTINGS.TRANSACTIONS.ROOT}
-        />
-        {/* <h1 className="text-[24px] font-bold">{translation(TRANSLATIONS_KEYS.SETTINGS.BIENS.TYPES.TITLE)}</h1> */}
-        <div className="flex w-full justify-between gap-2">
-          <SearchField />
-          <CreateTransactionTypeDialog />
-        </div>
-      </CardHeader>
-      <CardContent className="px-0">
-        <TransactionTypeTable data={data} />
-      </CardContent>
-    </Card>
+    <SettingsView
+      title={translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.TITLE)}
+      searchField={<SearchField />}
+      createComponent={<CreateTransactionTypeDialog colors={colors} />}
+      error={responseError}
+    >
+      <TransactionTypeTable data={result} colors={colors} />
+    </SettingsView>
   );
 }

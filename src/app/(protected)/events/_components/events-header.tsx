@@ -3,12 +3,12 @@
 import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/custom-button";
 import SearchField from "@/components/ui/search";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { ListItem } from "@/schemas/global.schema";
 import { ChevronDown, ChevronLeft, ChevronRight, Filter, Plus } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 type ViewMode = "month" | "week" | "day";
 
@@ -190,7 +190,7 @@ export default function EventHeader() {
           )}
         </div>
 
-        <Link href={NAVIGATION_KEYS.EVENTS.ADD}>
+        <Link href={ROUTES.EVENTS.CREATE}>
           <CustomButton text="Créer un événement" Icon={Plus} className="!p-6" />
         </Link>
       </div>

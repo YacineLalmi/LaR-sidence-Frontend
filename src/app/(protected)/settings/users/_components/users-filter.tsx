@@ -1,18 +1,16 @@
 "use client";
 
-import { getRolesList } from "@/actions/roles/get-roles-list.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ListItem } from "@/schemas/global.schema";
 import { UserFilterForm, UserFilterFormSchema } from "@/schemas/users/user-filter-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { MouseEvent, useCallback, useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -66,7 +64,7 @@ export default function UsersFilters({ roles }: Props) {
       router.push(`?${params.toString()}`);
       setIsOpen(false);
     },
-    [router, setIsOpen]
+    [router, setIsOpen],
   );
 
   const translation = useTranslations();
@@ -84,8 +82,8 @@ export default function UsersFilters({ roles }: Props) {
 
   return (
     <FilterDrawer
-      buttonText={translation(TRANSLATIONS_KEYS.COMMON.FILTER)}
-      title={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.FILTER.TITLE)}
+      buttonText={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.FILTER)}
+      title={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.FILTER.TITLE)}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
@@ -94,27 +92,27 @@ export default function UsersFilters({ roles }: Props) {
           <InputSelectField
             control={form.control}
             name="role_id"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.FILTER.LABEL.ROLE)}
+            label={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.FILTER.LABELS.ROLE)}
             options={roles}
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.FILTER.PLACEHOLDER.ROLE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.FILTER.PLACEHOLDERS.ROLE)}
           />
           <InputSelectField
             control={form.control}
             name="is_active"
-            label={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.FILTER.LABEL.STATUS)}
+            label={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.FILTER.LABELS.STATUS)}
             options={statusOptions}
-            placeholder={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.FILTER.PLACEHOLDER.STATUS)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.FILTER.PLACEHOLDERS.STATUS)}
           />
-          {/* <Button type="submit" className="w-full mt-5">
-            {translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
-          </Button> */}
-
-          <CustomButton type="submit" text={translation(TRANSLATIONS_KEYS.COMMON.APPLY)} className="w-full mt-5" />
+          <CustomButton
+            type="submit"
+            text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)}
+            className="w-full mt-5"
+          />
           <CustomButton
             onClick={handleClearFilters}
             type="button"
             variant="ghost"
-            text={translation(TRANSLATIONS_KEYS.COMMON.CLEAR_FILTERS)}
+            text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CLEAR_FILTERS)}
             className="w-full"
           />
         </form>

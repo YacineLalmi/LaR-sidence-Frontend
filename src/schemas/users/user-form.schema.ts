@@ -7,7 +7,7 @@ export const UserFormSchema = z.object({
   phonenumber: z.string(),
   email: z.string(),
   role_id: z.string(),
-  is_active: z.string(),
+  is_active: z.boolean(),
 });
 
 export type UserForm = z.infer<typeof UserFormSchema>;

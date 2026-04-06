@@ -1,25 +1,39 @@
 {
   "title": "Configuration des types des biens",
+  "description": "Gérer les types des biens dans l'application",
   "deleteText": "Voulez-vous supprimer le type avec l'ID {id}",
   "form": {
-    "add": "Créer un type de bien",
-    "update": "Modifier un type de bien",
-    "created": "Type créé avec succès",
-    "updated": "Type modifié avec succès",
-    "failedCreation": "Échec de la création de type",
-    "failedUpdate": "Échec de la modification de type",
-    "buttonText": "Créer un type",
-    "label": {
+    "titles": {
+      "create": "Créer un type de bien",
+      "update": "Modifier un type de bien",
+      "delete": "Supprimer un type de bien"
+    },
+    "messages": {
+      "created": "Type de bien créé avec succès",
+      "updated": "Type de bien modifié avec succès",
+      "deleted": "Type de bien Supprimé avec succès",
+      "failed_creation": "Échec de la création de type de bien",
+      "failed_update": "Échec de la modification de type de bien",
+      "failed_deletion": "Échec de la suppression de type de bien",
+      "delete_confirmation": "Supprimer cet type de bien (ID: {id}) ?"
+    },
+
+    "buttons": {
+      "create": "Créer un type de bien",
+      "update": "Modifier le type de bien",
+      "delete": "Supprimer le type de bien"
+    },
+    "labels": {
       "code": "Code de type",
       "name": " Nom de type",
       "description": "Description de type",
-      "isActive": "Type actif"
+      "is_active": "Type actif"
     },
-    "placeholder": {
+    "placeholders": {
       "code": "Insérer le code du type",
       "name": "Insérer le nom du type",
       "description": "Description de la couleur",
-      "isActive": "Le type est-il actif ?"
+      "is_active": "Le type est-il actif ?"
     }
   },
   "columns": {
@@ -28,6 +42,6 @@
     "name": "Nom",
     "description": "Description",
     "actions": "Actions",
-    "createdAt": "created_at"
+    "created_at": "created_at"
   }
 }

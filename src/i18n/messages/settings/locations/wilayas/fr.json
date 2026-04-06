@@ -1,32 +1,42 @@
 {
   "title": "Liste des wilayas",
-  "deleteText": "Voulez-vous supprimer la wilaya avec l'ID {id}",
+  "delete_text": "Voulez-vous supprimer la wilaya avec l'ID {id} ?",
+  "create_text": "Créer une wilaya",
   "form": {
-    "add": "Ajouter une wilaya",
-    "update": "Modifier une wilaya",
-    "created": "Wilaya créée avec succès",
-    "updated": "Wilaya modifiée avec succès",
-    "failedCreation": "Échec de la création de la",
-    "failedUpdate": "Échec de la modification de la wilaya",
-    "buttonText": "Créer une wilaya",
-    "label": {
-      "code": "Code de la wilaya",
-      "name": "Nom de la wilaya",
-      "longitude": "Longitude",
-      "latitude": "Latitude"
+    "titles": {
+      "create": "Ajouter une wilaya",
+      "edit": "Modifier une wilaya"
     },
-    "placeholder": {
-      "code": "Entrez le code de la wilaya",
-      "name": "Entrez le nom de la wilaya",
-      "longitude": "Entrez la longitude",
-      "latitude": "Entrez la latitude"
+    "messages": {
+      "created": "Wilaya créée avec succès",
+      "updated": "Wilaya modifiée avec succès",
+      "deleted": "Wilaya supprimée avec succès",
+      "failed_creation": "Échec de la création de wilaya",
+      "failed_update": "Échec de la modification de wilaya",
+      "failed_deletion": "Échec de la suppression de wilaya"
+    },
+    "labels": {
+      "code": "Code de la wilaya",
+      "name": {
+        "fr": "Nom",
+        "en": "Nom (EN)",
+        "ar": "Nom (AR)"
+      }
+    },
+    "placeholders": {
+      "code": "Ex: 16",
+      "name": {
+        "fr": "Entrez le nom en français",
+        "en": "Entrez le nom en anglais",
+        "ar": "أدخل الاسم بالعربية"
+      }
     }
   },
   "columns": {
-    "id": "Wilaya ID",
+    "id": "ID",
     "name": "Nom de la wilaya",
-    "code": "Code de la wilaya",
+    "code": "Code",
     "actions": "Actions",
-    "createdAt": "Date de creation"
+    "created_at": "Date de création"
   }
 }

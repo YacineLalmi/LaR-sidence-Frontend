@@ -3,7 +3,6 @@
 import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import React, { useCallback, useState } from "react";
 import SortingButton from "@/components/ui/sorting-button";
 import { format } from "date-fns";
 import { Role } from "@/schemas/roles/role.schema";
@@ -11,7 +10,8 @@ import UpdateRoleDialog from "./update-role-dialog";
 import { PermissionCategory } from "@/schemas/permissions/permission-category.schema";
 import DeleteRoleDialog from "./delete-role-dialog";
 import { useTranslations } from "next-intl";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { deleteRolesAction } from "@/actions/roles/delete-roles.action";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 interface Props {
   data: any;
@@ -48,21 +48,21 @@ export default function RolesTable({ data, permissions }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.ID)} columnKey="id" />;
+        return <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.ID)} columnKey="id" />;
       },
     },
     {
       accessorKey: "display_name",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.NAME),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.NAME),
       enableHiding: false,
     },
     {
       accessorKey: "description",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.DESCRIPTION),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.DESCRIPTION),
     },
     {
       accessorKey: "permissions",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.PERMISSIONS),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.PERMISSIONS),
       cell: ({ row }) => {
         const permissions = row.original.permissions || [];
         const displayLimit = 5;
@@ -98,7 +98,7 @@ export default function RolesTable({ data, permissions }: Props) {
       header: () => {
         return (
           <SortingButton
-            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.CREATED_AT)}
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.CREATED_AT)}
             columnKey="created_at"
           />
         );
@@ -115,9 +115,9 @@ export default function RolesTable({ data, permissions }: Props) {
           <UpdateRoleDialog role={row.original} permissions={permissions} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.ROLES.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.ROLES.COLUMNS.ACTIONS),
     },
   ];
 
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteRolesAction} />;
 }

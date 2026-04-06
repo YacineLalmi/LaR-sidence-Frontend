@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { DemandForm } from "@/schemas/demands/demand-form.schema";
 import { Demand, DemandSchema } from "@/schemas/demands/demand.schema";
@@ -7,11 +7,11 @@ import z from "zod";
 
 const END_POINTS = {
   create: "/demands",
-  findAll: "/demands",
+  findMany: "/demands",
   findOne: (id: string) => `/demands/${id}`,
-  update: (id: number) => `/demands/${id}`,
-  delete: (id: number) => `/demands/${id}`,
-  deleteMany: "/demands/bulk-delete",
+  update: (id: string) => `/demands/${id}`,
+  delete: (id: string) => `/demands/${id}`,
+  deleteMany: "/demands/many",
 };
 
 export const DemandService = {
@@ -26,16 +26,16 @@ export const DemandService = {
     return validatedResponseData;
   },
 
-  findAll: async (QueryParams: QueryParams) => {
+  findMany: async (QueryParams: QueryParams): Promise<PaginatedResponse<Demand>> => {
     const response = await ApiService.get<Demand[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: QueryParams,
     });
 
     const validatedResponseData = validateResponseData<Demand[]>(response.data, z.array(DemandSchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
@@ -50,7 +50,7 @@ export const DemandService = {
     return validatedResponseData;
   },
 
-  update: async (data: DemandForm, id: number) => {
+  update: async (data: DemandForm, id: string) => {
     const response = await ApiService.put<Demand>({
       endpoint: END_POINTS.update(id),
       body: data,
@@ -61,13 +61,13 @@ export const DemandService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
     });
   },
 
-  deleteMany: async (ids: number[]) => {
+  deleteMany: async (ids: string[]) => {
     await ApiService.delete({
       endpoint: END_POINTS.deleteMany,
       body: { ids },

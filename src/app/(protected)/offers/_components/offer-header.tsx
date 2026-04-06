@@ -1,13 +1,12 @@
 import SearchField from "@/components/ui/search";
-import React from "react";
 import { ListItem } from "@/schemas/global.schema";
 import OffersFilter from "./offer-filter";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom-button";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { ROUTES } from "@/constants/routes";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 interface Props {
   biens: ListItem[];
@@ -24,8 +23,8 @@ export default function OffersHeader({ types, status, clients, biens }: Props) {
         <SearchField />
         <OffersFilter types={types} status={status} biens={biens} clients={clients} />
       </div>
-      <Link href={NAVIGATION_KEYS.OFFERS.ADD}>
-        <CustomButton text={translation(TRANSLATIONS_KEYS.OFFERS.ADD_OFFER)} Icon={Plus} />
+      <Link href={ROUTES.OFFERS.CREATE}>
+        <CustomButton text={translation(TRANSLATIONS_KEYS_2.OFFERS.FORM.BUTTONS.CREATE)} Icon={Plus} />
       </Link>
     </div>
   );

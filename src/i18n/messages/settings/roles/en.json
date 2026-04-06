@@ -1,1 +1,43 @@
-{}
+{
+  "title": "Configuration des Rôles",
+  "description": "Gérer les rôles de l'application",
+  "form": {
+    "titles": {
+      "create": "Créer un rôle",
+      "update": "Modifier un rôle",
+      "delete": "Supprimer un rôle"
+    },
+    "messages": {
+      "created": "Rôle créé avec succès",
+      "updated": "Rôle modifié avec succès",
+      "deleted": "Rôle supprimé avec succès",
+      "failed_creation": "Échec de la création du rôle",
+      "failed_update": "Échec de la modification du rôle",
+      "failed_deletion": "Échec de la suppression du rôle",
+      "delete_confirmation": "Supprimer ce rôle (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un rôle",
+      "update": "Modifier le rôle",
+      "delete": "Supprimer le rôle"
+    },
+    "labels": {
+      "display_name": "Nom",
+      "description": "Description",
+      "permissions": "Permissions"
+    },
+    "placeholders": {
+      "display_name": "Entrez le nom du rôle",
+      "description": "Entrez la description du rôle",
+      "permissions": "Sélectionnez les permissions du rôle"
+    }
+  },
+  "columns": {
+    "id": "ID Rôle",
+    "name": "Nom du rôle",
+    "description": "Description",
+    "permissions": "Permissions",
+    "created_at": "Date d'Ajout",
+    "actions": "Actions"
+  }
+}

@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { BienPriorityForm } from "@/schemas/bien-priority/bien-priority-form.schema";
 import { BienPriority, BienPrioritySchema } from "@/schemas/bien-priority/bien-priotiry.schema";
@@ -27,7 +27,7 @@ export const BienPriorityService = {
     return validatedResponseData;
   },
 
-  findAll: async (queryParams: QueryParams) => {
+  findAll: async (queryParams: QueryParams): Promise<PaginatedResponse<BienPriority>> => {
     const response = await ApiService.get<BienPriority[]>({
       endpoint: END_POINTS.findAll,
       query: queryParams,
@@ -36,12 +36,12 @@ export const BienPriorityService = {
     const validatedResponseData = validateResponseData<BienPriority[]>(response.data, z.array(BienPrioritySchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
 
-  list: async () => {
+  list: async (): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
     });

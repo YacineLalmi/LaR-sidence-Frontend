@@ -1,0 +1,48 @@
+{
+  "title": "Configuration des Priorités des biens",
+  "description": "Gérer les priorités des biens utilisées dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer une Priorité",
+      "update": "Modifier une Priorité",
+      "delete": "Supprimer une Priorité"
+    },
+    "messages": {
+      "created": "Priorité créée avec succès",
+      "updated": "Priorité modifiée avec succès",
+      "deleted": "Priorité supprimée avec succès",
+      "failed_creation": "Échec de la création de la Priorité",
+      "failed_update": "Échec de la modification de la Priorité",
+      "failed_deletion": "Échec de la suppression de la Priorité",
+      "delete_confirmation": "Supprimer cette Priorité (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une Priorité",
+      "update": "Modifier la Priorité",
+      "delete": "Supprimer la Priorité"
+    },
+    "labels": {
+      "code": "Code de Priorité",
+      "name": "Nom de Priorité",
+      "description": "Description de Priorité",
+      "color_id": "Couleur de Priorité",
+      "is_active": "Priorité active"
+    },
+    "placeholders": {
+      "code": "Insérer le code de la Priorité",
+      "name": "Insérer le nom de la Priorité",
+      "description": "Description de la Priorité",
+      "color_id": "Choisir une couleur",
+      "is_active": "La Priorité est-elle active ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "color_id": "Couleur",
+    "actions": "Actions",
+    "created_at": "created_at"
+  }
+}

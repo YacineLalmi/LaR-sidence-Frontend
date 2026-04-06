@@ -1,70 +1,85 @@
 {
-  "title": "Gestion des clients",
-  "deleteClient": "Voulez-vous supprimer le client avec l'ID {id}",
-  "addClient": "Ajouter un client",
-  "editClient": "Modifier un client",
-  "filter": {
-    "title": "Filtrer les client",
-    "label": {
-      "gender": "Genre",
-      "type": "Type",
-      "status": "Statut",
-      "source": "Source"
-    },
-    "placeholder": {
-      "gender": "Sélectionnez le genre",
-      "type": "Sélectionnez le type",
-      "status": "Sélectionner un statut",
-      "source": "Sélectionnez la source"
-    }
-  },
+  "title": "Configuration des Clients",
+  "description": "Gérer les clients de l'application",
   "form": {
-    "addClient": "Ajouter un client",
-    "editClient": "Modifier un client",
-    "label": {
+    "titles": {
+      "create": "Créer un client",
+      "update": "Modifier un client",
+      "delete": "Supprimer un client"
+    },
+    "messages": {
+      "created": "Client créé avec succès",
+      "updated": "Client modifié avec succès",
+      "deleted": "Client supprimé avec succès",
+      "failed_creation": "Échec de la création du client",
+      "failed_update": "Échec de la modification du client",
+      "failed_deletion": "Échec de la suppression du client",
+      "delete_confirmation": "Supprimer ce client (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un client",
+      "update": "Modifier le client",
+      "delete": "Supprimer le client"
+    },
+    "labels": {
       "email": "E-mail",
       "mobile": "Mobile",
-      "firstName": "Prénom",
-      "lastName": "Nom",
-      "phoneNumber": "Téléphone 0{index}",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "phone_number": "Téléphone 0{index}",
       "civility": "Civilité",
       "comment": "Commentaire",
-      "companyName": "Nom de l’entreprise",
+      "company_name": "Nom de l'entreprise",
       "ai": "AI",
-      "tradeRegistration": "Registre du commerce",
-      "taxIdentification": "Numéro d’identification fiscale",
+      "trade_registration": "Registre du commerce",
+      "tax_identification": "Numéro d'identification fiscale",
       "type": "Type",
       "source": "Source",
       "documents": "Documents",
       "status": "Statut"
     },
-    "placeholder": {
-      "email": "Entrez l’adresse e-mail",
+    "placeholders": {
+      "email": "Entrez l'adresse e-mail",
       "mobile": "Entrez le numéro de mobile",
-      "firstName": "Entrez le prénom",
-      "lastName": "Entrez le nom",
-      "phoneNumber": "Entrez le numéro de téléphone",
+      "first_name": "Entrez le prénom",
+      "last_name": "Entrez le nom",
+      "phone_number": "Entrez le numéro de téléphone",
       "civility": "Sélectionnez la civilité",
       "type": "Sélectionnez le type",
       "source": "Sélectionnez la source",
-      "status": "Sélectionnez un statut",
+      "status": "Sélectionnez le statut",
       "comment": "Entrez un commentaire",
-      "companyName": "Entrez le nom de l’entreprise",
-      "ai": "Entrez l’IA",
-      "tradeRegistration": "Entrez le numéro du registre du commerce",
-      "taxIdentification": "Entrez le numéro d’identification fiscale",
+      "company_name": "Entrez le nom de l'entreprise",
+      "ai": "Entrez l'AI",
+      "trade_registration": "Entrez le numéro du registre du commerce",
+      "tax_identification": "Entrez le numéro d'identification fiscale",
       "documents": "Téléversez des documents"
+    }
+  },
+  "filter": {
+    "title": "Filtrer les clients",
+    "labels": {
+      "gender": "Genre",
+      "type": "Type",
+      "status": "Statut",
+      "source": "Source"
+    },
+    "placeholders": {
+      "gender": "Sélectionnez le genre",
+      "type": "Sélectionnez le type",
+      "status": "Sélectionnez le statut",
+      "source": "Sélectionnez la source"
     }
   },
   "columns": {
     "id": "ID",
     "email": "E-mail",
-    "firstName": "Prénom",
-    "lastName": "Nom",
+    "first_name": "Prénom",
+    "last_name": "Nom",
     "civility": "Civilité",
-    "phoneNumber": "Numéro de téléphone",
+    "phone_number": "Numéro de téléphone",
     "status": "Statut",
-    "createdAt": "Créé le",
+    "created_at": "Créé le",
     "document": "Fiche",
     "actions": "Actions"
   }

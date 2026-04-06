@@ -4,25 +4,17 @@ import { customToast } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import MirageLoader from "@/components/mirage-loader";
-import logo from "@/assests/images/logo-black.png";
-import Image from "next/image";
-import Link from "next/link";
-import { Form, FormLabel } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { LoginFormData, LoginFormDataSchema } from "@/schemas/auth/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputTextField from "@/components/custom-inputs/input-text";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import InputPasswordField from "@/components/custom-inputs/input-password-field";
 import { useRouter } from "next/navigation";
-import { loginAction } from "@/actions/authentication/login.action";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ResetPasswordDataForm, ResetPasswordDataFormSchema } from "@/schemas/auth/reset-password-form.schema";
 import { ResetPasswordAction } from "@/actions/authentication/reset-password.action";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export function ResetPasswordForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
@@ -43,60 +35,60 @@ export function ResetPasswordForm() {
   });
 
   async function onSubmit(values: ResetPasswordDataForm) {
-    
     setIsPending(true);
     try {
       const response = await ResetPasswordAction(values);
       if (response.isOk) {
         router.push(NAVIGATION_KEYS.DASHBOARD);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } finally {
       setIsPending(false);
     }
   }
 
   return (
-    <Card className="w-full bg-transparent shadow-none border-0">
+    <Card className="w-full max-w-lg bg-transparent shadow-none border-0">
       <CardHeader>
-        <CardTitle className="flex justify-center items-center mb-[36px] text-[36px] ">
-          Réinitialiser votre mot de passe
+        <CardTitle className="flex justify-center items-center text-center text-md xs:text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl">
+          {translation(TRANSLATIONS_KEYS_2.LOGIN.PASSWORD_RESETING)}
         </CardTitle>
-        <CardDescription className="flex flex-col tracking-widest  text-black text-[16px] text-center mb-[36px]">
-          Veuillez saisir un nouveau mot de passe pour votre compte.
+        <CardDescription className="flex flex-col tracking-widest text-center font-light w-3/4 mx-auto text-xs mg:text-lg">
+          {translation(TRANSLATIONS_KEYS_2.LOGIN.MESSAGES.INSERT_NEW_PASSWORD)}
         </CardDescription>
       </CardHeader>
       <CardContent className="my-0">
         <Form {...form}>
-          <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[36px]">
+          <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
             <InputPasswordField
               control={form.control}
               name="password"
-              label={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.PASSWORD)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.PASSWORD)}
             />
             <InputPasswordField
               control={form.control}
               name="password_confirmation"
-              label={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.PASSWORD_CONFIRMATION)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS.LOGIN.PASSWORD.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.PASSWORD_CONFIRMATION)}
             />
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col gap-2 mt-[24px]">
+      <CardFooter className="mt-6">
         <Button
           type="submit"
-          className="w-full rounded-4xl text-xl p-6 font-light flex justify-center cursor-pointer"
+          className="w-full rounded-4xl text-xs sm:text-sm md:text-md lg:text-lg  p-6 font-light flex justify-center cursor-pointer"
           form="reset-password-form"
         >
-          {isPending ? <MirageLoader /> : "Réinitialiser le mot de passe"}
+          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS_2.LOGIN.BUTTONS.RESET_PASSWORD)}
         </Button>
       </CardFooter>
     </Card>

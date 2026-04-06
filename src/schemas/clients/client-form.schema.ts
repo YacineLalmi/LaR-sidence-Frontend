@@ -6,7 +6,7 @@ const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
 export const ClientFormSchema = z.object({
   first_name: z.string().max(50),
   last_name: z.string().max(50),
-  civility: z.string(),
+  civility: z.enum(["mr", "mrs", "company"]),
   email: z.email(),
   mobile: z.string(),
   phone_numbers: z.array(z.string().regex(/^\d{12}$/, { message: "Le format du numéro de téléphone est incorrect" })),
@@ -21,7 +21,7 @@ export const ClientFormSchema = z.object({
   source_id: z.string(),
   documents: z
     .array(z.instanceof(File))
-    .max(5, "You can upload up to 5 files")
+    // .max(5, "You can upload up to 5 files")
     .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less"),
   // .refine(
   //   (files) => files.every((file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type)),

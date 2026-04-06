@@ -1,25 +1,37 @@
 {
-  "title": "Configuration des types des offers",
-  "deleteText": "Voulez-vous supprimer le type avec l'ID {id}",
+  "title": "Configuration des Types des offres",
+  "description": "Gérer les types des offres utilisés dans l'application",
   "form": {
-    "add": "Créer un type de offer",
-    "update": "Modifier un type de offer",
-    "created": "Type créé avec succès",
-    "updated": "Type modifié avec succès",
-    "failedCreation": "Échec de la création de type",
-    "failedUpdate": "Échec de la modification de type",
-    "buttonText": "Créer un type",
-    "label": {
-      "code": "Code de type",
-      "name": " Nom de type",
-      "description": "Description de type",
-      "isActive": "Type actif"
+    "titles": {
+      "create": "Créer un Type d'offre",
+      "update": "Modifier un Type d'offre",
+      "delete": "Supprimer un Type d'offre"
     },
-    "placeholder": {
-      "code": "Insérer le code du type",
-      "name": "Insérer le nom du type",
-      "description": "Description de la couleur",
-      "isActive": "Le type est-il actif ?"
+    "messages": {
+      "created": "Type créé avec succès",
+      "updated": "Type modifié avec succès",
+      "deleted": "Type supprimé avec succès",
+      "failed_creation": "Échec de la création du Type",
+      "failed_update": "Échec de la modification du Type",
+      "failed_deletion": "Échec de la suppression du Type",
+      "delete_confirmation": "Supprimer ce Type (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un Type",
+      "update": "Modifier le Type",
+      "delete": "Supprimer le Type"
+    },
+    "labels": {
+      "code": "Code de Type",
+      "name": "Nom de Type",
+      "description": "Description de Type",
+      "is_active": "Type actif"
+    },
+    "placeholders": {
+      "code": "Insérer le code du Type",
+      "name": "Insérer le nom du Type",
+      "description": "Description du Type",
+      "is_active": "Le Type est-il actif ?"
     }
   },
   "columns": {
@@ -28,6 +40,6 @@
     "name": "Nom",
     "description": "Description",
     "actions": "Actions",
-    "createdAt": "created_at"
+    "created_at": "created_at"
   }
 }

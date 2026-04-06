@@ -145,10 +145,10 @@ export default function EventsCalenderDays({ events, date, onEventClick }: Props
                       </div>
                       <div className="flex items-center gap-1.5">
                         <span className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-[9px] flex-shrink-0">
-                          {event.agent.first_name.charAt(0)}
+                          {event.agent?.first_name.charAt(0)}
                         </span>
                         <span className="truncate text-xs">
-                          {event.agent.first_name} {event.agent.last_name}
+                          {event.agent?.first_name} {event.agent?.last_name}
                         </span>
                       </div>
                     </div>

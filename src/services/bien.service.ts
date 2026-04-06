@@ -1,5 +1,5 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 
 import { BienForm } from "@/schemas/biens/bien-form.schema";
@@ -9,11 +9,12 @@ import z from "zod";
 
 const END_POINTS = {
   create: "/biens",
-  findAll: "/biens",
+  findMany: "/biens",
   list: "/lists/biens",
   findOne: (id: string) => `/biens/${id}`,
-  update: (id: number) => `/biens/${id}`,
-  delete: (id: number) => `/biens/${id}`,
+  update: (id: string) => `/biens/${id}`,
+  delete: (id: string) => `/biens/${id}`,
+  deleteMany: `/biens/many`,
 };
 
 export const BienService = {
@@ -27,7 +28,7 @@ export const BienService = {
         });
         continue;
       }
-      if (key === "additional_characteristics") {
+      if (key === "characteristics") {
         const characteristics = (data as any)[key] as number[];
         characteristics.forEach((characteristic: number, index: number) => {
           formData.append(`${key}[${index}]`, characteristic.toString());
@@ -57,19 +58,19 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  findAll: async (queryParams: QueryParams) => {
+  findMany: async (queryParams: QueryParams): Promise<PaginatedResponse<Bien>> => {
     const response = await ApiService.get<Bien[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: queryParams,
     });
     const validatedResponseData = validateResponseData<Bien[]>(response.data, z.array(BienSchema));
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
 
-  list: async () => {
+  list: async (): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
     });
@@ -79,7 +80,7 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  findOne: async (id: string) => {
+  findOne: async (id: string): Promise<Bien> => {
     const response = await ApiService.get<Bien>({
       endpoint: END_POINTS.findOne(id),
     });
@@ -89,7 +90,7 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  update: async (data: BienForm, id: number) => {
+  update: async (data: BienForm, id: string): Promise<Bien> => {
     const formData = new FormData();
     for (const key in data) {
       if (key === "images" || key === "documents") {
@@ -99,7 +100,7 @@ export const BienService = {
         });
         continue;
       }
-      if (key === "additional_characteristics") {
+      if (key === "characteristics") {
         const characteristics = (data as any)[key] as number[];
         characteristics.forEach((characteristic: number, index: number) => {
           formData.append(`${key}[${index}]`, characteristic.toString());
@@ -128,9 +129,16 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string): Promise<void> => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+  deleteMany: async (ids: string[]): Promise<void> => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany,
+      body: { ids }
     });
   },
 };

@@ -5,7 +5,6 @@ import { AuthService } from "@/services/auth.service";
 import { differenceInSeconds } from "date-fns";
 
 export async function refreshTokenAction(refresh_token: string): Promise<FormState> {
-  console.log("refresh_token", refresh_token);
   try {
     const response = await AuthService.refresh(refresh_token);
 

@@ -1,4 +1,5 @@
 "use client";
+
 import { getBienStatusList } from "@/actions/bien-status/get-bien-status-list.action";
 import { getBienTypeLit } from "@/actions/bien-types/get-bien-type-list.action";
 import { getCommuneByWilaya } from "@/actions/commune/get-commune-by-wilaya";
@@ -6,40 +7,114 @@ import { getTransactionTypeList } from "@/actions/transaction-type/get-transacti
 import { getAgentList } from "@/actions/users/get-agents-list.action";
 import { getWilayaList } from "@/actions/wilayas/get-wilaya-list.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import { Button } from "@/components/ui/button";
+import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { customToast } from "@/lib/utils";
 import { BienFilterForm, BienFilterFormSchema } from "@/schemas/biens/bien-filter-form.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function BienFilter() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const [wilayas, setWilayas] = useState<ListItem[]>([]);
-  const [communes, setCommunes] = useState<ListItem[]>([]);
-  const [agents, setAgents] = useState<ListItem[]>([]);
-  const [bienTypes, setBienTypes] = useState<ListItem[]>([]);
-  const [transactionTypes, setTransactionTypes] = useState<ListItem[]>([]);
-  const [status, setStatus] = useState<ListItem[]>([]);
-
+  const translation = useTranslations();
   const router = useRouter();
-  const form = useForm<BienFilterForm>({
-    resolver: zodResolver(BienFilterFormSchema),
-    defaultValues: {},
+
+  // State for Select options
+  const [options, setOptions] = useState<{
+    wilayas: ListItem[];
+    communes: ListItem[];
+    agents: ListItem[];
+    bienTypes: ListItem[];
+    transactionTypes: ListItem[];
+    status: ListItem[];
+  }>({
+    wilayas: [],
+    communes: [],
+    agents: [],
+    bienTypes: [],
+    transactionTypes: [],
+    status: [],
   });
 
-  const selectedWilayaId = form.watch("wilaya_id") || "";
+  // 1. Parse Initial Values from URL
+  const getInitialValues = (): Partial<BienFilterForm> => {
+    const params = new URLSearchParams(searchParams);
+    return {
+      wilaya_id: params.get("wilaya_id") || undefined,
+      commune_id: params.get("commune_id") || undefined,
+      bien_type_id: params.get("bien_type_id") || undefined,
+      transaction_type_id: params.get("transaction_type_id") || undefined,
+      bien_status_id: params.get("bien_status_id") || undefined,
+      agent_id: params.get("agent_id") || undefined,
+    };
+  };
+
+  const form = useForm<BienFilterForm>({
+    resolver: zodResolver(BienFilterFormSchema),
+    defaultValues: getInitialValues(),
+  });
+
+  const selectedWilayaId = form.watch("wilaya_id");
+
+  // 2. Fetch Static Lists on Mount
+  useEffect(() => {
+    const fetchLists = async () => {
+      const [w, a, t, tr, s] = await Promise.all([
+        getWilayaList(),
+        getAgentList(),
+        getBienTypeLit(),
+        getTransactionTypeList(),
+        getBienStatusList(),
+      ]);
+      setOptions((prev) => ({
+        ...prev,
+        wilayas: w,
+        agents: a,
+        bienTypes: t,
+        transactionTypes: tr,
+        status: s,
+      }));
+    };
+    fetchLists();
+  }, []);
+
+  // 3. Handle Dynamic Communes
+  useEffect(() => {
+    if (selectedWilayaId) {
+      getCommuneByWilaya(selectedWilayaId).then((data) => {
+        setOptions((prev) => ({ ...prev, communes: data }));
+        // Only set commune_id from URL if it's the first load or matches current wilaya
+        const urlCommune = searchParams.get("commune_id");
+        if (urlCommune) form.setValue("commune_id", urlCommune);
+      });
+    } else {
+      setOptions((prev) => ({ ...prev, communes: [] }));
+      form.setValue("commune_id", undefined);
+    }
+  }, [selectedWilayaId, searchParams]);
+
+  // 4. Update form when search params change (Browser back/forward)
+  useEffect(() => {
+    form.reset(getInitialValues());
+  }, [searchParams]);
+
+  const hasActiveFilters = () => {
+    const params = new URLSearchParams(searchParams);
+    const filterKeys = ["wilaya_id", "commune_id", "bien_type_id", "bien_status_id", "agent_id", "transaction_type_id"];
+    return Array.from(params.keys()).some((key) => filterKeys.includes(key));
+  };
 
   async function onSubmit(values: BienFilterForm) {
     const params = new URLSearchParams();
-
     Object.entries(values).forEach(([key, value]) => {
-      if (value) {
+      if (value && value !== "") {
         params.append(key, value.toString());
       }
     });
@@ -47,102 +122,79 @@ export default function BienFilter() {
     router.push(`?${params.toString()}`);
     setIsOpen(false);
   }
-  const t = useTranslations();
 
-  useEffect(() => {
-    getWilayaList().then((data) => {
-      setWilayas(data);
-      form.setValue("wilaya_id", searchParams.get("wilaya_id") || undefined);
-    });
-    getAgentList().then((data) => {
-      setAgents(data);
-      form.setValue("agent_id", searchParams.get("agent_id") || undefined);
-    });
-    getBienTypeLit().then((data) => {
-      setBienTypes(data);
-      form.setValue("bien_type_id", searchParams.get("bien_type_id") || undefined);
-    });
-    getTransactionTypeList().then((data) => {
-      setTransactionTypes(data);
-      form.setValue("transaction_type_id", searchParams.get("transaction_type_id") || undefined);
-    });
-    getBienStatusList().then((data) => {
-      setStatus(data);
-      form.setValue("status_id", searchParams.get("status_id") || undefined);
-    });
+  function handleClearFilters() {
+    form.reset({});
+    router.push(window.location.pathname);
+    setIsOpen(false);
+    customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+  }
 
-    return () => {
-      setWilayas([]);
-      setCommunes([]);
-      setAgents([]);
-      setBienTypes([]);
-      setTransactionTypes([]);
-      setStatus([]);
-      form.reset();
-    };
-  }, [form]);
-
-  useEffect(() => {
-    setCommunes([]);
-    form.resetField("commune_id");
-    getCommuneByWilaya(selectedWilayaId).then((data) => {
-      setCommunes(data);
-      form.setValue("commune_id", searchParams.get("commune_id") || undefined);
-    });
-
-    return () => {
-      setCommunes([]);
-      form.resetField("commune_id");
-    };
-  }, [selectedWilayaId]);
   return (
-    <FilterDrawer buttonText={t("common.filter")} title={t("biens.filter.title")} isOpen={isOpen} setIsOpen={setIsOpen}>
+    <FilterDrawer
+      buttonText={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.FILTER)}
+      title={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.TITLE)}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+    >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
-          <InputSelectField
-            control={form.control}
-            name="bien_type_id"
-            label={t("biens.filter.label.bienType")}
-            options={bienTypes}
-            placeholder={t("biens.filter.placeholder.bienType")}
-          />
-          <InputSelectField
-            control={form.control}
-            name="status_id"
-            label={t("biens.filter.label.status")}
-            options={status}
-            placeholder={t("biens.filter.placeholder.status")}
-          />
-          <InputSelectField
-            control={form.control}
-            name="transaction_type_id"
-            label={t("biens.filter.label.transactionType")}
-            options={transactionTypes}
-            placeholder={t("biens.filter.placeholder.transactionType")}
-          />
-          <InputSelectField
-            control={form.control}
-            name="wilaya_id"
-            label={t("biens.filter.label.wilaya")}
-            options={wilayas}
-            placeholder={t("biens.filter.placeholder.wilaya")}
-          />
-          <InputSelectField
-            control={form.control}
-            name="commune_id"
-            label={t("biens.filter.label.commune")}
-            options={communes}
-            placeholder={t("biens.filter.placeholder.commune")}
-            revalidate={0}
-          />
-          <InputSelectField
-            control={form.control}
-            name="agent_id"
-            label={t("biens.filter.label.agent")}
-            options={agents}
-            placeholder={t("biens.filter.placeholder.agent")}
-          />
-          <Button type="submit">{t("biens.filter.submit")}</Button>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-5">
+          <div className="space-y-2">
+            <InputSelectField
+              control={form.control}
+              name="bien_type_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.BIEN_TYPE)}
+              options={options.bienTypes}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.BIEN_TYPE)}
+            />
+            <InputSelectField
+              control={form.control}
+              name="bien_status_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.STATUS)}
+              options={options.status}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.STATUS)}
+            />
+            <InputSelectField
+              control={form.control}
+              name="transaction_type_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.TRANSACTION_TYPE)}
+              options={options.transactionTypes}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.TRANSACTION_TYPE)}
+            />
+            <InputSelectField
+              control={form.control}
+              name="wilaya_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.WILAYA)}
+              options={options.wilayas}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.WILAYA)}
+            />
+            <InputSelectField
+              control={form.control}
+              name="commune_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.COMMUNE)}
+              options={options.communes}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.COMMUNE)}
+              disabled={!selectedWilayaId}
+            />
+            <InputSelectField
+              control={form.control}
+              name="agent_id"
+              label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.AGENT)}
+              options={options.agents}
+              placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.AGENT)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2 mt-6">
+            <CustomButton text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)} type="submit" />
+            <CustomButton
+              text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CLEAR_FILTERS)}
+              type="button"
+              variant="outline"
+              onClick={handleClearFilters}
+              disabled={!hasActiveFilters()}
+            />
+          </div>
         </form>
       </Form>
     </FilterDrawer>

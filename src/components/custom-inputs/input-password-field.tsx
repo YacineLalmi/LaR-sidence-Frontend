@@ -28,7 +28,7 @@ export default function InputPasswordField<T extends FieldValues>({
       render={({ field }) => (
         <FormItem>
           {label && (
-            <FormLabel>
+            <FormLabel className="text-xs md:text-sm lg:text-base">
               {label} {required && <span className="text-red-500 text-xl mt-1">*</span>}
             </FormLabel>
           )}

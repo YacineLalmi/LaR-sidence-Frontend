@@ -13,17 +13,22 @@ import {
 } from "@/components/ui/alert-dialog";
 import { TriangleAlert, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { FormState } from "@/lib/definitions";
+import { customToast } from "@/lib/utils";
 
 interface Props {
-  title?: string;
+  title: string;
   description?: string;
   cancelText?: string;
   confirmText?: string;
-  onConfirm: any;
+  confirmAction: () => Promise<FormState>;
   trigger: any;
   isOpen: boolean;
   setIsOpen: any;
+  onSuccess: () => void;
+  successMessage?: string;
+  errorMessage?: string;
 }
 
 export function DeleteConfirmationDialog({
@@ -31,10 +36,13 @@ export function DeleteConfirmationDialog({
   description,
   cancelText,
   confirmText,
-  onConfirm,
+  confirmAction,
   trigger,
   isOpen,
   setIsOpen,
+  onSuccess,
+  successMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.DELETED,
+  errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.FAILED_DELETION,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -42,10 +50,20 @@ export function DeleteConfirmationDialog({
     async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      setIsPending(true);
-      await onConfirm(e).finally(() => setIsPending(false));
+      try {
+        setIsPending(true);
+        const response = await confirmAction();
+        if (response.isOk) {
+          onSuccess();
+          customToast.success(translation(successMessage));
+        } else customToast.error(response.errorMessage ?? translation(errorMessage));
+      } catch (error) {
+        customToast.error(translation(errorMessage));
+      } finally {
+        setIsPending(false);
+      }
     },
-    [onConfirm]
+    [confirmAction],
   );
 
   const translation = useTranslations();
@@ -57,9 +75,11 @@ export function DeleteConfirmationDialog({
           <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto">
             <TriangleAlert size={50} strokeWidth={1} color="red" />
           </div>
-          {title && <AlertDialogTitle className="text-xl font-semibold text-gray-900 text-center">{title}</AlertDialogTitle>}
+          {title && (
+            <AlertDialogTitle className="text-xl font-semibold text-gray-900 text-center">{title}</AlertDialogTitle>
+          )}
           <AlertDialogDescription className="text-red-500 text-base text-center">
-            {description ? description : translation(TRANSLATIONS_KEYS.COMMON.DELETE_CONFIRMATION_TEXT)}
+            {description ? description : translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.DELETE_CONFIRMATION_TEXT)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex-row gap-3 sm:justify-center">
@@ -67,7 +87,7 @@ export function DeleteConfirmationDialog({
             disabled={isPending}
             className="mt-0 px-8 py-2.5 border-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {cancelText ? cancelText : translation(TRANSLATIONS_KEYS.COMMON.CANCEL_BUTTON_TEXT)}
+            {cancelText ? cancelText : translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CANCEL)}
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={isPending}
@@ -75,7 +95,7 @@ export function DeleteConfirmationDialog({
             className="bg-black hover:bg-gray-800 text-white px-8 py-2.5 rounded-lg font-medium cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-            {confirmText ? confirmText : translation(TRANSLATIONS_KEYS.COMMON.CONFIRMATION_BUTTON_TEXT)}
+            {confirmText ? confirmText : translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CONFIRM)}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

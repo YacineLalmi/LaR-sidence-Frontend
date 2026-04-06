@@ -7,57 +7,12 @@ import { Interaction } from "@/schemas/interaction/interaction";
 import { format } from "date-fns";
 
 interface Props {
-  interactions: Interaction[];
+  interactions: Interaction[] | undefined;
 }
 
 export default function ClientInteractionHistoryDialog({ interactions }: Props) {
   const [open, setOpen] = useState(false);
-
-  // const interactions = [
-  //   {
-  //     id: 1,
-  //     date: "12/07/2025 - 14h10",
-  //     agent: "Abdeljdlil Hachemi",
-  //     type: "Appel",
-  //     typeColor: "bg-blue-100 text-blue-700",
-  //   },
-  //   {
-  //     id: 2,
-  //     date: "09/07/2025 - 10h45",
-  //     agent: "Automatique",
-  //     type: "Email",
-  //     typeColor: "bg-purple-100 text-purple-700",
-  //   },
-  //   {
-  //     id: 3,
-  //     date: "05/07/2025 - 16h30",
-  //     agent: "Nacer Amira",
-  //     type: "Visite",
-  //     typeColor: "bg-yellow-100 text-yellow-700",
-  //   },
-  //   {
-  //     id: 4,
-  //     date: "12/07/2025 - 14h10",
-  //     agent: "Yacine Ialmi",
-  //     type: "Appel",
-  //     typeColor: "bg-blue-100 text-blue-700",
-  //   },
-  //   {
-  //     id: 5,
-  //     date: "05/07/2025 - 16h30",
-  //     agent: "Abdelmalek Khaled",
-  //     type: "Visite",
-  //     typeColor: "bg-yellow-100 text-yellow-700",
-  //   },
-  //   {
-  //     id: 6,
-  //     date: "05/07/2025 - 16h30",
-  //     agent: "Automatique",
-  //     type: "Email",
-  //     typeColor: "bg-purple-100 text-purple-700",
-  //   },
-  // ];
-
+  if (!interactions) return;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -94,7 +49,7 @@ export default function ClientInteractionHistoryDialog({ interactions }: Props) 
                   className="grid grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors items-center"
                 >
                   <div className="text-sm text-gray-700">{format(interaction.created_at, "dd/MM/yyyy - HH:mm")}</div>
-                  <div className="text-sm text-gray-900 font-medium">{interaction.user}</div>
+                  <div className="text-sm text-gray-900 font-medium">{interaction.user?.first_name}</div>
                   <div>
                     <span
                       // className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${interaction.typeColor}`}

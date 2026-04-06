@@ -1,49 +1,60 @@
 import ApiService from "./api.service";
-import { QueryParams } from "@/lib/definitions";
+import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ColorForm } from "@/schemas/colors/color-form.schema";
 import { Color, ColorSchema } from "@/schemas/colors/color.schema";
 import { ListItem, ListItemSchema } from "@/schemas/global.schema";
-import { OfferForm } from "@/schemas/offers/offer-form.schema";
-import { Offer, OfferSchema } from "@/schemas/offers/offer.schema";
 import z from "zod";
 
 const END_POINTS = {
   create: "/configurations/colors",
-  findAll: "/configurations/colors",
+  findMany: "/configurations/colors",
+  findAll: "/configurations/colors/all",
   list: "/lists/colors",
   findOne: (id: string) => `/configurations/colors/${id}`,
-  update: (id: number) => `/configurations/colors/${id}`,
-  delete: (id: number) => `/configurations/colors/${id}`,
+  update: (id: string) => `/configurations/colors/${id}`,
+  delete: (id: string) => `/configurations/colors/${id}`,
+  deleteMany: (ids: string[]) => `/configurations/colors/many`,
 };
 
 export const ColorService = {
-  create: async (data: ColorForm) => {
+
+  create: async (data: ColorForm): Promise<Color> => {
     const response = await ApiService.post<Color>({
       endpoint: END_POINTS.create,
       body: data,
     });
 
-    const validatedResponseData = validateResponseData<Offer>(response.data, ColorSchema);
+    const validatedResponseData = validateResponseData<Color>(response.data, ColorSchema);
 
     return validatedResponseData;
   },
 
-  findAll: async (QueryParams: QueryParams) => {
+  findMany: async (QueryParams: QueryParams): Promise<PaginatedResponse<Color>> => {
     const response = await ApiService.get<Color[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: QueryParams,
     });
 
     const validatedResponseData = validateResponseData<Color[]>(response.data, z.array(ColorSchema));
 
     return {
-      items: validatedResponseData,
+      data: validatedResponseData,
       meta: response.meta,
     };
   },
 
-  list: async () => {
+  findAll: async (): Promise<Color[]> => {
+    const response = await ApiService.get<Color[]>({
+      endpoint: END_POINTS.findAll,
+    });
+
+    const validatedResponseData = validateResponseData<Color[]>(response.data, z.array(ColorSchema));
+
+    return validatedResponseData
+  },
+
+  list: async (): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
     });
@@ -53,7 +64,7 @@ export const ColorService = {
     return validatedResponseData;
   },
 
-  findOne: async (id: string) => {
+  findOne: async (id: string): Promise<Color> => {
     const response = await ApiService.get<Color>({
       endpoint: END_POINTS.findOne(id),
     });
@@ -63,7 +74,7 @@ export const ColorService = {
     return validatedResponseData;
   },
 
-  update: async (data: ColorForm, id: number) => {
+  update: async (data: ColorForm, id: string): Promise<Color> => {
     const response = await ApiService.put<Color>({
       endpoint: END_POINTS.update(id),
       body: data,
@@ -74,9 +85,17 @@ export const ColorService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+
+  deleteMany: async (ids: string[]) => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany(ids),
+      body: { ids },
     });
   },
 };

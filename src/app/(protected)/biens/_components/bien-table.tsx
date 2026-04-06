@@ -6,26 +6,26 @@ import { Bien } from "@/schemas/biens/bien.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Image } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import CustomButton from "@/components/ui/custom-button";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { ImageFetcher } from "@/components/ui/image-fetcher";
 import { StatusBadge } from "@/components/ui/status-badge";
 import DeleteBienDialog from "./delete-bien-dialog";
-import { ResponseMetaData } from "@/lib/definitions";
+import { PaginatedResponse } from "@/lib/definitions";
 import BienPriceHistoryDialog from "./bien-price-history-dialog";
-import { formatMoney } from "@/lib/utils";
+import { formatId, formatMoney } from "@/lib/utils";
 import FicheBienDialog from "./bien-document-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
+import { deleteBiensAction } from "@/actions/Bien/delete-biens.action";
 
 interface Props {
-  data: {
-    items: Bien[];
-    meta?: ResponseMetaData;
-  };
+  data: PaginatedResponse<Bien>;
 }
 
 export default function BienTable({ data }: Props) {
   const translation = useTranslations();
+  const locale = useLocale() as "fr" | "en" | "ar";
 
   const columns: ColumnDef<Bien>[] = [
     {
@@ -53,7 +53,8 @@ export default function BienTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ID),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.ID),
+      cell: ({ row }) => formatId(row.original.id),
     },
     {
       id: "bien.id",
@@ -67,24 +68,25 @@ export default function BienTable({ data }: Props) {
       },
     },
     {
-      id: "bien_type.name",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.BIEN_TYPE),
+      id: "bien_type",
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.BIEN_TYPE),
       cell: ({ row }) => {
-        return row.original.type.name;
+        return row.original.type?.name[locale];
       },
     },
     {
-      accessorKey: "transaction_type.name",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.TRANSACTION_TYPE),
+      accessorKey: "transaction_type",
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.TRANSACTION_TYPE),
+      cell: ({ row }) => <span className="font-medium">{row.original.transaction_type?.name[locale]}</span>,
     },
     {
       accessorKey: "price",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.PRICE),
-      cell: ({ row }) => formatMoney(row.original.price),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.PRICE),
+      cell: ({ row }) => formatMoney(row.original?.price),
     },
     {
       accessorKey: "availability_date",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.AVAILABILITY_DATE),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.AVAILABILITY_DATE),
       cell: ({ row }) => {
         const date = new Date(row.original.availability_date);
         return date.toLocaleDateString();
@@ -92,33 +94,33 @@ export default function BienTable({ data }: Props) {
     },
     {
       accessorKey: "adresse",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ADRESSE),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.ADDRESS),
       cell: ({ row }) => <div className="w-32 leading-5 text-wrap">{row.original.adresse}</div>,
     },
     {
       id: "bien.status",
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.BIEN_STATUS),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.BIEN_STATUS),
       cell: ({ row }) => <StatusBadge status={row.original.status} />,
     },
     {
       id: "fiche",
       cell: ({ row }) => <FicheBienDialog bien={row.original} />,
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.FICHE),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.FICHE),
     },
     {
       id: "actions",
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteBienDialog bien={row.original} />
-          <Link href={`/biens/${row.original.id}`}>
+          <Link href={ROUTES.BIENS.EDIT(row.original.id)}>
             <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0 size-7" />
           </Link>
           <BienPriceHistoryDialog prices={row.original.prices} />
         </div>
       ),
-      header: translation(TRANSLATIONS_KEYS.BIENS.COLUMNS.ACTIONS),
+      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.ACTIONS),
     },
   ];
 
-  return <DataTable data={data} columns={columns} rowClassName="leading-14" />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteBiensAction} rowClassName="leading-14" />;
 }

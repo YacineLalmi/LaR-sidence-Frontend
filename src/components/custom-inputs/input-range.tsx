@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Calendar1, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 type InputFieldProps<T extends FieldValues> = {
   control: Control<T>;
@@ -91,7 +92,7 @@ export function InputDateRangeField<T extends FieldValues>({
                     disabled={disabled}
                     className={cn(
                       "relative w-full p-4 rounded-full justify-start text-left font-normal bg-transparent border-gray-700",
-                      !displayValue && "text-muted-foreground"
+                      !displayValue && "text-muted-foreground",
                     )}
                   >
                     {displayValue || (
@@ -142,10 +143,10 @@ export function InputDateRangeField<T extends FieldValues>({
                       setOpen(false);
                     }}
                   >
-                    {translation(TRANSLATIONS_KEYS.COMMON.CLEAR_FILTERS)}
+                    {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.CLEAR_FILTERS)}
                   </Button>
                   <Button type="button" size="sm" onClick={() => setOpen(false)} disabled={!hasValue}>
-                    {translation(TRANSLATIONS_KEYS.COMMON.APPLY)}
+                    {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY)}
                   </Button>
                 </div>
               </PopoverContent>

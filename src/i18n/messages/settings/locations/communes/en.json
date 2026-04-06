@@ -1,1 +1,45 @@
-{}
+{
+  "title": "List of Communes",
+  "delete_text": "Do you want to delete the commune with ID {id}?",
+  "create_text": "Create a commune",
+  "form": {
+    "title": {
+      "create": "Add a commune",
+      "edit": "Edit a commune"
+    },
+    "message": {
+      "created": "Commune created successfully",
+      "updated": "Commune updated successfully",
+      "failed_creation": "Creation failed",
+      "failed_update": "Update failed",
+      "deleted": "Commune deleted successfully",
+      "failed_deletion": "Failed to delete the commune"
+    },
+    "label": {
+      "post_code": "Postal code",
+      "wilaya_id": "Wilaya",
+      "name": {
+        "fr": "Name (FR)",
+        "en": "Name (EN)",
+        "ar": "Name (AR)"
+      }
+    },
+    "placeholder": {
+      "post_code": "Ex: 35000",
+      "wilaya_id": "Select a wilaya",
+      "name": {
+        "fr": "Enter name in French",
+        "en": "Enter name in English",
+        "ar": "Enter name in Arabic"
+      }
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "name": "Commune name",
+    "post_code": "Postal code",
+    "wilaya": "Wilaya",
+    "actions": "Actions",
+    "created_at": "Creation date"
+  }
+}

@@ -1,25 +1,23 @@
 "use client";
 
-import { createEventAction } from "@/actions/events/create-event.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 import { customToast } from "@/lib/utils";
 import { EventForm, EventFormSchema } from "@/schemas/events/event-form.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputDateTimeField } from "@/components/custom-inputs/input-datetime";
 import { Event } from "@/schemas/events/event.schema";
 import { updateEventAction } from "@/actions/events/update-event.action";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   eventTypes: ListItem[];
@@ -42,10 +40,10 @@ export default function UpdateEventForm({ eventTypes, agents, biens, clients, ev
       description: event.description,
       start_date: new Date(event.start_date),
       end_date: new Date(event.end_date),
-      type_id: event.type.id.toString(),
-      agent_id: event.agent.id.toString(),
-      bien_id: event.bien.id.toString(),
-      client_id: event.client.id.toString(),
+      type_id: event.type?.id.toString(),
+      agent_id: event.agent?.id.toString(),
+      bien_id: event?.bien?.id.toString(),
+      client_id: event.client?.id.toString(),
     },
   });
 
@@ -55,11 +53,12 @@ export default function UpdateEventForm({ eventTypes, agents, biens, clients, ev
       const response = await updateEventAction(values, event.id);
       setIsPending(false);
       if (response.isOk) {
-        router.push(NAVIGATION_KEYS.EVENTS.ROOT);
-        customToast.success(translation(TRANSLATIONS_KEYS.COMMON.SUCCESS.OPERATION_COMPLETED));
-      } else customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+        router.push(ROUTES.EVENTS.ROOT);
+        customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
+      } else
+        customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     } catch (error) {
-      customToast.error(translation(TRANSLATIONS_KEYS.COMMON.ERRORS.SOMETHING_WRONG));
+      customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
     }
   }
 
@@ -75,77 +74,77 @@ export default function UpdateEventForm({ eventTypes, agents, biens, clients, ev
           <InputTextField
             control={form.control}
             name="title"
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TITLE.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.TITLE)}
             disabled={isPending}
             required
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TITLE.PLACEHOLDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.TITLE)}
           />
           <div className="grid grid-cols-2 gap-3">
             <InputDateTimeField
               control={form.control}
               name="start_date"
-              label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.START_DATE)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.START_DATE)}
             />
             <InputDateTimeField
               control={form.control}
               name="end_date"
-              label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.LABEL)}
+              label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.END_DATE)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.STARTDATE.PLACEHOLDER)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.END_DATE)}
             />
           </div>
           <InputSelectField
             control={form.control}
             name="type_id"
             options={eventTypes}
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TYPE.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.TYPE)}
             disabled={isPending}
             required
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.TYPE.PLACEHOLDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.TYPE)}
           />
           <InputSelectField
             control={form.control}
             name="agent_id"
             options={agents}
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.AGENT.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.AGENT)}
             disabled={isPending}
             required
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.AGENT.PLACEHOLDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.AGENT)}
           />
           <InputSelectField
             control={form.control}
             name="bien_id"
             options={biens}
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.BIEN.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.BIEN)}
             disabled={isPending}
             required
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.BIEN.PLACEHOLDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.BIEN)}
           />
           <InputSelectField
             control={form.control}
             name="client_id"
             options={clients}
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.CLIENT.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.CLIENT)}
             disabled={isPending}
             required
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.CLIENT.PLACEHOLDER)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.CLIENT)}
           />
         </div>
         <div>
           <InputTextArea
             control={form.control}
             name="description"
-            label={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.DESCRIPTION.LABEL)}
+            label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.DESCRIPTION)}
             disabled={isPending}
-            placeholder={translation(TRANSLATIONS_KEYS_2.CALENDAR.FORM.DESCRIPTION.LABEL)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.DESCRIPTION)}
           />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto" type="submit">
-          {translation(TRANSLATIONS_KEYS.COMMON.SUBMIT)}
+          {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT)}
         </Button>
       </form>
     </Form>

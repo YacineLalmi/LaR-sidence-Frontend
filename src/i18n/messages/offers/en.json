@@ -1,1 +1,68 @@
-{}
+{
+  "title": "Configuration des Offres",
+  "description": "Gérer les offres de l'application",
+  "form": {
+    "titles": {
+      "create": "Créer une offre",
+      "update": "Modifier une offre",
+      "delete": "Supprimer une offre"
+    },
+    "messages": {
+      "created": "Offre créée avec succès",
+      "updated": "Offre modifiée avec succès",
+      "deleted": "Offre supprimée avec succès",
+      "failed_creation": "Échec de la création de l'offre",
+      "failed_update": "Échec de la modification de l'offre",
+      "failed_deletion": "Échec de la suppression de l'offre",
+      "delete_confirmation": "Supprimer cette offre (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une offre",
+      "update": "Modifier l'offre",
+      "delete": "Supprimer l'offre"
+    },
+    "labels": {
+      "bien": "Bien",
+      "type": "Type",
+      "client": "Client",
+      "status": "Statut",
+      "proposed_price": "Prix proposé",
+      "conditions": "Conditions",
+      "comment": "Commentaire"
+    },
+    "placeholders": {
+      "bien": "Sélectionnez un bien",
+      "type": "Sélectionnez le type",
+      "client": "Sélectionnez un client",
+      "status": "Sélectionnez le statut",
+      "proposed_price": "Insérez le prix proposé",
+      "conditions": "Entrez les conditions",
+      "comment": "Entrez un commentaire"
+    }
+  },
+  "filter": {
+    "title": "Filtrer les offres",
+    "labels": {
+      "gender": "Genre",
+      "type": "Type",
+      "status": "Statut",
+      "source": "Source"
+    },
+    "placeholders": {
+      "gender": "Sélectionnez le genre",
+      "type": "Sélectionnez le type",
+      "status": "Sélectionnez le statut",
+      "source": "Sélectionnez la source"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "bien": "Bien",
+    "client": "Client",
+    "type": "Type",
+    "proposed_price": "Prix",
+    "status": "Statut",
+    "created_at": "Créé le",
+    "actions": "Actions"
+  }
+}

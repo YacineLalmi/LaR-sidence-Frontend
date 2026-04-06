@@ -6,17 +6,18 @@ import { Event, EventSchema } from "@/schemas/events/event.schema";
 import { EventForm } from "@/schemas/events/event-form.schema";
 
 const END_POINTS = {
-  findAll: "/events",
+  findMany: "/events",
   create: "/events",
   findOne: (id: string) => `/events/${id}`,
-  update: (id: number) => `/events/${id}`,
-  delete: (id: number) => `/events/${id}`,
+  update: (id: string) => `/events/${id}`,
+  delete: (id: string) => `/events/${id}`,
+  deleteMany: `/events/many`,
 };
 
 export const EventService = {
-  findAll: async (queryParams: QueryParams) => {
+  findMany: async (queryParams: QueryParams) => {
     const response = await ApiService.get<Event[]>({
-      endpoint: END_POINTS.findAll,
+      endpoint: END_POINTS.findMany,
       query: queryParams,
     });
 
@@ -49,7 +50,7 @@ export const EventService = {
     return validatedResponseData;
   },
 
-  update: async (data: EventForm, id: number) => {
+  update: async (data: EventForm, id: string) => {
     const payload = {
       ...data,
       start_date: data.start_date.toISOString(),
@@ -66,9 +67,16 @@ export const EventService = {
     return validatedResponseData;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: string) => {
     await ApiService.delete({
       endpoint: END_POINTS.delete(id),
+    });
+  },
+
+  deleteMany: async (ids: string[]) => {
+    await ApiService.delete({
+      endpoint: END_POINTS.deleteMany,
+      body: { ids }
     });
   },
 };

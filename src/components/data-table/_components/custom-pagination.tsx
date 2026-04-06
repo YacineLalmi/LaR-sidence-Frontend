@@ -10,87 +10,92 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   currentPage: number;
   totalPages: number;
   prefix?: string;
+  visiblePages?: number; // New configurable prop
 }
 
-export default function CustomPagination({ currentPage, totalPages, prefix }: Props) {
+export default function CustomPagination({
+  currentPage,
+  totalPages,
+  prefix,
+  visiblePages = 5, // Default to 5
+}: Props) {
   const router = useRouter();
-  const getPageNumbers = useCallback(() => {
-    const pages = [];
-    const maxVisiblePages = 5;
+  const searchParams = useSearchParams();
 
-    if (totalPages <= maxVisiblePages) {
-      // Show all pages if total is small
+  const getPageNumbers = useCallback(() => {
+    const pages: (number | string)[] = [];
+
+    // If total pages are less than or equal to what we want to show, show all
+    if (totalPages <= visiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
-    } else {
-      // Always show first page
-      pages.push(1);
-
-      if (currentPage <= 3) {
-        // Near the beginning
-        pages.push(2, 3, 4);
-        pages.push("ellipsis-end");
-      } else if (currentPage >= totalPages - 2) {
-        // Near the end
-        pages.push("ellipsis-start");
-        pages.push(totalPages - 3, totalPages - 2, totalPages - 1);
-      } else {
-        // In the middle
-        pages.push("ellipsis-start");
-        pages.push(currentPage - 1, currentPage, currentPage + 1);
-        pages.push("ellipsis-end");
-      }
-
-      // Always show last page
-      pages.push(totalPages);
+      return pages;
     }
+
+    // Dynamic logic for ellipsis and centering
+    const sideNeighbors = Math.floor((visiblePages - 2) / 2); // Subtract first and last page
+    let startPage = Math.max(2, currentPage - sideNeighbors);
+    let endPage = Math.min(totalPages - 1, currentPage + sideNeighbors);
+
+    // Adjust if near the start
+    if (currentPage <= sideNeighbors + 1) {
+      endPage = visiblePages - 1;
+    }
+
+    // Adjust if near the end
+    if (currentPage >= totalPages - sideNeighbors) {
+      startPage = totalPages - (visiblePages - 2);
+    }
+
+    pages.push(1); // Always show first
+
+    if (startPage > 2) {
+      pages.push("ellipsis-start");
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    if (endPage < totalPages - 1) {
+      pages.push("ellipsis-end");
+    }
+
+    pages.push(totalPages); // Always show last
 
     return pages;
-  }, [currentPage, totalPages]);
-
-  const pageNumbers = getPageNumbers();
-
-  const handlePrevious = useCallback(() => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
-    }
-  }, [currentPage]);
-
-  const handleNext = useCallback(() => {
-    if (currentPage < totalPages) {
-      handlePageChange(currentPage + 1);
-    }
-  }, [currentPage]);
+  }, [currentPage, totalPages, visiblePages]);
 
   const handlePageChange = useCallback(
     (page: number) => {
-      const params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(searchParams.toString());
       params.set(`${prefix ? prefix + "_" : ""}page`, page.toString());
       router.push(`?${params.toString()}`);
     },
-    [prefix]
+    [prefix, router, searchParams],
   );
+
+  const pageNumbers = getPageNumbers();
 
   return (
     <Pagination>
       <PaginationContent>
+        {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious
-            onClick={handlePrevious}
+            onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
             className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-            title=""
-          >
-            <span className="sr-only">Previous</span>
-          </PaginationPrevious>
+          />
         </PaginationItem>
 
+        {/* Page Numbers & Ellipsis */}
         {pageNumbers.map((page, index) => {
           if (typeof page === "string") {
             return (
@@ -113,13 +118,12 @@ export default function CustomPagination({ currentPage, totalPages, prefix }: Pr
           );
         })}
 
+        {/* Next Button */}
         <PaginationItem>
           <PaginationNext
-            onClick={handleNext}
+            onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
             className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-          >
-            <span className="sr-only">Next</span>
-          </PaginationNext>
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

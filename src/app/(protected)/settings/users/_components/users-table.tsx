@@ -5,15 +5,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import Status from "@/components/ui/status";
 import { useTranslations } from "next-intl";
 import { User } from "@/schemas/users/user.schema";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import CustomButton from "@/components/ui/custom-button";
 import DeleteUserDialog from "./delete-user-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { ROUTES } from "@/constants/routes";
+import { deleteUsersAction } from "@/actions/users/delete-users.action";
 
 interface Props {
   data: any;
@@ -47,28 +48,28 @@ export default function UsersTable({ data }: Props) {
     {
       accessorKey: "id",
       header: () => {
-        return <SortingButton columnName={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.ID)} columnKey="id" />;
+        return <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.ID)} columnKey="id" />;
       },
     },
     {
       id: "fullName",
       cell: ({ row }) => <span>{row.original.first_name + " " + row.original.last_name}</span>,
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.FULL_NAME),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.NAME),
     },
     {
       accessorKey: "phonenumber",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.PHONENUMBER),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.PHONE_NUMBER),
     },
     {
       accessorKey: "email",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.EMAIL),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.EMAIL),
     },
     {
       accessorKey: "created_at",
       header: () => {
         return (
           <SortingButton
-            columnName={translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.CREATED_AT)}
+            columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.CREATED_AT)}
             columnKey="created_at"
           />
         );
@@ -79,11 +80,11 @@ export default function UsersTable({ data }: Props) {
     },
     {
       accessorKey: "role.name",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.ROLE),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.ROLE),
     },
     {
       accessorKey: "is_active",
-      header: translation(TRANSLATIONS_KEYS.SETTINGS.USERS.COLUMNS.STATUS),
+      header: translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.STATUS),
       cell: ({ row }) => {
         return row.getValue("is_active") ? <Status value="Active" /> : <Status value="Inactive" color="bg-red-500" />;
       },
@@ -93,7 +94,7 @@ export default function UsersTable({ data }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteUserDialog user={row.original} />
-          <Link href={`/settings/users/${row.original.id}`}>
+          <Link href={ROUTES.SETTINGS.USERS.EDIT(row.original.id)}>
             <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
           </Link>
         </div>
@@ -101,5 +102,5 @@ export default function UsersTable({ data }: Props) {
       header: "Actions",
     },
   ];
-  return <DataTable data={data} columns={columns} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteUsersAction} />;
 }
