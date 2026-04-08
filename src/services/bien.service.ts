@@ -70,9 +70,10 @@ export const BienService = {
     };
   },
 
-  list: async (): Promise<ListItem[]> => {
+  list: async (needle: string): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
+      query: { needle }
     });
 
     const validatedResponseData = validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));

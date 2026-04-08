@@ -23,8 +23,9 @@ export interface HttpOptions {
   };
 }
 
-export interface FormState {
+export interface FormState<T = any> {
   isOk: boolean;
+  data?: T
   errorMessage?: string;
   errorCode?: ErrorCodes;
   errorDetails?: Record<string, string[] | undefined>;

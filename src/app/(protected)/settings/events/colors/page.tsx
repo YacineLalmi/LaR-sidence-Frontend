@@ -27,7 +27,6 @@ export default async function EventType({ searchParams }: { searchParams: Promis
     responseError = error;
   }
 
-  console.log(result);
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col gap-4">

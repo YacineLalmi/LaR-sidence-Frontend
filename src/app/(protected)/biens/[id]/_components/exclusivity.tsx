@@ -20,8 +20,6 @@ export default function Exclusivity({ form, isPending = false, priorities }: Pro
   const translation = useTranslations();
   const isExclusive = form.watch("exclusivity");
 
-  console.log("isExclusive", isExclusive);
-
   // Clear dates when exclusivity is turned off
   const handleExclusivityToggle = (checked: boolean) => {
     form.setValue("exclusivity", checked, { shouldDirty: true, shouldTouch: true, shouldValidate: true });

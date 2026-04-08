@@ -1,4 +1,5 @@
 {
   "title": "Configurations des événements",
-  "description": "Paramétrage et gestion des configurations des événements."
+  "description": "Paramétrage et gestion des configurations des événements.",
+  "colors": "Configuration des Couleurs des agents sur événements"
 }

@@ -11,7 +11,7 @@ export const ClientSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   civility: z.enum(['mr', 'mrs', 'company']),
-  email: z.string().optional(),
+  email: z.string(),
   mobile: z.string(),
   phone_numbers: z.array(z.string()).optional(),
   type: ClassificationSchema.optional(),

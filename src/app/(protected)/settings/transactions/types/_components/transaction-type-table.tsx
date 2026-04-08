@@ -78,7 +78,7 @@ export default function TransactionTypeTable({ data, colors }: Props) {
       accessorKey: "description",
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.COLUMNS.DESCRIPTION),
       cell: ({ row }) => (
-        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+        <div className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</div>
       ),
     },
     {

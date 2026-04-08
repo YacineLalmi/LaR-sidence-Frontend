@@ -6,12 +6,12 @@ import { ClassificationSchema } from "../classification/classification.schema";
 
 export const EventSchema = z.object({
   id: z.string(),
-  title: z.string(),
+  title: z.string().nullable().optional(),
   description: z.string().nullable(),
   start_date: z.string(),
   end_date: z.string(),
-  type: ClassificationSchema.optional(),
-  agent: UserSchema.optional(),
+  type: ClassificationSchema.nullable().optional(),
+  agent: UserSchema.nullable().optional(),
   bien: BienSchema.nullable().optional(),
   client: ClientSchema.optional(),
   created_at: z.iso.datetime(),

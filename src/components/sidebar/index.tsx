@@ -16,36 +16,37 @@ import logo from "@/assests/images/logo-black.png";
 import Settings from "../navbar/components/settings";
 import Link from "next/link";
 import Logout from "./_components/logout";
+import { ROUTES } from "@/constants/routes";
 
 const items = [
   {
     title: "Tableau de bord",
-    url: "/",
+    url: ROUTES.DASHBOARD,
     icon: Home,
   },
   {
     title: "Biens",
-    url: "/biens",
+    url: ROUTES.BIENS.ROOT,
     icon: Building2,
   },
   {
     title: "Calendrier",
-    url: "/events",
+    url: ROUTES.EVENTS.ROOT,
     icon: CalendarDays,
   },
   {
     title: "Offers",
-    url: "/offers",
+    url: ROUTES.OFFERS.ROOT,
     icon: Mails,
   },
   {
     title: "Clients",
-    url: "/clients",
+    url: ROUTES.CLIENTS.ROOT,
     icon: User2,
   },
   {
     title: "Demandes",
-    url: "/demands",
+    url: ROUTES.DEMANDS.ROOT,
     icon: FileText,
   },
 ];

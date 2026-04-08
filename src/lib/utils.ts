@@ -72,28 +72,28 @@ export const customToast = {
     return toast.success(message, {
       ...options,
       duration: 3000,
-      cancel: { label: "x", onClick: () => console.log(this) },
+      cancel: { label: "x", onClick: () => { return } },
     });
   },
   info: (message: string, options: ExternalToast = {}) => {
     return toast.info(message, {
       ...options,
       duration: 3000,
-      cancel: { label: "x", onClick: () => console.log(this) },
+      cancel: { label: "x", onClick: () => { return } },
     });
   },
   warning: (message: string, options: ExternalToast = {}) => {
     return toast.warning(message, {
       ...options,
       duration: 3000,
-      cancel: { label: "x", onClick: () => console.log(this) },
+      cancel: { label: "x", onClick: () => { return } },
     });
   },
   error: (message: string, options: ExternalToast = {}) => {
     return toast.error(message, {
       ...options,
       duration: 5000,
-      cancel: { label: "x", onClick: () => console.log(this) },
+      cancel: { label: "x", onClick: () => { return } },
     });
   },
 };

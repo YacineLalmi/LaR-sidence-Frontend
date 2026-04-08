@@ -9,7 +9,6 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations();
-  console.log("here");
 
   switch (error.name) {
     case ErrorCodes.UNAUTHORIZED:

@@ -54,7 +54,6 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    onSortingChange: (e) => console.log(e),
     manualSorting: true,
   });
 

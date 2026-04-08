@@ -27,6 +27,7 @@ const END_POINTS = {
   create: (category: string, scope: string) => `/configurations/classifications/${category}/${scope}`,
   findAll: (category: string, scope: string) => `/configurations/classifications/${category}/${scope}/all`,
   findMany: (category: string, scope: string) => `/configurations/classifications/${category}/${scope}`,
+  listAll: (category: string, scope: string) => `/lists/classifications/${category}/${scope}`,
   list: (category: string, scope: string) => `/lists/classifications/${category}/${scope}`,
   findOne: (category: string, scope: string, id: string) => `/configurations/classifications/${category}/${scope}/${id}`,
   update: (category: string, scope: string, id: string) => `/configurations/classifications/${category}/${scope}/${id}`,
@@ -71,9 +72,18 @@ export const ClassificationService = (category: string, scope: string) => ({
     };
   },
 
-  list: async (): Promise<ListItem[]> => {
+  listAll: async (): Promise<ListItem[]> => {
+    const response = await ApiService.get<ListItem[]>({
+      endpoint: END_POINTS.listAll(category, scope),
+    });
+
+    return validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));
+  },
+
+  list: async (needle: string): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list(category, scope),
+      query: { needle }
     });
 
     return validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));

@@ -8,20 +8,13 @@ import CustomButton from "@/components/ui/custom-button";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
-interface Props {
-  types: ListItem[];
-  status: ListItem[];
-  sources: ListItem[];
-  civilities: ListItem[];
-}
-
-export default function ClientHeader({ types, status, sources, civilities }: Props) {
+export default function ClientHeader() {
   const translation = useTranslations();
   return (
     <div className="flex items-center gap-2 justify-between w-full p-0">
       <div className="flex w-full gap-2">
         <SearchField />
-        <ClientFilters types={types} status={status} sources={sources} civilities={civilities} />
+        <ClientFilters />
       </div>
       <Link href={ROUTES.CLIENTS.CREATE}>
         <CustomButton text={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.BUTTONS.CREATE)} Icon={Plus} />

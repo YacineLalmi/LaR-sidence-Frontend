@@ -6,7 +6,7 @@ import { Locale, useLocale } from "next-intl";
 import React from "react";
 
 interface Props {
-  status: Classification | undefined;
+  status: Classification | undefined | null;
 }
 export const StatusBadge = ({ status }: Props) => {
   const locale = useLocale() as "fr" | "en" | "ar";

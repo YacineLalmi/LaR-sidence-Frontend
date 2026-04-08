@@ -26,7 +26,7 @@ function findMatchingRoute(path: string): RouteConfig | null {
 }
 
 export function checkRoutePermission(path: string, userPermissions: string[]): boolean {
-  console.log("User Permissions")
+
   const matchedRoute = findMatchingRoute(path);
   // Route not defined - deny access by default for security
   if (!matchedRoute) {

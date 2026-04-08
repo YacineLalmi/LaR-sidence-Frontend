@@ -7,7 +7,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { format } from "date-fns";
 import SortingButton from "@/components/ui/sorting-button";
 import { PaginatedResponse } from "@/lib/definitions";
-import { BienType } from "@/schemas/bien-type/bien-type.schema";
 import { Classification } from "@/schemas/classification/classification.schema";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { useCallback } from "react";
@@ -75,7 +74,7 @@ export default function BienTypeTable({ data, colors }: Props) {
       accessorKey: "description",
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.COLUMNS.DESCRIPTION),
       cell: ({ row }) => (
-        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+        <div className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</div>
       ),
     },
     {

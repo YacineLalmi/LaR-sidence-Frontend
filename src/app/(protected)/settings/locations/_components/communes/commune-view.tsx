@@ -1,4 +1,3 @@
-import React from "react";
 import { CommuneService } from "@/services/commune.service";
 import CommuneTable from "./communes-table";
 import { WilayaService } from "@/services/wilaya.service";
@@ -9,6 +8,7 @@ import SettingsView from "@/views/settings.view";
 import { PaginatedResponse } from "@/lib/definitions";
 import { Commune } from "@/schemas/communes/commune.schema";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { getWilayaListAction } from "@/actions/wilayas/get-wilaya-list.action";
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -34,7 +34,7 @@ export default async function CommuneView({ searchParams }: Props) {
     // Fetch both resources in parallel
     const [communesData, wilayasData] = await Promise.all([
       CommuneService.findByWilaya(selectedWilayaId, queryParams),
-      WilayaService.list(),
+      getWilayaListAction(),
     ]);
 
     result = communesData;

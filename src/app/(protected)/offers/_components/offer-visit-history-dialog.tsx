@@ -7,7 +7,7 @@ import VisitCard from "./visit-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {
-  visits: Visit[] | undefined;
+  visits: Visit[] | undefined | null;
 }
 
 // ============================================================================

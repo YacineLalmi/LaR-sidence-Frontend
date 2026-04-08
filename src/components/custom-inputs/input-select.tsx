@@ -1,62 +1,127 @@
-import React, { useCallback, useEffect, useState } from "react";
+"use client";
+
+import { useState } from "react";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { LucideIcon } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Loader2, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "../ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ListItem } from "@/schemas/global.schema";
 import { cn } from "@/lib/utils";
 
-type InputFieldProps<T extends FieldValues> = {
+type InputSelectFieldProps<T extends FieldValues> = {
   control: Control<T>;
   name: FieldPath<T>;
   label?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  LeftIcon?: LucideIcon;
-  RightIcon?: LucideIcon;
   description?: string;
   options: ListItem[];
-  revalidate?: number;
+  isPending?: boolean;
+  className?: string;
 };
+
 export default function InputSelectField<T extends FieldValues>({
   control,
   name,
   label,
   description,
-  placeholder = "",
+  placeholder = "Select an option",
   options = [],
-  required,
-}: InputFieldProps<T>) {
+  required = false,
+  disabled = false,
+  isPending = false,
+  className,
+}: InputSelectFieldProps<T>) {
+  const [open, setOpen] = useState(false);
+
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full gap-[12px]">
+        <FormItem className={cn("w-full flex flex-col gap-1.5", className)}>
           {!!label && (
-            <FormLabel>
-              {label} <span className={cn(" text-[16px]", required ? "text-red-500" : "text-transparent")}>*</span>
+            <FormLabel className="text-xs md:text-sm lg:text-base font-medium">
+              {label}
+              <span className={cn("ml-1 text-[16px]", required ? "text-red-500" : "text-transparent")}>*</span>
             </FormLabel>
           )}
-          <Select onValueChange={val => field.onChange(val)} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {options.length > 0
-                ? options.map((option) => (
-                    <SelectItem key={option.id} value={option.id.toString()}>
-                      {option.name}
-                    </SelectItem>
-                  ))
-                : "no options"}
-            </SelectContent>
-          </Select>
-          {!!description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
+
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  disabled={disabled || isPending}
+                  className={cn(
+                    "w-full justify-between bg-background font-normal transition-all focus:ring-2 border-1 border-black",
+                    !field.value && "text-muted-foreground",
+                  )}
+                >
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    {isPending && <Loader2 className="h-4 w-4 animate-spin text-primary shrink-0" />}
+                    <span className="truncate">
+                      {isPending
+                        ? "Chargement..."
+                        : options.find((opt) => opt.id.toString() === field.value?.toString())?.name || placeholder}
+                    </span>
+                  </div>
+                  {open ? (
+                    <ChevronUp className="ml-2 h-4 w-4 shrink-0" />
+                  ) : (
+                    <ChevronDown className="ml-2 h-4 w-4 shrink-0 " />
+                  )}
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-full p-0" align="start">
+              <Command>
+                <CommandInput placeholder="Rechercher..." />
+                <CommandList>
+                  {isPending ? (
+                    <div className="flex items-center justify-center py-6 gap-2 text-sm text-muted-foreground">
+                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                      <span>Chargement des données...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <CommandEmpty>Aucun résultat trouvé.</CommandEmpty>
+                      <CommandGroup>
+                        {options.map((option) => (
+                          <CommandItem
+                            key={option.id}
+                            value={option.name} // Command uses value for searching
+                            onSelect={() => {
+                              field.onChange(option.id.toString());
+                              setOpen(false);
+                            }}
+                            className="cursor-pointer"
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                option.id.toString() === field.value?.toString() ? "opacity-100" : "opacity-0",
+                              )}
+                            />
+                            {option.name}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </>
+                  )}
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          {!!description && <FormDescription className="text-[11px]">{description}</FormDescription>}
+          <FormMessage className="text-[11px] font-medium" />
         </FormItem>
       )}
     />

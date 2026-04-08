@@ -13,20 +13,69 @@ import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { InputDateTimeField } from "@/components/custom-inputs/input-datetime";
 import { ROUTES } from "@/constants/routes";
+import { getClientListAction } from "@/actions/clients/get-client-list.action";
+import { getBienListAction } from "@/actions/Bien/get-biens-list.action";
+import { getAgentListAction } from "@/actions/users/get-agents-list.action";
+import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
 
-interface Props {
-  eventTypes: ListItem[];
-  agents: ListItem[];
-  biens: ListItem[];
-  clients: ListItem[];
-}
-interface Props {}
-export default function CreateEventForm({ eventTypes, agents, biens, clients }: Props) {
+export default function CreateEventForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
+  const [types, setTypes] = useState<ListItem[]>([]);
+  const [agents, setAgents] = useState<ListItem[]>([]);
+  const [biens, setBiens] = useState<ListItem[]>([]);
+  const [clients, setClients] = useState<ListItem[]>([]);
+  const [isTypesPending, startTypesTransition] = useTransition();
+  const [isAgentsPending, startAgentsTransition] = useTransition();
+  const [isBiensPending, startBiensTransition] = useTransition();
+  const [isClientsPending, startClientsTransition] = useTransition();
+
+  // fetching types
+  useEffect(() => {
+    startTypesTransition(async () => {
+      try {
+        const results = await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.EVENT);
+        setTypes(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setTypes([]);
+      }
+    });
+
+    startAgentsTransition(async () => {
+      try {
+        const results = await getAgentListAction();
+        setAgents(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setAgents([]);
+      }
+    });
+
+    startBiensTransition(async () => {
+      try {
+        const results = await getBienListAction();
+        setBiens(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setBiens([]);
+      }
+    });
+
+    startClientsTransition(async () => {
+      try {
+        const results = await getClientListAction();
+        setClients(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setClients([]);
+      }
+    });
+  }, []);
 
   const router = useRouter();
   const translation = useTranslations();
@@ -75,7 +124,6 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
             name="title"
             label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.TITLE)}
             disabled={isPending}
-            required
             placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.TITLE)}
           />
           <div className="grid grid-cols-2 gap-3">
@@ -99,7 +147,8 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
           <InputSelectField
             control={form.control}
             name="type_id"
-            options={eventTypes}
+            options={types}
+            isPending={isTypesPending}
             label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.TYPE)}
             disabled={isPending}
             required
@@ -109,6 +158,7 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
             control={form.control}
             name="agent_id"
             options={agents}
+            isPending={isAgentsPending}
             label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.AGENT)}
             disabled={isPending}
             required
@@ -118,6 +168,7 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
             control={form.control}
             name="bien_id"
             options={biens}
+            isPending={isBiensPending}
             label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.BIEN)}
             disabled={isPending}
             placeholder={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.PLACEHOLDERS.BIEN)}
@@ -126,6 +177,7 @@ export default function CreateEventForm({ eventTypes, agents, biens, clients }: 
             control={form.control}
             name="client_id"
             options={clients}
+            isPending={isClientsPending}
             label={translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.CLIENT)}
             disabled={isPending}
             required

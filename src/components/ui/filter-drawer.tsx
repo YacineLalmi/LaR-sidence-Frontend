@@ -29,11 +29,6 @@ export default function FilterDrawer({
   isOpen,
   setIsOpen,
 }: PropsWithChildren<Props>) {
-  useEffect(() => {
-    return () => {
-      console.log("closing drawer...");
-    };
-  }, []);
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>

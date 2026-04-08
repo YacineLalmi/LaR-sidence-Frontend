@@ -6,50 +6,39 @@ import { ListItem } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import GeneralInformation from "./general-information";
-import Localisation from "./localisation";
+import Localisation from "../../create/_components/localisation";
 import { Stepper, StepperStep } from "./stepper";
-import TechnicalCharacteristics from "./technical-characteristics";
-import AdditionalCharacteristics from "./additional-characteristics";
-import Images from "./images";
-import LinkedDocuments from "./linked-document";
-import Exclusivity from "./exclusivity";
-import Description from "./description";
-import Commentaire from "./commentaire";
 import { BienForm, BienFormInput, BienFormOutput, BienFormSchema } from "@/schemas/biens/bien-form.schema";
 import { Bien } from "@/schemas/biens/bien.schema";
+import LinkedDocuments from "../../create/_components/linked-document";
 import { updateBienAction } from "@/actions/Bien/update-bien.action";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ROUTES } from "@/constants/routes";
+import GeneralInformation from "../../create/_components/general-information";
+import Description from "../../create/_components/description";
+import TechnicalCharacteristics from "../../create/_components/technical-characteristics";
+import AdditionalCharacteristics from "../../create/_components/additional-characteristics";
+import Images from "../../create/_components/images";
+import Exclusivity from "../../create/_components/exclusivity";
+import Commentaire from "../../create/_components/commentaire";
+import { getClientListAction } from "@/actions/clients/get-client-list.action";
+import { Client } from "@/schemas/clients/client.schema";
+import CreateClientDialog from "@/app/(protected)/clients/_components/create-client-dialog";
 
 interface Props {
   bien: Bien;
-  bienTypes: ListItem[];
-  transactionsTypes: ListItem[];
-  status: ListItem[];
-  wilayas: ListItem[];
-  agents: ListItem[];
-  priorities: ListItem[];
-  clients: ListItem[];
-  bienCharacteristics: ListItem[];
 }
 
-export default function UpdateBienForm({
-  bien,
-  agents,
-  bienTypes,
-  status,
-  transactionsTypes,
-  wilayas,
-  priorities,
-  clients,
-  bienCharacteristics,
-}: Props) {
+export default function UpdateBienForm({ bien }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
   const [isLoadingFiles, setIsLoadingFiles] = useState<boolean>(true);
+
+  const [isClientDialogOpen, setIsClientDialogOpen] = useState<boolean>(false);
+  const [clients, setClients] = useState<ListItem[]>([]);
+  const [isClientsPending, startClientsTransition] = useTransition();
 
   const translation = useTranslations();
   const router = useRouter();
@@ -90,6 +79,18 @@ export default function UpdateBienForm({
     },
   });
 
+  useEffect(() => {
+    startClientsTransition(async () => {
+      try {
+        const results = await getClientListAction();
+        setClients(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setClients([]);
+      }
+    });
+  }, []);
+
   // Load existing files and convert them to File objects
   useEffect(() => {
     const loadFiles = async () => {
@@ -123,7 +124,6 @@ export default function UpdateBienForm({
 
   // 2. Define a submit handler.
   async function onSubmit(values: BienForm) {
-    console.log(values);
     setIsPending(true);
     try {
       const response = await updateBienAction(values, bien.id);
@@ -170,74 +170,98 @@ export default function UpdateBienForm({
     );
   }
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid grid-cols-12 gap-3">
-        <div className="col-span-1 h-full">
-          <Stepper steps={sampleSteps} activeStep={activeStep} />
-        </div>
-        {activeStep === 1 && (
-          <div className="col-span-11 grid grid-cols-2 gap-5">
-            <GeneralInformation
-              clients={clients}
-              agents={agents}
-              status={status}
-              bienTypes={bienTypes}
-              form={form}
-              transactionsTypes={transactionsTypes}
-              isPending={isPending}
-            />
-            <div>
-              <Localisation form={form} wilayas={wilayas} />
-              <Description form={form} isPending={isPending} />
-            </div>
-          </div>
-        )}
-        {activeStep === 2 && (
-          <div className="col-span-11 grid grid-cols-2 gap-5">
-            <TechnicalCharacteristics form={form} isPending={isPending} />
-            <div>
-              <AdditionalCharacteristics form={form} isPending={isPending} bienCharacteristics={bienCharacteristics} />
-              <Images form={form} isPending={isPending} />
-            </div>
-          </div>
-        )}
-        {activeStep === 3 && (
-          <div className="col-span-11 grid grid-cols-2 gap-5">
-            <div>
-              <LinkedDocuments form={form} isPending={isPending} />
-              <Exclusivity form={form} isPending={isPending} priorities={priorities} />
-            </div>
-            <Commentaire form={form} isPending={isPending} />
-          </div>
-        )}
+  const handleClientCreated = (client: Client) => {
+    // Refresh the clients list
+    setIsClientDialogOpen(false);
+    startClientsTransition(async () => {
+      try {
+        const results = await getClientListAction();
+        setClients(results);
+        // Set the newly created client as selected
+        form.setValue("client_id", client.id);
+        // Show success message
+        customToast.success(
+          `${translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.CREATED)} - ${client.first_name} ${client.last_name}`,
+        );
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+      }
+    });
+  };
 
-        <div className="col-span-12 flex justify-end">
-          {activeStep > 1 && (
-            <Button
-              type="button"
-              className="border-1 cursor-pointer w-52 p-5"
-              onClick={() => setActiveStep((prev) => prev - 1)}
-            >
-              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.PREVIOUS)}
-            </Button>
+  return (
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="grid grid-cols-12 gap-3">
+          <div className="col-span-1 h-full">
+            <Stepper steps={sampleSteps} activeStep={activeStep} />
+          </div>
+          {activeStep === 1 && (
+            <div className="col-span-11 grid grid-cols-2 gap-5">
+              <GeneralInformation
+                form={form}
+                isPending={isPending}
+                setIsClientDialogOpen={setIsClientDialogOpen}
+                clients={clients}
+                isClientsPending={isClientsPending}
+              />
+              <div>
+                <Localisation form={form} />
+                <Description form={form} isPending={isPending} />
+              </div>
+            </div>
           )}
-          {activeStep < sampleSteps.length && (
-            <Button
-              type="button"
-              className="border-1 cursor-pointer w-52 p-5"
-              onClick={() => setActiveStep((prev) => prev + 1)}
-            >
-              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.NEXT)}
-            </Button>
+          {activeStep === 2 && (
+            <div className="col-span-11 grid grid-cols-2 gap-5">
+              <TechnicalCharacteristics form={form} isPending={isPending} />
+              <div>
+                <AdditionalCharacteristics form={form} isPending={isPending} />
+                <Images form={form} isPending={isPending} />
+              </div>
+            </div>
           )}
-          {activeStep === sampleSteps.length && (
-            <Button className="border-1 cursor-pointer w-52 p-5" type="submit" disabled={isPending}>
-              {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT)}
-            </Button>
+          {activeStep === 3 && (
+            <div className="col-span-11 grid grid-cols-2 gap-5">
+              <div>
+                <LinkedDocuments form={form} isPending={isPending} />
+                <Exclusivity form={form} isPending={isPending} />
+              </div>
+              <Commentaire form={form} isPending={isPending} />
+            </div>
           )}
-        </div>
-      </form>
-    </Form>
+
+          <div className="col-span-12 flex justify-end">
+            {activeStep > 1 && (
+              <Button
+                type="button"
+                className="border-1 cursor-pointer w-52 p-5"
+                onClick={() => setActiveStep((prev) => prev - 1)}
+              >
+                {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.PREVIOUS)}
+              </Button>
+            )}
+            {activeStep < sampleSteps.length && (
+              <Button
+                type="button"
+                className="border-1 cursor-pointer w-52 p-5"
+                onClick={() => setActiveStep((prev) => prev + 1)}
+              >
+                {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.NEXT)}
+              </Button>
+            )}
+            {activeStep === sampleSteps.length && (
+              <Button className="border-1 cursor-pointer w-52 p-5" type="submit" disabled={isPending}>
+                {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT)}
+              </Button>
+            )}
+          </div>
+        </form>
+      </Form>
+      <CreateClientDialog
+        open={isClientDialogOpen}
+        onOpenChange={setIsClientDialogOpen}
+        onClientCreated={handleClientCreated}
+      />
+    </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
 import { InputDateRangeField } from "@/components/custom-inputs/input-range";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import CustomButton from "@/components/ui/custom-button";
@@ -9,43 +10,86 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { ClientFilterForm, ClientFilterFormSchema } from "@/schemas/clients/client-filter-form.schema";
 import { ListItem } from "@/schemas/global.schema";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, parse } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
-interface Props {
-  types: ListItem[];
-  status: ListItem[];
-  sources: ListItem[];
-  civilities: ListItem[];
-}
+interface Props {}
 
-export default function ClientFilters({ types, status, sources, civilities }: Props) {
+export default function ClientFilters() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const translation = useTranslations();
   const router = useRouter();
+
+  const civilities: ListItem[] = [
+    {
+      id: "mrs",
+      name: "Female",
+    },
+    {
+      id: "mr",
+      name: "Male",
+    },
+    {
+      id: "company",
+      name: "Company",
+    },
+  ];
+
+  const [types, setTypes] = useState<ListItem[]>([]);
+  const [statuses, setStatuses] = useState<ListItem[]>([]);
+  const [sources, setSources] = useState<ListItem[]>([]);
+  const [isTypesPending, startTypesTransition] = useTransition();
+  const [isStatuesPending, startStatuesTransition] = useTransition();
+  const [isSourcesPending, startSourcesTransition] = useTransition();
+
+  useEffect(() => {
+    if (!open) return;
+    startTypesTransition(async () => {
+      try {
+        const results = await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.DEMAND);
+        setTypes(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setTypes([]);
+      }
+    });
+
+    startStatuesTransition(async () => {
+      try {
+        const results = await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.DEMAND);
+        setStatuses(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setStatuses([]);
+      }
+    });
+
+    startSourcesTransition(async () => {
+      try {
+        const results = await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.DEMAND);
+        setSources(results);
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setSources([]);
+      }
+    });
+  }, [open]);
 
   // Parse query params to get initial values
   const getInitialValues = (): Partial<ClientFilterForm> => {
     const params = new URLSearchParams(searchParams);
     const initialValues: any = {};
 
-    // Handle regular fields
-    const civility = params.get("civility");
-    if (civility) initialValues.civility = civility;
-
-    const type_id = params.get("type_id");
-    if (type_id) initialValues.type_id = type_id;
-
-    const status_id = params.get("status_id");
-    if (status_id) initialValues.status_id = status_id;
-
-    const source_id = params.get("source_id");
-    if (source_id) initialValues.source_id = source_id;
+    ["civility", "type_id", "status_id", "source_id"].forEach((key) => {
+      const val = params.get(key);
+      if (val) initialValues[key] = val;
+    });
 
     // Handle date range
     const created_between = params.get("created_between");
@@ -123,22 +167,10 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
     setIsOpen(false);
   }
 
-  async function onInvalid(values: any) {
-    const [field, error] = Object.entries(values)[0] as [string, { message: string }];
-    customToast.error(`${field}: ${error.message}`);
-  }
-
   function handleClearFilters() {
-    // Reset the form
     form.reset({});
-
-    // Clear all query parameters by navigating to the base path
     router.push(window.location.pathname);
-
-    // Close the drawer
     setIsOpen(false);
-
-    // Optional: Show success message
     customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
   }
 
@@ -150,7 +182,7 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
       setIsOpen={setIsOpen}
     >
       <Form {...form}>
-        <form id="client-filter-form" onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-2 p-5">
+        <form id="client-filter-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
           <InputSelectField
             control={form.control}
             name="civility"
@@ -168,7 +200,7 @@ export default function ClientFilters({ types, status, sources, civilities }: Pr
           <InputSelectField
             control={form.control}
             name="status_id"
-            options={status}
+            options={statuses}
             label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.STATUS)}
             placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.STATUS)}
           />

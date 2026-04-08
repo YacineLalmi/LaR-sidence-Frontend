@@ -1,11 +1,9 @@
 "use client";
 
-import { getBienStatusList } from "@/actions/bien-status/get-bien-status-list.action";
-import { getBienTypeLit } from "@/actions/bien-types/get-bien-type-list.action";
+import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
 import { getCommuneByWilaya } from "@/actions/commune/get-commune-by-wilaya";
-import { getTransactionTypeList } from "@/actions/transaction-type/get-transaction-type-list.action";
-import { getAgentList } from "@/actions/users/get-agents-list.action";
-import { getWilayaList } from "@/actions/wilayas/get-wilaya-list.action";
+import { getAgentListAction } from "@/actions/users/get-agents-list.action";
+import { getWilayaListAction } from "@/actions/wilayas/get-wilaya-list.action";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
@@ -14,6 +12,7 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { BienFilterForm, BienFilterFormSchema } from "@/schemas/biens/bien-filter-form.schema";
 import { ListItem } from "@/schemas/global.schema";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -67,11 +66,11 @@ export default function BienFilter() {
   useEffect(() => {
     const fetchLists = async () => {
       const [w, a, t, tr, s] = await Promise.all([
-        getWilayaList(),
-        getAgentList(),
-        getBienTypeLit(),
-        getTransactionTypeList(),
-        getBienStatusList(),
+        getWilayaListAction(),
+        getAgentListAction(),
+        getClassificationsListAction(CATEGORIES.TYPE, SCOPES.BIEN),
+        getClassificationsListAction(CATEGORIES.TYPE, SCOPES.TRANSACTION),
+        getClassificationsListAction(CATEGORIES.STATUS, SCOPES.BIEN),
       ]);
       setOptions((prev) => ({
         ...prev,

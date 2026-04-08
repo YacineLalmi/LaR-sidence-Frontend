@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const EventFormSchema = z.object({
-  title: z.string().min(1, "Le titre est obligatoire"),
+  title: z.string().nullable().optional(),
   description: z.string().nullable(),
   start_date: z.date(),
   end_date: z.date(),

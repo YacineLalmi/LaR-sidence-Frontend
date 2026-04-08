@@ -77,7 +77,7 @@ export default function ClientSourceTable({ data, colors }: Props) {
       accessorKey: "description",
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.SOURCES.COLUMNS.DESCRIPTION),
       cell: ({ row }) => (
-        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+        <div className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</div>
       ),
     },
     {

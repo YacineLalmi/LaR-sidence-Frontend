@@ -77,7 +77,7 @@ export default function BienPriorityTable({ data, colors }: Props) {
       accessorKey: "description",
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.PRIORITIES.COLUMNS.DESCRIPTION),
       cell: ({ row }) => (
-        <span className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</span>
+        <div className="font-medium max-w-24 truncate text-sm">{row.original.description[locale]}</div>
       ),
     },
     {

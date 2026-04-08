@@ -3,7 +3,7 @@
 import { ListItem } from "@/schemas/global.schema";
 import { ClientService } from "@/services/client.service";
 
-export async function searchClientAction(needle?: string): Promise<ListItem[]> {
+export async function getClientListAction(needle?: string): Promise<ListItem[]> {
   try {
     const value = needle || "";
     return await ClientService.list(value);

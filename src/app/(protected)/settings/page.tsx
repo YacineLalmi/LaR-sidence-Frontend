@@ -139,7 +139,7 @@ const CONFIG_MODULES: SettingsItem[] = [
       },
       {
         id: "event_colors",
-        title: TRANSLATIONS_KEYS_2.SETTINGS.EVENTS.TYPES.TITLE,
+        title: TRANSLATIONS_KEYS_2.SETTINGS.EVENTS.COLORS,
         link: ROUTES.SETTINGS.EVENTS.COLORS.ROOT,
       },
     ],

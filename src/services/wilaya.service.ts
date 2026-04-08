@@ -42,9 +42,10 @@ export const WilayaService = {
     };
   },
 
-  list: async (): Promise<ListItem[]> => {
+  list: async (needle: string): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list,
+      query: { needle }
     });
 
 

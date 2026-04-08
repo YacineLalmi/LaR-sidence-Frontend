@@ -11,15 +11,7 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export default async function UpdateBienPage({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
-  const bienTypes = await ClassificationService(CATEGORIES.TYPE, SCOPES.BIEN).list();
-  const status = await ClassificationService(CATEGORIES.STATUS, SCOPES.BIEN).list();
-  const transactionsTypes = await ClassificationService(CATEGORIES.TYPE, SCOPES.TRANSACTION).list();
-  const priorities = await ClassificationService(CATEGORIES.PRIORITY, SCOPES.BIEN).list();
-  const bienCharacteristics = await ClassificationService(CATEGORIES.CHARACTERISTIC, SCOPES.BIEN).list();
 
-  const wilayas = await WilayaService.list();
-  const agents = await UserService.agentList();
-  const clients = await ClientService.list();
   const bien = await BienService.findOne(id);
 
   const translation = await getTranslations();
@@ -29,17 +21,7 @@ export default async function UpdateBienPage({ params }: { params: Promise<{ id:
         <NavigationButton title={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.TITLES.UPDATE)} backLink="/biens" />
       </CardHeader>
       <CardContent>
-        <UpdateBienForm
-          clients={clients}
-          bien={bien}
-          agents={agents}
-          bienTypes={bienTypes}
-          status={status}
-          transactionsTypes={transactionsTypes}
-          wilayas={wilayas}
-          priorities={priorities}
-          bienCharacteristics={bienCharacteristics}
-        />
+        <UpdateBienForm bien={bien} />
       </CardContent>
     </Card>
   );

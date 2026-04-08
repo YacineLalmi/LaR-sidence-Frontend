@@ -19,8 +19,6 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  console.log("Path no public")
-
   const access_token = await getCookie(COOKIES_KEYS.ACCESS_TOKEN);
 
   if (!access_token) {
@@ -45,9 +43,7 @@ export default async function proxy(req: NextRequest) {
   }
 
   try {
-    console.log("getting permissions")
     const permissions = await getProfilePermissionsAction();
-    console.log("permissions", permissions)
     const hasPermission = checkRoutePermission(path, permissions);
     if (!hasPermission) {
       return NextResponse.redirect(new URL("/forbidden", req.nextUrl));
