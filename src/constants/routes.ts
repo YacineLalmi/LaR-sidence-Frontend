@@ -42,6 +42,10 @@ export const ROUTES = {
     EDIT: (id: string | number) => `/events/${id}`,
   },
 
+  DOCUMENTS: {
+    ROOT: "/documents",
+  },
+
   SETTINGS: {
     ROOT: "/settings",
 
@@ -89,6 +93,9 @@ export const ROUTES = {
       },
       TYPES: {
         ROOT: "/settings/offers/types",
+      },
+      SOURCES: {
+        ROOT: "/settings/offers/sources",
       },
     },
 

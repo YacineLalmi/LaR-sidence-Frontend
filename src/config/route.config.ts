@@ -92,6 +92,11 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     requireAuthentication: true,
   },
   {
+    path: ROUTES.SETTINGS.OFFERS.SOURCES.ROOT,
+    permissions: [PERMISSIONS.VIEW_CLIENT_SOURCES],
+    requireAuthentication: true,
+  },
+  {
     path: ROUTES.SETTINGS.DEMANDS.STATUSES.ROOT,
     permissions: [PERMISSIONS.VIEW_DEMAND_STATUES],
     requireAuthentication: true,
@@ -227,6 +232,11 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
   {
     path: ROUTES.DEMANDS.EDIT('[id]'),
     permissions: [PERMISSIONS.MANAGE_DEMANDS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.DOCUMENTS.ROOT,
+    permissions: [PERMISSIONS.VIEW_DOCUMENTS],
     requireAuthentication: true,
   },
   {

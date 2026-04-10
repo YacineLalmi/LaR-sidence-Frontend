@@ -1,4 +1,4 @@
-import { Building2, CalendarDays, FileText, Home, Mails, User2 } from "lucide-react";
+import { Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -48,6 +48,11 @@ const items = [
     title: "Demandes",
     url: ROUTES.DEMANDS.ROOT,
     icon: FileText,
+  },
+  {
+    title: "Documents",
+    url: ROUTES.DOCUMENTS.ROOT,
+    icon: FolderOpen,
   },
 ];
 
