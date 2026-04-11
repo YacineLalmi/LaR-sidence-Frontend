@@ -1,4 +1,4 @@
-import { Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
+import { Bell, Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -53,6 +53,11 @@ const items = [
     title: "Documents",
     url: ROUTES.DOCUMENTS.ROOT,
     icon: FolderOpen,
+  },
+  {
+    title: "Notifications",
+    url: ROUTES.NOTIFICATIONS.ROOT,
+    icon: Bell,
   },
 ];
 

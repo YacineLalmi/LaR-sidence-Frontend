@@ -1,0 +1,117 @@
+{
+  "title": "Notification settings",
+  "subtitle": "Per alert type: channels, audience, and timing used by scheduled jobs.",
+  "save": "Save",
+  "saved": "Settings saved",
+  "save_error": "Could not update settings",
+  "missing_category_hint": "This category is not in the database yet. Refresh the page or trigger default settings creation via the API.",
+  "missing_rule_hint": "This setting row is missing. Refresh the page.",
+  "sections": {
+    "categories": "Alerts by category",
+    "categories_hint": "Each block groups channels (in-app, email), audience, and related timing. Emails require a user address. Disabling a timing row falls back to server defaults.",
+    "other": "Other keys"
+  },
+  "fields": {
+    "thresholds": "Timing & thresholds",
+    "channels_heading": "Where to send alerts",
+    "channels_hint": "Turn on at least one channel to receive this alert type.",
+    "enabled": "Enabled",
+    "channel_in_app": "In the app",
+    "channel_in_app_hint": "Shows in the in-app notification center.",
+    "channel_email": "By email",
+    "channel_email_hint": "Sent to the account email address when available.",
+    "scope": "Who receives them",
+    "scope_hint": "Server-side audience filter for this category.",
+    "value": "Value",
+    "rule_apply": "Use this timing",
+    "rule_apply_hint": "When off, the server default applies.",
+    "scope_admin": "Admins",
+    "scope_agent": "Agents",
+    "scope_both": "Both"
+  },
+  "categories": {
+    "CONTRACT_EXPIRY": "Contract & exclusivity",
+    "APPOINTMENTS_VISITS": "Appointments & visits",
+    "AGENT_ACTIVITY": "Agent activity",
+    "PROPERTY_PERFORMANCE": "Property performance",
+    "ACTION_FOLLOWUP": "Demands & offers follow-up",
+    "RENTAL_PROCESS": "Rental / signature process",
+    "VISIT_FEEDBACK": "Visit feedback"
+  },
+  "categoryDescriptions": {
+    "CONTRACT_EXPIRY": "Exclusivity end dates and contract-related reminders.",
+    "APPOINTMENTS_VISITS": "Same-day meeting reminders.",
+    "AGENT_ACTIVITY": "e.g. empty calendar over a period.",
+    "PROPERTY_PERFORMANCE": "Price reviews, property activity.",
+    "ACTION_FOLLOWUP": "Pending demands and offers.",
+    "RENTAL_PROCESS": "Post-signature, inventory, rental-related visits.",
+    "VISIT_FEEDBACK": "Visit status updates."
+  },
+  "rules": {
+    "contract_expiry_offsets_days": {
+      "title": "Reminders before exclusivity ends",
+      "desc": "Days before expiry for each alert (multiple values).",
+      "placeholder": "e.g. 30, 7, 1"
+    },
+    "meeting_today_reminder_minutes": {
+      "title": "Same-day meeting reminder margin",
+      "desc": "Shown in the message text (minutes before slot).",
+      "placeholder": "30"
+    },
+    "empty_calendar_working_days_threshold": {
+      "title": "Empty calendar threshold",
+      "desc": "Days ahead with no events before alerting.",
+      "placeholder": "2"
+    },
+    "social_post_no_interaction_days": {
+      "title": "Days without property activity",
+      "desc": "If no recent event on the property for X days.",
+      "placeholder": "10"
+    },
+    "visit_followup_after_minutes": {
+      "title": "Visit follow-up (event)",
+      "desc": "Minutes after a “visit” event ends before admin alert.",
+      "placeholder": "90"
+    },
+    "post_signature_admin_followup_hours": {
+      "title": "Admin follow-up after signature",
+      "desc": "Hours after an event containing “signature”.",
+      "placeholder": "4"
+    },
+    "post_edl_admin_followup_hours": {
+      "title": "Admin follow-up after EDL (reserved)",
+      "desc": "Reserved for future engine use.",
+      "placeholder": "4"
+    },
+    "edl_after_signature_hours": {
+      "title": "Inventory (EDL) reminder",
+      "desc": "Hours after signature to remind about EDL.",
+      "placeholder": "24"
+    },
+    "exclusive_reminder_every_days": {
+      "title": "Exclusivity periodic reminder",
+      "desc": "One reminder every X days from exclusivity start.",
+      "placeholder": "15"
+    },
+    "price_revision_after_days": {
+      "title": "Price revision",
+      "desc": "Days without a price update before alerting.",
+      "placeholder": "30"
+    },
+    "demand_followup_offsets_hours": {
+      "title": "Demand follow-up (hours)",
+      "desc": "Multiple delays in hours since last update.",
+      "placeholder": "e.g. 24, 72"
+    },
+    "offer_followup_after_hours": {
+      "title": "Offer follow-up",
+      "desc": "Hours without processing since last offer update.",
+      "placeholder": "24"
+    },
+    "sales_visit_status_reminder_every_hours": {
+      "title": "Visit status reminder (Visit model)",
+      "desc": "Hours without status update for non-final visits.",
+      "placeholder": "48"
+    }
+  }
+}

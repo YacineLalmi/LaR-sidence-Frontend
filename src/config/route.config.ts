@@ -31,6 +31,7 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
       PERMISSIONS.VIEW_WILAYAS,
       PERMISSIONS.VIEW_ROLES,
       PERMISSIONS.VIEW_TRANSACTION_TYPES,
+      PERMISSIONS.VIEW_NOTIFICATIONS,
     ],
     requireAuthentication: true,
   },
@@ -237,6 +238,16 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
   {
     path: ROUTES.DOCUMENTS.ROOT,
     permissions: [PERMISSIONS.VIEW_DOCUMENTS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.NOTIFICATIONS.ROOT,
+    permissions: [PERMISSIONS.VIEW_NOTIFICATIONS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
+    permissions: [PERMISSIONS.MANAGE_NOTIFICATIONS],
     requireAuthentication: true,
   },
   {

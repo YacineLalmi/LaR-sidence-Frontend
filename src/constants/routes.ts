@@ -46,6 +46,10 @@ export const ROUTES = {
     ROOT: "/documents",
   },
 
+  NOTIFICATIONS: {
+    ROOT: "/notifications",
+  },
+
   SETTINGS: {
     ROOT: "/settings",
 
@@ -142,6 +146,9 @@ export const ROUTES = {
       ADD: "/settings/roles/add",
       DETAIL: (id: string | number) => `/settings/roles/${id}`,
       EDIT: (id: string | number) => `/settings/roles/${id}`,
+    },
+    NOTIFICATIONS: {
+      ROOT: "/settings/notifications",
     },
   },
 
