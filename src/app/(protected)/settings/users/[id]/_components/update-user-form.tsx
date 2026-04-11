@@ -38,9 +38,19 @@ export default function UpdateUserForm({ roles, user }: Props) {
     router.push(ROUTES.SETTINGS.USERS.ROOT);
   }, [router]);
 
+  const formDefaults: UserFormType = {
+    first_name: user.first_name,
+    last_name: user.last_name,
+    username: user.username,
+    phonenumber: user.phonenumber ?? "",
+    email: user.email,
+    role_id: user.role_id ?? "",
+    is_active: user.is_active,
+  };
+
   return (
     <UserForm
-      initialData={user}
+      initialData={formDefaults}
       roles={roles}
       status={status}
       submitAction={submitAction}
