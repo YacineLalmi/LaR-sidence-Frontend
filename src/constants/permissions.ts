@@ -107,4 +107,8 @@ export const PERMISSIONS = {
   // Notifications (centre + moteur)
   VIEW_NOTIFICATIONS: "VN",
   MANAGE_NOTIFICATIONS: "MN",
+
+  // Statistics & reports
+  VIEW_STATISTICS: "VSTAT",
+  EXPORT_STATISTICS: "MSTAT",
 };

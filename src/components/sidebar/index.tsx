@@ -1,4 +1,4 @@
-import { Bell, Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
+import { BarChart3, Bell, Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -23,6 +23,11 @@ const items = [
     title: "Tableau de bord",
     url: ROUTES.DASHBOARD,
     icon: Home,
+  },
+  {
+    title: "Statistiques",
+    url: ROUTES.STATISTICS.SECTION("biens"),
+    icon: BarChart3,
   },
   {
     title: "Biens",

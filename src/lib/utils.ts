@@ -14,7 +14,30 @@ export function transformQuery(query: QueryParams | undefined) {
   const params = new URLSearchParams(query);
   const transformed = new URLSearchParams();
 
-  const passthroughKeys = ["page", "perPage", "sort", "needle", "refresh_token", "include", "startDate", "endDate"];
+  const passthroughKeys = [
+    "page",
+    "perPage",
+    "sort",
+    "needle",
+    "refresh_token",
+    "include",
+    "startDate",
+    "endDate",
+    "date_from",
+    "date_to",
+    "granularity",
+    "breakdown",
+    "agent_ids",
+    "bien_type_ids",
+    "bien_status_ids",
+    "wilaya_ids",
+    "commune_ids",
+    "offer_status_ids",
+    "demand_status_ids",
+    "payment_status_ids",
+    "client_source_ids",
+    "demand_source_ids",
+  ];
 
   for (const [key, value] of params.entries()) {
     if (passthroughKeys.includes(key)) {

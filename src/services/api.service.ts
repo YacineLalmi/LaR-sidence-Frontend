@@ -41,8 +41,6 @@ class ApiService {
       } else config.body = JSON.stringify(body);
     }
 
-    console.log("Back end URL: ", url)
-
     const response = await fetch(url, config);
 
     const apiResponse = await handleApiResponse<Data>(response);

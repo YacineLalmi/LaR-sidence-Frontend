@@ -7,6 +7,11 @@ export const ROUTES = {
 
   DASHBOARD: "/dashboard",
 
+  STATISTICS: {
+    ROOT: "/statistics",
+    SECTION: (section: string) => `/statistics/${section}`,
+  },
+
   BIENS: {
     ROOT: "/biens",
     CREATE: "/biens/create",

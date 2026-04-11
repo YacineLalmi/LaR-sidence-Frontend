@@ -157,6 +157,16 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     requireAuthentication: true,
   },
   {
+    path: ROUTES.STATISTICS.ROOT,
+    permissions: [PERMISSIONS.VIEW_STATISTICS],
+    requireAuthentication: true,
+  },
+  {
+    path: "/statistics/[section]",
+    permissions: [PERMISSIONS.VIEW_STATISTICS],
+    requireAuthentication: true,
+  },
+  {
     path: ROUTES.PROFILE.ROOT,
     requireAuthentication: true,
   },
