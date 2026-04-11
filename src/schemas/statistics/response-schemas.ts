@@ -59,11 +59,17 @@ export const statisticsOffersResponseSchema = z
     avg_days_to_success_series: z
       .object({
         labels: z.array(z.string()),
-        values: z.array(z.number().nullable()),
+        values: z.array(z.coerce.number().nullable()),
       })
       .optional(),
     by_client_source: z
-      .array(z.object({ source_id: z.string().nullable(), label: z.string(), count: z.coerce.number() }))
+      .array(
+        z.object({
+          source_id: z.union([z.string(), z.number()]).nullable().transform((v) => (v == null ? null : String(v))),
+          label: z.string(),
+          count: z.coerce.number(),
+        })
+      )
       .optional(),
   })
   .passthrough();
