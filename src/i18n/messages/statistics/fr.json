@@ -86,7 +86,8 @@
     "appointmentsByAgent": "Rendez-vous par agent",
     "visits": "Visites",
     "visitsByAgent": "Visites par agent",
-    "emptyOffersChart": "Aucune offre sur cette période (ou sans bien lié). Élargissez les dates ou vérifiez les filtres."
+    "emptyOffersChart": "Aucune offre sur cette période (ou sans bien lié). Élargissez les dates ou vérifiez les filtres.",
+    "emptyDemandsChart": "Aucune demande sur cette période. Élargissez les dates ou vérifiez les filtres."
   },
   "templates": {
     "title": "Rapports prédéfinis",

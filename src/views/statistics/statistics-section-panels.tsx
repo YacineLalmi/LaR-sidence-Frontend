@@ -554,6 +554,11 @@ function DemandsPanel({
   const barCfg = { count: { label: t("chart.demands"), color: chartColors[0] ?? "var(--chart-1)" } } satisfies ChartConfig;
   const provRows = (bySource ?? []).map((r) => ({ label: r.label, count: r.count }));
 
+  const hasStatusData = statusPie.length > 0 && stTotal > 0;
+  const hasMatchData = matchTotal > 0;
+  const hasProvData = provRows.some((r) => r.count > 0);
+  const hasBarData = barRows.some((r) => (r.count ?? 0) > 0);
+
   return (
     <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
@@ -562,8 +567,11 @@ function DemandsPanel({
             <CardTitle className="text-base">{t("chart.demandsByStatus")}</CardTitle>
           </CardHeader>
           <CardContent>
+            {!hasStatusData ? (
+              <p className="text-muted-foreground py-8 text-center text-sm">{t("chart.emptyDemandsChart")}</p>
+            ) : (
             <div className="flex flex-col items-center gap-6 md:flex-row">
-              <ChartContainer config={stCfg} className="mx-auto aspect-square h-[240px] w-[240px]">
+              <ChartContainer config={stCfg} className="mx-auto aspect-square h-[240px] min-h-[200px] w-[240px]">
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Pie
@@ -596,6 +604,7 @@ function DemandsPanel({
                 ))}
               </div>
             </div>
+            )}
           </CardContent>
         </Card>
 
@@ -604,8 +613,11 @@ function DemandsPanel({
             <CardTitle className="text-base">{t("chart.demandMatching")}</CardTitle>
           </CardHeader>
           <CardContent>
+            {!hasMatchData ? (
+              <p className="text-muted-foreground py-8 text-center text-sm">{t("chart.emptyDemandsChart")}</p>
+            ) : (
             <div className="flex flex-col items-center gap-6 md:flex-row">
-              <ChartContainer config={matchCfg} className="mx-auto aspect-square h-[220px] w-[220px]">
+              <ChartContainer config={matchCfg} className="mx-auto aspect-square h-[220px] min-h-[180px] w-[220px]">
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Pie
@@ -635,6 +647,7 @@ function DemandsPanel({
                 ))}
               </div>
             </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -644,7 +657,11 @@ function DemandsPanel({
           <CardTitle className="text-base">{t("chart.demandProvenance")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <StatisticsProvenanceBars rows={provRows} />
+          {!hasProvData ? (
+            <p className="text-muted-foreground py-6 text-center text-sm">{t("chart.emptyDemandsChart")}</p>
+          ) : (
+            <StatisticsProvenanceBars rows={provRows} />
+          )}
         </CardContent>
       </Card>
 
@@ -653,7 +670,10 @@ function DemandsPanel({
           <CardTitle className="text-base">{t("chart.demandsSeries")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={barCfg} className="h-[300px]">
+          {!hasBarData ? (
+            <p className="text-muted-foreground py-12 text-center text-sm">{t("chart.emptyDemandsChart")}</p>
+          ) : (
+          <ChartContainer config={barCfg} className="h-[300px] min-h-[200px]">
             <BarChart data={barRows} accessibilityLayer>
               <CartesianGrid vertical={false} />
               <XAxis dataKey="period" tickLine={false} />
@@ -661,6 +681,7 @@ function DemandsPanel({
               <Bar dataKey="count" fill="var(--color-count)" radius={4} />
             </BarChart>
           </ChartContainer>
+          )}
         </CardContent>
       </Card>
     </div>
