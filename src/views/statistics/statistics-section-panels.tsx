@@ -3,13 +3,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, XAxis, YAxis } from "recharts";
 
 import { StatisticsProvenanceBars } from "./statistics-provenance-bars";
+import { statisticsSelectTriggerSm } from "./statistics-layout";
 import type { BiensDistributionMode } from "./statistics-types";
-
-const BIEN_DONUT_COLORS = ["#A8D4F0", "#B8E8C8", "#F5E6A8", "#D4C4F5", "#C4B5FD", "#F9C89A"];
 
 type Props = {
   section: string;
@@ -167,30 +167,49 @@ function BiensPanel({
     })) ?? [];
   const creationsCfg = { count: { label: t("chart.creationsShort"), color: "var(--chart-1)" } } satisfies ChartConfig;
 
+  let biensSubtitle = t("chart.biensSubtitleWilaya");
+  switch (biensView) {
+    case "type":
+      biensSubtitle = t("chart.biensSubtitleType");
+      break;
+    case "status":
+      biensSubtitle = t("chart.biensSubtitleStatus");
+      break;
+    case "exclusivity":
+      biensSubtitle = t("chart.biensSubtitleExclusivity");
+      break;
+    default:
+      break;
+  }
+
   return (
     <div className="space-y-6">
       <Card className="overflow-hidden rounded-[28px] border-0 bg-white shadow-sm">
-        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <CardTitle className="text-lg font-semibold">{t("chart.biensDonutTitle")}</CardTitle>
-            <CardDescription className="text-muted-foreground mt-1 max-w-xl">
-              {biensView === "type" && t("chart.biensDonutDescription")}
-              {biensView === "status" && t("chart.biensDonutDescriptionStatus")}
-              {biensView === "exclusivity" && t("chart.biensDonutDescriptionExclusivity")}
-              {biensView === "wilaya" && t("chart.biensWilayaDescription")}
-            </CardDescription>
+        <CardHeader className="space-y-0 pb-4 pt-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0 flex-1 pr-2">
+              <CardTitle className="text-lg font-semibold leading-tight">{t("chart.biensDonutTitle")}</CardTitle>
+              <CardDescription className="text-muted-foreground mt-1.5 max-w-[28rem] text-sm leading-snug">
+                {biensSubtitle}
+              </CardDescription>
+            </div>
+            <Select value={biensView} onValueChange={(v) => onBiensViewChange(v as BiensDistributionMode)}>
+              <SelectTrigger
+                className={cn(
+                  statisticsSelectTriggerSm,
+                  "w-full min-w-[160px] shrink-0 sm:w-[200px] lg:ml-auto"
+                )}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent align="end">
+                <SelectItem value="type">{t("chart.byType")}</SelectItem>
+                <SelectItem value="status">{t("chart.byStatus")}</SelectItem>
+                <SelectItem value="exclusivity">{t("chart.byExclusivity")}</SelectItem>
+                <SelectItem value="wilaya">{t("chart.byWilaya")}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <Select value={biensView} onValueChange={(v) => onBiensViewChange(v as BiensDistributionMode)}>
-            <SelectTrigger className="h-10 w-[180px] shrink-0 rounded-full border-border">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent align="end">
-              <SelectItem value="type">{t("chart.byType")}</SelectItem>
-              <SelectItem value="status">{t("chart.byStatus")}</SelectItem>
-              <SelectItem value="exclusivity">{t("chart.byExclusivity")}</SelectItem>
-              <SelectItem value="wilaya">{t("chart.byWilaya")}</SelectItem>
-            </SelectContent>
-          </Select>
         </CardHeader>
         <CardContent>
           {biensView === "wilaya" ? (
@@ -204,8 +223,11 @@ function BiensPanel({
               </BarChart>
             </ChartContainer>
           ) : (
-            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-center lg:gap-12">
-              <ChartContainer config={pieConfig} className="mx-auto aspect-square h-[min(320px,85vw)] w-[min(320px,85vw)] max-w-[360px]">
+            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-center lg:gap-10">
+              <ChartContainer
+                config={pieConfig}
+                className="mx-auto aspect-square h-[min(400px,88vw)] w-[min(400px,88vw)] max-w-[400px]"
+              >
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Pie
@@ -219,19 +241,19 @@ function BiensPanel({
                     strokeWidth={2}
                   >
                     {pieData.map((_, i) => (
-                      <Cell key={i} fill={BIEN_DONUT_COLORS[i % BIEN_DONUT_COLORS.length]} />
+                      <Cell key={i} fill={donutColors[i % donutColors.length]} />
                     ))}
                   </Pie>
                 </PieChart>
               </ChartContainer>
 
-              <div className="flex w-full max-w-sm flex-col gap-3 lg:min-w-[220px]">
+              <div className="flex w-full max-w-[400px] flex-col gap-3 lg:min-w-[240px]">
                 {pieData.map((row, i) => (
                   <div key={row.name} className="flex items-center justify-between gap-6 text-sm">
                     <div className="flex min-w-0 items-center gap-2">
                       <span
                         className="h-3 w-3 shrink-0 rounded-full"
-                        style={{ backgroundColor: BIEN_DONUT_COLORS[i % BIEN_DONUT_COLORS.length] }}
+                        style={{ backgroundColor: donutColors[i % donutColors.length] }}
                       />
                       <span className="truncate font-medium">{row.name}</span>
                     </div>

@@ -3,9 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import type { ListItem } from "@/schemas/global.schema";
 import { StatisticsFilters, type StatisticsSection } from "@/schemas/statistics/statistics.schema";
 import { useTranslations } from "next-intl";
+
+import {
+  statisticsFilterActions,
+  statisticsFilterLabel,
+  statisticsFiltersWidth,
+  statisticsSelectTriggerSm,
+} from "./statistics-layout";
 
 const ALL = "__all__";
 
@@ -42,17 +50,22 @@ export function StatisticsFiltersPanel({
   const showExclusivity = section === "biens" || section === "billing";
 
   return (
-    <aside className="w-full shrink-0 space-y-4 rounded-[28px] border border-black/5 bg-white p-6 shadow-sm lg:w-[300px] lg:max-w-[320px]">
-      <p className="text-base font-semibold">{t("filters.title")}</p>
+    <aside
+      className={cn(
+        "space-y-4 rounded-[28px] border border-black/5 bg-white p-6 shadow-sm",
+        statisticsFiltersWidth
+      )}
+    >
+      <p className="text-base font-semibold leading-none">{t("filters.title")}</p>
 
       <div className="space-y-4">
         <div className="grid gap-2">
-          <Label>{t("filters.period")}</Label>
+          <Label className={statisticsFilterLabel}>{t("filters.period")}</Label>
           <Select
             value={filters.granularity ?? "month"}
             onValueChange={(v) => onGranularityChange(v as StatisticsFilters["granularity"])}
           >
-            <SelectTrigger className="h-11 rounded-xl border-border bg-white">
+            <SelectTrigger className={statisticsSelectTriggerSm}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -66,7 +79,7 @@ export function StatisticsFiltersPanel({
         </div>
 
         <div className="grid gap-2">
-          <Label>{t("filters.propertyType")}</Label>
+          <Label className={statisticsFilterLabel}>{t("filters.propertyType")}</Label>
           <Select
             value={filters.bien_type_ids?.[0] ?? ALL}
             onValueChange={(v) =>
@@ -76,7 +89,7 @@ export function StatisticsFiltersPanel({
               }))
             }
           >
-            <SelectTrigger className="h-11 rounded-xl border-border bg-white">
+            <SelectTrigger className={statisticsSelectTriggerSm}>
               <SelectValue placeholder={t("filters.all")} />
             </SelectTrigger>
             <SelectContent>
@@ -91,7 +104,7 @@ export function StatisticsFiltersPanel({
         </div>
 
         <div className="grid gap-2">
-          <Label>{t("filters.wilaya")}</Label>
+          <Label className={statisticsFilterLabel}>{t("filters.wilaya")}</Label>
           <Select
             value={filters.wilaya_ids?.[0] ?? ALL}
             onValueChange={(v) =>
@@ -102,7 +115,7 @@ export function StatisticsFiltersPanel({
               }))
             }
           >
-            <SelectTrigger className="h-11 rounded-xl border-border bg-white">
+            <SelectTrigger className={statisticsSelectTriggerSm}>
               <SelectValue placeholder={t("filters.all")} />
             </SelectTrigger>
             <SelectContent>
@@ -117,7 +130,7 @@ export function StatisticsFiltersPanel({
         </div>
 
         <div className="grid gap-2">
-          <Label>{t("filters.commune")}</Label>
+          <Label className={statisticsFilterLabel}>{t("filters.commune")}</Label>
           <Select
             disabled={!wilayaId}
             value={filters.commune_ids?.[0] ?? ALL}
@@ -128,7 +141,7 @@ export function StatisticsFiltersPanel({
               }))
             }
           >
-            <SelectTrigger className="h-11 rounded-xl border-border bg-white disabled:opacity-60">
+            <SelectTrigger className={cn(statisticsSelectTriggerSm, "disabled:opacity-60")}>
               <SelectValue placeholder={t("filters.all")} />
             </SelectTrigger>
             <SelectContent>
@@ -144,7 +157,7 @@ export function StatisticsFiltersPanel({
 
         {showExclusivity ? (
           <div className="grid gap-2">
-            <Label>{t("filters.exclusivity")}</Label>
+            <Label className={statisticsFilterLabel}>{t("filters.exclusivity")}</Label>
             <Select
               value={filters.exclusivity === true ? "yes" : filters.exclusivity === false ? "no" : ALL}
               onValueChange={(v) =>
@@ -154,7 +167,7 @@ export function StatisticsFiltersPanel({
                 }))
               }
             >
-              <SelectTrigger className="h-11 rounded-xl border-border bg-white">
+              <SelectTrigger className={statisticsSelectTriggerSm}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -167,7 +180,7 @@ export function StatisticsFiltersPanel({
         ) : null}
 
         <div className="grid gap-2">
-          <Label>{t("filters.agent")}</Label>
+          <Label className={statisticsFilterLabel}>{t("filters.agent")}</Label>
           <Select
             value={filters.agent_ids?.[0] ?? ALL}
             onValueChange={(v) =>
@@ -177,7 +190,7 @@ export function StatisticsFiltersPanel({
               }))
             }
           >
-            <SelectTrigger className="h-11 rounded-xl border-border bg-white">
+            <SelectTrigger className={statisticsSelectTriggerSm}>
               <SelectValue placeholder={t("filters.all")} />
             </SelectTrigger>
             <SelectContent>
@@ -192,12 +205,21 @@ export function StatisticsFiltersPanel({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 pt-2">
-        <Button type="button" variant="outline" className="h-11 flex-1 rounded-full border-foreground bg-white" onClick={onReset}>
-          {t("filters.reset")}
+      <div className={statisticsFilterActions}>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-[38px] min-w-[121px] flex-1 rounded-lg border-foreground bg-white text-sm font-medium"
+          onClick={onReset}
+        >
+          {t("filters.cancel")}
         </Button>
-        <Button type="button" className="h-11 flex-1 rounded-full bg-black text-white hover:bg-black/90" onClick={onApply}>
-          {t("filters.apply")}
+        <Button
+          type="button"
+          className="h-[38px] min-w-[127px] flex-1 rounded-lg bg-black text-sm font-medium text-white hover:bg-black/90"
+          onClick={onApply}
+        >
+          {t("filters.confirm")}
         </Button>
       </div>
     </aside>

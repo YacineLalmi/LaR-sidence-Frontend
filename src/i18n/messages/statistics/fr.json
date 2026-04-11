@@ -1,6 +1,8 @@
 {
   "title": "Statistiques Générales & Rapports",
   "subtitle": "Période et filtres partagés entre les onglets.",
+  "backAria": "Retour au tableau de bord",
+  "sectionsNavAria": "Sections statistiques",
   "nav": {
     "summary": "Synthèse",
     "biens": "Biens immobiliers",
@@ -27,6 +29,8 @@
     "granularity": "Regroupement",
     "apply": "Filtrer",
     "reset": "Réinitialiser",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
     "granularityOptions": {
       "day": "Jour",
       "week": "Semaine",
@@ -47,7 +51,11 @@
     "biensDonutDescription": "Consultez la Répartition des biens par type.",
     "biensDonutDescriptionStatus": "Consultez la répartition des biens par statut.",
     "biensDonutDescriptionExclusivity": "Répartition par mandat d’exclusivité.",
-    "biensWilayaDescription": "Répartition par wilaya (barres horizontales).",
+    "biensWilayaDescription": "Consultez la répartition des biens par localisation.",
+    "biensSubtitleType": "Répartition par type de bien.",
+    "biensSubtitleStatus": "Répartition par statut.",
+    "biensSubtitleWilaya": "Répartition par localisation (wilaya).",
+    "biensSubtitleExclusivity": "Répartition par mandat d’exclusivité.",
     "byType": "Par type",
     "byStatus": "Par statut",
     "byExclusivity": "Par exclusivité",

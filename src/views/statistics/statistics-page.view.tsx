@@ -36,6 +36,7 @@ import { StatisticsFilters, statisticsSectionSchema, type StatisticsSection } fr
 import { useTranslations } from "next-intl";
 
 import { StatisticsFiltersPanel } from "./statistics-filters-panel";
+import { statisticsPageMaxWidth } from "./statistics-layout";
 import { StatisticsSectionPanels } from "./statistics-section-panels";
 import type { BiensDistributionMode } from "./statistics-types";
 
@@ -187,50 +188,30 @@ export function StatisticsPageView({ section }: Props) {
   const chartColors = useMemo(() => ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"], []);
 
   return (
-    <div className="-mx-5 bg-[#F9F9F7] px-5 pb-10 pt-2">
-      <div className="mx-auto max-w-[1600px] space-y-6">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="shrink-0 rounded-full" asChild>
-              <Link href={ROUTES.DASHBOARD} aria-label="Retour">
-                <ArrowLeft className="h-5 w-5" />
-              </Link>
-            </Button>
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
-              <p className="text-muted-foreground mt-0.5 text-sm">{t("subtitle")}</p>
+    <div className="-mx-5 bg-[#F9F9F7] px-5 pb-10 pt-6">
+      <div className={cn("mx-auto space-y-8 px-0 sm:px-4 lg:px-[clamp(1rem,4vw,5rem)]", statisticsPageMaxWidth)}>
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <Button variant="ghost" size="icon" className="mt-1 h-[54px] w-[54px] shrink-0 rounded-full" asChild>
+                <Link href={ROUTES.DASHBOARD} aria-label={t("backAria")}>
+                  <ArrowLeft className="h-5 w-5" />
+                </Link>
+              </Button>
+              <div>
+                <h1 className="text-[1.375rem] font-semibold leading-tight tracking-tight text-foreground sm:text-2xl">
+                  {t("title")}
+                </h1>
+                <p className="text-muted-foreground mt-1 text-sm">{t("subtitle")}</p>
+              </div>
             </div>
-          </div>
-
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <nav className="flex flex-wrap gap-2" aria-label="Sections statistiques">
-              {SECTION_NAV.map((item) => {
-                const Icon = item.icon;
-                const active = activeSection === item.segment;
-                return (
-                  <Link
-                    key={item.segment}
-                    href={ROUTES.STATISTICS.SECTION(item.segment)}
-                    className={cn(
-                      "inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors",
-                      active
-                        ? "border-black bg-black text-white shadow-sm"
-                        : "border-border bg-white text-foreground hover:bg-white/80"
-                    )}
-                  >
-                    <Icon className="h-4 w-4 shrink-0 opacity-90" />
-                    {t(`nav.${item.key}` as "nav.biens")}
-                  </Link>
-                );
-              })}
-            </nav>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   type="button"
                   disabled={exporting}
-                  className="h-11 shrink-0 gap-2 rounded-full border border-black bg-black px-6 text-white hover:bg-black/90"
+                  className="h-10 min-w-[143px] shrink-0 gap-2 rounded-lg border border-black bg-black px-5 text-sm font-medium text-white hover:bg-black/90"
                 >
                   {t("export.label")}
                   <ChevronDown className="h-4 w-4 opacity-80" />
@@ -243,9 +224,34 @@ export function StatisticsPageView({ section }: Props) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+
+          <nav
+            className="flex max-w-[960px] flex-wrap gap-2"
+            aria-label={t("sectionsNavAria")}
+          >
+            {SECTION_NAV.map((item) => {
+              const Icon = item.icon;
+              const active = activeSection === item.segment;
+              return (
+                <Link
+                  key={item.segment}
+                  href={ROUTES.STATISTICS.SECTION(item.segment)}
+                  className={cn(
+                    "inline-flex h-9 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors",
+                    active
+                      ? "border-black bg-black text-white shadow-sm"
+                      : "border-border bg-white text-foreground hover:bg-white/90"
+                  )}
+                >
+                  <Icon className="h-4 w-4 shrink-0 opacity-90" />
+                  {t(`nav.${item.key}` as "nav.biens")}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
           <StatisticsFiltersPanel
             section={activeSection}
             filters={filters}
