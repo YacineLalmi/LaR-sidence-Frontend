@@ -1,5 +1,6 @@
 import ApiService from "./api.service";
 import { validateResponseData } from "@/lib/utils";
+import { PasswordResetForm } from "@/schemas/profile/PasswordReset.schema";
 import { LoginFormData, LoginResponse, LoginResponseSchema } from "@/schemas/auth/auth.schema";
 import { ForgotPasswordDataForm } from "@/schemas/auth/forget-password-form.schema";
 import { ResetPasswordDataForm } from "@/schemas/auth/reset-password-form.schema";
@@ -10,6 +11,7 @@ const END_POINTS = {
   logout: "/auth/logout",
   forgotPassword: "/auth/forgot-password",
   resetPassword: "/auth/reset-password",
+  profileResetPassword: "/profile/reset-password",
 };
 
 export const AuthService = {
@@ -43,5 +45,16 @@ export const AuthService = {
 
   resetPassword: async (data: ResetPasswordDataForm): Promise<void> => {
     await ApiService.post({ endpoint: END_POINTS.resetPassword, body: data });
+  },
+
+  profileChangePassword: async (data: PasswordResetForm): Promise<void> => {
+    await ApiService.post({
+      endpoint: END_POINTS.profileResetPassword,
+      body: {
+        current_password: data.current_password,
+        new_password: data.new_password,
+        new_password_confirmation: data.new_password_confirmation,
+      },
+    });
   },
 };

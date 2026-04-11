@@ -2,6 +2,7 @@ import ApiService from "./api.service";
 import { PaginatedResponse, QueryParams } from "@/lib/definitions";
 import { validateResponseData } from "@/lib/utils";
 import { ListItem, ListItemSchema } from "@/schemas/global.schema";
+import { ProfileForm } from "@/schemas/users/profile-form.schema";
 import { UserForm } from "@/schemas/users/user-form.schema";
 import { User, UserSchema } from "@/schemas/users/user.schema";
 import z from "zod";
@@ -11,6 +12,7 @@ const END_POINTS = {
   findMany: "/configurations/users",
   agentsList: "/lists/agents",
   profile: "/profile",
+  updateProfile: "/profile",
   findOne: (id: string) => `/configurations/users/${id}`,
   update: (id: string) => `/configurations/users/${id}`,
   updateColor: (id: string) => `/configurations/users/color/${id}`,
@@ -71,11 +73,21 @@ export const UserService = {
   profile: async (): Promise<User> => {
     const response = await ApiService.get<User>({
       endpoint: END_POINTS.profile,
+      query: { include: "roles" },
     });
 
     const validatedResponseData = validateResponseData<User>(response.data, UserSchema);
 
     return validatedResponseData;
+  },
+
+  updateProfile: async (data: ProfileForm): Promise<User> => {
+    const response = await ApiService.put<User>({
+      endpoint: END_POINTS.updateProfile,
+      body: data,
+    });
+
+    return validateResponseData<User>(response.data, UserSchema);
   },
 
   update: async (data: UserForm, id: string): Promise<User> => {

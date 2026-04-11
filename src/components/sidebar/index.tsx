@@ -70,9 +70,11 @@ export function SideBar() {
       />
       <SidebarHeader className=" py-[5rem]">
         <SidebarMenuItem className="list-none">
-          <SidebarMenuButton>
-            <Image src={logo} alt="Logo" width={15} />
-            La Résidence
+          <SidebarMenuButton asChild>
+            <Link href={ROUTES.PROFILE.ROOT} className="flex items-center gap-2">
+              <Image src={logo} alt="Logo" width={15} />
+              La Résidence
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarHeader>

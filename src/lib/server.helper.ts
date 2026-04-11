@@ -3,7 +3,7 @@
 import { ErrorCodes } from "@/constants/error-codes";
 import { AuthService } from "@/services/auth.service";
 import { addHours, differenceInSeconds } from "date-fns";
-import { ForbiddenError, NotFoundError, ResponseValidationError, UnauthorizedError } from "./errors";
+import { ForbiddenError, NotFoundError, ResponseValidationError, ServerError, UnauthorizedError } from "./errors";
 import { refreshTokenAction } from "@/actions/authentication/refresh.action";
 
 // Get encryption key and ensure it's 32 bytes (256 bits) for AES-256-GCM
@@ -162,6 +162,25 @@ export async function refreshTokens(): Promise<boolean> {
   }
 }
 
+/** Node/undici often put syscall codes on `cause`; some builds use `code` or a generic "fetch failed" message. */
+function isBackendUnreachableError(error: unknown): boolean {
+  const codes = new Set([
+    "ECONNREFUSED",
+    "ECONNRESET",
+    "ETIMEDOUT",
+    "UND_ERR_CONNECT_TIMEOUT",
+    "UND_ERR_SOCKET",
+    "EHOSTUNREACH",
+    "ENOTFOUND",
+  ]);
+  const e = error as { cause?: { code?: string }; code?: string; message?: string };
+  if (e?.cause?.code && codes.has(e.cause.code)) return true;
+  if (e?.code && codes.has(e.code)) return true;
+  const msg = typeof e?.message === "string" ? e.message : "";
+  if (/fetch failed|ECONNREFUSED|connect ECONNREFUSED/i.test(msg)) return true;
+  return false;
+}
+
 export const handleServerActionError = async (error: any) => {
   if (error instanceof ResponseValidationError) {
     return {
@@ -183,15 +202,22 @@ export const handleServerActionError = async (error: any) => {
       errorMessage: error.message,
       errorCode: ErrorCodes.RESOURCE_NOT_FOUND,
     };
-  } else if (["ECONNREFUSED", "UND_ERR_CONNECT_TIMEOUT", "EHOSTUNREACH"].includes(error?.cause?.code)) {
+  } else if (error instanceof ServerError) {
+    return {
+      errorMessage: error.message,
+      errorCode: ErrorCodes.SERVER_ERROR,
+    };
+  } else if (isBackendUnreachableError(error)) {
     return {
       errorMessage: "Erreur de connexion : impossible de se connecter au serveur",
       errorCode: ErrorCodes.CONNECTION_ERROR,
     };
   }
 
+  const fallback =
+    typeof error?.message === "string" && error.message.length > 0 ? error.message : "Erreur inconnue";
   return {
-    errorMessage: "Erreur inconnue",
+    errorMessage: fallback,
     errorCode: ErrorCodes.UKNOWN_ERROR,
   };
 };

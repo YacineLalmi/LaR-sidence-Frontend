@@ -1,1 +1,56 @@
-{}
+{
+  "title": "Profile management",
+  "pageTitle": "Profile & Settings",
+  "buttons": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "sections": {
+    "accountSecurity": "Account & security",
+    "displayAccessibility": "Display & accessibility",
+    "changePassword": "Change password",
+    "language": "Language"
+  },
+  "fields": {
+    "lastName": "Last name",
+    "firstName": "First name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal code",
+    "username": "Username"
+  },
+  "placeholders": {
+    "address": "—",
+    "city": "—",
+    "postalCode": "—"
+  },
+  "hints": {
+    "addressFields": "These fields will be available in a future version."
+  },
+  "messages": {
+    "profileUpdated": "Profile updated.",
+    "passwordChanged": "Password changed.",
+    "updateFailed": "Update failed.",
+    "passwordChangeFailed": "Could not change password."
+  },
+  "passwordDialog": {
+    "title": "Change password",
+    "description": "Enter your current password and your new password.",
+    "submit": "Confirm"
+  },
+  "form": {
+    "label": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password"
+    },
+    "placeholder": {
+      "currentPassword": "Enter your current password",
+      "newPassword": "Enter your new password",
+      "confirmNewPassword": "Confirm your new password"
+    }
+  }
+}

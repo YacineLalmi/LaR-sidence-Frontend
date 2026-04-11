@@ -1,5 +1,46 @@
 {
-  "title": "Gestion de Profile",
+  "title": "Gestion de profil",
+  "pageTitle": "Profil & Paramètres",
+  "buttons": {
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "sections": {
+    "accountSecurity": "Compte & Sécurité",
+    "displayAccessibility": "Affichage & Accessibilité",
+    "changePassword": "Changer le mot de passe",
+    "language": "Langue"
+  },
+  "fields": {
+    "lastName": "Nom",
+    "firstName": "Prénom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "username": "Nom d'utilisateur"
+  },
+  "placeholders": {
+    "address": "—",
+    "city": "—",
+    "postalCode": "—"
+  },
+  "hints": {
+    "addressFields": "Ces champs seront disponibles dans une prochaine version."
+  },
+  "messages": {
+    "profileUpdated": "Profil mis à jour.",
+    "passwordChanged": "Mot de passe modifié.",
+    "updateFailed": "La mise à jour a échoué.",
+    "passwordChangeFailed": "Impossible de modifier le mot de passe."
+  },
+  "passwordDialog": {
+    "title": "Changer le mot de passe",
+    "description": "Saisissez votre mot de passe actuel puis le nouveau mot de passe.",
+    "submit": "Confirmer"
+  },
   "form": {
     "label": {
       "currentPassword": "Mot de passe actuel",
