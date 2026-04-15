@@ -1,22 +1,33 @@
 import z from "zod";
-import { RoleSchema } from "../roles/role.schema";
-import { ColorSchema } from "../colors/color.schema";
 
-export const UserSchema = z.object({
-  id: z.string(),
-  last_name: z.string(),
-  first_name: z.string(),
-  phonenumber: z.string(),
-  is_active: z.boolean(),
-  username: z.string(),
-  email: z.string(),
-  role: RoleSchema.optional(),
-  color: ColorSchema.optional(),
-  color_id: z.string().optional(),
-  role_id: z.string(),
-  created_at: z.string(),
-  updated_at: z.iso.datetime().nullable(),
-  deleted_at: z.iso.datetime().nullable(),
-});
+/** Dates API Laravel (souvent ISO, parfois sans timezone stricte). */
+const apiDateTime = z.union([z.string(), z.null()]).optional();
+
+export const UserSchema = z
+  .object({
+    id: z.union([z.string(), z.number()]).transform((v) => String(v)),
+    last_name: z.string(),
+    first_name: z.string(),
+    phonenumber: z.union([z.string(), z.null()]).optional(),
+    is_active: z.coerce.boolean(),
+    username: z.string(),
+    email: z.string(),
+    /** Présent seulement si `include=roles` ; structure variable (permissions, dates). */
+    role: z.any().optional().nullable(),
+    /** Forme variable selon ColorResource / traductions — ne pas valider strictement en liste. */
+    color: z.any().optional().nullable(),
+    color_id: z
+      .union([z.string(), z.number(), z.null()])
+      .optional()
+      .transform((v) => (v == null ? undefined : String(v))),
+    role_id: z
+      .union([z.string(), z.number(), z.null()])
+      .optional()
+      .transform((v) => (v == null || v === "" ? "" : String(v))),
+    created_at: z.union([z.string(), z.null()]),
+    updated_at: apiDateTime,
+    deleted_at: apiDateTime,
+  })
+  .passthrough();
 
 export type User = z.infer<typeof UserSchema>;

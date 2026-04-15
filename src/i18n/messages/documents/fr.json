@@ -1,0 +1,119 @@
+{
+  "title": "Gestion des documents",
+  "description": "Référentiel sécurisé pour tous les documents",
+  "add": "Ajouter",
+  "upload": "Téléverser des documents",
+  "filters": "Filtres",
+  "apply": "Appliquer",
+  "filter_sheet": {
+    "close": "Fermer",
+    "document_name": "Nom du document",
+    "document_name_placeholder": "Nom du fichier…",
+    "agent_name": "Nom de l’agent",
+    "date_label": "Date d’ajout / modification",
+    "document_type": "Type du document",
+    "select_option": "Sélectionner une option",
+    "apply": "Appliquer filtres",
+    "reset": "Réinitialiser les filtres",
+    "types": {
+      "pdf": "PDF",
+      "doc": "DOC",
+      "docx": "DOCX",
+      "xls": "XLS",
+      "xlsx": "XLSX",
+      "jpg": "JPG",
+      "jpeg": "JPEG",
+      "png": "PNG",
+      "gif": "GIF",
+      "svg": "SVG"
+    }
+  },
+  "search_placeholder": "Rechercher par nom…",
+  "search_placeholder_wide": "Tapez n’importe quoi…",
+  "view_grid": "Grille",
+  "view_table": "Liste",
+  "files_section": {
+    "title": "Fichiers"
+  },
+  "folders": {
+    "title": "Dossiers",
+    "card_all": "Tous les documents",
+    "card_all_subtitle": "Vue globale de la bibliothèque",
+    "card_subtitle": "{size} · {count} fichier(s)",
+    "open": "Ouvrir",
+    "create": "Nouveau dossier",
+    "all": "Tous les documents",
+    "filter_hint": "Filtrer par dossier",
+    "empty": "Aucun dossier. Créez-en un pour classer vos fichiers.",
+    "dialog_title": "Créer un dossier",
+    "dialog_name": "Nom du dossier",
+    "dialog_submit": "Créer",
+    "created": "Dossier créé",
+    "delete": "Supprimer le dossier",
+    "delete_confirm_title": "Supprimer ce dossier ?",
+    "delete_confirm_hint": "Les documents resteront accessibles sans dossier.",
+    "deleted": "Dossier supprimé"
+  },
+  "columns": {
+    "name": "Nom du document",
+    "folder": "Dossier",
+    "type": "Type",
+    "date": "Date",
+    "updated": "Dernière modification",
+    "owner": "Ajouté par",
+    "actions": "Actions",
+    "size": "Taille du document",
+    "source": "Source",
+    "confidential": "Confidentiel"
+  },
+  "source": {
+    "entity_form": "Fiche",
+    "library_manual": "Bibliothèque"
+  },
+  "actions": {
+    "preview": "Prévisualiser",
+    "download": "Télécharger",
+    "delete": "Supprimer",
+    "share": "Partager",
+    "bulk_download": "Télécharger la sélection"
+  },
+  "preview_dialog": {
+    "print": "Imprimer",
+    "close_aria": "Fermer la prévisualisation"
+  },
+  "share_modal": {
+    "title": "Partager ce fichier",
+    "description": "Envoyez un lien de téléchargement sécurisé par email ou via WhatsApp.",
+    "email_placeholder": "Email",
+    "send": "Envoyer",
+    "whatsapp": "Envoyer sur WhatsApp",
+    "close": "Fermer",
+    "email_required": "Indiquez une adresse email.",
+    "email_sent": "Email envoyé",
+    "error": "Une erreur est survenue",
+    "whatsapp_message": "Document « {name} » — lien sécurisé (valable 7 jours) : {url}"
+  },
+  "upload_dialog": {
+    "title": "Ajouter un document",
+    "drop": "Glissez-déposez des fichiers ici ou cliquez pour parcourir",
+    "display_name": "Nom d’affichage",
+    "confidential": "Confidentiel",
+    "folder": "Dossier",
+    "folder_placeholder": "Choisir un dossier",
+    "no_folder": "Sans dossier (racine)",
+    "link_entity": "Associer à une fiche (optionnel)",
+    "entity_type": "Type",
+    "entity_id": "Identifiant"
+  },
+  "delete_confirm": {
+    "title": "Supprimer ce document ?",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
+  },
+  "messages": {
+    "uploaded": "Document ajouté",
+    "deleted": "Document supprimé",
+    "download_ready": "Téléchargement lancé",
+    "error": "Une erreur est survenue"
+  }
+}

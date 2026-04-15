@@ -7,6 +7,11 @@ export const ROUTES = {
 
   DASHBOARD: "/dashboard",
 
+  STATISTICS: {
+    ROOT: "/statistics",
+    SECTION: (section: string) => `/statistics/${section}`,
+  },
+
   BIENS: {
     ROOT: "/biens",
     CREATE: "/biens/create",
@@ -42,18 +47,12 @@ export const ROUTES = {
     EDIT: (id: string | number) => `/events/${id}`,
   },
 
-  BILLS: {
-    ROOT: "/bills",
-    CREATE: "/bills/create",
-    DETAIL: (id: string | number) => `/bills/${id}`,
-    EDIT: (id: string | number) => `/bills/${id}`,
-  },
-
   DOCUMENTS: {
     ROOT: "/documents",
-    CREATE: "/documents/create",
-    DETAIL: (id: string | number) => `/documents/${id}`,
-    EDIT: (id: string | number) => `/documents/${id}`,
+  },
+
+  NOTIFICATIONS: {
+    ROOT: "/notifications",
   },
 
   SETTINGS: {
@@ -104,6 +103,9 @@ export const ROUTES = {
       TYPES: {
         ROOT: "/settings/offers/types",
       },
+      SOURCES: {
+        ROOT: "/settings/offers/sources",
+      },
     },
 
     DEMANDS: {
@@ -149,6 +151,9 @@ export const ROUTES = {
       ADD: "/settings/roles/add",
       DETAIL: (id: string | number) => `/settings/roles/${id}`,
       EDIT: (id: string | number) => `/settings/roles/${id}`,
+    },
+    NOTIFICATIONS: {
+      ROOT: "/settings/notifications",
     },
   },
 

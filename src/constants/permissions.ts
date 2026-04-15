@@ -98,4 +98,17 @@ export const PERMISSIONS = {
   // Colors
   VIEW_COLORS: "VC",
   MANAGE_COLORS: "MC",
+
+  // Documents (library)
+  VIEW_DOCUMENTS: "VDOC",
+  MANAGE_DOCUMENTS: "MDOC",
+  VIEW_CONFIDENTIAL_DOCUMENTS: "VDOCC",
+
+  // Notifications (centre + moteur)
+  VIEW_NOTIFICATIONS: "VN",
+  MANAGE_NOTIFICATIONS: "MN",
+
+  // Statistics & reports
+  VIEW_STATISTICS: "VSTAT",
+  EXPORT_STATISTICS: "MSTAT",
 };

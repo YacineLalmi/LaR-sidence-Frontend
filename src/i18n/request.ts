@@ -32,8 +32,8 @@ async function loadMessagesRecursively(baseDir: string, locale: string): Promise
       // Recursively load messages from subdirectory
       messages[entry.name] = await loadMessagesRecursively(fullPath, locale);
     } else if (entry.isFile() && entry.name === `${locale}.json`) {
-      // Load the locale file and merge its contents into the current level
-      const fileContent = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+      const raw = fs.readFileSync(fullPath, "utf-8").trim();
+      const fileContent = raw.length === 0 ? {} : JSON.parse(raw);
       Object.assign(messages, fileContent);
     }
   }

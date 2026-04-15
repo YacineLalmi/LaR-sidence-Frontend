@@ -1,0 +1,117 @@
+{
+  "title": "Paramètres des notifications",
+  "subtitle": "Pour chaque type d’alerte : canaux, portée et délais utilisés par les tâches planifiées.",
+  "save": "Enregistrer",
+  "saved": "Paramètres enregistrés",
+  "save_error": "Mise à jour impossible",
+  "missing_category_hint": "Cette catégorie n’est pas encore en base. Rechargez la page ou appelez l’API pour créer les paramètres par défaut.",
+  "missing_rule_hint": "Ce paramètre n’est pas encore en base. Rechargez la page.",
+  "sections": {
+    "categories": "Alertes par catégorie",
+    "categories_hint": "Chaque bloc regroupe les canaux (in-app, e-mail), la portée et les délais associés à ce type d’alerte. Les e-mails partent si l’utilisateur a une adresse. Désactiver un délai utilise la valeur par défaut côté serveur.",
+    "other": "Autres clés"
+  },
+  "fields": {
+    "thresholds": "Délais et seuils",
+    "channels_heading": "Où envoyer les alertes",
+    "channels_hint": "Au moins un canal doit être activé pour recevoir ce type d’alerte.",
+    "enabled": "Activé",
+    "channel_in_app": "Dans l’application",
+    "channel_in_app_hint": "Notification dans le centre de messages.",
+    "channel_email": "Par e-mail",
+    "channel_email_hint": "Envoi à l’adresse e-mail du compte (si renseignée).",
+    "scope": "Qui est concerné",
+    "scope_hint": "Filtre les destinataires côté serveur pour cette catégorie.",
+    "value": "Valeur",
+    "rule_apply": "Utiliser ce délai",
+    "rule_apply_hint": "Désactivé → le serveur applique sa valeur par défaut.",
+    "scope_admin": "Administrateurs",
+    "scope_agent": "Agents",
+    "scope_both": "Les deux"
+  },
+  "categories": {
+    "CONTRACT_EXPIRY": "Contrat & exclusivité",
+    "APPOINTMENTS_VISITS": "Rendez-vous & visites",
+    "AGENT_ACTIVITY": "Activité des agents",
+    "PROPERTY_PERFORMANCE": "Performance des biens",
+    "ACTION_FOLLOWUP": "Suivi demandes & offres",
+    "RENTAL_PROCESS": "Process location / signature",
+    "VISIT_FEEDBACK": "Retours de visite"
+  },
+  "categoryDescriptions": {
+    "CONTRACT_EXPIRY": "Échéances d’exclusivité et rappels liés aux contrats.",
+    "APPOINTMENTS_VISITS": "Rappels de rendez-vous et visites du jour.",
+    "AGENT_ACTIVITY": "Ex. calendrier vide sur une période donnée.",
+    "PROPERTY_PERFORMANCE": "Révision des prix, activité sur les biens.",
+    "ACTION_FOLLOWUP": "Relances sur demandes et offres en attente.",
+    "RENTAL_PROCESS": "Suivi après signature, état des lieux, visites liées au bail.",
+    "VISIT_FEEDBACK": "Mise à jour du statut des visites enregistrées."
+  },
+  "rules": {
+    "contract_expiry_offsets_days": {
+      "title": "Rappels avant fin d’exclusivité",
+      "desc": "Nombre de jours avant l’échéance pour chaque alerte (plusieurs valeurs possibles).",
+      "placeholder": "ex. 30, 7, 1"
+    },
+    "meeting_today_reminder_minutes": {
+      "title": "Marge de rappel RDV (jour même)",
+      "desc": "Texte d’information affiché dans le message (minutes avant le créneau).",
+      "placeholder": "30"
+    },
+    "empty_calendar_working_days_threshold": {
+      "title": "Seuil calendrier vide",
+      "desc": "Nombre de jours sans événement pour alerter (agents sans RDV).",
+      "placeholder": "2"
+    },
+    "social_post_no_interaction_days": {
+      "title": "Jours sans activité sur le bien",
+      "desc": "Si aucun événement récent sur le bien depuis X jours (performance).",
+      "placeholder": "10"
+    },
+    "visit_followup_after_minutes": {
+      "title": "Suivi visite (événement)",
+      "desc": "Minutes après la fin d’un événement « visite » avant alerte admin.",
+      "placeholder": "90"
+    },
+    "post_signature_admin_followup_hours": {
+      "title": "Relance admin après signature",
+      "desc": "Heures après un événement contenant « signature ».",
+      "placeholder": "4"
+    },
+    "post_edl_admin_followup_hours": {
+      "title": "Relance admin après EDL (réservé)",
+      "desc": "Paramètre conservé pour évolution du moteur.",
+      "placeholder": "4"
+    },
+    "edl_after_signature_hours": {
+      "title": "Rappel état des lieux",
+      "desc": "Heures après signature pour rappeler l’EDL.",
+      "placeholder": "24"
+    },
+    "exclusive_reminder_every_days": {
+      "title": "Périodicité rappel exclusivité",
+      "desc": "Un rappel tous les X jours depuis le début d’exclusivité.",
+      "placeholder": "15"
+    },
+    "price_revision_after_days": {
+      "title": "Révision des prix",
+      "desc": "Jours sans mise à jour de prix pour alerter.",
+      "placeholder": "30"
+    },
+    "demand_followup_offsets_hours": {
+      "title": "Relances demandes (heures)",
+      "desc": "Plusieurs délais en heures depuis la dernière mise à jour.",
+      "placeholder": "ex. 24, 72"
+    },
+    "offer_followup_after_hours": {
+      "title": "Relance offres",
+      "desc": "Heures sans traitement depuis la dernière mise à jour de l’offre.",
+      "placeholder": "24"
+    },
+    "sales_visit_status_reminder_every_hours": {
+      "title": "Rappel statut visite (modèle Visit)",
+      "desc": "Heures sans mise à jour du statut pour les visites non finalisées.",
+      "placeholder": "48"
+    }
+  }
+}

@@ -13,25 +13,9 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     path: "/forbidden",
     requireAuthentication: true,
   },
+  /** Hub: any signed-in user can open it; each sub-route still enforces its own permissions. */
   {
     path: "/settings",
-    permissions: [
-      PERMISSIONS.VIEW_USERS,
-      PERMISSIONS.VIEW_BIEN_CHARACTERISTICS,
-      PERMISSIONS.VIEW_BIEN_STATUSES,
-      PERMISSIONS.VIEW_BIEN_TYPES,
-      PERMISSIONS.VIEW_BIEN_PRIORITIES,
-      PERMISSIONS.VIEW_CLIENT_TYPES,
-      PERMISSIONS.VIEW_CLIENT_STATUSES,
-      PERMISSIONS.VIEW_CLIENT_SOURCES,
-      PERMISSIONS.VIEW_OFFER_TYPES,
-      PERMISSIONS.VIEW_OFFER_STATUSES,
-      PERMISSIONS.VIEW_COLORS,
-      PERMISSIONS.VIEW_COMMUNES,
-      PERMISSIONS.VIEW_WILAYAS,
-      PERMISSIONS.VIEW_ROLES,
-      PERMISSIONS.VIEW_TRANSACTION_TYPES,
-    ],
     requireAuthentication: true,
   },
 
@@ -89,6 +73,11 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
   {
     path: ROUTES.SETTINGS.OFFERS.STATUSES.ROOT,
     permissions: [PERMISSIONS.VIEW_OFFER_STATUSES],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.OFFERS.SOURCES.ROOT,
+    permissions: [PERMISSIONS.VIEW_CLIENT_SOURCES],
     requireAuthentication: true,
   },
   {
@@ -167,6 +156,20 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     path: ROUTES.DASHBOARD,
     requireAuthentication: true,
   },
+  {
+    path: ROUTES.STATISTICS.ROOT,
+    permissions: [PERMISSIONS.VIEW_STATISTICS],
+    requireAuthentication: true,
+  },
+  {
+    path: "/statistics/[section]",
+    permissions: [PERMISSIONS.VIEW_STATISTICS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.PROFILE.ROOT,
+    requireAuthentication: true,
+  },
 
   {
     path: ROUTES.CLIENTS.ROOT,
@@ -227,6 +230,21 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
   {
     path: ROUTES.DEMANDS.EDIT('[id]'),
     permissions: [PERMISSIONS.MANAGE_DEMANDS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.DOCUMENTS.ROOT,
+    permissions: [PERMISSIONS.VIEW_DOCUMENTS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.NOTIFICATIONS.ROOT,
+    permissions: [PERMISSIONS.VIEW_NOTIFICATIONS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
+    permissions: [PERMISSIONS.MANAGE_NOTIFICATIONS],
     requireAuthentication: true,
   },
   {

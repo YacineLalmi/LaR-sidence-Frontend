@@ -1,5 +1,5 @@
 import SettingCard from "./_components/setting-card";
-import { Building2, Calendar1, CreditCard, Map } from "lucide-react";
+import { Bell, Building2, Calendar1, CreditCard, Map } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { SettingsItem } from "@/types/settings";
 import { ROUTES } from "@/constants/routes";
@@ -26,6 +26,11 @@ const CONFIG_MODULES: SettingsItem[] = [
         id: "colors",
         title: TRANSLATIONS_KEYS_2.SETTINGS.COLORS.TITLE,
         link: ROUTES.SETTINGS.COLORS.ROOT,
+      },
+      {
+        id: "notifications",
+        title: "Notifications",
+        link: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
       },
     ],
   },
@@ -141,6 +146,19 @@ const CONFIG_MODULES: SettingsItem[] = [
         id: "event_colors",
         title: TRANSLATIONS_KEYS_2.SETTINGS.EVENTS.COLORS,
         link: ROUTES.SETTINGS.EVENTS.COLORS.ROOT,
+      },
+    ],
+  },
+  {
+    id: "notifications_module",
+    title: "Notifications",
+    description: "Alertes et rappels automatiques",
+    icon: Bell,
+    subs: [
+      {
+        id: "notification_settings",
+        title: "Paramètres notifications",
+        link: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
       },
     ],
   },

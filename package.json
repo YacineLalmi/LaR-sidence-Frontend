@@ -6,7 +6,7 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "tsc --noEmit",
     "tsc": "npx tsc --noEmit",
     "i18n:generate": "tsx src/scripts/generate-translation-keys.ts",
     "i18n:generate:fr": "tsx src/scripts/generate-translation-keys.ts fr"

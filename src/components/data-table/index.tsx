@@ -16,7 +16,7 @@ import CustomPagination from "./_components/custom-pagination";
 import { useCallback, useEffect, useState } from "react";
 import { DeleteConfirmationDialog } from "../ui/delete-confirmation-dialog";
 import CustomButton from "../ui/custom-button";
-import { Trash2 } from "lucide-react";
+import { Download, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
@@ -33,6 +33,9 @@ interface DataTableProps<TData, TValue> {
     visiblePages?: number;
   };
   onDeleteMultiple?: (ids: string[]) => Promise<FormState>;
+  /** Optional second bulk action (e.g. ZIP download for documents). */
+  onBulkDownload?: (ids: string[]) => void | Promise<void>;
+  bulkDownloadLabel?: string;
   footer?: {
     left?: React.ReactNode;
     right?: React.ReactNode;
@@ -52,6 +55,7 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
+    getRowId: (row) => String((row as { id?: string }).id ?? ""),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualSorting: true,
@@ -139,7 +143,20 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
             />
           )}
         </div>
-        <div className="w-2/12 flex justify-end">
+        <div className="w-2/12 flex justify-end gap-2 items-center">
+          {props.onBulkDownload && (
+            <CustomButton
+              text={props.bulkDownloadLabel ?? "Download"}
+              Icon={Download}
+              variant="outline"
+              disabled={selectedRows.length === 0}
+              className="cursor-pointer rounded-sm"
+              onClick={async () => {
+                const ids = selectedRows.map((row) => String((row.original as { id: string }).id));
+                await props.onBulkDownload?.(ids);
+              }}
+            />
+          )}
           {props.onDeleteMultiple && (
             <DeleteConfirmationDialog
               title={translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.DELETE_SELECTION_MESSAGE, {

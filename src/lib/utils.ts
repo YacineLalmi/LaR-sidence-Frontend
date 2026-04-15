@@ -14,7 +14,30 @@ export function transformQuery(query: QueryParams | undefined) {
   const params = new URLSearchParams(query);
   const transformed = new URLSearchParams();
 
-  const passthroughKeys = ["page", "perPage", "sort", "needle", "refresh_token", "include", "startDate", "endDate"];
+  const passthroughKeys = [
+    "page",
+    "perPage",
+    "sort",
+    "needle",
+    "refresh_token",
+    "include",
+    "startDate",
+    "endDate",
+    "date_from",
+    "date_to",
+    "granularity",
+    "breakdown",
+    "agent_ids",
+    "bien_type_ids",
+    "bien_status_ids",
+    "wilaya_ids",
+    "commune_ids",
+    "offer_status_ids",
+    "demand_status_ids",
+    "payment_status_ids",
+    "client_source_ids",
+    "demand_source_ids",
+  ];
 
   for (const [key, value] of params.entries()) {
     if (passthroughKeys.includes(key)) {
@@ -25,6 +48,19 @@ export function transformQuery(query: QueryParams | undefined) {
   }
 
   return transformed.toString();
+}
+
+/** Laravel often returns 422 + { message } or { errors: { field: string[] } }. */
+function getApiErrorMessage(content: unknown): string {
+  const c = content as { message?: unknown; errors?: Record<string, string[]> };
+  if (typeof c?.message === "string" && c.message.length > 0) return c.message;
+  const errors = c?.errors;
+  if (errors && typeof errors === "object") {
+    const firstKey = Object.keys(errors)[0];
+    const first = firstKey != null ? errors[firstKey] : undefined;
+    if (Array.isArray(first) && typeof first[0] === "string") return first[0];
+  }
+  return "La requête a échoué.";
 }
 
 export const handleApiResponse = async <Data>(response: Response): Promise<ApiResponse<Data>> => {
@@ -39,19 +75,26 @@ export const handleApiResponse = async <Data>(response: Response): Promise<ApiRe
       return responseBody;
     }
   } else {
-    const content = await response.json();
+    let content: unknown;
+    try {
+      content = await response.json();
+    } catch {
+      content = {};
+    }
+    const msg = getApiErrorMessage(content);
     switch (response.status) {
       case 401:
-        throw new UnauthorizedError();
+        throw new UnauthorizedError(typeof (content as { message?: string }).message === "string" ? (content as { message: string }).message : undefined);
       case 403:
         throw new ForbiddenError();
       case 404:
         throw new NotFoundError();
       case 400:
-        throw new ResponseValidationError(content.message);
+      case 422:
+        throw new ResponseValidationError(msg);
 
       default:
-        throw new ServerError();
+        throw new ServerError(msg);
     }
   }
 };
