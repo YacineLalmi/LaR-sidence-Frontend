@@ -1,15 +1,4 @@
-"use client";
-import {
-  Briefcase,
-  Building2,
-  CalendarDays,
-  FileText,
-  FolderArchive,
-  Home,
-  Mails,
-  Settings,
-  User2,
-} from "lucide-react";
+import { BarChart3, Bell, Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
 
 import {
   Sidebar,
@@ -24,76 +13,73 @@ import {
 
 import Image from "next/image";
 import logo from "@/assests/images/logo-black.png";
+import Settings from "../navbar/components/settings";
 import Link from "next/link";
 import Logout from "./_components/logout";
 import { ROUTES } from "@/constants/routes";
-import { useLocale, useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { getMainColorOfGraphicItem } from "recharts/types/util/ChartUtils";
+
+const items = [
+  {
+    title: "Tableau de bord",
+    url: ROUTES.DASHBOARD,
+    icon: Home,
+  },
+  {
+    title: "Statistiques",
+    url: ROUTES.STATISTICS.SECTION("biens"),
+    icon: BarChart3,
+  },
+  {
+    title: "Biens",
+    url: ROUTES.BIENS.ROOT,
+    icon: Building2,
+  },
+  {
+    title: "Calendrier",
+    url: ROUTES.EVENTS.ROOT,
+    icon: CalendarDays,
+  },
+  {
+    title: "Offers",
+    url: ROUTES.OFFERS.ROOT,
+    icon: Mails,
+  },
+  {
+    title: "Clients",
+    url: ROUTES.CLIENTS.ROOT,
+    icon: User2,
+  },
+  {
+    title: "Demandes",
+    url: ROUTES.DEMANDS.ROOT,
+    icon: FileText,
+  },
+  {
+    title: "Documents",
+    url: ROUTES.DOCUMENTS.ROOT,
+    icon: FolderOpen,
+  },
+  {
+    title: "Notifications",
+    url: ROUTES.NOTIFICATIONS.ROOT,
+    icon: Bell,
+  },
+];
 
 export function SideBar() {
-  const translation = useTranslations();
-  const locale = useLocale();
-  const isRTL = locale === "ar";
-
-  const items = useMemo(
-    () => [
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DASHBOARD),
-        url: ROUTES.DASHBOARD,
-        icon: Home,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.PROPERTIES),
-        url: ROUTES.BIENS.ROOT,
-        icon: Building2,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.CALENDAR),
-        url: ROUTES.EVENTS.ROOT,
-        icon: CalendarDays,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.OFFERS),
-        url: ROUTES.OFFERS.ROOT,
-        icon: Mails,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.CLIENTS),
-        url: ROUTES.CLIENTS.ROOT,
-        icon: User2,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DEMANDS),
-        url: ROUTES.DEMANDS.ROOT,
-        icon: FileText,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.BILLS),
-        url: ROUTES.DEMANDS.ROOT,
-        icon: Briefcase,
-      },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DOCUMENTS),
-        url: ROUTES.DOCUMENTS.ROOT,
-        icon: FolderArchive,
-      },
-    ],
-    [],
-  );
-
   return (
-    <Sidebar className="items-center" collapsible="icon" side={isRTL ? "right" : "left"}>
+    <Sidebar className="items-center" collapsible="icon">
       <SidebarTrigger
-        className={`absolute top-1/5 ${isRTL ? "-left-2" : "-right-2"} transform -translate-y-1/2 px-4 py- rounded`}
+        className="absolute top-1/5 -right-2 transform  -translate-y-1/2 px-4 py- rounded"
         style={{ background: "#C8AB68" }}
       />
-      <SidebarHeader className="py-[5rem]">
+      <SidebarHeader className=" py-[5rem]">
         <SidebarMenuItem className="list-none">
-          <SidebarMenuButton>
-            <Image src={logo} alt="Logo" width={15} />
-            La Résidence
+          <SidebarMenuButton asChild>
+            <Link href={ROUTES.PROFILE.ROOT} className="flex items-center gap-2">
+              <Image src={logo} alt="Logo" width={15} />
+              La Résidence
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarHeader>
@@ -111,12 +97,12 @@ export function SideBar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="py-7">
+      <SidebarFooter className=" py-7">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton asChild>
-            <Link href={ROUTES.SETTINGS.ROOT}>
+            <Link href="/settings">
               <Settings />
-              <span>{translation(TRANSLATIONS_KEYS_2.SIDEMENU.SETTINGS)}</span>
+              <span>Paramètres</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
@@ -130,4 +116,3 @@ export function SideBar() {
     </Sidebar>
   );
 }
-
