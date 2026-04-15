@@ -11,7 +11,6 @@ import { FormItem, FormLabel, FormMessage, FormControl, FormField } from "@/comp
 import { cn } from "@/lib/utils";
 import { Calendar1, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 type InputFieldProps<T extends FieldValues> = {
@@ -66,9 +65,9 @@ export function InputDateRangeField<T extends FieldValues>({
           if (from && to) {
             return `${formatDisplayDate(from)} - ${formatDisplayDate(to)}`;
           } else if (from) {
-            return `${translation(TRANSLATIONS_KEYS.COMMON.FROM)}: ${formatDisplayDate(from)}`;
+            return `${translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.FROM)}: ${formatDisplayDate(from)}`;
           } else if (to) {
-            return `${translation(TRANSLATIONS_KEYS.COMMON.TO)}: ${formatDisplayDate(to)}`;
+            return `${translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.TO)}: ${formatDisplayDate(to)}`;
           }
 
           return null;
@@ -97,7 +96,7 @@ export function InputDateRangeField<T extends FieldValues>({
                   >
                     {displayValue || (
                       <span className="text-gray-500">
-                        {placeholder || translation(TRANSLATIONS_KEYS.COMMON.SELECT_A_PERIOD)}
+                        {placeholder || translation(TRANSLATIONS_KEYS_2.EVENTS.FORM.LABELS.SELECT_PERIOD)}
                       </span>
                     )}
                     <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">

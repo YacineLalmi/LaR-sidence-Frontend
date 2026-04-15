@@ -1,0 +1,93 @@
+{
+  "title": "التقويم",
+  "description": "إدارة أحداث التقويم",
+  "view": {
+    "month": "شهر",
+    "week": "أسبوع"
+  },
+  "actions": {
+    "add_event": "إضافة حدث",
+    "create_event": "إنشاء حدث",
+    "edit_event": "تعديل حدث",
+    "delete_event": "حذف هذا الحدث",
+    "cancel": "إلغاء",
+    "publish": "نشر",
+    "save": "حفظ",
+    "confirm": "تأكيد"
+  },
+  "form": {
+    "titles": {
+      "create": "إنشاء حدث",
+      "update": "تعديل حدث",
+      "delete": "حذف حدث"
+    },
+    "messages": {
+      "created": "تم إنشاء الحدث بنجاح",
+      "updated": "تم تعديل الحدث بنجاح",
+      "deleted": "تم حذف الحدث بنجاح",
+      "failed_creation": "فشل إنشاء الحدث",
+      "failed_update": "فشل تعديل الحدث",
+      "failed_deletion": "فشل حذف الحدث",
+      "delete_confirmation": "هل أنت متأكد من رغبتك في حذف هذا الحدث؟"
+    },
+    "buttons": {
+      "create": "إنشاء حدث",
+      "update": "تعديل الحدث",
+      "delete": "حذف الحدث",
+      "add_field": "إضافة حقل"
+    },
+    "labels": {
+      "title": "عنوان الحدث",
+      "start_date": "تاريخ/وقت البداية",
+      "end_date": "تاريخ/وقت النهاية",
+      "type": "نوع الحدث",
+      "agent": "الوكلاء المشاركون",
+      "bien": "العقار المعني",
+      "client": "العميل المعني",
+      "visitor_name": "اسم ولقب الزائر",
+      "visitor_phone": "هاتف الزائر",
+      "description": "الوصف",
+      "from": "من",
+      "to": "إلى",
+      "select_period": "اختر فترة زمنية"
+    },
+    "placeholders": {
+      "title": "أدخل عنوان الحدث",
+      "start_date": "اختر تاريخ ووقت البداية",
+      "end_date": "اختر تاريخ ووقت النهاية",
+      "type": "اختر النوع",
+      "agent": "اختر الوكلاء",
+      "bien": "اختر العقار",
+      "client": "اختر العميل",
+      "visitor_name": "أدخل اسم ولقب الزائر",
+      "visitor_phone": "أدخل رقم هاتف الزائر",
+      "description": "أدخل وصف الحدث"
+    }
+  },
+  "filter": {
+    "title": "تصفية الأحداث",
+    "labels": {
+      "agent": "الوكيل",
+      "date": "التاريخ",
+      "type": "نوع الحدث",
+      "bien": "العقار"
+    },
+    "placeholders": {
+      "agent": "اختر وكيلاً",
+      "date": "اختر تاريخاً",
+      "type": "اختر نوع الحدث",
+      "bien": "اختر عقاراً"
+    },
+    "buttons": {
+      "apply": "تطبيق الفلاتر"
+    }
+  },
+  "delete": {
+    "title": "حذف هذا الحدث",
+    "message": "هل أنت متأكد من رغبتك في حذف هذا الحدث؟"
+  },
+  "week": {
+    "prefix": "أسبوع"
+  },
+  "more": "أخرى"
+}

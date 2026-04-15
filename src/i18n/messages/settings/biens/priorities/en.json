@@ -1,1 +1,48 @@
-{}
+{
+  "title": "Property Priorities Configuration",
+  "description": "Manage property priorities used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Priority",
+      "update": "Modify a Priority",
+      "delete": "Delete a Priority"
+    },
+    "messages": {
+      "created": "Priority created successfully",
+      "updated": "Priority modified successfully",
+      "deleted": "Priority deleted successfully",
+      "failed_creation": "Failed to create Priority",
+      "failed_update": "Failed to modify Priority",
+      "failed_deletion": "Failed to delete Priority",
+      "delete_confirmation": "Delete this Priority (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Priority",
+      "update": "Modify the Priority",
+      "delete": "Delete the Priority"
+    },
+    "labels": {
+      "code": "Priority Code",
+      "name": "Priority Name",
+      "description": "Priority Description",
+      "color_id": "Priority Color",
+      "is_active": "Active Priority"
+    },
+    "placeholders": {
+      "code": "Insert the Priority code",
+      "name": "Insert the Priority name",
+      "description": "Priority description",
+      "color_id": "Choose a color",
+      "is_active": "Is the Priority active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "color_id": "Color",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

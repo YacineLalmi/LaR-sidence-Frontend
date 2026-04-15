@@ -1,1 +1,48 @@
-{}
+{
+  "title": "Property Status Configuration",
+  "description": "Manage property statuses used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Status",
+      "update": "Modify a Status",
+      "delete": "Delete a Status"
+    },
+    "messages": {
+      "created": "Status created successfully",
+      "updated": "Status modified successfully",
+      "deleted": "Status deleted successfully",
+      "failed_creation": "Failed to create status",
+      "failed_update": "Failed to modify status",
+      "failed_deletion": "Failed to delete status",
+      "delete_confirmation": "Delete this status (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Status",
+      "update": "Modify the Status",
+      "delete": "Delete the Status"
+    },
+    "labels": {
+      "code": "Status Code",
+      "name": "Status Name",
+      "description": "Status Description",
+      "colorId": "Status Color",
+      "isActive": "Active Status"
+    },
+    "placeholders": {
+      "code": "Insert the status code",
+      "name": "Insert the status name",
+      "description": "Status description",
+      "colorId": "Choose a color",
+      "isActive": "Is the status active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "colorId": "Color",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

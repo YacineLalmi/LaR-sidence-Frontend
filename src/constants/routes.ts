@@ -42,6 +42,20 @@ export const ROUTES = {
     EDIT: (id: string | number) => `/events/${id}`,
   },
 
+  BILLS: {
+    ROOT: "/bills",
+    CREATE: "/bills/create",
+    DETAIL: (id: string | number) => `/bills/${id}`,
+    EDIT: (id: string | number) => `/bills/${id}`,
+  },
+
+  DOCUMENTS: {
+    ROOT: "/documents",
+    CREATE: "/documents/create",
+    DETAIL: (id: string | number) => `/documents/${id}`,
+    EDIT: (id: string | number) => `/documents/${id}`,
+  },
+
   SETTINGS: {
     ROOT: "/settings",
 

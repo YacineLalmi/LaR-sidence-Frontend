@@ -1,64 +1,64 @@
 {
-  "title": "Configuration des Utilisateurs",
-  "description": "Gérer les utilisateurs de l'application",
+  "title": "Users Configuration",
+  "description": "Manage application users",
   "form": {
     "titles": {
-      "create": "Créer un utilisateur",
-      "update": "Modifier un utilisateur",
-      "delete": "Supprimer un utilisateur"
+      "create": "Create a User",
+      "update": "Modify a User",
+      "delete": "Delete a User"
     },
     "messages": {
-      "created": "Utilisateur créé avec succès",
-      "updated": "Utilisateur modifié avec succès",
-      "deleted": "Utilisateur supprimé avec succès",
-      "failed_creation": "Échec de la création de l'utilisateur",
-      "failed_update": "Échec de la modification de l'utilisateur",
-      "failed_deletion": "Échec de la suppression de l'utilisateur",
-      "delete_confirmation": "Supprimer cet utilisateur (ID: {id}) ?"
+      "created": "User created successfully",
+      "updated": "User modified successfully",
+      "deleted": "User deleted successfully",
+      "failed_creation": "Failed to create user",
+      "failed_update": "Failed to modify user",
+      "failed_deletion": "Failed to delete user",
+      "delete_confirmation": "Delete this user (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer un utilisateur",
-      "update": "Modifier l'utilisateur",
-      "delete": "Supprimer l'utilisateur"
+      "create": "Create a user",
+      "update": "Modify the user",
+      "delete": "Delete the user"
     },
     "labels": {
-      "email": "E-mail",
-      "first_name": "Prénom",
-      "last_name": "Nom",
-      "username": "Nom d'utilisateur",
-      "phone_number": "Téléphone",
-      "role": "Rôle",
-      "status": "État"
+      "email": "Email",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "username": "Username",
+      "phone_number": "Phone",
+      "role": "Role",
+      "status": "Status"
     },
     "placeholders": {
-      "email": "Entrez l'e-mail",
-      "first_name": "Entrez le prénom",
-      "last_name": "Entrez le nom",
-      "username": "Entrez le nom d'utilisateur",
-      "phone_number": "Entrez le numéro de téléphone",
-      "role": "Sélectionnez le rôle",
-      "status": "Sélectionnez l'état"
+      "email": "Enter email",
+      "first_name": "Enter first name",
+      "last_name": "Enter last name",
+      "username": "Enter username",
+      "phone_number": "Enter phone number",
+      "role": "Select a role",
+      "status": "Select a status"
     }
   },
   "filter": {
-    "title": "Filtrer les utilisateurs",
+    "title": "Filter Users",
     "labels": {
-      "role": "Rôle",
-      "status": "État"
+      "role": "Role",
+      "status": "Status"
     },
     "placeholders": {
-      "role": "Sélectionner un rôle",
-      "status": "Sélectionner un état"
+      "role": "Select a role",
+      "status": "Select a status"
     }
   },
   "columns": {
-    "id": "ID Utilisateur",
-    "name": "Nom et Prénom",
-    "phone_number": "Téléphone",
-    "email": "E-mail",
-    "created_at": "Date d'Ajout",
-    "role": "Rôle",
-    "status": "État",
+    "id": "User ID",
+    "name": "Full Name",
+    "phone_number": "Phone",
+    "email": "Email",
+    "created_at": "Date Added",
+    "role": "Role",
+    "status": "Status",
     "actions": "Actions"
   }
 }

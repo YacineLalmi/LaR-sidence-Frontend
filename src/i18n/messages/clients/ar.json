@@ -1,0 +1,86 @@
+{
+  "title": "إعدادات العملاء",
+  "description": "إدارة عملاء التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء عميل",
+      "update": "تعديل عميل",
+      "delete": "حذف عميل"
+    },
+    "messages": {
+      "created": "تم إنشاء العميل بنجاح",
+      "updated": "تم تعديل العميل بنجاح",
+      "deleted": "تم حذف العميل بنجاح",
+      "failed_creation": "فشل إنشاء العميل",
+      "failed_update": "فشل تعديل العميل",
+      "failed_deletion": "فشل حذف العميل",
+      "delete_confirmation": "هل تريد حذف هذا العميل (الرقم: {id}) ؟"
+    },
+    "buttons": {
+      "create": "إنشاء عميل",
+      "update": "تعديل العميل",
+      "delete": "حذف العميل"
+    },
+    "labels": {
+      "email": "البريد الإلكتروني",
+      "mobile": "المحمول",
+      "first_name": "الاسم الشخصي",
+      "last_name": "الاسم العائلي",
+      "phone_number": "الهاتف 0{index}",
+      "civility": "اللقب",
+      "comment": "تعليق",
+      "company_name": "اسم الشركة",
+      "ai": "المعرف الإحصائي (AI)",
+      "trade_registration": "السجل التجاري",
+      "tax_identification": "الرقم التعريفي الضريبي",
+      "type": "النوع",
+      "source": "المصدر",
+      "documents": "المستندات",
+      "status": "الحالة"
+    },
+    "placeholders": {
+      "email": "أدخل البريد الإلكتروني",
+      "mobile": "أدخل رقم المحمول",
+      "first_name": "أدخل الاسم الشخصي",
+      "last_name": "أدخل الاسم العائلي",
+      "phone_number": "أدخل رقم الهاتف",
+      "civility": "اختر اللقب",
+      "type": "اختر النوع",
+      "source": "اختر المصدر",
+      "status": "اختر الحالة",
+      "comment": "أدخل تعليقاً",
+      "company_name": "أدخل اسم الشركة",
+      "ai": "أدخل المعرف الإحصائي",
+      "trade_registration": "أدخل رقم السجل التجاري",
+      "tax_identification": "أدخل الرقم التعريفي الضريبي",
+      "documents": "تحميل المستندات"
+    }
+  },
+  "filter": {
+    "title": "تصفية العملاء",
+    "labels": {
+      "gender": "الجنس",
+      "type": "النوع",
+      "status": "الحالة",
+      "source": "المصدر"
+    },
+    "placeholders": {
+      "gender": "اختر الجنس",
+      "type": "اختر النوع",
+      "status": "اختر الحالة",
+      "source": "اختر المصدر"
+    }
+  },
+  "columns": {
+    "id": "الرقم",
+    "email": "البريد الإلكتروني",
+    "first_name": "الاسم الشخصي",
+    "last_name": "الاسم العائلي",
+    "civility": "اللقب",
+    "phone_number": "رقم الهاتف",
+    "status": "الحالة",
+    "created_at": "أنشئ في",
+    "document": "البطاقة",
+    "actions": "الإجراءات"
+  }
+}

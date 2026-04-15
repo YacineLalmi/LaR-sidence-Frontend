@@ -3,4 +3,5 @@ export const COOKIES_KEYS = {
   REFRESH_TOKEN: "refresh_token",
   USER_INFORMATION: "eo_rmnsutoifirna",
   USER_PERMISSIONS: "osu_reimpsriessn",
+  LANGUAGE: "lang",
 };

@@ -1,0 +1,33 @@
+{
+  "welcome": "Welcome to La Résidence",
+  "forgot_your_password": "Forgot your password?",
+  "remember_me": "Remember me",
+  "password_reseting": "Password Reset",
+  "messages": {
+    "invalid_credentials": "Incorrect username or password",
+    "network_error": "Network error: unable to connect to the server",
+    "unexpected_error": "An unexpected error occurred. Please try again later.",
+    "reset_link_sent": "A reset link has been sent to your email address if it is associated with an account.",
+    "insert_new_password": "Please enter your new password.",
+    "insert_your_email": "Please enter your email address to receive a reset link.",
+    "success": "Login successful"
+  },
+  "buttons": {
+    "login": "Login",
+    "logout": "Logout",
+    "forgot_your_password": "Forgot your password?",
+    "reset_password": "Reset password"
+  },
+  "labels": {
+    "username": "Username",
+    "password": "Password",
+    "email": "Email address",
+    "password_confirmation": "Confirm password"
+  },
+  "placeholders": {
+    "username": "Enter your username...",
+    "password": "Enter your password...",
+    "email": "Enter your email address...",
+    "password_confirmation": "Confirm your password..."
+  }
+}

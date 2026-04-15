@@ -1,45 +1,45 @@
 {
-  "title": "Configuration des Types des demandes",
-  "description": "Gérer les types des demandes utilisés dans l'application",
+  "title": "Request Sources Configuration",
+  "description": "Manage request sources used in the application",
   "form": {
     "titles": {
-      "create": "Créer un Type de demande",
-      "update": "Modifier un Type de demande",
-      "delete": "Supprimer un Type de demande"
+      "create": "Create a Request Source",
+      "update": "Modify a Request Source",
+      "delete": "Delete a Request Source"
     },
     "messages": {
-      "created": "Type créé avec succès",
-      "updated": "Type modifié avec succès",
-      "deleted": "Type supprimé avec succès",
-      "failed_creation": "Échec de la création du Type",
-      "failed_update": "Échec de la modification du Type",
-      "failed_deletion": "Échec de la suppression du Type",
-      "delete_confirmation": "Supprimer ce Type (ID: {id}) ?"
+      "created": "Source created successfully",
+      "updated": "Source modified successfully",
+      "deleted": "Source deleted successfully",
+      "failed_creation": "Failed to create Source",
+      "failed_update": "Failed to modify Source",
+      "failed_deletion": "Failed to delete Source",
+      "delete_confirmation": "Delete this Source (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer un Type",
-      "update": "Modifier le Type",
-      "delete": "Supprimer le Type"
+      "create": "Create a Source",
+      "update": "Modify the Source",
+      "delete": "Delete the Source"
     },
     "labels": {
-      "code": "Code de Type",
-      "name": "Nom de Type",
-      "description": "Description de Type",
-      "is_active": "Type actif"
+      "code": "Source Code",
+      "name": "Source Name",
+      "description": "Source Description",
+      "is_active": "Active Source"
     },
     "placeholders": {
-      "code": "Insérer le code du Type",
-      "name": "Insérer le nom du Type",
-      "description": "Description du Type",
-      "is_active": "Le Type est-il actif ?"
+      "code": "Insert the Source code",
+      "name": "Insert the Source name",
+      "description": "Source description",
+      "is_active": "Is the Source active?"
     }
   },
   "columns": {
     "id": "ID",
     "code": "Code",
-    "name": "Nom",
+    "name": "Name",
     "description": "Description",
     "actions": "Actions",
-    "created_at": "created_at"
+    "created_at": "Created at"
   }
 }

@@ -1,4 +1,43 @@
 {
-  "cancel": "Cancel",
-  "confirm": "Confirm"
+  "search": {
+    "placeholder": "Type to search...",
+    "button": "Search"
+  },
+  "messages": {
+    "something_wrong": "An error has occurred!",
+    "not_found": "The requested resource could not be found",
+    "unknown": "Unknown error",
+    "forbidden": "You do not have the necessary privileges to perform this action",
+    "unauthorized": "You are not authorized to perform this action",
+    "loading_file_failed": "Document loading failed",
+    "loading": "Loading...",
+    "operation_completed": "Operation successful!",
+    "operation_failed": "Operation failed!",
+    "delete_confirmation_text": "This action is irreversible and cannot be undone or restored. Are you sure you want to continue?",
+    "delete_selection_message": "You are about to delete {count} items",
+    "created": "Resource created successfully",
+    "updated": "Resource modified successfully",
+    "failed_creation": "Failed to create resource",
+    "failed_update": "Failed to modify resource",
+    "deleted": "Resource deleted successfully",
+    "failed_deletion": "Failed to delete resource",
+    "many_deleted": "Resources deleted successfully",
+    "failed_many_deletion": "Failed to delete resources"
+  },
+  "buttons": {
+    "filter": "Filter",
+    "clear_filters": "Clear filters",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "add": "Add",
+    "apply": "Apply",
+    "edit": "Edit",
+    "print": "Print",
+    "delete_selection": "Delete selection",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "try_again": "Try again"
+  }
 }

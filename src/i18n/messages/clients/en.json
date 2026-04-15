@@ -1,1 +1,86 @@
-{}
+{
+  "title": "Client Configuration",
+  "description": "Manage application clients",
+  "form": {
+    "titles": {
+      "create": "Create a Client",
+      "update": "Modify a Client",
+      "delete": "Delete a Client"
+    },
+    "messages": {
+      "created": "Client created successfully",
+      "updated": "Client modified successfully",
+      "deleted": "Client deleted successfully",
+      "failed_creation": "Failed to create client",
+      "failed_update": "Failed to modify client",
+      "failed_deletion": "Failed to delete client",
+      "delete_confirmation": "Delete this client (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Client",
+      "update": "Modify the Client",
+      "delete": "Delete the Client"
+    },
+    "labels": {
+      "email": "E-mail",
+      "mobile": "Mobile",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "phone_number": "Phone 0{index}",
+      "civility": "Civility",
+      "comment": "Comment",
+      "company_name": "Company Name",
+      "ai": "AI",
+      "trade_registration": "Trade Registration",
+      "tax_identification": "Tax Identification Number",
+      "type": "Type",
+      "source": "Source",
+      "documents": "Documents",
+      "status": "Status"
+    },
+    "placeholders": {
+      "email": "Enter email address",
+      "mobile": "Enter mobile number",
+      "first_name": "Enter first name",
+      "last_name": "Enter last name",
+      "phone_number": "Enter phone number",
+      "civility": "Select civility",
+      "type": "Select type",
+      "source": "Select source",
+      "status": "Select status",
+      "comment": "Enter a comment",
+      "company_name": "Enter company name",
+      "ai": "Enter AI",
+      "trade_registration": "Enter trade registration number",
+      "tax_identification": "Enter tax identification number",
+      "documents": "Upload documents"
+    }
+  },
+  "filter": {
+    "title": "Filter Clients",
+    "labels": {
+      "gender": "Gender",
+      "type": "Type",
+      "status": "Status",
+      "source": "Source"
+    },
+    "placeholders": {
+      "gender": "Select gender",
+      "type": "Select type",
+      "status": "Select status",
+      "source": "Select source"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "email": "E-mail",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "civility": "Civility",
+    "phone_number": "Phone Number",
+    "status": "Status",
+    "created_at": "Created on",
+    "document": "Sheet",
+    "actions": "Actions"
+  }
+}

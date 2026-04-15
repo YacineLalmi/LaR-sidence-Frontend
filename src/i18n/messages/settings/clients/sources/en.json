@@ -1,1 +1,45 @@
-{}
+{
+  "title": "Client Sources Configuration",
+  "description": "Manage client sources used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Client Source",
+      "update": "Modify a Client Source",
+      "delete": "Delete a Client Source"
+    },
+    "messages": {
+      "created": "Source created successfully",
+      "updated": "Source modified successfully",
+      "deleted": "Source deleted successfully",
+      "failed_creation": "Failed to create Source",
+      "failed_update": "Failed to modify Source",
+      "failed_deletion": "Failed to delete Source",
+      "delete_confirmation": "Delete this Source (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Source",
+      "update": "Modify the Source",
+      "delete": "Delete the Source"
+    },
+    "labels": {
+      "code": "Source Code",
+      "name": "Source Name",
+      "description": "Source Description",
+      "is_active": "Active Source"
+    },
+    "placeholders": {
+      "code": "Insert the Source code",
+      "name": "Insert the Source name",
+      "description": "Source description",
+      "is_active": "Is the Source active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

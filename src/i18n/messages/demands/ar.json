@@ -1,0 +1,108 @@
+{
+  "title": "إعدادات الطلبات",
+  "description": "إدارة طلبات التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء طلب",
+      "update": "تعديل طلب",
+      "delete": "حذف طلب"
+    },
+    "messages": {
+      "created": "تم إنشاء الطلب بنجاح",
+      "updated": "تم تعديل الطلب بنجاح",
+      "deleted": "تم حذف الطلب بنجاح",
+      "failed_creation": "فشل إنشاء الطلب",
+      "failed_update": "فشل تعديل الطلب",
+      "failed_deletion": "فشل حذف الطلب",
+      "delete_confirmation": "هل تريد حذف هذا الطلب (الرقم: {id}) ؟"
+    },
+    "buttons": {
+      "create": "إنشاء طلب",
+      "update": "تعديل الطلب",
+      "delete": "حذف الطلب",
+      "publish": "نشر"
+    },
+    "sections": {
+      "general_information": "معلومات عامة",
+      "internal_comments": "تعليقات داخلية"
+    },
+    "labels": {
+      "title": "عنوان الطلب",
+      "type": "نوع الطلب",
+      "agent": "الوكيل المكلف",
+      "client": "العميل المعني",
+      "bien": "العقار المعني",
+      "status": "حالة الطلب",
+      "budget": "الميزانية",
+      "priority": "الأولوية",
+      "source": "مصدر الطلب",
+      "comment": "تعليق"
+    },
+    "placeholders": {
+      "title": "أدخل عنوان الطلب",
+      "type": "اختر النوع",
+      "agent": "اختر الوكيل",
+      "client": "اختر العميل",
+      "bien": "اختر العقار",
+      "status": "اختر الحالة",
+      "budget": "أدخل الميزانية",
+      "priority": "اختر الأولوية",
+      "source": "اختر المصدر",
+      "comment": "أدخل تعليقاتك"
+    }
+  },
+  "filter": {
+    "title": "تصفية الطلبات",
+    "labels": {
+      "status": "حالة الطلب",
+      "type": "نوع الطلب",
+      "client": "العميل",
+      "agent": "الوكيل المكلف",
+      "budget_min": "الميزانية الدنيا",
+      "budget_max": "الميزانية القصوى",
+      "created_between": "تاريخ الإضافة"
+    },
+    "placeholders": {
+      "status": "اختر الحالة",
+      "type": "اختر النوع",
+      "client": "اختر العميل",
+      "agent": "اختر الوكيل",
+      "budget_min": "أدخل الميزانية الدنيا",
+      "budget_max": "أدخل الميزانية القصوى",
+      "created_between": "اختر نطاقاً زمنياً"
+    },
+    "buttons": {
+      "clear": "إعادة تعيين الفلاتر",
+      "submit": "تطبيق الفلاتر"
+    }
+  },
+  "columns": {
+    "demand_id": "رقم الطلب",
+    "title": "عنوان الطلب",
+    "type": "نوع الطلب",
+    "client": "العميل",
+    "agent": "الوكيل",
+    "budget": "الميزانية",
+    "date_added": "تاريخ الإضافة",
+    "status": "الحالة",
+    "fiche": "البطاقة",
+    "actions": "الإجراءات"
+  },
+  "actions": {
+    "view": "عرض",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "print": "طباعة",
+    "delete_selection": "حذف التحديد"
+  },
+  "delete": {
+    "title": "حذف هذا الطلب",
+    "description": "هل أنت متأكد من رغبتك في حذف هذا الطلب؟ هذا الإجراء غير قابل للتراجع."
+  },
+  "detail": {
+    "title": "بطاقة الطلب",
+    "demand_id": "رقم الطلب",
+    "created_at": "أنشئ في",
+    "updated_at": "عدل في"
+  }
+}

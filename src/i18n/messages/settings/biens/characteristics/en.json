@@ -1,1 +1,45 @@
-{}
+{
+  "title": "Property Characteristics Configuration",
+  "description": "Manage property characteristics used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Characteristic",
+      "update": "Modify a Characteristic",
+      "delete": "Delete a Characteristic"
+    },
+    "messages": {
+      "created": "Characteristic created successfully",
+      "updated": "Characteristic modified successfully",
+      "deleted": "Characteristic deleted successfully",
+      "failed_creation": "Failed to create Characteristic",
+      "failed_update": "Failed to modify Characteristic",
+      "failed_deletion": "Failed to delete Characteristic",
+      "delete_confirmation": "Delete this Characteristic (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Characteristic",
+      "update": "Modify the Characteristic",
+      "delete": "Delete the Characteristic"
+    },
+    "labels": {
+      "code": "Characteristic Code",
+      "name": "Characteristic Name",
+      "description": "Characteristic Description",
+      "isActive": "Active Characteristic"
+    },
+    "placeholders": {
+      "code": "Insert the Characteristic code",
+      "name": "Insert the Characteristic name",
+      "description": "Characteristic description",
+      "isActive": "Is the Characteristic active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

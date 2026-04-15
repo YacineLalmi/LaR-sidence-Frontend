@@ -1,0 +1,43 @@
+{
+  "search": {
+    "placeholder": "اكتب للبحث...",
+    "button": "بحث"
+  },
+  "messages": {
+    "something_wrong": "حدث خطأ ما!",
+    "not_found": "المورد المطلوب غير موجود",
+    "unknown": "خطأ غير معروف",
+    "forbidden": "ليس لديك الصلاحيات اللازمة للقيام بهذا الإجراء",
+    "unauthorized": "غير مسموح لك بالقيام بهذا الإجراء",
+    "loading_file_failed": "فشل تحميل المستندات",
+    "loading": "جاري التحميل...",
+    "operation_completed": "تمت العملية بنجاح!",
+    "operation_failed": "فشلت العملية!",
+    "delete_confirmation_text": "هذا الإجراء غير قابل للتراجع ولا يمكن إلغاؤه أو استعادته. هل أنت متأكد من رغبتك في الاستمرار؟",
+    "delete_selection_message": "أنت على وشك حذف {count} عنصر",
+    "created": "تم إنشاء المورد بنجاح",
+    "updated": "تم تعديل المورد بنجاح",
+    "failed_creation": "فشل إنشاء المورد",
+    "failed_update": "فشل تعديل المورد",
+    "deleted": "تم حذف المورد بنجاح",
+    "failed_deletion": "فشل حذف المورد",
+    "many_deleted": "تم حذف الموارد بنجاح",
+    "failed_many_deletion": "فشل حذف الموارد"
+  },
+  "buttons": {
+    "filter": "تصفية",
+    "clear_filters": "مسح الفلاتر",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "add": "إضافة",
+    "apply": "تطبيق",
+    "edit": "تعديل",
+    "print": "طباعة",
+    "delete_selection": "حذف التحديد",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "try_again": "إعادة المحاولة"
+  }
+}

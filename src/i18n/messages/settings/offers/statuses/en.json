@@ -1,1 +1,48 @@
-{}
+{
+  "title": "Configuration des Statuts des offres",
+  "description": "Gérer les statuts des offres utilisés dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer un Statut d'offre",
+      "update": "Modifier un Statut d'offre",
+      "delete": "Supprimer un Statut d'offre"
+    },
+    "messages": {
+      "created": "Statut créé avec succès",
+      "updated": "Statut modifié avec succès",
+      "deleted": "Statut supprimé avec succès",
+      "failed_creation": "Échec de la création du Statut",
+      "failed_update": "Échec de la modification du Statut",
+      "failed_deletion": "Échec de la suppression du Statut",
+      "delete_confirmation": "Supprimer ce Statut (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un Statut",
+      "update": "Modifier le Statut",
+      "delete": "Supprimer le Statut"
+    },
+    "labels": {
+      "code": "Code de Statut",
+      "name": "Nom de Statut",
+      "description": "Description de Statut",
+      "color_id": "Couleur de Statut",
+      "is_active": "Statut actif"
+    },
+    "placeholders": {
+      "code": "Insérer le code du Statut",
+      "name": "Insérer le nom du Statut",
+      "description": "Description du Statut",
+      "color_id": "Choisir une couleur",
+      "is_active": "Le Statut est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "color_id": "Couleur",
+    "actions": "Actions",
+    "created_at": "created_at"
+  }
+}

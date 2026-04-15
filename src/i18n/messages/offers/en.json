@@ -1,68 +1,68 @@
 {
-  "title": "Configuration des Offres",
-  "description": "Gérer les offres de l'application",
+  "title": "Offers Configuration",
+  "description": "Manage application offers",
   "form": {
     "titles": {
-      "create": "Créer une offre",
-      "update": "Modifier une offre",
-      "delete": "Supprimer une offre"
+      "create": "Create an Offer",
+      "update": "Modify an Offer",
+      "delete": "Delete an Offer"
     },
     "messages": {
-      "created": "Offre créée avec succès",
-      "updated": "Offre modifiée avec succès",
-      "deleted": "Offre supprimée avec succès",
-      "failed_creation": "Échec de la création de l'offre",
-      "failed_update": "Échec de la modification de l'offre",
-      "failed_deletion": "Échec de la suppression de l'offre",
-      "delete_confirmation": "Supprimer cette offre (ID: {id}) ?"
+      "created": "Offer created successfully",
+      "updated": "Offer modified successfully",
+      "deleted": "Offer deleted successfully",
+      "failed_creation": "Failed to create offer",
+      "failed_update": "Failed to modify offer",
+      "failed_deletion": "Failed to delete offer",
+      "delete_confirmation": "Delete this offer (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer une offre",
-      "update": "Modifier l'offre",
-      "delete": "Supprimer l'offre"
+      "create": "Create an offer",
+      "update": "Modify the offer",
+      "delete": "Delete the offer"
     },
     "labels": {
-      "bien": "Bien",
+      "bien": "Property",
       "type": "Type",
       "client": "Client",
-      "status": "Statut",
-      "proposed_price": "Prix proposé",
+      "status": "Status",
+      "proposed_price": "Proposed price",
       "conditions": "Conditions",
-      "comment": "Commentaire"
+      "comment": "Comment"
     },
     "placeholders": {
-      "bien": "Sélectionnez un bien",
-      "type": "Sélectionnez le type",
-      "client": "Sélectionnez un client",
-      "status": "Sélectionnez le statut",
-      "proposed_price": "Insérez le prix proposé",
-      "conditions": "Entrez les conditions",
-      "comment": "Entrez un commentaire"
+      "bien": "Select a property",
+      "type": "Select type",
+      "client": "Select a client",
+      "status": "Select status",
+      "proposed_price": "Enter proposed price",
+      "conditions": "Enter conditions",
+      "comment": "Enter a comment"
     }
   },
   "filter": {
-    "title": "Filtrer les offres",
+    "title": "Filter Offers",
     "labels": {
-      "gender": "Genre",
+      "gender": "Gender",
       "type": "Type",
-      "status": "Statut",
+      "status": "Status",
       "source": "Source"
     },
     "placeholders": {
-      "gender": "Sélectionnez le genre",
-      "type": "Sélectionnez le type",
-      "status": "Sélectionnez le statut",
-      "source": "Sélectionnez la source"
+      "gender": "Select gender",
+      "type": "Select type",
+      "status": "Select status",
+      "source": "Select source"
     }
   },
   "columns": {
     "id": "ID",
-    "bien": "Bien",
+    "bien": "Property",
     "client": "Client",
     "type": "Type",
-    "proposed_price": "Prix",
-    "status": "Statut",
-    "created_at": "Créé le",
+    "proposed_price": "Price",
+    "status": "Status",
+    "created_at": "Created on",
     "actions": "Actions"
   }
 }

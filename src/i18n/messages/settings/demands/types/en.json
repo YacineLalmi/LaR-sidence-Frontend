@@ -1,45 +1,45 @@
 {
-  "title": "Configuration des Types des demandes",
-  "description": "Gérer les types des demandes utilisés dans l'application",
+  "title": "Request Types Configuration",
+  "description": "Manage request types used in the application",
   "form": {
     "titles": {
-      "create": "Créer un Type de demande",
-      "update": "Modifier un Type de demande",
-      "delete": "Supprimer un Type de demande"
+      "create": "Create a Request Type",
+      "update": "Modify a Request Type",
+      "delete": "Delete a Request Type"
     },
     "messages": {
-      "created": "Type créé avec succès",
-      "updated": "Type modifié avec succès",
-      "deleted": "Type supprimé avec succès",
-      "failed_creation": "Échec de la création du Type",
-      "failed_update": "Échec de la modification du Type",
-      "failed_deletion": "Échec de la suppression du Type",
-      "delete_confirmation": "Supprimer ce Type (ID: {id}) ?"
+      "created": "Type created successfully",
+      "updated": "Type modified successfully",
+      "deleted": "Type deleted successfully",
+      "failed_creation": "Failed to create Type",
+      "failed_update": "Failed to modify Type",
+      "failed_deletion": "Failed to delete Type",
+      "delete_confirmation": "Delete this Type (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer un Type",
-      "update": "Modifier le Type",
-      "delete": "Supprimer le Type"
+      "create": "Create a Type",
+      "update": "Modify the Type",
+      "delete": "Delete the Type"
     },
     "labels": {
-      "code": "Code de Type",
-      "name": "Nom de Type",
-      "description": "Description de Type",
-      "is_active": "Type actif"
+      "code": "Type Code",
+      "name": "Type Name",
+      "description": "Type Description",
+      "is_active": "Active Type"
     },
     "placeholders": {
-      "code": "Insérer le code du Type",
-      "name": "Insérer le nom du Type",
-      "description": "Description du Type",
-      "is_active": "Le Type est-il actif ?"
+      "code": "Insert the Type code",
+      "name": "Insert the Type name",
+      "description": "Type description",
+      "is_active": "Is the Type active?"
     }
   },
   "columns": {
     "id": "ID",
     "code": "Code",
-    "name": "Nom",
+    "name": "Name",
     "description": "Description",
     "actions": "Actions",
-    "created_at": "created_at"
+    "created_at": "Created at"
   }
 }

@@ -1,0 +1,43 @@
+{
+  "title": "إعدادات الأدوار",
+  "description": "إدارة أدوار التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء دور",
+      "update": "تعديل دور",
+      "delete": "حذف دور"
+    },
+    "messages": {
+      "created": "تم إنشاء الدور بنجاح",
+      "updated": "تم تعديل الدور بنجاح",
+      "deleted": "تم حذف الدور بنجاح",
+      "failed_creation": "فشل إنشاء الدور",
+      "failed_update": "فشل تعديل الدور",
+      "failed_deletion": "فشل حذف الدور",
+      "delete_confirmation": "هل تريد حذف هذا الدور (الرقم: {id}) ؟"
+    },
+    "buttons": {
+      "create": "إنشاء دور",
+      "update": "تعديل الدور",
+      "delete": "حذف الدور"
+    },
+    "labels": {
+      "display_name": "الاسم",
+      "description": "الوصف",
+      "permissions": "الصلاحيات"
+    },
+    "placeholders": {
+      "display_name": "أدخل اسم الدور",
+      "description": "أدخل وصف الدور",
+      "permissions": "اختر صلاحيات الدور"
+    }
+  },
+  "columns": {
+    "id": "معرف الدور",
+    "name": "اسم الدور",
+    "description": "الوصف",
+    "permissions": "الصلاحيات",
+    "created_at": "تاريخ الإضافة",
+    "actions": "الإجراءات"
+  }
+}

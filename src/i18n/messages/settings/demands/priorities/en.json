@@ -1,48 +1,48 @@
 {
-  "title": "Configuration des Priorités des demandes",
-  "description": "Gérer les priorités des demandes utilisées dans l'application",
+  "title": "Request Priorities Configuration",
+  "description": "Manage request priorities used in the application",
   "form": {
     "titles": {
-      "create": "Créer une Priorité de demande",
-      "update": "Modifier une Priorité de demande",
-      "delete": "Supprimer une Priorité de demande"
+      "create": "Create a Request Priority",
+      "update": "Modify a Request Priority",
+      "delete": "Delete a Request Priority"
     },
     "messages": {
-      "created": "Priorité créée avec succès",
-      "updated": "Priorité modifiée avec succès",
-      "deleted": "Priorité supprimée avec succès",
-      "failed_creation": "Échec de la création de la Priorité",
-      "failed_update": "Échec de la modification de la Priorité",
-      "failed_deletion": "Échec de la suppression de la Priorité",
-      "delete_confirmation": "Supprimer cette Priorité (ID: {id}) ?"
+      "created": "Priority created successfully",
+      "updated": "Priority modified successfully",
+      "deleted": "Priority deleted successfully",
+      "failed_creation": "Failed to create Priority",
+      "failed_update": "Failed to modify Priority",
+      "failed_deletion": "Failed to delete Priority",
+      "delete_confirmation": "Delete this Priority (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer une Priorité",
-      "update": "Modifier la Priorité",
-      "delete": "Supprimer la Priorité"
+      "create": "Create a Priority",
+      "update": "Modify the Priority",
+      "delete": "Delete the Priority"
     },
     "labels": {
-      "code": "Code de Priorité",
-      "name": "Nom de Priorité",
-      "description": "Description de Priorité",
-      "color_id": "Couleur de Priorité",
-      "is_active": "Priorité active"
+      "code": "Priority Code",
+      "name": "Priority Name",
+      "description": "Priority Description",
+      "color_id": "Priority Color",
+      "is_active": "Active Priority"
     },
     "placeholders": {
-      "code": "Insérer le code de la Priorité",
-      "name": "Insérer le nom de la Priorité",
-      "description": "Description de la Priorité",
-      "color_id": "Choisir une couleur",
-      "is_active": "La Priorité est-elle active ?"
+      "code": "Insert the Priority code",
+      "name": "Insert the Priority name",
+      "description": "Priority description",
+      "color_id": "Choose a color",
+      "is_active": "Is the Priority active?"
     }
   },
   "columns": {
     "id": "ID",
     "code": "Code",
-    "name": "Nom",
+    "name": "Name",
     "description": "Description",
-    "color_id": "Couleur",
+    "color_id": "Color",
     "actions": "Actions",
-    "created_at": "created_at"
+    "created_at": "Created at"
   }
 }

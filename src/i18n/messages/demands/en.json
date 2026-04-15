@@ -1,68 +1,91 @@
 {
-  "title": "Demand Management",
-  "filter": {
-    "title": "Filters",
-    "label": {
-      "status": "Demand Status",
-      "type": "Demand Type",
-      "client": "Client",
-      "agent": "Assigned Agent",
-      "bien": "Related Property",
-      "source": "Demand Source"
-    },
-    "placeholder": {
-      "status": "Select an option",
-      "type": "Select an option",
-      "client": "Select an option",
-      "agent": "Select an option",
-      "bien": "Select an option",
-      "source": "Select an option"
-    },
-    "submit": "Apply filters"
-  },
+  "title": "Requests Configuration",
+  "description": "Manage application requests",
   "form": {
-    "createTitle": "Create a demand",
-    "editTitle": "Modify a demand",
-    "buttonText": "Create a demand",
-    "publish": "Publish",
-    "sections": {
-      "generalInformation": "General Information",
-      "internalComments": "Internal Comments"
+    "titles": {
+      "create": "Create a Request",
+      "update": "Modify a Request",
+      "delete": "Delete a Request"
     },
-    "label": {
-      "title": "Demand Title",
-      "type": "Demand Type",
+    "messages": {
+      "created": "Request created successfully",
+      "updated": "Request modified successfully",
+      "deleted": "Request deleted successfully",
+      "failed_creation": "Failed to create request",
+      "failed_update": "Failed to modify request",
+      "failed_deletion": "Failed to delete request",
+      "delete_confirmation": "Delete this request (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Request",
+      "update": "Modify the Request",
+      "delete": "Delete the Request",
+      "publish": "Publish"
+    },
+    "sections": {
+      "general_information": "General Information",
+      "internal_comments": "Internal Comments"
+    },
+    "labels": {
+      "title": "Request Title",
+      "type": "Request Type",
       "agent": "Assigned Agent",
-      "client": "Related Client",
-      "bien": "Related Property",
-      "status": "Demand Status",
+      "client": "Concerned Client",
+      "bien": "Concerned Property",
+      "status": "Request Status",
       "budget": "Budget",
       "priority": "Priority",
-      "source": "Demand Source",
+      "source": "Request Source",
       "comment": "Comment"
     },
-    "placeholder": {
-      "title": "Enter the demand title",
-      "type": "Select an option",
-      "agent": "Select an option",
-      "client": "Select an option",
-      "bien": "Select an option",
-      "status": "Select an option",
-      "budget": "Enter the budget",
-      "priority": "Select an option",
-      "source": "Select an option",
+    "placeholders": {
+      "title": "Enter request title",
+      "type": "Select type",
+      "agent": "Select agent",
+      "client": "Select client",
+      "bien": "Select property",
+      "status": "Select status",
+      "budget": "Enter budget",
+      "priority": "Select priority",
+      "source": "Select source",
       "comment": "Enter your comments"
     }
   },
+  "filter": {
+    "title": "Filter Requests",
+    "labels": {
+      "status": "Request status",
+      "type": "Request type",
+      "client": "Client",
+      "agent": "Assigned agent",
+      "budget_min": "Min budget",
+      "budget_max": "Max budget",
+      "created_between": "Date added"
+    },
+    "placeholders": {
+      "status": "Select status",
+      "type": "Select type",
+      "client": "Select client",
+      "agent": "Select agent",
+      "budget_min": "Enter minimum budget",
+      "budget_max": "Enter maximum budget",
+      "created_between": "Select a date range"
+    },
+    "buttons": {
+      "clear": "Reset filters",
+      "submit": "Apply filters"
+    }
+  },
   "columns": {
-    "demandId": "Demand ID",
-    "title": "Demand Title",
-    "type": "Demand Type",
+    "demand_id": "Request ID",
+    "title": "Request Title",
+    "type": "Request Type",
     "client": "Client",
     "agent": "Agent",
     "budget": "Budget",
-    "dateAdded": "Date Added",
+    "date_added": "Date Added",
     "status": "Status",
+    "fiche": "Sheet",
     "actions": "Actions"
   },
   "actions": {
@@ -70,16 +93,16 @@
     "edit": "Edit",
     "delete": "Delete",
     "print": "Print",
-    "deleteSelection": "Delete selection"
+    "delete_selection": "Delete selection"
   },
   "delete": {
-    "title": "Delete this demand",
-    "description": "Are you sure you want to delete this demand? This action is irreversible."
+    "title": "Delete this request",
+    "description": "Are you sure you want to delete this request? This action is irreversible."
   },
   "detail": {
-    "title": "Demand details",
-    "demandId": "Demand ID",
-    "createdAt": "Created at",
-    "updatedAt": "Updated at"
+    "title": "Request Sheet",
+    "demand_id": "Request ID",
+    "created_at": "Created on",
+    "updated_at": "Modified on"
   }
 }

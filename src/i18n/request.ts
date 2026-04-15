@@ -1,10 +1,14 @@
-import { getCookie } from "@/lib/server.helper";
 import { getRequestConfig } from "next-intl/server";
 import fs from "fs";
 import path from "path";
+import { hasLocale } from "next-intl";
+import { routing } from "./routing";
 
-export default getRequestConfig(async () => {
-  const locale = (await getCookie("lang")) ?? "fr";
+export default getRequestConfig(async ({requestLocale}) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
   const messagesDir = path.join(process.cwd(), "src/i18n/messages");
   const messages = await loadMessagesRecursively(messagesDir, locale);
 
@@ -36,3 +40,20 @@ async function loadMessagesRecursively(baseDir: string, locale: string): Promise
 
   return messages;
 }
+
+
+// import {hasLocale} from 'next-intl';
+// import {routing} from './routing';
+ 
+// export default getRequestConfig(async ({requestLocale}) => {
+//   // Typically corresponds to the `[locale]` segment
+//   const requested = await requestLocale;
+//   const locale = hasLocale(routing.locales, requested)
+//     ? requested
+//     : routing.defaultLocale;
+ 
+//   return {
+//     locale
+//     // ...
+//   };
+// });

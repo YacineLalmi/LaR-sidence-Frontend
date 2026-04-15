@@ -1,1 +1,46 @@
-{}
+{
+  "title": "Property Types Configuration",
+  "description": "Manage property types in the application",
+  "deleteText": "Do you want to delete the type with ID {id}",
+  "form": {
+    "titles": {
+      "create": "Create a Property Type",
+      "update": "Modify a Property Type",
+      "delete": "Delete a Property Type"
+    },
+    "messages": {
+      "created": "Property type created successfully",
+      "updated": "Property type modified successfully",
+      "deleted": "Property type deleted successfully",
+      "failed_creation": "Failed to create property type",
+      "failed_update": "Failed to modify property type",
+      "failed_deletion": "Failed to delete property type",
+      "delete_confirmation": "Delete this property type (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a property type",
+      "update": "Modify the property type",
+      "delete": "Delete the property type"
+    },
+    "labels": {
+      "code": "Type Code",
+      "name": "Type Name",
+      "description": "Type Description",
+      "is_active": "Active Type"
+    },
+    "placeholders": {
+      "code": "Insert the type code",
+      "name": "Insert the type name",
+      "description": "Type description",
+      "is_active": "Is the type active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

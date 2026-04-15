@@ -1,1 +1,63 @@
-{}
+{
+  "title": "Color Configuration",
+  "description": "Manage colors used in the application",
+  "form": {
+    "title": {
+      "create": "Create a color",
+      "update": "Modify a color",
+      "delete": "Delete a color"
+    },
+    "messages": {
+      "created": "Color created successfully",
+      "updated": "Color modified successfully",
+      "deleted": "Color deleted successfully",
+      "failed_creation": "Failed to create color",
+      "failed_update": "Failed to modify color",
+      "failed_deletion": "Failed to delete color",
+      "delete_confirmation": "Delete this color (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a color",
+      "update": "Modify the color",
+      "delete": "Delete the color"
+    },
+    "labels": {
+      "background_color": "Badge color code",
+      "text_color": "Text color code",
+      "name": {
+        "fr": "Color name (FR)",
+        "en": "Color name (EN)",
+        "ar": "Color name (AR)"
+      },
+      "description": {
+        "fr": "Color description (FR)",
+        "en": "Color description (EN)",
+        "ar": "Color description (AR)"
+      }
+    },
+    "placeholders": {
+      "background_color": "Badge color code",
+      "text_color": "Text color code",
+      "name": {
+        "fr": "Enter the color name in French",
+        "en": "Enter the color name in English",
+        "ar": "أدخل اسم اللون بالعربية"
+      },
+      "description": {
+        "fr": "Enter the color description in French",
+        "en": "Enter the color description in English",
+        "ar": "أدخل وصف اللون بالعربية"
+      }
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "background_color": "Background Color",
+    "text_color": "Text Color",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at",
+    "preview": "Preview"
+  }
+}

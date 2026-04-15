@@ -4,7 +4,6 @@ import { SearchForm, SearchFormSchema } from "@/schemas/global.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "./form";
 import { Search } from "lucide-react";

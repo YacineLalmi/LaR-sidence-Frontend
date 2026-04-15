@@ -1,0 +1,45 @@
+{
+  "title": "إعدادات أنواع المعاملات",
+  "description": "إدارة أنواع المعاملات المستخدمة في التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء نوع معاملة",
+      "update": "تعديل نوع معاملة",
+      "delete": "حذف نوع معاملة"
+    },
+    "messages": {
+      "created": "تم إنشاء النوع بنجاح",
+      "updated": "تم تعديل النوع بنجاح",
+      "deleted": "تم حذف النوع بنجاح",
+      "failed_creation": "فشل إنشاء النوع",
+      "failed_update": "فشل تعديل النوع",
+      "failed_deletion": "فشل حذف النوع",
+      "delete_confirmation": "هل تريد حذف هذا النوع (الرقم: {id}) ؟"
+    },
+    "buttons": {
+      "create": "إنشاء نوع",
+      "update": "تعديل النوع",
+      "delete": "حذف النوع"
+    },
+    "labels": {
+      "code": "رمز النوع",
+      "name": "اسم النوع",
+      "description": "وصف النوع",
+      "is_active": "نوع نشط"
+    },
+    "placeholders": {
+      "code": "أدخل رمز النوع",
+      "name": "أدخل اسم النوع",
+      "description": "وصف النوع",
+      "is_active": "هل النوع نشط؟"
+    }
+  },
+  "columns": {
+    "id": "الرقم",
+    "code": "الرمز",
+    "name": "الاسم",
+    "description": "الوصف",
+    "actions": "الإجراءات",
+    "created_at": "تاريخ الإنشاء"
+  }
+}

@@ -1,1 +1,5 @@
-{}
+{
+  "title": "Locations Management",
+  "description": "Manage locations used in the application",
+  "wilaya_commune": "Manage provinces and municipalities"
+}

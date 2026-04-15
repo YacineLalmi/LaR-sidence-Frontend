@@ -1,1 +1,45 @@
-{}
+{
+  "title": "Client Types Configuration",
+  "description": "Manage client types used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Client Type",
+      "update": "Modify a Client Type",
+      "delete": "Delete a Client Type"
+    },
+    "messages": {
+      "created": "Type created successfully",
+      "updated": "Type modified successfully",
+      "deleted": "Type deleted successfully",
+      "failed_creation": "Failed to create Type",
+      "failed_update": "Failed to modify Type",
+      "failed_deletion": "Failed to delete Type",
+      "delete_confirmation": "Delete this Type (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Type",
+      "update": "Modify the Type",
+      "delete": "Delete the Type"
+    },
+    "labels": {
+      "code": "Type Code",
+      "name": "Type Name",
+      "description": "Type Description",
+      "is_active": "Active Type"
+    },
+    "placeholders": {
+      "code": "Insert the Type code",
+      "name": "Insert the Type name",
+      "description": "Type description",
+      "is_active": "Is the Type active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

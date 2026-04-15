@@ -1,0 +1,68 @@
+{
+  "title": "إعدادات العروض",
+  "description": "إدارة عروض التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء عرض",
+      "update": "تعديل عرض",
+      "delete": "حذف عرض"
+    },
+    "messages": {
+      "created": "تم إنشاء العرض بنجاح",
+      "updated": "تم تعديل العرض بنجاح",
+      "deleted": "تم حذف العرض بنجاح",
+      "failed_creation": "فشل إنشاء العرض",
+      "failed_update": "فشل تعديل العرض",
+      "failed_deletion": "فشل حذف العرض",
+      "delete_confirmation": "هل تريد حذف هذا العرض (الرقم: {id}) ؟"
+    },
+    "buttons": {
+      "create": "إنشاء عرض",
+      "update": "تعديل العرض",
+      "delete": "حذف العرض"
+    },
+    "labels": {
+      "bien": "العقار",
+      "type": "النوع",
+      "client": "العميل",
+      "status": "الحالة",
+      "proposed_price": "السعر المقترح",
+      "conditions": "الشروط",
+      "comment": "تعليق"
+    },
+    "placeholders": {
+      "bien": "اختر عقاراً",
+      "type": "اختر النوع",
+      "client": "اختر عميلاً",
+      "status": "اختر الحالة",
+      "proposed_price": "أدخل السعر المقترح",
+      "conditions": "أدخل الشروط",
+      "comment": "أدخل تعليقاً"
+    }
+  },
+  "filter": {
+    "title": "تصفية العروض",
+    "labels": {
+      "gender": "الجنس",
+      "type": "النوع",
+      "status": "الحالة",
+      "source": "المصدر"
+    },
+    "placeholders": {
+      "gender": "اختر الجنس",
+      "type": "اختر النوع",
+      "status": "اختر الحالة",
+      "source": "اختر المصدر"
+    }
+  },
+  "columns": {
+    "id": "الرقم",
+    "bien": "العقار",
+    "client": "العميل",
+    "type": "النوع",
+    "proposed_price": "السعر",
+    "status": "الحالة",
+    "created_at": "أنشئ في",
+    "actions": "الإجراءات"
+  }
+}

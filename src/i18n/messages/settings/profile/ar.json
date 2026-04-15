@@ -1,0 +1,15 @@
+{
+  "title": "إدارة الملف الشخصي",
+  "form": {
+    "label": {
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+    },
+    "placeholder": {
+      "currentPassword": "أدخل كلمة المرور الحالية",
+      "newPassword": "أدخل كلمة المرور الجديدة",
+      "confirmNewPassword": "أكد كلمة المرور الجديدة"
+    }
+  }
+}

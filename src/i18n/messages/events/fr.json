@@ -46,7 +46,10 @@
       "client": "Client concerné",
       "visitor_name": "Nom et prénom du visiteur",
       "visitor_phone": "Téléphone du visiteur",
-      "description": "Description"
+      "description": "Description",
+      "from": "De",
+      "to": "à",
+      "select_period": "Sélectionner une periode"
     },
     "placeholders": {
       "title": "Entrez le titre de l'événement",

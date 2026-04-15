@@ -1,1 +1,15 @@
-{}
+{
+  "title": "Profile Management",
+  "form": {
+    "label": {
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password"
+    },
+    "placeholder": {
+      "currentPassword": "Enter your current password",
+      "newPassword": "Enter your new password",
+      "confirmNewPassword": "Confirm your new password"
+    }
+  }
+}

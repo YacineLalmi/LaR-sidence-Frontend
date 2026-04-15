@@ -1,48 +1,48 @@
 {
-  "title": "Configuration des Statuts des demandes",
-  "description": "Gérer les statuts des demandes utilisés dans l'application",
+  "title": "Request Statuses Configuration",
+  "description": "Manage request statuses used in the application",
   "form": {
     "titles": {
-      "create": "Créer un Statut de demande",
-      "update": "Modifier un Statut de demande",
-      "delete": "Supprimer un Statut de demande"
+      "create": "Create a Request Status",
+      "update": "Modify a Request Status",
+      "delete": "Delete a Request Status"
     },
     "messages": {
-      "created": "Statut créé avec succès",
-      "updated": "Statut modifié avec succès",
-      "deleted": "Statut supprimé avec succès",
-      "failed_creation": "Échec de la création du Statut",
-      "failed_update": "Échec de la modification du Statut",
-      "failed_deletion": "Échec de la suppression du Statut",
-      "delete_confirmation": "Supprimer ce Statut (ID: {id}) ?"
+      "created": "Status created successfully",
+      "updated": "Status modified successfully",
+      "deleted": "Status deleted successfully",
+      "failed_creation": "Failed to create Status",
+      "failed_update": "Failed to modify Status",
+      "failed_deletion": "Failed to delete Status",
+      "delete_confirmation": "Delete this Status (ID: {id}) ?"
     },
     "buttons": {
-      "create": "Créer un Statut",
-      "update": "Modifier le Statut",
-      "delete": "Supprimer le Statut"
+      "create": "Create a Status",
+      "update": "Modify the Status",
+      "delete": "Delete the Status"
     },
     "labels": {
-      "code": "Code de Statut",
-      "name": "Nom de Statut",
-      "description": "Description de Statut",
-      "color_id": "Couleur de Statut",
-      "is_active": "Statut actif"
+      "code": "Status Code",
+      "name": "Status Name",
+      "description": "Status Description",
+      "color_id": "Status Color",
+      "is_active": "Active Status"
     },
     "placeholders": {
-      "code": "Insérer le code du Statut",
-      "name": "Insérer le nom du Statut",
-      "description": "Description du Statut",
-      "color_id": "Choisir une couleur",
-      "is_active": "Le Statut est-il actif ?"
+      "code": "Insert the Status code",
+      "name": "Insert the Status name",
+      "description": "Status description",
+      "color_id": "Choose a color",
+      "is_active": "Is the Status active?"
     }
   },
   "columns": {
     "id": "ID",
     "code": "Code",
-    "name": "Nom",
+    "name": "Name",
     "description": "Description",
-    "color_id": "Couleur",
+    "color_id": "Color",
     "actions": "Actions",
-    "created_at": "created_at"
+    "created_at": "Created at"
   }
 }

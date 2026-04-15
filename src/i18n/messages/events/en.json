@@ -1,90 +1,93 @@
 {
-  "title": "Calendrier",
-  "description": "Gérer les événements du calendrier",
+  "title": "Calendar",
+  "description": "Manage calendar events",
   "view": {
-    "month": "Mois",
-    "week": "Semaine"
+    "month": "Month",
+    "week": "Week"
   },
   "actions": {
-    "add_event": "Ajouter un événement",
-    "create_event": "Créer un événement",
-    "edit_event": "Modifier un événement",
-    "delete_event": "Supprimer cet événement",
-    "cancel": "Annuler",
-    "publish": "Publier",
-    "save": "Sauvegarder",
-    "confirm": "Confirmer"
+    "add_event": "Add an event",
+    "create_event": "Create an event",
+    "edit_event": "Edit an event",
+    "delete_event": "Delete this event",
+    "cancel": "Cancel",
+    "publish": "Publish",
+    "save": "Save",
+    "confirm": "Confirm"
   },
   "form": {
     "titles": {
-      "create": "Créer un événement",
-      "update": "Modifier un événement",
-      "delete": "Supprimer un événement"
+      "create": "Create an Event",
+      "update": "Modify an Event",
+      "delete": "Delete an Event"
     },
     "messages": {
-      "created": "Événement créé avec succès",
-      "updated": "Événement modifié avec succès",
-      "deleted": "Événement supprimé avec succès",
-      "failed_creation": "Échec de la création de l'événement",
-      "failed_update": "Échec de la modification de l'événement",
-      "failed_deletion": "Échec de la suppression de l'événement",
-      "delete_confirmation": "Êtes-vous sûr de vouloir supprimer cet événement ?"
+      "created": "Event created successfully",
+      "updated": "Event modified successfully",
+      "deleted": "Event deleted successfully",
+      "failed_creation": "Failed to create event",
+      "failed_update": "Failed to modify event",
+      "failed_deletion": "Failed to delete event",
+      "delete_confirmation": "Are you sure you want to delete this event?"
     },
     "buttons": {
-      "create": "Créer un événement",
-      "update": "Modifier l'événement",
-      "delete": "Supprimer l'événement",
-      "add_field": "Ajouter un champ"
+      "create": "Create an event",
+      "update": "Modify the event",
+      "delete": "Delete the event",
+      "add_field": "Add a field"
     },
     "labels": {
-      "title": "Titre de l'événement",
-      "start_date": "Date/heure de début",
-      "end_date": "Date/heure de fin",
-      "type": "Type d'événement",
-      "agent": "Agents participants",
-      "bien": "Bien concerné",
-      "client": "Client concerné",
-      "visitor_name": "Nom et prénom du visiteur",
-      "visitor_phone": "Téléphone du visiteur",
-      "description": "Description"
+      "title": "Event Title",
+      "start_date": "Start date/time",
+      "end_date": "End date/time",
+      "type": "Event Type",
+      "agent": "Participating agents",
+      "bien": "Concerned property",
+      "client": "Concerned client",
+      "visitor_name": "Visitor's full name",
+      "visitor_phone": "Visitor's phone",
+      "description": "Description",
+      "from": "From",
+      "to": "to",
+      "select_period": "Select a period"
     },
     "placeholders": {
-      "title": "Entrez le titre de l'événement",
-      "start_date": "Sélectionnez la date et l'heure de début",
-      "end_date": "Sélectionnez la date et l'heure de fin",
-      "type": "Sélectionnez le type",
-      "agent": "Sélectionnez les agents",
-      "bien": "Sélectionnez le bien",
-      "client": "Sélectionnez le client",
-      "visitor_name": "Entrez le nom et prénom du visiteur",
-      "visitor_phone": "Entrez le téléphone du visiteur",
-      "description": "Entrez la description de l'événement"
+      "title": "Enter event title",
+      "start_date": "Select start date and time",
+      "end_date": "Select end date and time",
+      "type": "Select type",
+      "agent": "Select agents",
+      "bien": "Select property",
+      "client": "Select client",
+      "visitor_name": "Enter visitor's full name",
+      "visitor_phone": "Enter visitor's phone number",
+      "description": "Enter event description"
     }
   },
   "filter": {
-    "title": "Filtrer les événements",
+    "title": "Filter Events",
     "labels": {
       "agent": "Agent",
       "date": "Date",
-      "type": "Type d'événement",
-      "bien": "Bien"
+      "type": "Event Type",
+      "bien": "Property"
     },
     "placeholders": {
-      "agent": "Sélectionnez un agent",
-      "date": "Sélectionnez une date",
-      "type": "Sélectionnez un type d'événement",
-      "bien": "Sélectionnez un bien"
+      "agent": "Select an agent",
+      "date": "Select a date",
+      "type": "Select an event type",
+      "bien": "Select a property"
     },
     "buttons": {
-      "apply": "Appliquer les filtres"
+      "apply": "Apply filters"
     }
   },
   "delete": {
-    "title": "Supprimer cet événement",
-    "message": "Êtes-vous sûr de vouloir supprimer cet événement ?"
+    "title": "Delete this event",
+    "message": "Are you sure you want to delete this event?"
   },
   "week": {
-    "prefix": "Semaine du"
+    "prefix": "Week of"
   },
-  "more": "autres"
+  "more": "others"
 }
