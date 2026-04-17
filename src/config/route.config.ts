@@ -13,13 +13,10 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     path: "/forbidden",
     requireAuthentication: true,
   },
-  /** Hub: any signed-in user can open it; each sub-route still enforces its own permissions. */
   {
-    path: "/settings",
+    path: ROUTES.SETTINGS.ROOT,
     requireAuthentication: true,
   },
-
-  // Adjusted
   {
     path: ROUTES.SETTINGS.COLORS.ROOT,
     permissions: [PERMISSIONS.VIEW_COLORS],

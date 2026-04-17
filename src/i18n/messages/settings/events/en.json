@@ -1,5 +1,5 @@
 {
-  "title": "إعدادات الأحداث",
-  "description": "ضبط وإدارة إعدادات الأحداث.",
-  "colors": "إعدادات ألوان الوكلاء في الأحداث"
+  "title": "Events Configuration",
+  "description": "Setting up and managing event configurations.",
+  "colors": "Configuration of agent colors for events"
 }

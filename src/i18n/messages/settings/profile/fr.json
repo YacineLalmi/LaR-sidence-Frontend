@@ -1,56 +1,56 @@
 {
   "title": "Gestion de profil",
-  "pageTitle": "Profil & Paramètres",
+  "page_title": "Profil & Paramètres",
   "buttons": {
     "edit": "Modifier",
     "save": "Enregistrer",
     "cancel": "Annuler"
   },
   "sections": {
-    "accountSecurity": "Compte & Sécurité",
-    "displayAccessibility": "Affichage & Accessibilité",
-    "changePassword": "Changer le mot de passe",
+    "account_security": "Compte & Sécurité",
+    "display_accessibility": "Affichage & Accessibilité",
+    "change_password": "Changer le mot de passe",
     "language": "Langue"
   },
   "fields": {
-    "lastName": "Nom",
-    "firstName": "Prénom",
+    "last_name": "Nom",
+    "first_name": "Prénom",
     "email": "Email",
     "phone": "Téléphone",
     "address": "Adresse",
     "city": "Ville",
-    "postalCode": "Code postal",
+    "postal_code": "Code postal",
     "username": "Nom d'utilisateur"
   },
   "placeholders": {
     "address": "—",
     "city": "—",
-    "postalCode": "—"
+    "postal_code": "—"
   },
   "hints": {
-    "addressFields": "Ces champs seront disponibles dans une prochaine version."
+    "address_fields": "Ces champs seront disponibles dans une prochaine version."
   },
   "messages": {
-    "profileUpdated": "Profil mis à jour.",
-    "passwordChanged": "Mot de passe modifié.",
-    "updateFailed": "La mise à jour a échoué.",
-    "passwordChangeFailed": "Impossible de modifier le mot de passe."
+    "profile_updated": "Profil mis à jour.",
+    "password_changed": "Mot de passe modifié.",
+    "update_failed": "La mise à jour a échoué.",
+    "password_change_failed": "Impossible de modifier le mot de passe."
   },
-  "passwordDialog": {
+  "password_dialog": {
     "title": "Changer le mot de passe",
     "description": "Saisissez votre mot de passe actuel puis le nouveau mot de passe.",
     "submit": "Confirmer"
   },
   "form": {
     "label": {
-      "currentPassword": "Mot de passe actuel",
-      "newPassword": "Nouveau mot de passe",
-      "confirmNewPassword": "Confirmer le nouveau mot de passe"
+      "current_password": "Mot de passe actuel",
+      "new_password": "Nouveau mot de passe",
+      "confirm_new_password": "Confirmer le nouveau mot de passe"
     },
     "placeholder": {
-      "currentPassword": "Entrez votre mot de passe actuel",
-      "newPassword": "Entrez votre nouveau mot de passe",
-      "confirmNewPassword": "Confirmez votre nouveau mot de passe"
+      "current_password": "Entrez votre mot de passe actuel",
+      "new_password": "Entrez votre nouveau mot de passe",
+      "confirm_new_password": "Confirmez votre nouveau mot de passe"
     }
   }
 }

@@ -1,0 +1,119 @@
+{
+  "title": "إدارة المستندات",
+  "description": "مستودع آمن لجميع المستندات",
+  "add": "إضافة",
+  "upload": "تحميل مستندات",
+  "filters": "مرشحات",
+  "apply": "تطبيق",
+  "filter_sheet": {
+    "close": "إغلاق",
+    "document_name": "اسم المستند",
+    "document_name_placeholder": "اسم الملف…",
+    "agent_name": "اسم الوكيل",
+    "date_label": "تاريخ الإضافة / التعديل",
+    "document_type": "نوع المستند",
+    "select_option": "اختر خياراً",
+    "apply": "تطبيق المرشحات",
+    "reset": "إعادة تعيين المرشحات",
+    "types": {
+      "pdf": "PDF",
+      "doc": "DOC",
+      "docx": "DOCX",
+      "xls": "XLS",
+      "xlsx": "XLSX",
+      "jpg": "JPG",
+      "jpeg": "JPEG",
+      "png": "PNG",
+      "gif": "GIF",
+      "svg": "SVG"
+    }
+  },
+  "search_placeholder": "بحث بالاسم…",
+  "search_placeholder_wide": "اكتب أي شيء…",
+  "view_grid": "شبكة",
+  "view_table": "قائمة",
+  "files_section": {
+    "title": "الملفات"
+  },
+  "folders": {
+    "title": "المجلدات",
+    "card_all": "جميع المستندات",
+    "card_all_subtitle": "عرض شامل للمكتبة",
+    "card_subtitle": "{size} · {count} ملف(ات)",
+    "open": "فتح",
+    "create": "مجلد جديد",
+    "all": "جميع المستندات",
+    "filter_hint": "تصفية حسب المجلد",
+    "empty": "لا توجد مجلدات. أنشئ واحداً لتصنيف ملفاتك.",
+    "dialog_title": "إنشاء مجلد",
+    "dialog_name": "اسم المجلد",
+    "dialog_submit": "إنشاء",
+    "created": "تم إنشاء المجلد",
+    "delete": "حذف المجلد",
+    "delete_confirm_title": "حذف هذا المجلد؟",
+    "delete_confirm_hint": "ستبقى المستندات متاحة بدون مجلد.",
+    "deleted": "تم حذف المجلد"
+  },
+  "columns": {
+    "name": "اسم المستند",
+    "folder": "المجلد",
+    "type": "النوع",
+    "date": "التاريخ",
+    "updated": "آخر تعديل",
+    "owner": "أضيف بواسطة",
+    "actions": "الإجراءات",
+    "size": "حجم المستند",
+    "source": "المصدر",
+    "confidential": "سري"
+  },
+  "source": {
+    "entity_form": "ملف",
+    "library_manual": "المكتبة"
+  },
+  "actions": {
+    "preview": "معاينة",
+    "download": "تحميل",
+    "delete": "حذف",
+    "share": "مشاركة",
+    "bulk_download": "تحميل المحدد"
+  },
+  "preview_dialog": {
+    "print": "طباعة",
+    "close_aria": "إغلاق المعاينة"
+  },
+  "share_modal": {
+    "title": "مشاركة هذا الملف",
+    "description": "أرسل رابط تحميل آمن عبر البريد الإلكتروني أو واتساب.",
+    "email_placeholder": "البريد الإلكتروني",
+    "send": "إرسال",
+    "whatsapp": "إرسال عبر واتساب",
+    "close": "إغلاق",
+    "email_required": "يرجى إدخال عنوان بريد إلكتروني.",
+    "email_sent": "تم إرسال البريد",
+    "error": "حدث خطأ ما",
+    "whatsapp_message": "مستند « {name} » — رابط آمن (صالح لمدة 7 أيام): {url}"
+  },
+  "upload_dialog": {
+    "title": "إضافة مستند",
+    "drop": "اسحب الملفات وأفلتها هنا أو انقر للتصفح",
+    "display_name": "اسم العرض",
+    "confidential": "سري",
+    "folder": "المجلد",
+    "folder_placeholder": "اختر مجلداً",
+    "no_folder": "بدون مجلد (الجذر)",
+    "link_entity": "ربط بسجل (اختياري)",
+    "entity_type": "النوع",
+    "entity_id": "المعرف"
+  },
+  "delete_confirm": {
+    "title": "حذف هذا المستند؟",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد"
+  },
+  "messages": {
+    "uploaded": "تمت إضافة المستند",
+    "deleted": "تم حذف المستند",
+    "download_ready": "بدأ التحميل",
+    "error": "حدث خطأ ما"
+  }
+}

@@ -1,56 +1,56 @@
 {
-  "title": "Profile management",
-  "pageTitle": "Profile & Settings",
+  "title": "Profile Management",
+  "page_title": "Profile & Settings",
   "buttons": {
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel"
   },
   "sections": {
-    "accountSecurity": "Account & security",
-    "displayAccessibility": "Display & accessibility",
-    "changePassword": "Change password",
+    "account_security": "Account & Security",
+    "display_accessibility": "Display & Accessibility",
+    "change_password": "Change Password",
     "language": "Language"
   },
   "fields": {
-    "lastName": "Last name",
-    "firstName": "First name",
+    "last_name": "Last Name",
+    "first_name": "First Name",
     "email": "Email",
     "phone": "Phone",
     "address": "Address",
     "city": "City",
-    "postalCode": "Postal code",
+    "postal_code": "Postal Code",
     "username": "Username"
   },
   "placeholders": {
     "address": "—",
     "city": "—",
-    "postalCode": "—"
+    "postal_code": "—"
   },
   "hints": {
-    "addressFields": "These fields will be available in a future version."
+    "address_fields": "These fields will be available in a future version."
   },
   "messages": {
-    "profileUpdated": "Profile updated.",
-    "passwordChanged": "Password changed.",
-    "updateFailed": "Update failed.",
-    "passwordChangeFailed": "Could not change password."
+    "profile_updated": "Profile updated.",
+    "password_changed": "Password changed.",
+    "update_failed": "Update failed.",
+    "password_change_failed": "Unable to change password."
   },
-  "passwordDialog": {
-    "title": "Change password",
-    "description": "Enter your current password and your new password.",
+  "password_dialog": {
+    "title": "Change Password",
+    "description": "Enter your current password then the new password.",
     "submit": "Confirm"
   },
   "form": {
     "label": {
-      "currentPassword": "Current password",
-      "newPassword": "New password",
-      "confirmNewPassword": "Confirm new password"
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_new_password": "Confirm New Password"
     },
     "placeholder": {
-      "currentPassword": "Enter your current password",
-      "newPassword": "Enter your new password",
-      "confirmNewPassword": "Confirm your new password"
+      "current_password": "Enter your current password",
+      "new_password": "Enter your new password",
+      "confirm_new_password": "Confirm your new password"
     }
   }
 }

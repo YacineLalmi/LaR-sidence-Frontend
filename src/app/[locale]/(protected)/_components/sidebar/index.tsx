@@ -1,4 +1,15 @@
-import { BarChart3, Bell, Building2, CalendarDays, FileText, FolderOpen, Home, Mails, User2 } from "lucide-react";
+import {
+  BarChart3,
+  Bell,
+  Building2,
+  CalendarDays,
+  Clipboard,
+  FolderOpen,
+  Home,
+  Mails,
+  Settings,
+  User2,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -13,60 +24,66 @@ import {
 
 import Image from "next/image";
 import logo from "@/assests/images/logo-black.png";
-import Settings from "../navbar/components/settings";
 import Link from "next/link";
 import Logout from "./_components/logout";
 import { ROUTES } from "@/constants/routes";
-
-const items = [
-  {
-    title: "Tableau de bord",
-    url: ROUTES.DASHBOARD,
-    icon: Home,
-  },
-  {
-    title: "Statistiques",
-    url: ROUTES.STATISTICS.SECTION("biens"),
-    icon: BarChart3,
-  },
-  {
-    title: "Biens",
-    url: ROUTES.BIENS.ROOT,
-    icon: Building2,
-  },
-  {
-    title: "Calendrier",
-    url: ROUTES.EVENTS.ROOT,
-    icon: CalendarDays,
-  },
-  {
-    title: "Offers",
-    url: ROUTES.OFFERS.ROOT,
-    icon: Mails,
-  },
-  {
-    title: "Clients",
-    url: ROUTES.CLIENTS.ROOT,
-    icon: User2,
-  },
-  {
-    title: "Demandes",
-    url: ROUTES.DEMANDS.ROOT,
-    icon: FileText,
-  },
-  {
-    title: "Documents",
-    url: ROUTES.DOCUMENTS.ROOT,
-    icon: FolderOpen,
-  },
-  {
-    title: "Notifications",
-    url: ROUTES.NOTIFICATIONS.ROOT,
-    icon: Bell,
-  },
-];
+import { use, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export function SideBar() {
+  const translation = useTranslations();
+
+  const items = useMemo(
+    () => [
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DASHBOARD),
+        url: ROUTES.DASHBOARD,
+        icon: Home,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.STATISTICS),
+        url: ROUTES.STATISTICS.SECTION("biens"),
+        icon: BarChart3,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.PROPERTIES),
+        url: ROUTES.BIENS.ROOT,
+        icon: Building2,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.CALENDAR),
+        url: ROUTES.EVENTS.ROOT,
+        icon: CalendarDays,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.OFFERS),
+        url: ROUTES.OFFERS.ROOT,
+        icon: Clipboard,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.CLIENTS),
+        url: ROUTES.CLIENTS.ROOT,
+        icon: User2,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DEMANDS),
+        url: ROUTES.DEMANDS.ROOT,
+        icon: Mails,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DOCUMENTS),
+        url: ROUTES.DOCUMENTS.ROOT,
+        icon: FolderOpen,
+      },
+      {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.NOTIFICATIONS),
+        url: ROUTES.NOTIFICATIONS.ROOT,
+        icon: Bell,
+      },
+    ],
+    [translation],
+  );
   return (
     <Sidebar className="items-center" collapsible="icon">
       <SidebarTrigger

@@ -7,5 +7,7 @@
   "demands": "Requests",
   "settings": "Settings",
   "bills": "bills",
-  "documents": "documents"
+  "documents": "documents",
+  "notifications": "Notifications",
+  "statistics": "Statistics"
 }

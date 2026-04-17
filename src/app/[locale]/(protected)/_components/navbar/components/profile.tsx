@@ -11,6 +11,7 @@ type Props = {
 };
 
 export default function Profile({ user }: Props) {
+  console.log("user:", user);
   if (!user) {
     return (
       <div className="flex items-center gap-3 pr-1">

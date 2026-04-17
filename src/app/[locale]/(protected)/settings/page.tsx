@@ -29,7 +29,7 @@ const CONFIG_MODULES: SettingsItem[] = [
       },
       {
         id: "notifications",
-        title: "Notifications",
+        title: TRANSLATIONS_KEYS_2.SETTINGS.NOTIFICATIONS.TITLE,
         link: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
       },
     ],
@@ -150,19 +150,6 @@ const CONFIG_MODULES: SettingsItem[] = [
     ],
   },
   {
-    id: "notifications_module",
-    title: "Notifications",
-    description: "Alertes et rappels automatiques",
-    icon: Bell,
-    subs: [
-      {
-        id: "notification_settings",
-        title: "Paramètres notifications",
-        link: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
-      },
-    ],
-  },
-  {
     id: "transactions",
     title: TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TITLE,
     description: TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.DESCRIPTION,
@@ -199,51 +186,6 @@ export default async function Settings() {
         {CONFIG_MODULES.map((module) => (
           <SettingCard key={module.id} module={module} />
         ))}
-        {/* <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.LOCATIONS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.LOCATIONS.TITLE)}
-          icon={MapPinned}
-        /> */}
-        {/* <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.USERS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.USERS.TITLE)}
-          icon={UsersRound}
-        />
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.ROLES.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.ROLES.TITLE)}
-          icon={Shield}
-        />
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.BIENS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.BIENS.TITLE)}
-          icon={Building2}
-        />
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.CLIENTS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.CLIENTS.TITLE)}
-          icon={UserRoundCog}
-        />
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.TRANSACTIONS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.TRANSACTIONS.TITLE)}
-          icon={Building2}
-        />
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.OFFERS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.OFFERS.TITLE)}
-          icon={Building2}
-        />
-        {/* <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.PROFILE.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.PROFILE.TITLE)}
-          icon={BadgeCheck}
-        /> 
-        <SettingCard
-          link={NAVIGATION_KEYS.SETTINGS.COLORS.ROOT}
-          title={settingsTranslations(TRANSLATIONS_KEYS.SETTINGS.COLORS.TITLE)}
-          icon={BadgeCheck}
-        /> */}
       </div>
     </>
   );

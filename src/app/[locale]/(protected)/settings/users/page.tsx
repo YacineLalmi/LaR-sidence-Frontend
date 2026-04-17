@@ -1,6 +1,7 @@
 import { UserService } from "@/services/user.service";
 import UsersTable from "./_components/users-table";
 import { getTranslations } from "next-intl/server";
+import { TRANSLATIONS_KEYS } from "@/i18n/translation-constants";
 import CustomButton from "@/components/ui/custom-button";
 import { Plus } from "lucide-react";
 import Link from "next/link";

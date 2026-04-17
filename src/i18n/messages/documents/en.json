@@ -1,0 +1,119 @@
+{
+  "title": "Document Management",
+  "description": "Secure repository for all documents",
+  "add": "Add",
+  "upload": "Upload documents",
+  "filters": "Filters",
+  "apply": "Apply",
+  "filter_sheet": {
+    "close": "Close",
+    "document_name": "Document name",
+    "document_name_placeholder": "File name…",
+    "agent_name": "Agent name",
+    "date_label": "Addition / modification date",
+    "document_type": "Document type",
+    "select_option": "Select an option",
+    "apply": "Apply filters",
+    "reset": "Reset filters",
+    "types": {
+      "pdf": "PDF",
+      "doc": "DOC",
+      "docx": "DOCX",
+      "xls": "XLS",
+      "xlsx": "XLSX",
+      "jpg": "JPG",
+      "jpeg": "JPEG",
+      "png": "PNG",
+      "gif": "GIF",
+      "svg": "SVG"
+    }
+  },
+  "search_placeholder": "Search by name…",
+  "search_placeholder_wide": "Type anything…",
+  "view_grid": "Grid",
+  "view_table": "List",
+  "files_section": {
+    "title": "Files"
+  },
+  "folders": {
+    "title": "Folders",
+    "card_all": "All documents",
+    "card_all_subtitle": "Global view of the library",
+    "card_subtitle": "{size} · {count} file(s)",
+    "open": "Open",
+    "create": "New folder",
+    "all": "All documents",
+    "filter_hint": "Filter by folder",
+    "empty": "No folders. Create one to classify your files.",
+    "dialog_title": "Create a folder",
+    "dialog_name": "Folder name",
+    "dialog_submit": "Create",
+    "created": "Folder created",
+    "delete": "Delete folder",
+    "delete_confirm_title": "Delete this folder?",
+    "delete_confirm_hint": "Documents will remain accessible without a folder.",
+    "deleted": "Folder deleted"
+  },
+  "columns": {
+    "name": "Document name",
+    "folder": "Folder",
+    "type": "Type",
+    "date": "Date",
+    "updated": "Last modified",
+    "owner": "Added by",
+    "actions": "Actions",
+    "size": "Document size",
+    "source": "Source",
+    "confidential": "Confidential"
+  },
+  "source": {
+    "entity_form": "File",
+    "library_manual": "Library"
+  },
+  "actions": {
+    "preview": "Preview",
+    "download": "Download",
+    "delete": "Delete",
+    "share": "Share",
+    "bulk_download": "Download selection"
+  },
+  "preview_dialog": {
+    "print": "Print",
+    "close_aria": "Close preview"
+  },
+  "share_modal": {
+    "title": "Share this file",
+    "description": "Send a secure download link via email or WhatsApp.",
+    "email_placeholder": "Email",
+    "send": "Send",
+    "whatsapp": "Send on WhatsApp",
+    "close": "Close",
+    "email_required": "Please provide an email address.",
+    "email_sent": "Email sent",
+    "error": "An error occurred",
+    "whatsapp_message": "Document \"{name}\" — secure link (valid 7 days): {url}"
+  },
+  "upload_dialog": {
+    "title": "Add a document",
+    "drop": "Drag and drop files here or click to browse",
+    "display_name": "Display name",
+    "confidential": "Confidential",
+    "folder": "Folder",
+    "folder_placeholder": "Choose a folder",
+    "no_folder": "No folder (root)",
+    "link_entity": "Link to a record (optional)",
+    "entity_type": "Type",
+    "entity_id": "Identifier"
+  },
+  "delete_confirm": {
+    "title": "Delete this document?",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "messages": {
+    "uploaded": "Document added",
+    "deleted": "Document deleted",
+    "download_ready": "Download started",
+    "error": "An error occurred"
+  }
+}

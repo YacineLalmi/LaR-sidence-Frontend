@@ -1,15 +1,56 @@
 {
   "title": "إدارة الملف الشخصي",
+  "page_title": "الملف الشخصي والإعدادات",
+  "buttons": {
+    "edit": "تعديل",
+    "save": "حفظ",
+    "cancel": "إلغاء"
+  },
+  "sections": {
+    "account_security": "الحساب والأمان",
+    "display_accessibility": "العرض وإمكانية الوصول",
+    "change_password": "تغيير كلمة المرور",
+    "language": "اللغة"
+  },
+  "fields": {
+    "last_name": "اللقب",
+    "first_name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "city": "المدينة",
+    "postal_code": "الرمز البريدي",
+    "username": "اسم المستخدم"
+  },
+  "placeholders": {
+    "address": "—",
+    "city": "—",
+    "postal_code": "—"
+  },
+  "hints": {
+    "address_fields": "ستكون هذه الحقول متاحة في إصدار مستقبلي."
+  },
+  "messages": {
+    "profile_updated": "تم تحديث الملف الشخصي.",
+    "password_changed": "تم تغيير كلمة المرور.",
+    "update_failed": "فشل التحديث.",
+    "password_change_failed": "تعذر تغيير كلمة المرور."
+  },
+  "password_dialog": {
+    "title": "تغيير كلمة المرور",
+    "description": "أدخل كلمة المرور الحالية ثم كلمة المرور الجديدة.",
+    "submit": "تأكيد"
+  },
   "form": {
     "label": {
-      "currentPassword": "كلمة المرور الحالية",
-      "newPassword": "كلمة المرور الجديدة",
-      "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+      "current_password": "كلمة المرور الحالية",
+      "new_password": "كلمة المرور الجديدة",
+      "confirm_new_password": "تأكيد كلمة المرور الجديدة"
     },
     "placeholder": {
-      "currentPassword": "أدخل كلمة المرور الحالية",
-      "newPassword": "أدخل كلمة المرور الجديدة",
-      "confirmNewPassword": "أكد كلمة المرور الجديدة"
+      "current_password": "أدخل كلمة المرور الحالية",
+      "new_password": "أدخل كلمة المرور الجديدة",
+      "confirm_new_password": "أكد كلمة المرور الجديدة"
     }
   }
 }

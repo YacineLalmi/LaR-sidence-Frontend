@@ -7,5 +7,7 @@
   "demands": "Demandes",
   "settings": "Paramètres",
   "bills": "factures",
-  "documents": "documents"
+  "documents": "documents",
+  "notifications": "Notifications",
+  "statistics": "Statistiques"
 }

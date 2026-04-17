@@ -1,6 +1,10 @@
 "use client";
 
-import { deleteNotificationAction, markAllNotificationsReadAction, markNotificationReadAction } from "@/actions/notifications/mark-notification-read.action";
+import {
+  deleteNotificationAction,
+  markAllNotificationsReadAction,
+  markNotificationReadAction,
+} from "@/actions/notifications/mark-notification-read.action";
 import { notificationEntityHref } from "@/lib/notification-entity-link";
 import { NOTIFICATION_CATEGORIES, type NotificationCategoryId } from "@/schemas/notifications/notification.constants";
 import { Notification, NotificationAggregates } from "@/schemas/notifications/notification.schema";
@@ -22,6 +26,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 function priorityIcon(priority?: string) {
   if (priority === "CRITICAL") return <CircleX className="h-5 w-5 text-red-500" />;
@@ -32,7 +37,7 @@ function priorityIcon(priority?: string) {
 function pillInputClass() {
   return cn(
     "h-11 w-full rounded-full border border-foreground/90 bg-white px-4 text-sm shadow-none",
-    "placeholder:text-muted-foreground/70 focus-visible:ring-1 focus-visible:ring-foreground"
+    "placeholder:text-muted-foreground/70 focus-visible:ring-1 focus-visible:ring-foreground",
   );
 }
 
@@ -105,9 +110,9 @@ export default function NotificationsView({
   initialData: PaginatedResponse<Notification>;
   aggregates: NotificationAggregates;
 }) {
-  const t = useTranslations("notifications");
-  const deleteConfirmTitle = t("delete_confirm_title");
-  const deleteConfirmDescription = t("delete_confirm_description");
+  const translation = useTranslations();
+  const deleteConfirmTitle = translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.DELETE_CONFIRM_TITLE);
+  const deleteConfirmDescription = translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.DELETE_CONFIRM_DESCRIPTION);
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -143,7 +148,7 @@ export default function NotificationsView({
         toast.error(res.errorMessage || "Impossible");
         return;
       }
-      toast.success(t("mark_all_success"));
+      toast.success(translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.MARK_ALL_SUCCESS));
       router.refresh();
     });
 
@@ -158,26 +163,26 @@ export default function NotificationsView({
     <div className="space-y-5">
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <BucketSummaryCard
-          title={t("bucket_urgent_title")}
-          description={t("bucket_urgent_desc")}
+          title={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_URGENT_TITLE)}
+          description={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_URGENT_DESC)}
           count={buckets.urgent.count}
           accentClass="border-red-200/80 bg-red-50/40 dark:bg-red-950/20"
         />
         <BucketSummaryCard
-          title={t("bucket_today_title")}
-          description={t("bucket_today_desc")}
+          title={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_TODAY_TITLE)}
+          description={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_TODAY_DESC)}
           count={buckets.today.count}
           accentClass="border-amber-200/80 bg-amber-50/40 dark:bg-amber-950/20"
         />
         <BucketSummaryCard
-          title={t("bucket_follow_title")}
-          description={t("bucket_follow_desc")}
+          title={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_FOLLOW_TITLE)}
+          description={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_FOLLOW_DESC)}
           count={buckets.to_follow.count}
           accentClass="border-sky-200/80 bg-sky-50/40 dark:bg-sky-950/20"
         />
         <BucketSummaryCard
-          title={t("bucket_history_title")}
-          description={t("bucket_history_desc")}
+          title={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_HISTORY_TITLE)}
+          description={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.BUCKET_HISTORY_DESC)}
           count={buckets.history.count}
           accentClass="border-stone-200/80 bg-stone-50/50 dark:bg-stone-900/30"
         />
@@ -185,14 +190,14 @@ export default function NotificationsView({
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">
-          {t("page_summary", { unread: unreadOnPage, total: data.length })}
+          {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PAGE_SUMMARY, { unread: unreadOnPage, total: data.length })}
         </p>
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="h-8 px-3 rounded-full">
             {data.length}
           </Badge>
           <Button onClick={onMarkAll} disabled={isPending} className="rounded-full">
-            {t("mark_all_read")}
+            {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.MARK_ALL_READ)}
           </Button>
         </div>
       </div>
@@ -204,7 +209,7 @@ export default function NotificationsView({
             className={cn(pillInputClass(), "pl-11 pr-4")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder={t("search_placeholder")}
+            placeholder={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.SEARCH_PLACEHOLDER)}
             onKeyDown={(e) => {
               if (e.key === "Enter") pushQuery({ search });
             }}
@@ -218,7 +223,7 @@ export default function NotificationsView({
               className="gap-2 rounded-full border-foreground/90 bg-white px-5 hover:bg-stone-50"
             >
               <Filter className="h-4 w-4" />
-              {t("filter")}
+              {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.FILTER)}
             </Button>
           </SheetTrigger>
           <SheetContent
@@ -228,13 +233,13 @@ export default function NotificationsView({
           >
             <SheetHeader className="flex flex-row items-start justify-between border-b border-stone-100 px-6 py-5 text-left">
               <SheetTitle className="font-serif text-2xl font-semibold tracking-tight text-foreground">
-                {t("sheet_title")}
+                {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.SHEET_TITLE)}
               </SheetTitle>
               <button
                 type="button"
                 onClick={() => setSheetOpen(false)}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black text-white hover:bg-stone-800"
-                aria-label={t("sheet_close")}
+                aria-label={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.SHEET_CLOSE)}
               >
                 <span className="text-lg leading-none">×</span>
               </button>
@@ -242,45 +247,58 @@ export default function NotificationsView({
 
             <div className="flex flex-col gap-5 px-6 py-6">
               <div className="space-y-2">
-                <Label className="text-sm font-medium">{t("priority")}</Label>
-                <Select value={draftPriority || "__all__"} onValueChange={(v) => setDraftPriority(v === "__all__" ? "" : v)}>
+                <Label className="text-sm font-medium">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY)}</Label>
+                <Select
+                  value={draftPriority || "__all__"}
+                  onValueChange={(v) => setDraftPriority(v === "__all__" ? "" : v)}
+                >
                   <SelectTrigger className={cn(pillInputClass(), "flex !h-11 items-center justify-between")}>
-                    <SelectValue placeholder={t("priority_all")} />
+                    <SelectValue placeholder={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY_ALL)} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__all__">{t("priority_all")}</SelectItem>
-                    <SelectItem value="CRITICAL">{t("priority_critical")}</SelectItem>
-                    <SelectItem value="IMPORTANT">{t("priority_important")}</SelectItem>
-                    <SelectItem value="NORMAL">{t("priority_normal")}</SelectItem>
+                    <SelectItem value="__all__">
+                      {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY_ALL)}
+                    </SelectItem>
+                    <SelectItem value="CRITICAL">
+                      {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY_CRITICAL)}
+                    </SelectItem>
+                    <SelectItem value="IMPORTANT">
+                      {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY_IMPORTANT)}
+                    </SelectItem>
+                    <SelectItem value="NORMAL">
+                      {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITY_NORMAL)}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium">{t("read_state")}</Label>
+                <Label className="text-sm font-medium">
+                  {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_STATE)}
+                </Label>
                 <Select value={draftRead || "__all__"} onValueChange={(v) => setDraftRead(v === "__all__" ? "" : v)}>
                   <SelectTrigger className={cn(pillInputClass(), "flex !h-11 items-center justify-between")}>
-                    <SelectValue placeholder={t("read_all")} />
+                    <SelectValue placeholder={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_ALL)} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__all__">{t("read_all")}</SelectItem>
-                    <SelectItem value="0">{t("read_unread")}</SelectItem>
-                    <SelectItem value="1">{t("read_read")}</SelectItem>
+                    <SelectItem value="__all__">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_ALL)}</SelectItem>
+                    <SelectItem value="0">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_UNREAD)}</SelectItem>
+                    <SelectItem value="1">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_READ)}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium">{t("type")}</Label>
+                <Label className="text-sm font-medium">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.TYPE)}</Label>
                 <Select value={draftType || "__all__"} onValueChange={(v) => setDraftType(v === "__all__" ? "" : v)}>
                   <SelectTrigger className={cn(pillInputClass(), "flex !h-11 items-center justify-between")}>
-                    <SelectValue placeholder={t("type_all")} />
+                    <SelectValue placeholder={translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.TYPE_ALL)} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__all__">{t("type_all")}</SelectItem>
+                    <SelectItem value="__all__">{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.TYPE_ALL)}</SelectItem>
                     {NOTIFICATION_CATEGORIES.map((cat) => (
                       <SelectItem key={cat} value={cat}>
-                        {t(`categories.${cat}`)}
+                        {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.CATEGORIES[cat])}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -303,7 +321,7 @@ export default function NotificationsView({
                     setSheetOpen(false);
                   }}
                 >
-                  {t("reset")}
+                  {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.RESET)}
                 </Button>
                 <Button
                   type="button"
@@ -313,7 +331,7 @@ export default function NotificationsView({
                     setSheetOpen(false);
                   }}
                 >
-                  {t("apply_filters")}
+                  {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.APPLY_FILTERS)}
                 </Button>
               </div>
             </div>
@@ -325,7 +343,7 @@ export default function NotificationsView({
         {data.length === 0 && (
           <Card className="border-dashed">
             <CardContent className="py-10 text-center text-sm text-muted-foreground">
-              {t("empty_state")}
+              {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.EMPTY_STATE)}
             </CardContent>
           </Card>
         )}
@@ -337,7 +355,7 @@ export default function NotificationsView({
               key={String(item.id)}
               className={cn(
                 "transition-colors",
-                item.is_read ? "opacity-80" : "border-amber-200 bg-amber-50/30 dark:bg-amber-950/10"
+                item.is_read ? "opacity-80" : "border-amber-200 bg-amber-50/30 dark:bg-amber-950/10",
               )}
             >
               <CardHeader className="pb-1">
@@ -351,25 +369,33 @@ export default function NotificationsView({
                   </div>
                   <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
                     <Badge variant={item.is_read ? "outline" : "default"}>
-                      {item.is_read ? t("read_badge") : t("unread_badge")}
+                      {item.is_read
+                        ? translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.READ_BADGE)
+                        : translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.UNREAD_BADGE)}
                     </Badge>
                     <Badge variant="secondary">
-                      {isNotificationCategory(item.type) ? t(`categories.${item.type}`) : item.type}
+                      {isNotificationCategory(item.type)
+                        ? translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.CATEGORIES[item.type])
+                        : item.type}
                     </Badge>
                     <Badge variant="outline" className="font-normal">
-                      {pr === "CRITICAL" || pr === "IMPORTANT" || pr === "NORMAL" ? t(`priorities.${pr}`) : pr}
+                      {pr === "CRITICAL" || pr === "IMPORTANT" || pr === "NORMAL"
+                        ? translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PRIORITIES[pr])
+                        : pr}
                     </Badge>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="pt-1 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-xs text-muted-foreground font-medium">
-                  {item.created_at ? formatDistanceToNow(new Date(item.created_at), { addSuffix: true, locale: fr }) : "-"}
+                  {item.created_at
+                    ? formatDistanceToNow(new Date(item.created_at), { addSuffix: true, locale: fr })
+                    : "-"}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-end">
                   {href && (
                     <Button size="sm" variant="secondary" className="rounded-full" asChild>
-                      <Link href={href}>{t("cta_view")}</Link>
+                      <Link href={href}>{translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.CTA_VIEW)}</Link>
                     </Button>
                   )}
                   {!item.is_read && (
@@ -388,7 +414,7 @@ export default function NotificationsView({
                         })
                       }
                     >
-                      {t("cta_resolve")}
+                      {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.CTA_RESOLVE)}
                     </Button>
                   )}
                   <NotificationDeleteButton
@@ -409,17 +435,17 @@ export default function NotificationsView({
           disabled={page <= 1}
           onClick={() => pushQuery({ page: String(Math.max(1, page - 1)) })}
         >
-          {t("prev")}
+          {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PREV)}
         </Button>
         <span className="text-sm text-muted-foreground">
-          {t("page_of", { page, total: totalPages })}
+          {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.PAGE_OF, { page, total: totalPages })}
         </span>
         <Button
           variant="outline"
           disabled={page >= totalPages}
           onClick={() => pushQuery({ page: String(Math.min(totalPages, page + 1)) })}
         >
-          {t("next")}
+          {translation(TRANSLATIONS_KEYS_2.NOTIFICATIONS.NEXT)}
         </Button>
       </div>
     </div>
