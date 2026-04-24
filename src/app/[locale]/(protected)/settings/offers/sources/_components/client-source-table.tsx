@@ -19,10 +19,9 @@ import UpdateClientSourceDialog from "./update-client-source-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function ClientSourceTable({ data, colors }: Props) {
+export default function ClientSourceTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function ClientSourceTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteClientSourceDialog classification={row.original} />
-          <UpdateClientSourceDialog classification={row.original} colors={colors} />
+          <UpdateClientSourceDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.SOURCES.COLUMNS.ACTIONS),

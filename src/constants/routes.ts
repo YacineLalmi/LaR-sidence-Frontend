@@ -1,3 +1,5 @@
+import { METHODS } from "http";
+
 export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
@@ -17,6 +19,13 @@ export const ROUTES = {
     CREATE: "/biens/create",
     DETAIL: (id: string | number) => `/biens/${id}`,
     EDIT: (id: string | number) => `/biens/${id}`,
+  },
+
+  BILLS: {
+    ROOT: "/bills",
+    CREATE: "/bills/create",
+    DETAIL: (id: string | number) => `/bills/${id}`,
+    EDIT: (id: string | number) => `/bills/${id}`,
   },
 
   CLIENTS: {
@@ -130,6 +139,7 @@ export const ROUTES = {
         ROOT: "/settings/transactions/types",
       },
     },
+
     EVENTS: {
       ROOT: "/settings/events",
       TYPES: {
@@ -139,6 +149,7 @@ export const ROUTES = {
         ROOT: "/settings/events/colors",
       },
     },
+
     USERS: {
       ROOT: "/settings/users",
       CREATE: "/settings/users/create",
@@ -152,8 +163,26 @@ export const ROUTES = {
       DETAIL: (id: string | number) => `/settings/roles/${id}`,
       EDIT: (id: string | number) => `/settings/roles/${id}`,
     },
+
     NOTIFICATIONS: {
       ROOT: "/settings/notifications",
+    },
+
+    BILLS: {
+      PAYMENTS: {
+        STATUSES: {
+          ROOT: "/settings/bills/payments/statuses",
+        },
+        METHODS: {
+          ROOT: "/settings/bills/payments/methods",
+        },
+      },
+      MODELS: {
+        ROOT: "/settings/bills/models",
+        CREATE: "/settings/bills/models/create",
+        DETAIL: (id: string | number) => `/settings/bills/models/${id}`,
+        EDIT: (id: string | number) => `/settings/bills/models/${id}`,
+      }
     },
   },
 

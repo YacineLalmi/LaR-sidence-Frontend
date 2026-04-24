@@ -18,6 +18,10 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ListItem } from "@/schemas/global.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import { FormState } from "@/lib/definitions";
+import useFetch from "@/hooks/use-fetch.hook";
+import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
+import { CATEGORIES } from "@/services/classification.service";
+import { getColorsListAction } from "@/actions/colors/get-colors-list.action";
 
 interface Props {
   initialData: ClassificationFormType;
@@ -26,7 +30,6 @@ interface Props {
   errorMessage?: string;
   formId?: string;
   successAction?: () => void;
-  colors: ListItem[];
 }
 
 export default function ClassificationForm({
@@ -36,11 +39,12 @@ export default function ClassificationForm({
   errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_FAILED,
   formId,
   successAction,
-  colors,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
   const translation = useTranslations();
+
+  const [colors, isColorPending] = useFetch<ListItem[]>(() => getColorsListAction(), []);
 
   const form = useForm<ClassificationFormType>({
     resolver: zodResolver(ClassificationFormSchema),
@@ -119,6 +123,7 @@ export default function ClassificationForm({
           label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.CODE)}
           disabled={isPending}
           options={colors}
+          isPending={isColorPending}
           placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.CODE)}
         />
       </form>

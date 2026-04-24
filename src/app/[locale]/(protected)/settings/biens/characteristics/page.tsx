@@ -17,8 +17,6 @@ export default async function BienCharacteristics({
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const colors = await ColorService.list();
-
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
 
@@ -31,10 +29,10 @@ export default async function BienCharacteristics({
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.CHARACTERISTICS.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateBienCharacteristicDialog colors={colors} />}
+      createComponent={<CreateBienCharacteristicDialog />}
       error={responseError}
     >
-      <BienCharacteristicTable data={result} colors={colors} />
+      <BienCharacteristicTable data={result} />
     </SettingsView>
   );
 }

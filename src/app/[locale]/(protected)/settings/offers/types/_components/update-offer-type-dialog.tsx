@@ -7,17 +7,15 @@ import UpdateClassificationDialog from "../../../_components/update-classificati
 import { Classification } from "@/schemas/classification/classification.schema";
 
 interface Props {
-  colors: ListItem[];
   classification: Classification;
 }
-export default function UpdateOfferTypeDialog({ colors, classification }: Props) {
+export default function UpdateOfferTypeDialog({ classification }: Props) {
   return (
     <UpdateClassificationDialog
       title={TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.TYPES.FORM.TITLES.UPDATE}
       classification={classification}
       category={CATEGORIES.TYPE}
       scope={SCOPES.OFFER}
-      colors={colors}
       errorMessage={TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.TYPES.FORM.MESSAGES.FAILED_CREATION}
       successMessage={TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.TYPES.FORM.MESSAGES.CREATED}
     />

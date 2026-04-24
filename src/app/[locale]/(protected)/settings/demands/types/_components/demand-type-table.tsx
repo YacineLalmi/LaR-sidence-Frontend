@@ -18,10 +18,9 @@ import DeleteDemandTypeDialog from "./delete-demand-type-dialog";
 import UpdateDemandTypeDialog from "./update-demand-type-dialog";
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function DemandTypeTable({ data, colors }: Props) {
+export default function DemandTypeTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -100,7 +99,7 @@ export default function DemandTypeTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteDemandTypeDialog classification={row.original} />
-          <UpdateDemandTypeDialog classification={row.original} colors={colors} />
+          <UpdateDemandTypeDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.TYPES.COLUMNS.ACTIONS),

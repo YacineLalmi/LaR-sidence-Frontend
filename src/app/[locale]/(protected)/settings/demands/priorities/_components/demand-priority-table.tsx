@@ -19,10 +19,9 @@ import UpdatedDemandPriorityDialog from "./update-demand-priority-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function DemandPriorityTable({ data, colors }: Props) {
+export default function DemandPriorityTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function DemandPriorityTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteDemandPriorityDialog classification={row.original} />
-          <UpdatedDemandPriorityDialog classification={row.original} colors={colors} />
+          <UpdatedDemandPriorityDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.PRIORITIES.COLUMNS.ACTIONS),

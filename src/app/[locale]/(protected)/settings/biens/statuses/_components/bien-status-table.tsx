@@ -19,10 +19,9 @@ import UpdateBienStatusDialog from "./update-bien-status-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function BienStatusTable({ data, colors }: Props) {
+export default function BienStatusTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function BienStatusTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteBienStatusDialog classification={row.original} />
-          <UpdateBienStatusDialog classification={row.original} colors={colors} />
+          <UpdateBienStatusDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.STATUSES.COLUMNS.ACTIONS),

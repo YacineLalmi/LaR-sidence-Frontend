@@ -214,6 +214,23 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     permissions: [PERMISSIONS.MANAGE_BIENS],
     requireAuthentication: true,
   },
+
+  {
+    path: ROUTES.BILLS.ROOT,
+    permissions: [PERMISSIONS.VIEW_BILLS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.BILLS.CREATE,
+    permissions: [PERMISSIONS.MANAGE_BILLS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.BILLS.EDIT("[id]"),
+    permissions: [PERMISSIONS.MANAGE_BILLS],
+    requireAuthentication: true,
+  },
+
   {
     path: ROUTES.DEMANDS.ROOT,
     permissions: [PERMISSIONS.VIEW_DEMANDS],
@@ -262,6 +279,31 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
   {
     path: ROUTES.SETTINGS.EVENTS.COLORS.ROOT,
     permissions: [PERMISSIONS.MANAGE_USERS, PERMISSIONS.MANAGE_EVENTS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.BILLS.PAYMENTS.STATUSES.ROOT,
+    permissions: [PERMISSIONS.VIEW_BILL_PAYMENTS_SOURCES],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.BILLS.PAYMENTS.METHODS.ROOT,
+    permissions: [PERMISSIONS.VIEW_BILL_PAYMENTS_METHODS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.BILLS.MODELS.ROOT,
+    permissions: [PERMISSIONS.VIEW_BILL_MODELS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.BILLS.MODELS.CREATE,
+    permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
+    requireAuthentication: true,
+  },
+  {
+    path: ROUTES.SETTINGS.BILLS.MODELS.EDIT("[id]"),
+    permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
     requireAuthentication: true,
   },
 ];

@@ -19,10 +19,9 @@ import UpdateClientStatusDialog from "./update-client-status-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function ClientStatusTable({ data, colors }: Props) {
+export default function ClientStatusTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function ClientStatusTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteClientStatusDialog classification={row.original} />
-          <UpdateClientStatusDialog classification={row.original} colors={colors} />
+          <UpdateClientStatusDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.STATUSES.COLUMNS.ACTIONS),

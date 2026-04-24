@@ -12,17 +12,15 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { useCallback } from "react";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { deleteClassificationsAction } from "@/actions/classification/delete-classifications.action";
-import { ListItem } from "@/schemas/global.schema";
 import { formatId } from "@/lib/utils";
 import DeleteEventTypeDialog from "./delete-event-type-dialog";
 import UpdateEventTypeDialog from "./update-event-type-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function EventTypeTable({ data, colors }: Props) {
+export default function EventTypeTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +97,7 @@ export default function EventTypeTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteEventTypeDialog classification={row.original} />
-          <UpdateEventTypeDialog classification={row.original} colors={colors} />
+          <UpdateEventTypeDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.EVENTS.TYPES.COLUMNS.ACTIONS),

@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import SearchField from "@/components/ui/search";
 import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
-import { ColorService } from "@/services/colors.service";
 import SettingsView from "@/views/settings.view";
 import { PaginatedResponse } from "@/lib/definitions";
 import { Classification } from "@/schemas/classification/classification.schema";
@@ -13,8 +12,6 @@ import { ROUTES } from "@/constants/routes";
 export default async function StatusType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
-
-  const colors = await ColorService.list();
 
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
@@ -28,11 +25,11 @@ export default async function StatusType({ searchParams }: { searchParams: Promi
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.STATUSES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateClientSourceDialog colors={colors} />}
+      createComponent={<CreateClientSourceDialog />}
       error={responseError}
       backLink={ROUTES.SETTINGS.ROOT}
     >
-      <ClientSourceTable data={result} colors={colors} />
+      <ClientSourceTable data={result} />
     </SettingsView>
   );
 }

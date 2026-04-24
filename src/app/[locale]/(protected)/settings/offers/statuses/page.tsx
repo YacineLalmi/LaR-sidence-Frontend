@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import SearchField from "@/components/ui/search";
 import { CATEGORIES, ClassificationService, SCOPES } from "@/services/classification.service";
-import { ColorService } from "@/services/colors.service";
 import SettingsView from "@/views/settings.view";
 import { PaginatedResponse } from "@/lib/definitions";
 import { Classification } from "@/schemas/classification/classification.schema";
@@ -12,8 +11,6 @@ import OfferStatusTable from "./_components/client-status-table";
 export default async function StatusType({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
   const translation = await getTranslations();
-
-  const colors = await ColorService.list();
 
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
@@ -27,10 +24,10 @@ export default async function StatusType({ searchParams }: { searchParams: Promi
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.STATUSES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateOfferStatusDialog colors={colors} />}
+      createComponent={<CreateOfferStatusDialog />}
       error={responseError}
     >
-      <OfferStatusTable data={result} colors={colors} />
+      <OfferStatusTable data={result} />
     </SettingsView>
   );
 }

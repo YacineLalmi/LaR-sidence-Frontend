@@ -4,6 +4,7 @@ import {
   Building2,
   CalendarDays,
   Clipboard,
+  DollarSign,
   FolderOpen,
   Home,
   Mails,
@@ -67,6 +68,11 @@ export function SideBar() {
         icon: User2,
       },
       {
+        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.BILLS),
+        url: ROUTES.BILLS.ROOT,
+        icon: DollarSign,
+      },
+      {
         title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.DEMANDS),
         url: ROUTES.DEMANDS.ROOT,
         icon: Mails,
@@ -90,7 +96,7 @@ export function SideBar() {
         className="absolute top-1/5 -right-2 transform  -translate-y-1/2 px-4 py- rounded"
         style={{ background: "#C8AB68" }}
       />
-      <SidebarHeader className=" py-[5rem]">
+      <SidebarHeader className=" py-[3rem]">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton asChild>
             <Link href={ROUTES.PROFILE.ROOT} className="flex items-center gap-2">

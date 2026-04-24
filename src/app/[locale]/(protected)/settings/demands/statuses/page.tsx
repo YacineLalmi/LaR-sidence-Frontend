@@ -13,8 +13,6 @@ export default async function StatusType({ searchParams }: { searchParams: Promi
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const colors = await ColorService.list();
-
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
 
@@ -27,10 +25,10 @@ export default async function StatusType({ searchParams }: { searchParams: Promi
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.STATUSES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateDemandStatusDialog colors={colors} />}
+      createComponent={<CreateDemandStatusDialog  />}
       error={responseError}
     >
-      <DemandStatusTable data={result} colors={colors} />
+      <DemandStatusTable data={result} />
     </SettingsView>
   );
 }

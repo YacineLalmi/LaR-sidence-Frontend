@@ -19,10 +19,9 @@ import DeleteDemandStatusDialog from "./delete-demand-status-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function DemandStatusTable({ data, colors }: Props) {
+export default function DemandStatusTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -101,7 +100,7 @@ export default function DemandStatusTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteDemandStatusDialog classification={row.original} />
-          <UpdateDemandStatusDialog classification={row.original} colors={colors} />
+          <UpdateDemandStatusDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.STATUSES.COLUMNS.ACTIONS),

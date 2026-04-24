@@ -13,8 +13,6 @@ export default async function OfferType({ searchParams }: { searchParams: Promis
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const colors = await ColorService.list();
-
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
 
@@ -27,10 +25,10 @@ export default async function OfferType({ searchParams }: { searchParams: Promis
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.TYPES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateOfferTypeDialog colors={colors} />}
+      createComponent={<CreateOfferTypeDialog />}
       error={responseError}
     >
-      <OfferTypeTable data={result} colors={colors} />
+      <OfferTypeTable data={result} />
     </SettingsView>
   );
 }

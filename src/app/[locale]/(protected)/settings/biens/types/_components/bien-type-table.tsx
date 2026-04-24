@@ -19,10 +19,9 @@ import { formatId } from "@/lib/utils";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function BienTypeTable({ data, colors }: Props) {
+export default function BienTypeTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -96,7 +95,7 @@ export default function BienTypeTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteBienTypeDialog classification={row.original} />
-          <UpdateBienTypeDialog classification={row.original} colors={colors} />
+          <UpdateBienTypeDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.COLUMNS.ACTIONS),

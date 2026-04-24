@@ -54,10 +54,10 @@ export function ResetPasswordForm() {
     <Card className="w-full max-w-lg bg-transparent shadow-none border-0">
       <CardHeader>
         <CardTitle className="flex justify-center items-center text-center text-md xs:text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl">
-          {translation(TRANSLATIONS_KEYS_2.LOGIN.PASSWORD_RESETING)}
+          {translation(TRANSLATIONS_KEYS_2.AUTH.PASSWORD_RESETING)}
         </CardTitle>
         <CardDescription className="flex flex-col tracking-widest text-center font-light w-3/4 mx-auto text-xs mg:text-lg">
-          {translation(TRANSLATIONS_KEYS_2.LOGIN.MESSAGES.INSERT_NEW_PASSWORD)}
+          {translation(TRANSLATIONS_KEYS_2.AUTH.MESSAGES.INSERT_NEW_PASSWORD)}
         </CardDescription>
       </CardHeader>
       <CardContent className="my-0">
@@ -66,18 +66,18 @@ export function ResetPasswordForm() {
             <InputPasswordField
               control={form.control}
               name="password"
-              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.PASSWORD)}
+              label={translation(TRANSLATIONS_KEYS_2.AUTH.LABELS.PASSWORD)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.PASSWORD)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.AUTH.PLACEHOLDERS.PASSWORD)}
             />
             <InputPasswordField
               control={form.control}
               name="password_confirmation"
-              label={translation(TRANSLATIONS_KEYS_2.LOGIN.LABELS.PASSWORD_CONFIRMATION)}
+              label={translation(TRANSLATIONS_KEYS_2.AUTH.LABELS.PASSWORD_CONFIRMATION)}
               disabled={isPending}
               required
-              placeholder={translation(TRANSLATIONS_KEYS_2.LOGIN.PLACEHOLDERS.PASSWORD_CONFIRMATION)}
+              placeholder={translation(TRANSLATIONS_KEYS_2.AUTH.PLACEHOLDERS.PASSWORD_CONFIRMATION)}
             />
           </form>
         </Form>
@@ -88,7 +88,7 @@ export function ResetPasswordForm() {
           className="w-full rounded-4xl text-xs sm:text-sm md:text-md lg:text-lg  p-6 font-light flex justify-center cursor-pointer"
           form="reset-password-form"
         >
-          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS_2.LOGIN.BUTTONS.RESET_PASSWORD)}
+          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS_2.AUTH.BUTTONS.RESET_PASSWORD)}
         </Button>
       </CardFooter>
     </Card>

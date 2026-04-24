@@ -12,6 +12,7 @@ export const CATEGORIES = {
   SOURCE: "source",
   PRIORITY: "priority",
   CHARACTERISTIC: "characteristic",
+  METHOD: "method",
 }
 
 export const SCOPES = {
@@ -21,6 +22,7 @@ export const SCOPES = {
   DEMAND: "demand",
   EVENT: "event",
   TRANSACTION: "transaction",
+  PAYMENT: "payment",
 }
 
 const END_POINTS = {

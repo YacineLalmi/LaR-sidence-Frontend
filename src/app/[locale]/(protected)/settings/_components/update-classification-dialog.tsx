@@ -18,7 +18,6 @@ const FORM_ID = "update-classification-form";
 interface Props {
   category: string;
   scope: string;
-  colors: ListItem[];
   successMessage?: string;
   errorMessage?: string;
   classification: Classification;
@@ -28,7 +27,6 @@ interface Props {
 export default function UpdateClassificationDialog({
   category,
   scope,
-  colors,
   successMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.UPDATED,
   errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.FAILED_UPDATE,
   classification,
@@ -75,7 +73,6 @@ export default function UpdateClassificationDialog({
         errorMessage={errorMessage}
         formId={FORM_ID}
         successAction={onSuccess}
-        colors={colors}
       />
     </FormDialog>
   );

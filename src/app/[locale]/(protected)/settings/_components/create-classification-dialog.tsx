@@ -9,7 +9,6 @@ import CustomButton from "@/components/ui/custom-button";
 import { ClassificationForm as ClassificationFormType } from "@/schemas/classification/classification-form.schema";
 import { createClassificationAction } from "@/actions/classification/create-classification.action";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { ListItem } from "@/schemas/global.schema";
 import ClassificationForm from "./classification-form";
 
 const FORM_ID = "create-classification-form";
@@ -17,7 +16,6 @@ const FORM_ID = "create-classification-form";
 interface Props {
   category: string;
   scope: string;
-  colors: ListItem[];
   successMessage?: string;
   errorMessage?: string;
   title: string;
@@ -27,7 +25,6 @@ interface Props {
 export default function CreateClassificationDialog({
   category,
   scope,
-  colors,
   title,
   buttonText,
   successMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.CREATED,
@@ -88,7 +85,6 @@ export default function CreateClassificationDialog({
         errorMessage={errorMessage}
         formId={FORM_ID}
         successAction={onSuccess}
-        colors={colors}
       />
     </FormDialog>
   );

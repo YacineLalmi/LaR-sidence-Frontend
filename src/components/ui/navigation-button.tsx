@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "./button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useRouter } from "next/router";
 
 interface Props {
   title: string;

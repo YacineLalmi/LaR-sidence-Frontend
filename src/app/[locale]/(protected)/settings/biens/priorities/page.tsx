@@ -14,8 +14,6 @@ export default async function BienPriority({ searchParams }: { searchParams: Pro
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const colors = await ColorService.list();
-
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
 
@@ -28,11 +26,11 @@ export default async function BienPriority({ searchParams }: { searchParams: Pro
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.PRIORITIES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateBienPriorityDialog colors={colors} />}
+      createComponent={<CreateBienPriorityDialog />}
       error={responseError}
       backLink={ROUTES.SETTINGS.ROOT}
     >
-      <BienPriorityTable data={result} colors={colors} />
+      <BienPriorityTable data={result} />
     </SettingsView>
   );
 }

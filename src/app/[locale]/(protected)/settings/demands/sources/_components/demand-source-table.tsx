@@ -19,10 +19,9 @@ import UpdateDemandSourceDialog from "./update-demand-source-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function DemandSourceTable({ data, colors }: Props) {
+export default function DemandSourceTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function DemandSourceTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeletedDemandSourceDialog classification={row.original} />
-          <UpdateDemandSourceDialog classification={row.original} colors={colors} />
+          <UpdateDemandSourceDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.SOURCES.COLUMNS.ACTIONS),

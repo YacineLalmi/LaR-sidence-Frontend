@@ -94,6 +94,7 @@ export async function proxy(req: NextRequest) {
       // Check route permissions
       try {
         const permissions = await getProfilePermissionsAction();
+        console.log(permissions)
         const hasPermission = checkRoutePermission(pathWithoutLocale, permissions);
 
         if (!hasPermission) {

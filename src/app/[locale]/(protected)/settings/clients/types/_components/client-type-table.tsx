@@ -19,10 +19,9 @@ import UpdateClientTypeDialog from "./update-client-type-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function ClientTypeTable({ data, colors }: Props) {
+export default function ClientTypeTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +98,7 @@ export default function ClientTypeTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteClientTypeDialog classification={row.original} />
-          <UpdateClientTypeDialog classification={row.original} colors={colors} />
+          <UpdateClientTypeDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.COLUMNS.ACTIONS),

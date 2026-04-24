@@ -111,4 +111,21 @@ export const PERMISSIONS = {
   // Statistics & reports
   VIEW_STATISTICS: "VSTAT",
   EXPORT_STATISTICS: "MSTAT",
+
+  // Bill payments sources
+  VIEW_BILL_PAYMENTS_SOURCES: "VBPS",
+  MANAGE_BILL_PAYMENTS_SOURCES: "MBPS",
+
+  // Bill payments methods
+  VIEW_BILL_PAYMENTS_METHODS: "VBPM",
+  MANAGE_BILL_PAYMENTS_METHODS: "MBPM",
+
+  // Bill models
+  VIEW_BILL_MODELS: "VBM",
+  MANAGE_BILL_MODELS: "MBM",
+
+  // Bills
+  VIEW_BILLS: "VB",
+  MANAGE_BILLS: "MB",
+
 };

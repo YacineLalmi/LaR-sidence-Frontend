@@ -12,17 +12,15 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { useCallback } from "react";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { deleteClassificationsAction } from "@/actions/classification/delete-classifications.action";
-import { ListItem } from "@/schemas/global.schema";
 import { formatId } from "@/lib/utils";
 import DeleteClientSourceDialog from "./delete-client-source-dialog";
 import UpdateClientSourceDialog from "./update-client-source-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function ClientSourceTable({ data, colors }: Props) {
+export default function ClientSourceTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +97,7 @@ export default function ClientSourceTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteClientSourceDialog classification={row.original} />
-          <UpdateClientSourceDialog classification={row.original} colors={colors} />
+          <UpdateClientSourceDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.SOURCES.COLUMNS.ACTIONS),

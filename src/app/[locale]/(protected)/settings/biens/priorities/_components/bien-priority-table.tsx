@@ -12,17 +12,15 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { useCallback } from "react";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { deleteClassificationsAction } from "@/actions/classification/delete-classifications.action";
-import { ListItem } from "@/schemas/global.schema";
 import { formatId } from "@/lib/utils";
 import DeleteBienPriorityDialog from "./delete-bien-priority-dialog";
 import UpdateBienPriorityDialog from "./update-bien-priority-dialog";
 
 interface Props {
   data: PaginatedResponse<Classification>;
-  colors: ListItem[];
 }
 
-export default function BienPriorityTable({ data, colors }: Props) {
+export default function BienPriorityTable({ data }: Props) {
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
 
@@ -99,7 +97,7 @@ export default function BienPriorityTable({ data, colors }: Props) {
       cell: ({ row }) => (
         <div className="flex items-center">
           <DeleteBienPriorityDialog classification={row.original} />
-          <UpdateBienPriorityDialog classification={row.original} colors={colors} />
+          <UpdateBienPriorityDialog classification={row.original} />
         </div>
       ),
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.PRIORITIES.COLUMNS.ACTIONS),

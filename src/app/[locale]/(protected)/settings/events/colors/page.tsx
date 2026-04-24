@@ -22,7 +22,7 @@ export default async function EventType({ searchParams }: { searchParams: Promis
 
   try {
     result = await UserService.findMany({ ...queryParams, include: "color" });
-    colors = await ColorService.list();
+    colors = await ColorService.list("");
   } catch (error: any) {
     responseError = error;
   }

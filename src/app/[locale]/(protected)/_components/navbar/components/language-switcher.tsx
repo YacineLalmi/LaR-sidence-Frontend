@@ -43,11 +43,8 @@ export default function LanguageSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative h-9 w-9" disabled={isPending}>
-          <Globe className="h-5 w-5" />
-          <span className="sr-only">Change language</span>
-        </Button>
+      <DropdownMenuTrigger asChild className="bg-red">
+        <Globe className="h-5 w-5" strokeWidth={1.75} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[150px]">
         {languages.map((language) => (

@@ -14,8 +14,6 @@ export default async function ClientType({ searchParams }: { searchParams: Promi
   const queryParams = await searchParams;
   const translation = await getTranslations();
 
-  const colors = await ColorService.list();
-
   let result: PaginatedResponse<Classification> = { data: [], meta: undefined };
   let responseError: Error | null = null;
 
@@ -28,11 +26,11 @@ export default async function ClientType({ searchParams }: { searchParams: Promi
     <SettingsView
       title={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.TITLE)}
       searchField={<SearchField />}
-      createComponent={<CreateClientTypeDialog colors={colors} />}
+      createComponent={<CreateClientTypeDialog />}
       error={responseError}
       backLink={ROUTES.SETTINGS.ROOT}
     >
-      <ClientTypeTable data={result} colors={colors} />
+      <ClientTypeTable data={result} />
     </SettingsView>
   );
 }
