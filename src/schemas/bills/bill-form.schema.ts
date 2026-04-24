@@ -1,16 +1,19 @@
 import z from "zod";
 
 export const BillFormSchema = z.object({
-  // title: z.string().min(1, "Le titre est requis").max(255),
-  type_id: z.string().min(1, "Le type de demande est requis"),
-  client_id: z.string().min(1, "Le client est requis"),
-  source_id: z.string().min(1, "La source est requise"),
-  bien_id: z.string().min(1, "Le bien est requis"),
-  agent_id: z.string().min(1, "L'agent est requis"),
-  status_id: z.string().min(1, "Le statut est requis"),
-  priority_id: z.string().min(1, "La priorité est requise"),
-  budget: z.string().regex(/^\d+$/, "Le budget doit être un nombre entier positif"),
-  comment: z.string().nullable().optional(),
+  due_date: z.string(),
+  client_id: z.string(),
+  bien_id: z.string(),
+  status_id: z.string(),
+  services_description: z.string().nullable(),
+  amount_ht: z.string(),
+  tax_amount: z.string(),
+  total_ttc: z.string(),
+  billing_model_id: z.string(),
+  payments: z.array(z.string()),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  deleted_at: z.iso.datetime().nullable().optional(),
 });
 
 export type BillForm = z.infer<typeof BillFormSchema>;

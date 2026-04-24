@@ -1,0 +1,45 @@
+{
+  "title": "Payment Statuses Configuration",
+  "description": "Manage payment statuses used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Payment Status",
+      "update": "Modify a Payment Status",
+      "delete": "Delete a Payment Status"
+    },
+    "messages": {
+      "created": "Status created successfully",
+      "updated": "Status modified successfully",
+      "deleted": "Status deleted successfully",
+      "failed_creation": "Failed to create Status",
+      "failed_update": "Failed to modify Status",
+      "failed_deletion": "Failed to delete Status",
+      "delete_confirmation": "Delete this Status (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Status",
+      "update": "Modify the Status",
+      "delete": "Delete the Status"
+    },
+    "labels": {
+      "code": "Status Code",
+      "name": "Status Name",
+      "description": "Status Description",
+      "is_active": "Active Status"
+    },
+    "placeholders": {
+      "code": "Insert the Status code",
+      "name": "Insert the Status name",
+      "description": "Status description",
+      "is_active": "Is the Status active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

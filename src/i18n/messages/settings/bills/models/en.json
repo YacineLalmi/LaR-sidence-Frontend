@@ -1,0 +1,54 @@
+{
+  "title": "Billing Models Configuration",
+  "description": "Manage billing templates and banking information",
+  "form": {
+    "titles": {
+      "create": "Create a Billing Model",
+      "update": "Modify a Billing Model",
+      "delete": "Delete a Billing Model"
+    },
+    "messages": {
+      "created": "Model created successfully",
+      "updated": "Model modified successfully",
+      "deleted": "Model deleted successfully",
+      "failed_creation": "Failed to create Model",
+      "failed_update": "Failed to modify Model",
+      "failed_deletion": "Failed to delete Model",
+      "delete_confirmation": "Delete this Model (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Model",
+      "update": "Modify the Model",
+      "delete": "Delete the Model"
+    },
+    "labels": {
+      "name": "Model Name",
+      "iban": "IBAN",
+      "swift_bic": "SWIFT/BIC",
+      "bank_name": "Bank Name",
+      "logo": "Logo",
+      "tax_rate": "Tax Rate (%)",
+      "legal_mentions": "Legal Mentions",
+      "footer": "Footer"
+    },
+    "placeholders": {
+      "name": "e.g., Standard Model",
+      "iban": "Enter IBAN",
+      "swift_bic": "Enter SWIFT/BIC code",
+      "bank_name": "Enter bank name",
+      "logo": "Choose an image (Max 2MB)",
+      "tax_rate": "e.g., 20",
+      "legal_mentions": "Terms, Registration, etc.",
+      "footer": "Bottom of page text"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "name": "Model",
+    "bank_name": "Bank",
+    "tax_rate": "Tax",
+    "actions": "Actions",
+    "iban": "IBAN",
+    "created_at": "Created At"
+  }
+}

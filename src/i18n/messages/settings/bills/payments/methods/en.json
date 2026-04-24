@@ -1,0 +1,45 @@
+{
+  "title": "Payment Methods Configuration",
+  "description": "Manage payment methods used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Payment Method",
+      "update": "Modify a Payment Method",
+      "delete": "Delete a Payment Method"
+    },
+    "messages": {
+      "created": "Method created successfully",
+      "updated": "Method modified successfully",
+      "deleted": "Method deleted successfully",
+      "failed_creation": "Failed to create Method",
+      "failed_update": "Failed to modify Method",
+      "failed_deletion": "Failed to delete Method",
+      "delete_confirmation": "Delete this Method (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Method",
+      "update": "Modify the Method",
+      "delete": "Delete the Method"
+    },
+    "labels": {
+      "code": "Method Code",
+      "name": "Method Name",
+      "description": "Method Description",
+      "is_active": "Active Method"
+    },
+    "placeholders": {
+      "code": "Insert the Method code",
+      "name": "Insert the Method name",
+      "description": "Method description",
+      "is_active": "Is the Method active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

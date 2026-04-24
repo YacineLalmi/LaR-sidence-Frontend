@@ -1,21 +1,22 @@
 import z from "zod";
 import { ClientSchema } from "../clients/client.schema";
 import { BienSchema } from "../biens/bien.schema";
-import { UserSchema } from "../users/user.schema";
 import { ClassificationSchema } from "../classification/classification.schema";
+import { BillingModelSchema } from "./models/billing-model.schema";
+import { PaymentSchema } from "../payment/payment.schema";
 
 export const BillSchema = z.object({
   id: z.string(),
-  title: z.string().nullable().optional(),
-  type: ClassificationSchema.nullable().optional(),
+  due_date: z.string(),
   client: ClientSchema.nullable().optional(),
-  source: ClassificationSchema.optional(),
   bien: BienSchema.nullable().optional(),
-  agent: UserSchema.nullable().optional(),
   status: ClassificationSchema.nullable().optional(),
-  priority: ClassificationSchema.nullable().optional(),
-  budget: z.string(),
-  comment: z.string().nullable(),
+  services_description: z.string().nullable(),
+  amount_ht: z.string(),
+  tax_amount: z.string(),
+  total_ttc: z.string(),
+  bill_model_id: z.string(),
+  payments: z.array(z.string()),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   deleted_at: z.iso.datetime().nullable().optional(),

@@ -1,0 +1,45 @@
+{
+  "title": "Configuration des Méthodes de paiement",
+  "description": "Gérer les méthodes de paiement utilisées dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer une Méthode de paiement",
+      "update": "Modifier une Méthode de paiement",
+      "delete": "Supprimer une Méthode de paiement"
+    },
+    "messages": {
+      "created": "Méthode créée avec succès",
+      "updated": "Méthode modifiée avec succès",
+      "deleted": "Méthode supprimée avec succès",
+      "failed_creation": "Échec de la création de la Méthode",
+      "failed_update": "Échec de la modification de la Méthode",
+      "failed_deletion": "Échec de la suppression de la Méthode",
+      "delete_confirmation": "Supprimer cette Méthode (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une Méthode",
+      "update": "Modifier la Méthode",
+      "delete": "Supprimer la Méthode"
+    },
+    "labels": {
+      "code": "Code de Méthode",
+      "name": "Nom de Méthode",
+      "description": "Description de Méthode",
+      "is_active": "Méthode active"
+    },
+    "placeholders": {
+      "code": "Insérer le code de la Méthode",
+      "name": "Insérer le nom de la Méthode",
+      "description": "Description de la Méthode",
+      "is_active": "La Méthode est-elle active ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Date de création"
+  }
+}

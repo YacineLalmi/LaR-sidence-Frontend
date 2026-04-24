@@ -1,0 +1,54 @@
+{
+  "title": "Configuration des Modèles de facture",
+  "description": "Gérer les modèles de facturation et les informations bancaires",
+  "form": {
+    "titles": {
+      "create": "Créer un Modèle de facture",
+      "update": "Modifier un Modèle de facture",
+      "delete": "Supprimer un Modèle de facture"
+    },
+    "messages": {
+      "created": "Modèle créé avec succès",
+      "updated": "Modèle modifié avec succès",
+      "deleted": "Modèle supprimé avec succès",
+      "failed_creation": "Échec de la création du Modèle",
+      "failed_update": "Échec de la modification du Modèle",
+      "failed_deletion": "Échec de la suppression du Modèle",
+      "delete_confirmation": "Supprimer ce Modèle (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un Modèle",
+      "update": "Modifier le Modèle",
+      "delete": "Supprimer le Modèle"
+    },
+    "labels": {
+      "name": "Nom du modèle",
+      "iban": "IBAN",
+      "swift_bic": "SWIFT/BIC",
+      "bank_name": "Nom de la banque",
+      "logo": "Logo",
+      "tax_rate": "Taux de taxe (%)",
+      "legal_mentions": "Mentions légales",
+      "footer": "Pied de page"
+    },
+    "placeholders": {
+      "name": "Ex: Modèle Standard",
+      "iban": "Saisir l'IBAN",
+      "swift_bic": "Saisir le code SWIFT/BIC",
+      "bank_name": "Saisir le nom de la banque",
+      "logo": "Choisir une image (Max 2Mo)",
+      "tax_rate": "Ex: 20",
+      "legal_mentions": "Conditions, Siren, etc.",
+      "footer": "Texte en bas de page"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "name": "Modèle",
+    "bank_name": "Banque",
+    "tax_rate": "Taxe",
+    "actions": "Actions",
+    "iban": "IBAN",
+    "created_at": "Date de création"
+  }
+}

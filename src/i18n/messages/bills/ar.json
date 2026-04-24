@@ -1,0 +1,108 @@
+{
+  "title": "إعدادات الفواتير",
+  "description": "إدارة فواتير التطبيق",
+  "form": {
+    "titles": {
+      "create": "إنشاء فاتورة",
+      "update": "تعديل الفاتورة",
+      "delete": "حذف الفاتورة"
+    },
+    "messages": {
+      "created": "تم إنشاء الفاتورة بنجاح",
+      "updated": "تم تعديل الفاتورة بنجاح",
+      "deleted": "تم حذف الفاتورة بنجاح",
+      "failed_creation": "فشل إنشاء الفاتورة",
+      "failed_update": "فشل تعديل الفاتورة",
+      "failed_deletion": "فشل حذف الفاتورة",
+      "delete_confirmation": "هل تريد حذف هذه الفاتورة (رقم: {id})؟"
+    },
+    "buttons": {
+      "create": "إنشاء فاتورة",
+      "update": "تعديل الفاتورة",
+      "delete": "حذف الفاتورة",
+      "publish": "نشر"
+    },
+    "sections": {
+      "general_information": "معلومات عامة",
+      "billing_details": "تفاصيل الفوترة",
+      "internal_comments": "ملاحظات داخلية"
+    },
+    "labels": {
+      "billing_model_id": "نموذج الفاتورة",
+      "client_id": "الزبون المعني",
+      "bien_id": "العقار المعني",
+      "services_description": "وصف الخدمات",
+      "status": "حالة الفاتورة",
+      "due_date": "تاريخ الاستحقاق",
+      "amount_ht": "المبلغ الصافي (HT)",
+      "tax_amount": "مبلغ الضريبة",
+      "total_ttc": "المبلغ الإجمالي (TTC)",
+      "comment": "تعليق"
+    },
+    "placeholders": {
+      "billing_model_id": "اختر النموذج",
+      "client_id": "اختر الزبون",
+      "bien_id": "اختر العقار",
+      "services_description": "صف الخدمات المقدمة...",
+      "status": "اختر الحالة",
+      "due_date": "اختر تاريخ الاستحقاق",
+      "amount_ht": "0.00",
+      "tax_amount": "حساب تلقائي...",
+      "total_ttc": "الإجمالي المحسوب...",
+      "comment": "أدخل ملاحظاتك"
+    }
+  },
+  "filter": {
+    "title": "تصفية الفواتير",
+    "labels": {
+      "status": "الحالة",
+      "client_id": "الزبون",
+      "due_date": "الاستحقاق",
+      "amount_min": "أقل مبلغ (TTC)",
+      "amount_max": "أقصى مبلغ (TTC)",
+      "created_between": "تاريخ الإضافة"
+    },
+    "placeholders": {
+      "status": "اختر الحالة",
+      "client_id": "اختر الزبون",
+      "due_date": "اختر التاريخ",
+      "amount_min": "أدخل أقل مبلغ",
+      "amount_max": "أدخل أقصى مبلغ",
+      "created_between": "اختر النطاق الزمني"
+    },
+    "buttons": {
+      "clear": "إعادة تعيين المرشحات",
+      "submit": "تطبيق المرشحات"
+    }
+  },
+  "columns": {
+    "id": "رقم الفاتورة",
+    "billing_model_id": "النموذج",
+    "client_id": "الزبون",
+    "bien_id": "العقار",
+    "amount_ht": "المبلغ الصافي",
+    "tax_amount": "الضريبة",
+    "total_ttc": "الإجمالي",
+    "due_date": "تاريخ الاستحقاق",
+    "status": "الحالة",
+    "created_at": "تاريخ الإضافة",
+    "actions": "الإجراءات"
+  },
+  "actions": {
+    "view": "عرض",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "print": "طباعة / PDF",
+    "delete_selection": "حذف المحدد"
+  },
+  "delete": {
+    "title": "حذف هذه الفاتورة",
+    "description": "هل أنت متأكد من حذف هذه الفاتورة؟ هذا الإجراء غير قابل للتراجع."
+  },
+  "detail": {
+    "title": "تفاصيل الفاتورة",
+    "id": "رقم الفاتورة",
+    "created_at": "أنشئت في",
+    "updated_at": "عدلت في"
+  }
+}

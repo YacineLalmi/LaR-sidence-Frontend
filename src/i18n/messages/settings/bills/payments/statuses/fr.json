@@ -1,0 +1,45 @@
+{
+  "title": "Configuration des Statuts de paiement",
+  "description": "Gérer les statuts de paiement utilisés dans l'application",
+  "form": {
+    "titles": {
+      "create": "Créer un Statut de paiement",
+      "update": "Modifier un Statut de paiement",
+      "delete": "Supprimer un Statut de paiement"
+    },
+    "messages": {
+      "created": "Statut créé avec succès",
+      "updated": "Statut modifié avec succès",
+      "deleted": "Statut supprimé avec succès",
+      "failed_creation": "Échec de la création du Statut",
+      "failed_update": "Échec de la modification du Statut",
+      "failed_deletion": "Échec de la suppression du Statut",
+      "delete_confirmation": "Supprimer ce Statut (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer un Statut",
+      "update": "Modifier le Statut",
+      "delete": "Supprimer le Statut"
+    },
+    "labels": {
+      "code": "Code du Statut",
+      "name": "Nom du Statut",
+      "description": "Description du Statut",
+      "is_active": "Statut actif"
+    },
+    "placeholders": {
+      "code": "Insérer le code du Statut",
+      "name": "Insérer le nom du Statut",
+      "description": "Description du Statut",
+      "is_active": "Le Statut est-il actif ?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Nom",
+    "description": "Description",
+    "actions": "Actions",
+    "created_at": "Date de création"
+  }
+}

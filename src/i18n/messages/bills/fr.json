@@ -1,0 +1,108 @@
+{
+  "title": "Configuration des Factures",
+  "description": "Gérer les factures de l'application",
+  "form": {
+    "titles": {
+      "create": "Créer une facture",
+      "update": "Modifier une facture",
+      "delete": "Supprimer une facture"
+    },
+    "messages": {
+      "created": "Facture créée avec succès",
+      "updated": "Facture modifiée avec succès",
+      "deleted": "Facture supprimée avec succès",
+      "failed_creation": "Échec de la création de la facture",
+      "failed_update": "Échec de la modification de la facture",
+      "failed_deletion": "Échec de la suppression de la facture",
+      "delete_confirmation": "Supprimer cette facture (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Créer une facture",
+      "update": "Modifier la facture",
+      "delete": "Supprimer la facture",
+      "publish": "Publier"
+    },
+    "sections": {
+      "general_information": "Informations Générales",
+      "billing_details": "Détails de facturation",
+      "internal_comments": "Commentaires Internes"
+    },
+    "labels": {
+      "billing_model_id": "Modèle de facture",
+      "client_id": "Client concerné",
+      "bien_id": "Bien concerné",
+      "services_description": "Description des services",
+      "status": "Statut du paiement",
+      "due_date": "Date d'échéance",
+      "amount_ht": "Montant HT",
+      "tax_amount": "Montant de la taxe",
+      "total_ttc": "Total TTC",
+      "comment": "Commentaire"
+    },
+    "placeholders": {
+      "billing_model_id": "Sélectionnez le modèle",
+      "client_id": "Sélectionnez le client",
+      "bien_id": "Sélectionnez le bien",
+      "services_description": "Détaillez les prestations fournies...",
+      "status": "Sélectionnez le statut",
+      "due_date": "Sélectionnez la date limite",
+      "amount_ht": "0.00",
+      "tax_amount": "Calcul automatique...",
+      "total_ttc": "Total calculé...",
+      "comment": "Entrez vos commentaires"
+    }
+  },
+  "filter": {
+    "title": "Filtrer les factures",
+    "labels": {
+      "status": "Statut",
+      "client_id": "Client",
+      "due_date": "Échéance",
+      "amount_min": "Montant min (TTC)",
+      "amount_max": "Montant max (TTC)",
+      "created_between": "Date d'émission"
+    },
+    "placeholders": {
+      "status": "Sélectionnez le statut",
+      "client_id": "Sélectionnez le client",
+      "due_date": "Sélectionnez une date",
+      "amount_min": "Montant minimum",
+      "amount_max": "Montant maximum",
+      "created_between": "Sélectionnez une plage de dates"
+    },
+    "buttons": {
+      "clear": "Réinitialiser les filtres",
+      "submit": "Appliquer les filtres"
+    }
+  },
+  "columns": {
+    "id": "Facture ID",
+    "billing_model_id": "Modèle",
+    "client_id": "Client",
+    "bien_id": "Bien",
+    "amount_ht": "Montant HT",
+    "tax_amount": "Taxe",
+    "total_ttc": "Total TTC",
+    "due_date": "Échéance",
+    "status": "Statut",
+    "created_at": "Date d'ajout",
+    "actions": "Actions"
+  },
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "print": "Imprimer / PDF",
+    "delete_selection": "Supprimer la sélection"
+  },
+  "delete": {
+    "title": "Supprimer cette facture",
+    "description": "Êtes-vous sûr de vouloir supprimer cette facture ? Cette action est irréversible."
+  },
+  "detail": {
+    "title": "Détails de la facture",
+    "id": "Facture ID",
+    "created_at": "Émise le",
+    "updated_at": "Modifiée le"
+  }
+}

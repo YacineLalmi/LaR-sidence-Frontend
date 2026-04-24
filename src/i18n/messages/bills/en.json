@@ -1,0 +1,108 @@
+{
+  "title": "Bills Configuration",
+  "description": "Manage application bills",
+  "form": {
+    "titles": {
+      "create": "Create a bill",
+      "update": "Modify a bill",
+      "delete": "Delete a bill"
+    },
+    "messages": {
+      "created": "Bill created successfully",
+      "updated": "Bill modified successfully",
+      "deleted": "Bill deleted successfully",
+      "failed_creation": "Failed to create bill",
+      "failed_update": "Failed to modify bill",
+      "failed_deletion": "Failed to delete bill",
+      "delete_confirmation": "Delete this bill (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create bill",
+      "update": "Modify bill",
+      "delete": "Delete bill",
+      "publish": "Publish"
+    },
+    "sections": {
+      "general_information": "General Information",
+      "billing_details": "Billing Details",
+      "internal_comments": "Internal Comments"
+    },
+    "labels": {
+      "billing_model_id": "Billing Model",
+      "client_id": "Related Client",
+      "bien_id": "Related Property",
+      "services_description": "Services Description",
+      "status": "Bill Status",
+      "due_date": "Due Date",
+      "amount_ht": "Amount (Excl. Tax)",
+      "tax_amount": "Tax Amount",
+      "total_ttc": "Total (Incl. Tax)",
+      "comment": "Comment"
+    },
+    "placeholders": {
+      "billing_model_id": "Select model",
+      "client_id": "Select client",
+      "bien_id": "Select property",
+      "services_description": "Describe the services provided...",
+      "status": "Select status",
+      "due_date": "Select deadline",
+      "amount_ht": "0.00",
+      "tax_amount": "Auto-calculated...",
+      "total_ttc": "Calculated total...",
+      "comment": "Enter your comments"
+    }
+  },
+  "filter": {
+    "title": "Filter bills",
+    "labels": {
+      "status": "Status",
+      "client_id": "Client",
+      "due_date": "Due date",
+      "amount_min": "Min amount (TTC)",
+      "amount_max": "Max amount (TTC)",
+      "created_between": "Date added"
+    },
+    "placeholders": {
+      "status": "Select status",
+      "client_id": "Select client",
+      "due_date": "Select date",
+      "amount_min": "Enter minimum amount",
+      "amount_max": "Enter maximum amount",
+      "created_between": "Select date range"
+    },
+    "buttons": {
+      "clear": "Reset filters",
+      "submit": "Apply filters"
+    }
+  },
+  "columns": {
+    "id": "Bill ID",
+    "billing_model_id": "Model",
+    "client_id": "Client",
+    "bien_id": "Property",
+    "amount_ht": "Net Amount",
+    "tax_amount": "Tax",
+    "total_ttc": "Total",
+    "due_date": "Due Date",
+    "status": "Status",
+    "created_at": "Date Added",
+    "actions": "Actions"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "print": "Print / PDF",
+    "delete_selection": "Delete selection"
+  },
+  "delete": {
+    "title": "Delete this bill",
+    "description": "Are you sure you want to delete this bill? This action cannot be undone."
+  },
+  "detail": {
+    "title": "Bill Details",
+    "id": "Bill ID",
+    "created_at": "Created at",
+    "updated_at": "Updated at"
+  }
+}

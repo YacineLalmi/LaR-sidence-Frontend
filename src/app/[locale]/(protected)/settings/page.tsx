@@ -175,6 +175,29 @@ const CONFIG_MODULES: SettingsItem[] = [
       },
     ],
   },
+  {
+    id: "bills",
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.TITLE,
+    description: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.DESCRIPTION,
+    icon: Map,
+    subs: [
+      {
+        id: "bill_payments_statuses",
+        title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.PAYMENTS.STATUSES.TITLE,
+        link: ROUTES.SETTINGS.BILLS.PAYMENTS.STATUSES.ROOT,
+      },
+      {
+        id: "bill_payments_methods",
+        title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.PAYMENTS.METHODS.TITLE,
+        link: ROUTES.SETTINGS.BILLS.PAYMENTS.METHODS.ROOT,
+      },
+      {
+        id: "billing_models",
+        title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.TITLE,
+        link: ROUTES.SETTINGS.BILLS.MODELS.ROOT,
+      },
+    ],
+  },
 ];
 
 export default async function Settings() {
