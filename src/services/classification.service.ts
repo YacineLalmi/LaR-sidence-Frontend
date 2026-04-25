@@ -17,6 +17,7 @@ export const CATEGORIES = {
 
 export const SCOPES = {
   BIEN: "bien",
+  BILL: "bill",
   CLEINT: "client",
   OFFER: "offer",
   DEMAND: "demand",

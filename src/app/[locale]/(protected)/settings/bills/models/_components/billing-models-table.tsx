@@ -13,6 +13,7 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { BillingModel } from "@/schemas/bills/models/billing-model.schema";
 import DeleteBillingModelDialog from "./delete-billing-model-dialog";
 import { ROUTES } from "@/constants/routes";
+import { deleteBillingModelsAction } from "@/actions/bills/models/delete-billing-models.action";
 
 interface Props {
   data: PaginatedResponse<BillingModel>;
@@ -94,5 +95,5 @@ export default function BillingModelsTable({ data }: Props) {
     },
   ];
 
-  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteDemandsAction} />;
+  return <DataTable data={data} columns={columns} onDeleteMultiple={deleteBillingModelsAction} />;
 }

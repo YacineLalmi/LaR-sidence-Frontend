@@ -2,9 +2,8 @@
 
 import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
 import Section from "@/app/[locale]/(protected)/biens/create/_components/section";
-import InputFileLarge2 from "@/components/custom-inputs/input-file-large-2";
+import InputFileLarge from "@/components/custom-inputs/input-file/index";
 import InputSelectField from "@/components/custom-inputs/input-select";
-import InputSelectFetchField from "@/components/custom-inputs/input-select-fetch";
 import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
@@ -294,7 +293,7 @@ export default function ClientForm({
         </div>
         <div>
           <Section header="Docmuments">
-            <InputFileLarge2 control={form.control} name="documents" form={form} areFileLoading={areFileLoading} />
+            <InputFileLarge control={form.control} name="documents" areFileLoading={areFileLoading} />
             <InputSelectField
               control={form.control}
               name="source_id"

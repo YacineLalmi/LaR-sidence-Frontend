@@ -196,6 +196,11 @@ const CONFIG_MODULES: SettingsItem[] = [
         title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.TITLE,
         link: ROUTES.SETTINGS.BILLS.MODELS.ROOT,
       },
+      {
+        id: "billing_statuses",
+        title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.STATUSES.TITLE,
+        link: ROUTES.SETTINGS.BILLS.STATUSES.ROOT,
+      },
     ],
   },
 ];

@@ -7,9 +7,12 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import BillingModelForm from "../../_components/billing-model-form";
 import { createBillingModelAction } from "@/actions/bills/models/create-billing-model.action";
+import { useTranslations } from "next-intl";
+import { customToast } from "@/lib/utils";
 
 export default function CreateBillingModelForm() {
   const router = useRouter();
+  const translation = useTranslations();
 
   const initialData: BillingModelFormType = {
     name: "",
@@ -24,6 +27,7 @@ export default function CreateBillingModelForm() {
 
   const onSuccess = useCallback(() => {
     router.push(ROUTES.SETTINGS.BILLS.MODELS.ROOT);
+    customToast.success(translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.CREATED));
   }, [router]);
 
   return (

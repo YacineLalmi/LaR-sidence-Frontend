@@ -7,18 +7,19 @@ import BillingModelForm from "../../settings/bills/models/_components/billing-mo
 import { BillingModelForm as BillingModelFormType } from "@/schemas/bills/models/billing-model-form.schema";
 import { createBillingModelAction } from "@/actions/bills/models/create-billing-model.action";
 import { BillingModel } from "@/schemas/bills/models/billing-model.schema";
+import { updateBillingModelAction } from "@/actions/bills/models/update-billing-model.action";
 
 type UpdateBillingModelDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onBillingModelCreated: (billingModel: BillingModel) => void;
+  onBillingModelUpdated: (billingModel: BillingModel) => void;
   billingModel: BillingModel | undefined;
 };
 
 export default function UpdateBillingModelDialog({
   open,
   onOpenChange,
-  onBillingModelCreated,
+  onBillingModelUpdated,
   billingModel,
 }: UpdateBillingModelDialogProps) {
   const translation = useTranslations();
@@ -31,24 +32,24 @@ export default function UpdateBillingModelDialog({
     swift_bic: billingModel?.swift_bic || "",
     footer: billingModel?.footer || "",
     legal_mentions: billingModel?.legal_mentions || "",
-    logo: null,
+    logo: billingModel?.logo,
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="!max-w-4xl max-h-[95vh] overflow-y-auto"
+        className="!max-w-6xl max-h-[95vh] overflow-y-auto"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>{translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.TITLES.CREATE)}</DialogTitle>
+          <DialogTitle>{translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.TITLES.UPDATE)}</DialogTitle>
         </DialogHeader>
         <BillingModelForm
           initialData={initialData}
-          submitAction={createBillingModelAction}
-          successAction={onBillingModelCreated}
-          successMessage={TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.CREATED}
+          submitAction={(values: BillingModelFormType) => updateBillingModelAction(values, billingModel?.id || "")}
+          successAction={onBillingModelUpdated}
+          successMessage={TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.UPDATED}
           errorMessage={TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.FAILED_CREATION}
         />
       </DialogContent>

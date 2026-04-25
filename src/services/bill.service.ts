@@ -15,7 +15,7 @@ const END_POINTS = {
 };
 
 export const BillService = {
-  create: async (data: BillForm) => {
+  create: async (data: FormData) => {
     const response = await ApiService.post<Bill>({
       endpoint: END_POINTS.create,
       body: data,
@@ -40,9 +40,10 @@ export const BillService = {
     };
   },
 
-  findOne: async (id: string) => {
+  findOne: async (id: string, queryParam?: QueryParams) => {
     const response = await ApiService.get<Bill>({
       endpoint: END_POINTS.findOne(id),
+      query: queryParam
     });
 
     const validatedResponseData = validateResponseData<Bill>(response.data, BillSchema);
@@ -50,7 +51,7 @@ export const BillService = {
     return validatedResponseData;
   },
 
-  update: async (data: BillForm, id: string) => {
+  update: async (data: FormData, id: string) => {
     const response = await ApiService.put<Bill>({
       endpoint: END_POINTS.update(id),
       body: data,

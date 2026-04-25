@@ -18,13 +18,10 @@ export default function CreateBillForm() {
     status_id: "",
     services_description: "",
     amount_ht: "",
-    tax_amount: "",
-    total_ttc: "",
+    amount_tva: "",
+    amount_ttc: "",
     billing_model_id: "",
-    payments: [],
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    deleted_at: null,
+    documents: [],
   };
 
   const onSuccess = useCallback(() => {

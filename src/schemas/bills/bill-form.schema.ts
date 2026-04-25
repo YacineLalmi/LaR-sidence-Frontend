@@ -1,5 +1,7 @@
 import z from "zod";
 
+const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
+
 export const BillFormSchema = z.object({
   due_date: z.string(),
   client_id: z.string(),
@@ -7,13 +9,12 @@ export const BillFormSchema = z.object({
   status_id: z.string(),
   services_description: z.string().nullable(),
   amount_ht: z.string(),
-  tax_amount: z.string(),
-  total_ttc: z.string(),
+  amount_tva: z.string(),
+  amount_ttc: z.string(),
   billing_model_id: z.string(),
-  payments: z.array(z.string()),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  deleted_at: z.iso.datetime().nullable().optional(),
+  documents: z
+    .array(z.instanceof(File))
+    .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less"),
 });
 
 export type BillForm = z.infer<typeof BillFormSchema>;

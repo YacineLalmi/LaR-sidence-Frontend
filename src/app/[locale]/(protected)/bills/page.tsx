@@ -6,7 +6,12 @@ import BillsHeader from "./_components/bill-header";
 import BillsTable from "./_components/bills-table";
 
 export default async function Bills({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
-  const queryParams = await searchParams;
+  let queryParams = await searchParams;
+
+  queryParams = {
+    ...queryParams,
+    include: "client,bien,status.color,billingModel",
+  };
 
   const bills = await BillService.findMany(queryParams);
 

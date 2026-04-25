@@ -35,7 +35,7 @@ export default function CreateBillingModelDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="!max-w-4xl max-h-[95vh] overflow-y-auto"
+        className="!max-w-6xl max-h-[95vh] overflow-y-auto"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >

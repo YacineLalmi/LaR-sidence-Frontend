@@ -29,11 +29,13 @@ import Link from "next/link";
 import Logout from "./_components/logout";
 import { ROUTES } from "@/constants/routes";
 import { use, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export function SideBar() {
   const translation = useTranslations();
+  const locale = useLocale();
+  const isRTL = locale === "ar";
 
   const items = useMemo(
     () => [
@@ -91,18 +93,16 @@ export function SideBar() {
     [translation],
   );
   return (
-    <Sidebar className="items-center" collapsible="icon">
+    <Sidebar className="items-center" collapsible="icon" side={isRTL ? "right" : "left"}>
       <SidebarTrigger
-        className="absolute top-1/5 -right-2 transform  -translate-y-1/2 px-4 py- rounded"
+        className={`absolute top-1/5 ${isRTL ? "-left-2" : "-right-2"} transform -translate-y-1/2 px-4 py- rounded`}
         style={{ background: "#C8AB68" }}
       />
-      <SidebarHeader className=" py-[3rem]">
+      <SidebarHeader className="py-[3rem]">
         <SidebarMenuItem className="list-none">
-          <SidebarMenuButton asChild>
-            <Link href={ROUTES.PROFILE.ROOT} className="flex items-center gap-2">
-              <Image src={logo} alt="Logo" width={15} />
-              La Résidence
-            </Link>
+          <SidebarMenuButton>
+            <Image src={logo} alt="Logo" width={15} />
+            La Résidence
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarHeader>
@@ -120,12 +120,12 @@ export function SideBar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className=" py-7">
+      <SidebarFooter className="py-7">
         <SidebarMenuItem className="list-none">
           <SidebarMenuButton asChild>
-            <Link href="/settings">
+            <Link href={ROUTES.SETTINGS.ROOT}>
               <Settings />
-              <span>Paramètres</span>
+              <span>{translation(TRANSLATIONS_KEYS_2.SIDEMENU.SETTINGS)}</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

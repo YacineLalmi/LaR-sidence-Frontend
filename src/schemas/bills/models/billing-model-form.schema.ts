@@ -9,15 +9,19 @@ export const BillingModelFormSchema = z.object({
         .max(255, "Name must be less than 255 characters"),
 
     iban: z.string()
-        .min(1, "IBAN is required")
+        .min(11, "IBAN is required")
         .max(34, "IBAN is too long")
-        // Optional: add a regex for basic IBAN structure
-        .transform((val) => val.replace(/\s+/g, "").toUpperCase()),
+        .transform((val) => val.replace(/\s+/g, "").toUpperCase())
+        .refine((val) => /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(val), {
+            message: "Invalid IBAN format",
+        }),
 
     swift_bic: z.string()
         .min(1, "SWIFT/BIC is required")
-        .max(11, "SWIFT/BIC is too long")
-        .toUpperCase(),
+        .toUpperCase()
+        .refine((val) => /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(val), {
+            message: "Invalid SWIFT/BIC format (8 or 11 characters required)",
+        }),
 
     bank_name: z.string()
         .min(1, "Bank name is required")

@@ -17,7 +17,7 @@ const END_POINTS = {
 };
 
 export const BillingModelService = {
-    create: async (data: BillingModelForm) => {
+    create: async (data: FormData) => {
         const response = await ApiService.post<BillingModel>({
             endpoint: END_POINTS.create,
             body: data,
@@ -59,17 +59,21 @@ export const BillingModelService = {
         const response = await ApiService.get<BillingModel>({
             endpoint: END_POINTS.findOne(id),
         });
+        console.log(response)
 
         const validatedResponseData = validateResponseData<BillingModel>(response.data, BillingModelSchema);
 
         return validatedResponseData;
     },
 
-    update: async (data: BillingModelForm, id: string) => {
-        const response = await ApiService.put<BillingModel>({
+    update: async (data: FormData, id: string) => {
+
+        const response = await ApiService.post<BillingModel>({
             endpoint: END_POINTS.update(id),
             body: data,
         });
+
+        console.log(response)
 
         const validatedResponseData = validateResponseData<BillingModel>(response.data, BillingModelSchema);
 

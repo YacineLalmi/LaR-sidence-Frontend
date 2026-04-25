@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Demand } from "@/schemas/demands/demand.schema";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit } from "lucide-react";
+import { Edit, Eye } from "lucide-react";
 import Link from "next/link";
 import { PaginatedResponse } from "@/lib/definitions";
 import { useLocale, useTranslations } from "next-intl";
@@ -15,6 +15,9 @@ import { Bill } from "@/schemas/bills/bill.schema";
 import DeleteBillDialog from "./delete-bill-dialog";
 import { deleteBillsAction } from "@/actions/bills/delete-bills.action";
 import { ROUTES } from "@/constants/routes";
+import PaymentDialog from "./payment-dialog";
+import PaymentHistoryDialog from "./payment-history-dialog";
+import ViewBillDialog from "./bill-preview";
 
 interface Props {
   data: PaginatedResponse<Bill>;
@@ -110,15 +113,29 @@ export default function BillsTable({ data }: Props) {
     },
     {
       id: "actions",
-      cell: ({ row }) => (
-        <div className="flex items-center">
-          <Link href={ROUTES.BILLS.EDIT(row.original.id)}>
-            <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
-          </Link>
-          <DeleteBillDialog bill={row.original} />
-        </div>
-      ),
       header: translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.ACTIONS),
+      cell: ({ row }) => {
+        const bill = row.original;
+
+        return (
+          <div className="flex items-center gap-0">
+            {/* View / Print Action */}
+            <ViewBillDialog bill={row.original} />
+
+            {/* Payment Action */}
+            <PaymentDialog bill={bill} />
+
+            {/* Payment History - New Action */}
+            <PaymentHistoryDialog bill={bill} />
+
+            {/* Existing Actions */}
+            <Link href={ROUTES.BILLS.EDIT(bill.id)}>
+              <CustomButton Icon={Edit} size="icon" variant="ghost" className="!p-0" />
+            </Link>
+            <DeleteBillDialog bill={bill} />
+          </div>
+        );
+      },
     },
   ];
 

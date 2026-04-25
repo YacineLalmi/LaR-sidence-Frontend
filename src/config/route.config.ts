@@ -306,4 +306,9 @@ export const ROUTES_PERMISSIONS: RouteConfig[] = [
     permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
     requireAuthentication: true,
   },
+  {
+    path: ROUTES.SETTINGS.BILLS.STATUSES.ROOT,
+    permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
+    requireAuthentication: true,
+  },
 ];

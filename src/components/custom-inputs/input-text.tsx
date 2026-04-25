@@ -18,7 +18,62 @@ type InputFieldProps<T extends FieldValues> = {
   RightIcon?: LucideIcon;
   RightIconOnClick?: () => any;
   className?: string;
-  errorInside?: boolean; // New boolean prop
+  errorInside?: boolean;
+  formatDisplay?: (value: string) => string; // Function to format display
+  formatValue?: (value: string) => string; // Function to format stored value
+  type?: string; // Input type
+};
+
+// Predefined formatters
+export const formatters = {
+  iban: (value: string) => {
+    // Remove all non-alphanumeric characters
+    const cleaned = value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+    // Format as XXXX XXXX XXXX XXXX...
+    return cleaned.match(/.{1,4}/g)?.join(" ") || cleaned;
+  },
+
+  ibanValue: (value: string) => {
+    // Remove spaces for storage
+    return value.replace(/\s/g, "").toUpperCase();
+  },
+
+  creditCard: (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    return cleaned.match(/.{1,4}/g)?.join(" ") || cleaned;
+  },
+
+  creditCardValue: (value: string) => {
+    return value.replace(/\s/g, "");
+  },
+
+  phone: (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    // Format as XX XX XX XX XX (French format)
+    const match = cleaned.match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+    if (match) {
+      return `${match[1]} ${match[2]} ${match[3]} ${match[4]} ${match[5]}`;
+    }
+    return cleaned;
+  },
+
+  phoneValue: (value: string) => {
+    return value.replace(/\s/g, "");
+  },
+
+  bic: (value: string) => {
+    return value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+  },
+
+  currency: (value: string) => {
+    const cleaned = value.replace(/[^\d.,]/g, "");
+    return cleaned;
+  },
+
+  percentage: (value: string) => {
+    const cleaned = value.replace(/[^\d.,]/g, "");
+    return cleaned;
+  },
 };
 
 export default function InputTextField<T extends FieldValues>({
@@ -32,7 +87,10 @@ export default function InputTextField<T extends FieldValues>({
   RightIcon,
   RightIconOnClick,
   className,
-  errorInside = false, // Default to false (under the input)
+  errorInside = false,
+  formatDisplay,
+  formatValue,
+  type = "text",
 }: InputFieldProps<T>) {
   return (
     <FormField
@@ -55,14 +113,17 @@ export default function InputTextField<T extends FieldValues>({
               <Input
                 disabled={disabled}
                 placeholder={placeholder}
-                className={cn(
-                  !!LeftIcon && "pl-8",
-                  !!RightIcon && "pr-8",
-                  // Add extra padding-right if error is inside to prevent text overlap
-                  errorInside && "pr-10",
-                  className,
-                )}
-                {...field}
+                type={type}
+                className={cn(!!LeftIcon && "pl-8", !!RightIcon && "pr-8", errorInside && "pr-10", className)}
+                value={formatDisplay ? formatDisplay(field.value || "") : field.value || ""}
+                onChange={(e) => {
+                  const rawValue = e.target.value;
+                  const formattedValue = formatValue ? formatValue(rawValue) : rawValue;
+                  field.onChange(formattedValue);
+                }}
+                onBlur={field.onBlur}
+                name={field.name}
+                ref={field.ref}
               />
 
               {RightIcon && (

@@ -1,0 +1,48 @@
+{
+  "title": "Bill Statuses Configuration",
+  "description": "Manage offer statuses used in the application",
+  "form": {
+    "titles": {
+      "create": "Create a Bill Status",
+      "update": "Modify a Bill Status",
+      "delete": "Delete a Bill Status"
+    },
+    "messages": {
+      "created": "Status created successfully",
+      "updated": "Status modified successfully",
+      "deleted": "Status deleted successfully",
+      "failed_creation": "Failed to create Status",
+      "failed_update": "Failed to modify Status",
+      "failed_deletion": "Failed to delete Status",
+      "delete_confirmation": "Delete this Status (ID: {id}) ?"
+    },
+    "buttons": {
+      "create": "Create a Status",
+      "update": "Modify the Status",
+      "delete": "Delete the Status"
+    },
+    "labels": {
+      "code": "Status Code",
+      "name": "Status Name",
+      "description": "Status Description",
+      "color_id": "Status Color",
+      "is_active": "Active Status"
+    },
+    "placeholders": {
+      "code": "Insert the Status code",
+      "name": "Insert the Status name",
+      "description": "Status description",
+      "color_id": "Choose a color",
+      "is_active": "Is the Status active?"
+    }
+  },
+  "columns": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "description": "Description",
+    "color_id": "Color",
+    "actions": "Actions",
+    "created_at": "Created at"
+  }
+}

@@ -2,6 +2,12 @@ import { ApiResponse, HttpOptions, RequestOptions } from "@/lib/definitions";
 import { getCookie } from "@/lib/server.helper";
 import { handleApiResponse, transformQuery } from "@/lib/utils";
 
+// New type for download options
+interface DownloadOptions extends Omit<RequestOptions, 'body'> {
+  filename?: string; // Optional custom filename
+  onProgress?: (progress: number) => void; // Progress callback
+}
+
 class ApiService {
   private baseUrl: string;
   private defaultConfig: HttpOptions;
@@ -12,9 +18,8 @@ class ApiService {
   }
 
   private async request<Data>({ endpoint, method, query, options = {}, body }: RequestOptions) {
-    // const queryParams = new URLSearchParams(query).toString();
     const queryParams = transformQuery(query);
-    const url = `${this.baseUrl}${endpoint}${queryParams ? "?" + queryParams : ""}`; // To not include '?' every time
+    const url = `${this.baseUrl}${endpoint}${queryParams ? "?" + queryParams : ""}`;
 
     const config: RequestInit = {
       method,
@@ -35,7 +40,6 @@ class ApiService {
 
     if (body) {
       if (body instanceof FormData) {
-        // If body is FormData, let the browser set the correct headers including boundaries
         delete (config.headers as any)["content-type"];
         config.body = body;
       } else config.body = JSON.stringify(body);
@@ -85,6 +89,65 @@ class ApiService {
       query,
       body,
     });
+  }
+
+  /**
+   * Download a file from the API
+   * @param options - Download options including endpoint, query, filename, and progress callback
+   * @returns Promise<Blob> - The downloaded file as a Blob
+   */
+  async downloadFile({ endpoint, query, options = {}, filename, onProgress }: DownloadOptions): Promise<Blob> {
+    const queryParams = transformQuery(query);
+    const url = `${this.baseUrl}${endpoint}${queryParams ? "?" + queryParams : ""}`;
+
+    const config: RequestInit = {
+      method: "GET",
+      headers: {
+        ...this.defaultConfig.headers,
+        ...options.headers,
+      },
+    };
+
+    // Add authorization token if on server side
+    if (typeof window === "undefined") {
+      const access_token = await getCookie("access_token");
+      if (access_token) {
+        config.headers = { ...config.headers, Authorization: `Bearer ${access_token}` };
+      }
+    }
+
+    const response = await fetch(url, config);
+    console.log(" file", response)
+
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.statusText}`);
+    }
+
+    // Handle progress tracking if callback provided
+    if (onProgress && response.body) {
+      const contentLength = response.headers.get("content-length");
+      const total = contentLength ? parseInt(contentLength, 10) : 0;
+      let loaded = 0;
+
+      const reader = response.body.getReader();
+      const chunks: BlobPart[] = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        chunks.push(value);
+        loaded += value.length;
+
+        if (total > 0) {
+          onProgress((loaded / total) * 100);
+        }
+      }
+
+      return new Blob(chunks);
+    }
+
+    return await response.blob();
   }
 }
 

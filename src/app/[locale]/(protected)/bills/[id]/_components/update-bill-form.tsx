@@ -23,16 +23,13 @@ export default function UpdateBillForm({ bill }: Props) {
     status_id: bill.status?.id || "",
     services_description: bill.services_description || "",
     amount_ht: bill.amount_ht || "",
-    tax_amount: bill.tax_amount || "",
-    total_ttc: bill.total_ttc || "",
-    bill_model_id: 0 || "",
-    payments: bill.payments || [],
-    created_at: bill.created_at || new Date().toISOString(),
-    updated_at: bill.updated_at || new Date().toISOString(),
-    deleted_at: bill.deleted_at || null,
+    amount_tva: bill.amount_tva || "",
+    amount_ttc: bill.amount_ttc || "",
+    billing_model_id: bill.billing_model?.id || "",
+    documents: [],
   };
   const onSuccess = useCallback(() => {
-    router.push(ROUTES.DEMANDS.ROOT);
+    router.push(ROUTES.BILLS.ROOT);
   }, [router]);
 
   return (

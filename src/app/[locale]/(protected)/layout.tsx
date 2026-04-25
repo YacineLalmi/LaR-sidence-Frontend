@@ -5,18 +5,26 @@ import { User } from "@/schemas/users/user.schema";
 import { SideBar } from "./_components/sidebar";
 import NavBar from "./_components/navbar/navbar";
 
-export default async function ProtectedPagesLayout({ children }: { children: React.ReactNode }) {
+export default async function ProtectedPagesLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params?: Promise<{ locale?: string }>;
+}) {
+  const locale = (await params)?.locale || "fr"; // default to French
+  const isRTL = locale === "ar";
   let user: User | null = null;
   try {
     user = await UserService.profile();
   } catch {}
 
   return (
-    <div>
+    <div dir={isRTL ? "rtl" : "ltr"} className={isRTL ? "rtl" : "ltr"}>
       <SidebarProvider>
         <SideBar />
         <SidebarInset className="bg-transparent">
-          <NavBar user={user} />
+          <NavBar user={user} locale={locale} />
           <main className="px-5 pb-6 pt-0">{children}</main>
         </SidebarInset>
       </SidebarProvider>

@@ -1,9 +1,7 @@
 "use client";
 
-import { BienStatus } from "@/schemas/bien-status/bien-status.schema";
 import { Classification } from "@/schemas/classification/classification.schema";
-import { Locale, useLocale } from "next-intl";
-import React from "react";
+import { useLocale } from "next-intl";
 
 interface Props {
   status: Classification | undefined | null;

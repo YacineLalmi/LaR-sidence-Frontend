@@ -25,6 +25,10 @@ import { BillingModel } from "@/schemas/bills/models/billing-model.schema";
 import CreateBillingModelDialog from "./create-billing-model-dialog";
 import UpdateBillingModelDialog from "./update-billing-model-dialog";
 import { getBillingModelAction } from "@/actions/bills/models/get-billing-model.actions";
+import InputFileLarge from "@/components/custom-inputs/input-file/index";
+import { Classification } from "@/schemas/classification/classification.schema";
+import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
+import { CATEGORIES, SCOPES } from "@/services/classification.service";
 
 interface Props {
   initialData: BillFormType;
@@ -50,6 +54,11 @@ export default function BillForm({
   const [clients, isClientsPending] = useFetch<ListItem[]>(() => getClientListAction(), []);
   const [biens, isBiensPending] = useFetch<ListItem[]>(() => getBienListAction(), []);
   const [billingModels, setBillingModels] = useState<ListItem[]>([]);
+
+  const [billStatuses, isBillStatusesLoading] = useFetch<ListItem[]>(
+    () => getClassificationsListAction(CATEGORIES.STATUS, SCOPES.BILL),
+    [],
+  );
   const [initialBillingModels, isInitialBillingModelsPending] = useFetch<ListItem[]>(
     () => getBillingModelsListAction(),
     [],
@@ -83,15 +92,6 @@ export default function BillForm({
     customToast.error(`${field}: ${error.message}`);
   }
 
-  const handleDocumentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    setDocuments((prev) => [...prev, ...files]);
-  };
-
-  const removeDocument = (index: number) => {
-    setDocuments((prev) => prev.filter((_, i) => i !== index));
-  };
-
   useEffect(() => {
     if (!isInitialBillingModelsPending) {
       setBillingModels(initialBillingModels);
@@ -110,8 +110,6 @@ export default function BillForm({
     }
   }, [form.watch("billing_model_id")]);
 
-  console.log(selectedBillingModel);
-
   const handleBillingModelCreated = (billingModel: BillingModel) => {
     setIsCreateBillingModelDialogOpen(false);
     setBillingModels((prev) => [...prev, { id: billingModel.id, name: billingModel.name }]);
@@ -120,6 +118,24 @@ export default function BillForm({
       `${translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.CREATED)} - ${billingModel.name}`,
     );
   };
+
+  const handleBillingModelUpdated = (billingModel: BillingModel) => {
+    setIsUpdateBillingModelDialogOpen(false);
+    setBillingModels((prev) => [...prev, { id: billingModel.id, name: billingModel.name }]);
+    form.setValue("billing_model_id", billingModel.id);
+    customToast.success(
+      `${translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.UPDATED)} - ${billingModel.name}`,
+    );
+  };
+
+  useEffect(() => {
+    if (selectedBillingModel && form.watch("amount_ht")) {
+      const amoutHT = parseFloat(form.getValues("amount_ht"));
+      const taxAmount = (amoutHT * selectedBillingModel.tax_rate) / 100;
+      form.setValue("amount_tva", `${taxAmount.toFixed(2)}`);
+      form.setValue("amount_ttc", `${(amoutHT + taxAmount).toFixed(2)}`);
+    }
+  }, [form.watch("amount_ht"), selectedBillingModel]);
 
   return (
     <>
@@ -156,6 +172,17 @@ export default function BillForm({
                 placeholder={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.PLACEHOLDERS.BIEN_ID)}
                 disabled={isPending}
                 isPending={isBiensPending}
+                required
+              />
+
+              <InputSelectField
+                control={form.control}
+                name="status_id"
+                label={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.LABELS.STATUS)}
+                options={billStatuses}
+                placeholder={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.PLACEHOLDERS.STATUS)}
+                disabled={isPending}
+                isPending={isBillStatusesLoading}
                 required
               />
 
@@ -211,57 +238,23 @@ export default function BillForm({
 
               <InputTextField
                 control={form.control}
-                name="tax_amount"
-                label="Montant TVA"
-                placeholder="Sélectionner une option"
-                disabled={isPending}
+                name="amount_tva"
+                label={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.LABELS.TAX_AMOUNT)}
+                placeholder={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.PLACEHOLDERS.TAX_AMOUNT)}
+                disabled
                 required
               />
 
               <InputTextField
                 control={form.control}
-                name="total_ttc"
-                label="Montant TTC"
-                placeholder="Sélectionner une option"
-                disabled={isPending}
+                name="amount_ttc"
+                label={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.LABELS.TOTAL_TTC)}
+                placeholder={translation(TRANSLATIONS_KEYS_2.BILLS.FORM.PLACEHOLDERS.TOTAL_TTC)}
+                disabled
                 required
               />
 
-              <div className="space-y-3">
-                <label className="text-sm font-medium">Téléverser des documents</label>
-                <label className="block">
-                  <input
-                    type="file"
-                    accept="*/*"
-                    multiple
-                    className="hidden"
-                    onChange={handleDocumentUpload}
-                    disabled={isPending}
-                  />
-                  <div className="border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center cursor-pointer hover:border-gray-400 transition-colors bg-white">
-                    <Upload className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                    <p className="text-sm text-gray-600">Glissez-déposez vos documents ici ou cliquez pour importer</p>
-                  </div>
-                </label>
-
-                {/* Liste des documents uploadés */}
-                {documents.length > 0 && (
-                  <div className="mt-4 space-y-2">
-                    {documents.map((doc, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm text-gray-700 truncate">{doc.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => removeDocument(index)}
-                          className="text-red-500 hover:text-red-700 text-sm font-medium"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <InputFileLarge control={form.control} name="documents" />
             </div>
           </div>
 
@@ -283,7 +276,7 @@ export default function BillForm({
       />
       <UpdateBillingModelDialog
         billingModel={selectedBillingModel}
-        onBillingModelCreated={handleBillingModelCreated}
+        onBillingModelUpdated={handleBillingModelUpdated}
         open={isUpdateBillingModelDialogOpen}
         onOpenChange={setIsUpdateBillingModelDialogOpen}
       />

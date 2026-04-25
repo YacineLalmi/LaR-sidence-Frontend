@@ -1,5 +1,3 @@
-import { METHODS } from "http";
-
 export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
@@ -182,7 +180,10 @@ export const ROUTES = {
         CREATE: "/settings/bills/models/create",
         DETAIL: (id: string | number) => `/settings/bills/models/${id}`,
         EDIT: (id: string | number) => `/settings/bills/models/${id}`,
-      }
+      },
+      STATUSES: {
+        ROOT: "/settings/bills/statuses",
+      },
     },
   },
 

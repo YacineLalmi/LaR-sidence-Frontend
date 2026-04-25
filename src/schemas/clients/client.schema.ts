@@ -1,7 +1,4 @@
 import z from "zod";
-import { ClientTypeSchema } from "../client-types/client-type.schema";
-import { ClientSourceSchema } from "../client-sources/client-source.schema";
-import { ClientStatusSchema } from "../client-status/client-status.schema";
 import { FileSchema } from "../file/file.schema";
 import { InteractionSchema } from "../interaction/interaction";
 import { ClassificationSchema } from "../classification/classification.schema";
