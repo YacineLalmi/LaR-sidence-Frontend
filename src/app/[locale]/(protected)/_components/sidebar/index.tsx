@@ -44,11 +44,11 @@ export function SideBar() {
         url: ROUTES.DASHBOARD,
         icon: Home,
       },
-      {
-        title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.STATISTICS),
-        url: ROUTES.STATISTICS.SECTION("biens"),
-        icon: BarChart3,
-      },
+      // {
+      //   title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.STATISTICS),
+      //   url: ROUTES.STATISTICS.SECTION("biens"),
+      //   icon: BarChart3,
+      // },
       {
         title: translation(TRANSLATIONS_KEYS_2.SIDEMENU.PROPERTIES),
         url: ROUTES.BIENS.ROOT,
