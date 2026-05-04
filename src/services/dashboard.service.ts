@@ -68,7 +68,7 @@ export const DashboardService = {
             endpoint: END_POINTS.getTransactions,
             query: { range }
         });
-        const validatedResponseData = validateResponseData<ChartStats>(response.data, z.array(ChartStatsSchema));
+        const validatedResponseData = validateResponseData<ChartStats>(response.data, ChartStatsSchema);
 
         return validatedResponseData;
     },

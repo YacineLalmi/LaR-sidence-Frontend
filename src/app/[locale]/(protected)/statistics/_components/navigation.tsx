@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { Users, ChevronDown, Download, DollarSign, Building2, Database, PieChart, Clock, Calendar } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 // Navigation config with icon mapping
 const navItems = [
@@ -18,9 +18,9 @@ const navItems = [
 ];
 
 export function Navigation() {
-  const [activeTab, setActiveTab] = React.useState("Biens immobiliers");
   const pathName = usePathname();
   const currentPage = pathName.split("/").pop();
+  const router = useRouter();
 
   return (
     <header className="w-full bg-transparent">
@@ -35,7 +35,9 @@ export function Navigation() {
               <Button
                 key={item.label}
                 variant="ghost"
-                onClick={() => setActiveTab(item.label)}
+                onClick={() => {
+                  router.push(ROUTES.STATISTICS.SECTION(item.id));
+                }}
                 className={cn(
                   "flex items-center gap-2.5 rounded-full px-6 py-2 text-base font-medium transition-colors border-black border-2 cursor-pointer",
                   isActive ? "bg-black text-white hover:bg-slate-800" : "text-slate-800 hover:bg-amber-200",
