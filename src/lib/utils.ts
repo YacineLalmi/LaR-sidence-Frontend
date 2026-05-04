@@ -19,6 +19,7 @@ export function transformQuery(query: QueryParams | undefined) {
     "perPage",
     "sort",
     "needle",
+    "range",
     "refresh_token",
     "include",
     "startDate",
@@ -37,6 +38,7 @@ export function transformQuery(query: QueryParams | undefined) {
     "payment_status_ids",
     "client_source_ids",
     "demand_source_ids",
+    "groupBy"
   ];
 
   for (const [key, value] of params.entries()) {

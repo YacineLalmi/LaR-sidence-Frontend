@@ -2,6 +2,8 @@ import ApiService from "./api.service";
 import { getStatisticsResponseSchema } from "@/schemas/statistics/response-schemas";
 import { StatisticsFilters } from "@/schemas/statistics/statistics.schema";
 import { validateResponseData } from "@/lib/utils";
+import { BienDistribution, BienDistributionSchema } from "@/schemas/dashboard/bien-distribution.schema";
+import z from "zod";
 
 function appendArrayParam(params: URLSearchParams, key: string, values: string[] | undefined) {
   if (!values?.length) return;
@@ -31,20 +33,42 @@ export function buildStatisticsQuery(filters: StatisticsFilters): string {
   return p.toString();
 }
 
-const ENDPOINTS = {
+const END_POINTS = {
   section: (name: string, qs: string) => `/statistics/${name}${qs ? `?${qs}` : ""}`,
+  biens: "/statistics/biens",
+  clients: "/statistics/clients"
 };
 
 export const StatisticsService = {
   async fetchSection(section: string, filters: StatisticsFilters): Promise<Record<string, unknown>> {
     const qs = buildStatisticsQuery(filters);
     const res = await ApiService.get<Record<string, unknown>>({
-      endpoint: ENDPOINTS.section(section, qs),
+      endpoint: END_POINTS.section(section, qs),
     });
     if (res.data === undefined) {
       throw new Error("Réponse statistiques vide");
     }
     const schema = getStatisticsResponseSchema(section);
     return validateResponseData(res.data, schema);
+  },
+
+  getBiens: async (groupBy: string) => {
+    const response = await ApiService.get<BienDistribution[]>({
+      endpoint: END_POINTS.biens,
+      query: { groupBy }
+    });
+    const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
+
+    return validatedResponseData;
+  },
+
+  getClients: async (groupBy: string) => {
+    const response = await ApiService.get<BienDistribution[]>({
+      endpoint: END_POINTS.clients,
+      query: { groupBy }
+    });
+    const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
+
+    return validatedResponseData;
   },
 };

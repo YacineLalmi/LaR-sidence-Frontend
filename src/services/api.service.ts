@@ -21,6 +21,7 @@ class ApiService {
     const queryParams = transformQuery(query);
     const url = `${this.baseUrl}${endpoint}${queryParams ? "?" + queryParams : ""}`;
 
+    console.log(url)
     const config: RequestInit = {
       method,
       headers: {

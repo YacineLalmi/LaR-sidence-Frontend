@@ -1,5 +1,4 @@
 import {
-  BarChart3,
   Bell,
   Building2,
   CalendarDays,
@@ -28,7 +27,7 @@ import logo from "@/assests/images/logo-black.png";
 import Link from "next/link";
 import Logout from "./_components/logout";
 import { ROUTES } from "@/constants/routes";
-import { use, useMemo } from "react";
+import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 

@@ -16,7 +16,6 @@ function useFetch<R = any>(fetchAction: () => Promise<R>, initialData: R, isAllo
                 const result = await fetchAction();
                 setData(result);
             } catch (error) {
-                console.error("Wilaya Fetch Failed:", error);
                 customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));
             }
         });

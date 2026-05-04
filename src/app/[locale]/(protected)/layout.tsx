@@ -12,7 +12,7 @@ export default async function ProtectedPagesLayout({
   children: React.ReactNode;
   params?: Promise<{ locale?: string }>;
 }) {
-  const locale = (await params)?.locale || "fr"; // default to French
+  const locale = (await params)?.locale || "fr";
   const isRTL = locale === "ar";
   let user: User | null = null;
   try {

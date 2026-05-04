@@ -7,7 +7,6 @@ import { getProfilePermissionsAction } from "./actions/Profile/get-profile-permi
 import { ROUTES } from "./constants/routes";
 import { routing } from "./i18n/routing";
 import createMiddleware from 'next-intl/middleware';
-import { redirect } from "./i18n/navigation";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -56,19 +55,15 @@ export async function proxy(req: NextRequest) {
       }
 
       if (!access_token) {
-        console.debug("no access toke")
         let refresh_token: string | null = null;
 
         try {
-          console.debug("retrieving refresh token")
           refresh_token = await getCookie(COOKIES_KEYS.REFRESH_TOKEN);
         } catch (error) {
-          console.error("retrieving refresh token failed")
           refresh_token = null;
         }
 
         if (!refresh_token) {
-          console.debug("no refresh token")
           await clearCookies();
           return NextResponse.redirect(new URL(`/${locale}${ROUTES.AUTH.LOGIN}`, req.url));
         }
@@ -79,12 +74,10 @@ export async function proxy(req: NextRequest) {
 
           if (!refreshResult.isOk) {
             await clearCookies();
-            console.error("failed refreshing token")
           }
 
           // Token refreshed successfully, continue with the request
         } catch (error) {
-          console.error("Failed to refresh token:", error);
           await clearCookies();
           const loginUrl = new URL(`/${locale}${ROUTES.AUTH.LOGIN}`, req.url);
           return NextResponse.redirect(loginUrl);
