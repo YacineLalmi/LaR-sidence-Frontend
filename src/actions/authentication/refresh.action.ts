@@ -1,11 +1,18 @@
+'use server'
+
 import { COOKIES_KEYS } from "@/constants/cookies-keys";
 import { FormState } from "@/lib/definitions";
+import { UnauthorizedError } from "@/lib/errors";
 import { getCookie, setCookie } from "@/lib/server.helper";
 import { AuthService } from "@/services/auth.service";
 import { differenceInSeconds } from "date-fns";
 
-export async function refreshTokenAction(refresh_token: string): Promise<FormState> {
+export async function refreshTokenAction(): Promise<FormState> {
   try {
+
+    const refresh_token = await getCookie(COOKIES_KEYS.REFRESH_TOKEN)
+    if (!refresh_token) throw new UnauthorizedError()
+
     const response = await AuthService.refresh(refresh_token);
 
     await setCookie({
@@ -26,7 +33,6 @@ export async function refreshTokenAction(refresh_token: string): Promise<FormSta
 
     return { isOk: true };
   } catch (error) {
-    console.error("Refresh token error:", error);
     return { isOk: false };
   }
 }

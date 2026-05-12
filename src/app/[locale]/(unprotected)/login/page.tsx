@@ -1,7 +1,11 @@
+import { getCookie } from "@/lib/server.helper";
 import CustomCarousel from "../_components/carousel";
 import { LoginForm } from "./_components/login-form";
+import { COOKIES_KEYS } from "@/constants/cookies-keys";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
-export default function LoginPage() {
+export default async function LoginPage() {
   return (
     /* - min-h-screen au lieu de h-screen pour éviter les problèmes de défilement sur mobile
        - flex-col par défaut (mobile)

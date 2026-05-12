@@ -5,7 +5,7 @@ import { ForbiddenError } from "@/lib/errors";
 import { ShieldAlert, AlertCircle } from "lucide-react";
 
 interface Props {
-  title: string;
+  title?: string;
   searchField: React.ReactNode;
   createComponent?: React.ReactNode;
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function SettingsView({ title, searchField, createComponent, chil
   // Helper to render the header consistently
   const renderHeader = () => (
     <CardHeader className="px-0 flex flex-col gap-4">
-      {backLink ? (
+      {title && backLink ? (
         <NavigationButton title={title} backLink={backLink} />
       ) : (
         <h1 className="text-2xl font-bold tracking-tight">{title}</h1>

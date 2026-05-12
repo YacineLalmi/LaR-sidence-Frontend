@@ -25,7 +25,6 @@ export default async function Utilisateurs({ searchParams }: { searchParams: Pro
   }
   return (
     <SettingsView
-      title={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.TITLE)}
       searchField={<UsersHeader />}
       createComponent={
         <Link href={ROUTES.SETTINGS.USERS.CREATE}>

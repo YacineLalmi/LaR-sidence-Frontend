@@ -1,6 +1,5 @@
 import SettingCard from "./_components/setting-card";
-import { Bell, Building2, Calendar1, CreditCard, Map } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { Building2, Calendar1, CreditCard, Map } from "lucide-react";
 import { SettingsItem } from "@/types/settings";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
@@ -206,10 +205,8 @@ const CONFIG_MODULES: SettingsItem[] = [
 ];
 
 export default async function Settings() {
-  const translation = await getTranslations();
   return (
     <>
-      <h1 className="font-semibold text-[32px] mb-2">{translation(TRANSLATIONS_KEYS_2.SETTINGS.TITLE)}</h1>
       <div className="grid grid-cols-3 gap-3">
         {CONFIG_MODULES.map((module) => (
           <SettingCard key={module.id} module={module} />

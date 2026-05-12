@@ -1,8 +1,8 @@
-import { RouteConfig, ROUTES_PERMISSIONS } from "@/config/route.config";
+import { RouteConfig, ROUTES_CONFIG } from "@/config/route.config";
 import { arraysIntersect } from "../utils";
 
 export function isPublicRoute(path: string): boolean {
-  const route = ROUTES_PERMISSIONS.find((route) => route.path === path);
+  const route = ROUTES_CONFIG[path]
   if (route) {
     return !route.requireAuthentication;
   }
@@ -21,8 +21,15 @@ function matchDynamicRoute(actualPath: string, routePattern: string): boolean {
   });
 }
 
-function findMatchingRoute(path: string): RouteConfig | null {
-  return ROUTES_PERMISSIONS.find((route) => matchDynamicRoute(path, route.path)) || null;
+export function findMatchingRoute(path: string): RouteConfig | null {
+  let route = ROUTES_CONFIG[path]
+  if (route) return route;
+
+  const matchedRouteKey = Object.keys(ROUTES_CONFIG).find((key) => matchDynamicRoute(path, key))
+
+  if (matchedRouteKey) return ROUTES_CONFIG[matchedRouteKey]
+
+  return null
 }
 
 export function checkRoutePermission(path: string, userPermissions: string[]): boolean {

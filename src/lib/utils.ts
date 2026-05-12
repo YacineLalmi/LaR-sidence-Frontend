@@ -38,7 +38,11 @@ export function transformQuery(query: QueryParams | undefined) {
     "payment_status_ids",
     "client_source_ids",
     "demand_source_ids",
-    "groupBy"
+    "groupBy",
+    "wilaya_id",
+    "commune_id",
+    "bien_type_id",
+    "period"
   ];
 
   for (const [key, value] of params.entries()) {

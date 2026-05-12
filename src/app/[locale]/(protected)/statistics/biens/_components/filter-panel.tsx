@@ -18,15 +18,6 @@ import InputSelectField from "@/components/custom-inputs/input-select";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import CustomButton from "@/components/ui/custom-button";
 
-// Data structures for Algerian-specific real estate context
-const filterConfig = [
-  { key: "periode", label: "Période", options: ["Aujourd'hui", "Semaine", "Mois", "Année"] },
-  { key: "typeBien", label: "Type de Bien", options: ["Maison", "Appartement", "Local", "Bureau"] },
-  { key: "commune", label: "Commune", options: ["Hydra", "Sidi M'Hamed", "Bab El Oued"] },
-  { key: "wilaya", label: "Wilaya", options: ["Alger", "Oran", "Constantine", "Blida"] },
-  { key: "exclusivite", label: "Exclusivité", options: ["Oui", "Non"] },
-];
-
 export function FilterPanel() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
@@ -79,7 +70,7 @@ export function FilterPanel() {
       wilaya_id: params.get("wilaya_id") || undefined,
       commune_id: params.get("commune_id") || undefined,
       period: (params.get("period") || "year") as "year" | "month" | "week",
-      exclusivity: (params.get("exclusivity") || "yes") as "yes" | "no",
+      exclusivity: (params.get("exclusivity") || undefined) as "yes" | "no",
     },
   });
 
@@ -165,8 +156,8 @@ export function FilterPanel() {
             control={form.control}
             name="exclusivity"
             options={exclusivities}
-            label={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.LABELS.COMMUNE)}
-            placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FILTER.PLACEHOLDERS.COMMUNE)}
+            label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.IS_EXCLUSIVE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.IS_EXCLUSIVE)}
           />
         </div>
 

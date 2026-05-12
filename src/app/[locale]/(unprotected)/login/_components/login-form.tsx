@@ -21,12 +21,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { redirect, useRouter } from "@/i18n/navigation";
 import { ROUTES } from "@/constants/routes";
+import { useSearchParams } from "next/navigation";
 
 export function LoginForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const translation = useTranslations();
-  const locale = useLocale();
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  // 1. Extract the 'returnTo' value, or fallback to Dashboard
+  const returnTo = searchParams.get("returnTo") || ROUTES.DASHBOARD;
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginFormDataSchema),
@@ -41,7 +46,7 @@ export function LoginForm() {
     try {
       const response = await loginAction(values);
       if (response.isOk) {
-        router.push(ROUTES.DASHBOARD);
+        router.push(returnTo);
         customToast.success(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_COMPLETED));
       } else
         customToast.error(response.errorMessage || translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.SOMETHING_WRONG));

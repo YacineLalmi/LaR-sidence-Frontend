@@ -1,6 +1,5 @@
 import SearchField from "@/components/ui/search";
 import ClientFilters from "./client-filters";
-import { ListItem } from "@/schemas/global.schema";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";

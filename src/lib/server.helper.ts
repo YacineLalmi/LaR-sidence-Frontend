@@ -148,19 +148,19 @@ export async function removeCookie(key: string): Promise<void> {
 
 export async function clearCookies(): Promise<void> {
   const cookieStore = await require("next/headers").cookies();
-  cookieStore.getAll().forEach((cookie: any) => cookieStore.delete(cookie.name));
+  cookieStore.getAll().forEach(async (cookie: any) => await cookieStore.delete(cookie.name));
 }
 
-export async function refreshTokens(): Promise<boolean> {
-  // Has no access token
-  const refresh_token = await getCookie("refresh_token");
-  if (!refresh_token) {
-    return false;
-  } else {
-    await refreshTokenAction(refresh_token);
-    return true;
-  }
-}
+// export async function refreshTokens(): Promise<boolean> {
+//   // Has no access token
+//   const refresh_token = await getCookie("refresh_token");
+//   if (!refresh_token) {
+//     return false;
+//   } else {
+//     await refreshTokenAction(refresh_token);
+//     return true;
+//   }
+// }
 
 /** Node/undici often put syscall codes on `cause`; some builds use `code` or a generic "fetch failed" message. */
 function isBackendUnreachableError(error: unknown): boolean {

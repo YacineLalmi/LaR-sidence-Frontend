@@ -9,13 +9,17 @@ interface Props {
   backTitle?: string | undefined;
 }
 
-export default function NavigationButton({ title, backLink = "/dashboard", backTitle = "Dashboard" }: Props) {
+export default function NavigationButton({ title, backLink, backTitle }: Props) {
   const isRTL = useLocale() === "ar";
   return (
     <div className="flex gap-3 items-center">
-      <Link href={backLink}>
-        <Button className="cursor-pointer rounded-full">{isRTL ? <ArrowRight /> : <ArrowLeft />}</Button>
-      </Link>
+      {backLink && (
+        <Link href={backLink}>
+          <Button className="cursor-pointer rounded-full" title={backTitle}>
+            {isRTL ? <ArrowRight /> : <ArrowLeft />}
+          </Button>
+        </Link>
+      )}
       <h1 className="text-xl font-bold">{title}</h1>
     </div>
   );

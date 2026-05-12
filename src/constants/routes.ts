@@ -1,4 +1,8 @@
 export const ROUTES = {
+
+  SESSION: {
+    EXPIRED: "/session-expired"
+  },
   AUTH: {
     LOGIN: "/login",
     FORGET_PASSWORD: "/password/forget",

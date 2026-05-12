@@ -1,314 +1,197 @@
 import { PERMISSIONS } from "@/constants/permissions";
 import { ROUTES } from "@/constants/routes";
+import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 export type RouteConfig = {
-  path: string;
   permissions?: string[];
   requireAuthentication: boolean;
+  title: string;
+  backLink?: string
 };
 
-export const ROUTES_PERMISSIONS: RouteConfig[] = [
-
-  {
-    path: "/forbidden",
+export const ROUTES_CONFIG: Record<string, RouteConfig> = {
+  // --- SETTINGS ---
+  [ROUTES.SETTINGS.ROOT]: {
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.ROOT,
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.COLORS.ROOT,
+  [ROUTES.SETTINGS.COLORS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_COLORS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.COLORS.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.BIENS.TYPES.ROOT,
+  [ROUTES.SETTINGS.BIENS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BIEN_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.BIENS.STATUSES.ROOT,
+  [ROUTES.SETTINGS.BIENS.STATUSES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BIEN_STATUSES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BIENS.STATUSES.TITLE,
   },
-
-  {
-    path: ROUTES.SETTINGS.BIENS.PRIORITIES.ROOT,
+  [ROUTES.SETTINGS.BIENS.PRIORITIES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BIEN_PRIORITIES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BIENS.PRIORITIES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.BIENS.CHARACTERISTICS.ROOT,
+  [ROUTES.SETTINGS.BIENS.CHARACTERISTICS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BIEN_CHARACTERISTICS],
     requireAuthentication: true,
-  }, {
-    path: ROUTES.SETTINGS.CLIENTS.STATUSES.ROOT,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BIENS.CHARACTERISTICS.TITLE,
+  },
+  [ROUTES.SETTINGS.CLIENTS.STATUSES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_CLIENT_STATUSES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.STATUSES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.CLIENTS.TYPES.ROOT,
+  [ROUTES.SETTINGS.CLIENTS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_CLIENT_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.CLIENTS.SOURCES.ROOT,
+  [ROUTES.SETTINGS.CLIENTS.SOURCES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_CLIENT_SOURCES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.CLIENTS.SOURCES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.LOCATIONS.ROOT,
+  [ROUTES.SETTINGS.LOCATIONS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_WILAYAS, PERMISSIONS.VIEW_COMMUNES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.LOCATIONS.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.OFFERS.TYPES.ROOT,
+  [ROUTES.SETTINGS.OFFERS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_OFFER_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.OFFERS.STATUSES.ROOT,
+  [ROUTES.SETTINGS.OFFERS.STATUSES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_OFFER_STATUSES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.OFFERS.STATUSES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.OFFERS.SOURCES.ROOT,
-    permissions: [PERMISSIONS.VIEW_CLIENT_SOURCES],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.DEMANDS.STATUSES.ROOT,
+  [ROUTES.SETTINGS.DEMANDS.STATUSES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DEMAND_STATUES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.STATUSES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.DEMANDS.SOURCES.ROOT,
+  [ROUTES.SETTINGS.DEMANDS.SOURCES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DEMAND_SOURCES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.SOURCES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.DEMANDS.TYPES.ROOT,
+  [ROUTES.SETTINGS.DEMANDS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DEMAND_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.DEMANDS.PRIORITIES.ROOT,
-    permissions: [PERMISSIONS.VIEW_DEMAND_TYPES],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.TRANSACTIONS.TYPES.ROOT,
+  [ROUTES.SETTINGS.TRANSACTIONS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_TRANSACTION_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.TRANSACTIONS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.EVENTS.TYPES.ROOT,
+  [ROUTES.SETTINGS.EVENTS.TYPES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_EVENTS_TYPES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.EVENTS.TYPES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.ROLES.ROOT,
+  [ROUTES.SETTINGS.ROLES.ROOT]: {
     permissions: [PERMISSIONS.VIEW_ROLES],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.ROLES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.ROLES.ADD,
-    permissions: [PERMISSIONS.MANAGE_ROLES],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.ROLES.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_ROLES],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.USERS.ROOT,
+  [ROUTES.SETTINGS.USERS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_USERS],
     requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.USERS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_USERS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.USERS.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_USERS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.AUTH.LOGIN,
-    requireAuthentication: false,
-  },
-  {
-    path: ROUTES.AUTH.FORGET_PASSWORD,
-    requireAuthentication: false,
-  },
-  {
-    path: ROUTES.AUTH.RESET_PASSWORD,
-    requireAuthentication: false,
-  },
-  {
-    path: ROUTES.DASHBOARD,
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.STATISTICS.ROOT,
-    permissions: [PERMISSIONS.VIEW_STATISTICS],
-    requireAuthentication: true,
-  },
-  {
-    path: "/statistics/[section]",
-    permissions: [PERMISSIONS.VIEW_STATISTICS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.PROFILE.ROOT,
-    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.USERS.TITLE,
   },
 
-  {
-    path: ROUTES.CLIENTS.ROOT,
+  // --- AUTH ---
+  [ROUTES.AUTH.LOGIN]: {
+    requireAuthentication: false,
+    title: TRANSLATIONS_KEYS_2.AUTH.BUTTONS.LOGIN,
+  },
+  [ROUTES.AUTH.FORGET_PASSWORD]: {
+    requireAuthentication: false,
+    title: TRANSLATIONS_KEYS_2.AUTH.FORGOT_YOUR_PASSWORD,
+  },
+
+  // --- CORE MODULES ---
+  [ROUTES.DASHBOARD]: {
+    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SIDEMENU.DASHBOARD,
+  },
+  [ROUTES.STATISTICS.ROOT]: {
+    permissions: [PERMISSIONS.VIEW_STATISTICS],
+    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.STATISTICS.TITLE,
+  },
+  [ROUTES.PROFILE.ROOT]: {
+    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.PROFILE.TITLE,
+  },
+  [ROUTES.CLIENTS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_CLIENTS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.CLIENTS.TITLE,
   },
-  {
-    path: ROUTES.CLIENTS.CREATE,
+  [ROUTES.CLIENTS.CREATE]: {
     permissions: [PERMISSIONS.MANAGE_CLIENTS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.CLIENTS.FORM.TITLES.CREATE,
+    backLink: ROUTES.CLIENTS.ROOT
   },
-  {
-    path: ROUTES.CLIENTS.EDIT("[id]"),
+  [ROUTES.CLIENTS.EDIT("[id]")]: {
     permissions: [PERMISSIONS.MANAGE_CLIENTS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.CLIENTS.FORM.TITLES.UPDATE,
+    backLink: ROUTES.CLIENTS.ROOT
   },
-  {
-    path: ROUTES.OFFERS.ROOT,
+  [ROUTES.OFFERS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_OFFERS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.OFFERS.TITLE,
   },
-  {
-    path: ROUTES.OFFERS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_OFFERS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.OFFERS.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_OFFERS],
-    requireAuthentication: true,
-  },
-
-  {
-    path: ROUTES.BIENS.ROOT,
+  [ROUTES.BIENS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BIENS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.BIENS.TITLE,
   },
-  {
-    path: ROUTES.BIENS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_BIENS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.BIENS.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_BIENS],
-    requireAuthentication: true,
-  },
-
-  {
-    path: ROUTES.BILLS.ROOT,
+  [ROUTES.BILLS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BILLS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.BILLS.TITLE,
   },
-  {
-    path: ROUTES.BILLS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_BILLS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.BILLS.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_BILLS],
-    requireAuthentication: true,
-  },
-
-  {
-    path: ROUTES.DEMANDS.ROOT,
+  [ROUTES.DEMANDS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DEMANDS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.DEMANDS.TITLE,
   },
-  {
-    path: ROUTES.DEMANDS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_DEMANDS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.DEMANDS.EDIT('[id]'),
-    permissions: [PERMISSIONS.MANAGE_DEMANDS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.DOCUMENTS.ROOT,
+  [ROUTES.DOCUMENTS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DOCUMENTS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.DOCUMENTS.TITLE,
   },
-  {
-    path: ROUTES.NOTIFICATIONS.ROOT,
+  [ROUTES.NOTIFICATIONS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_NOTIFICATIONS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.NOTIFICATIONS.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.NOTIFICATIONS.ROOT,
-    permissions: [PERMISSIONS.MANAGE_NOTIFICATIONS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.EVENTS.ROOT,
+  [ROUTES.EVENTS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_EVENTS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.EVENTS.TITLE,
   },
-  {
-    path: ROUTES.EVENTS.CREATE,
-    permissions: [PERMISSIONS.MANAGE_EVENTS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.EVENTS.EDIT('[id]'),
-    permissions: [PERMISSIONS.MANAGE_EVENTS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.EVENTS.COLORS.ROOT,
-    permissions: [PERMISSIONS.MANAGE_USERS, PERMISSIONS.MANAGE_EVENTS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.BILLS.PAYMENTS.STATUSES.ROOT,
-    permissions: [PERMISSIONS.VIEW_BILL_PAYMENTS_SOURCES],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.BILLS.PAYMENTS.METHODS.ROOT,
-    permissions: [PERMISSIONS.VIEW_BILL_PAYMENTS_METHODS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.BILLS.MODELS.ROOT,
+
+  // --- BILLS CONFIG ---
+  [ROUTES.SETTINGS.BILLS.MODELS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_BILL_MODELS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.BILLS.MODELS.CREATE,
+  [ROUTES.SETTINGS.BILLS.STATUSES.ROOT]: {
     permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
     requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.SETTINGS.BILLS.STATUSES.TITLE,
   },
-  {
-    path: ROUTES.SETTINGS.BILLS.MODELS.EDIT("[id]"),
-    permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
-    requireAuthentication: true,
-  },
-  {
-    path: ROUTES.SETTINGS.BILLS.STATUSES.ROOT,
-    permissions: [PERMISSIONS.MANAGE_BILL_MODELS],
-    requireAuthentication: true,
-  },
-];
+};

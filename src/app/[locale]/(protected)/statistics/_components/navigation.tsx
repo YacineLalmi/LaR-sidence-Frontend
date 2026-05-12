@@ -9,11 +9,11 @@ import { usePathname, useRouter } from "next/navigation";
 // Navigation config with icon mapping
 const navItems = [
   { disabled: false, id: "biens", label: "Biens immobiliers", icon: Building2 },
-  { disabled: true, id: "offers", label: "Offres", icon: Database },
+  { disabled: false, id: "offers", label: "Offres", icon: Database },
   { disabled: false, id: "clients", label: "Clients", icon: Users },
-  { disabled: true, id: "demands", label: "Demandes", icon: PieChart },
+  { disabled: false, id: "demands", label: "Demandes", icon: PieChart },
   { disabled: true, id: "agents", label: "Agents", icon: Clock },
-  { disabled: true, id: "bills", label: "Facturation", icon: DollarSign }, // Note: Adjust lucide-react name if needed
+  { disabled: false, id: "bills", label: "Facturation", icon: DollarSign }, // Note: Adjust lucide-react name if needed
   { disabled: true, id: "events", label: "Calendrier", icon: Calendar },
 ];
 

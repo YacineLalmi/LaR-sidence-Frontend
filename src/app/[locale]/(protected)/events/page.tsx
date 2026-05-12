@@ -11,7 +11,6 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
-        <h1 className="text-[32px] font-bold">{translation(TRANSLATIONS_KEYS_2.EVENTS.TITLE)}</h1>
         <EventHeader />
       </CardHeader>
       <CardContent className="px-0">

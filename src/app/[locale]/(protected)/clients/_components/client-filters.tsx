@@ -6,6 +6,7 @@ import InputSelectField from "@/components/custom-inputs/input-select";
 import CustomButton from "@/components/ui/custom-button";
 import FilterDrawer from "@/components/ui/filter-drawer";
 import { Form } from "@/components/ui/form";
+import useFetch from "@/hooks/use-fetch.hook";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { customToast } from "@/lib/utils";
 import { ClientFilterForm, ClientFilterFormSchema } from "@/schemas/clients/client-filter-form.schema";
@@ -17,8 +18,6 @@ import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-
-interface Props {}
 
 export default function ClientFilters() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,45 +40,21 @@ export default function ClientFilters() {
     },
   ];
 
-  const [types, setTypes] = useState<ListItem[]>([]);
-  const [statuses, setStatuses] = useState<ListItem[]>([]);
-  const [sources, setSources] = useState<ListItem[]>([]);
-  const [isTypesPending, startTypesTransition] = useTransition();
-  const [isStatuesPending, startStatuesTransition] = useTransition();
-  const [isSourcesPending, startSourcesTransition] = useTransition();
-
-  useEffect(() => {
-    if (!open) return;
-    startTypesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.DEMAND);
-        setTypes(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setTypes([]);
-      }
-    });
-
-    startStatuesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.DEMAND);
-        setStatuses(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setStatuses([]);
-      }
-    });
-
-    startSourcesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.DEMAND);
-        setSources(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setSources([]);
-      }
-    });
-  }, [open]);
+  const [types, isTypesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.CLEINT),
+    [],
+    isOpen,
+  );
+  const [statuses, isStatuesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.CLEINT),
+    [],
+    isOpen,
+  );
+  const [sources, isSourcesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.CLEINT),
+    [],
+    isOpen,
+  );
 
   // Parse query params to get initial values
   const getInitialValues = (): Partial<ClientFilterForm> => {
@@ -194,6 +169,7 @@ export default function ClientFilters() {
             control={form.control}
             name="type_id"
             options={types}
+            isPending={isTypesLoading}
             label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.TYPE)}
             placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.TYPE)}
           />
@@ -201,6 +177,7 @@ export default function ClientFilters() {
             control={form.control}
             name="status_id"
             options={statuses}
+            isPending={isStatuesLoading}
             label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.STATUS)}
             placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.STATUS)}
           />
@@ -208,6 +185,7 @@ export default function ClientFilters() {
             control={form.control}
             name="source_id"
             options={sources}
+            isPending={isSourcesLoading}
             label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.SOURCE)}
             placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.SOURCE)}
           />

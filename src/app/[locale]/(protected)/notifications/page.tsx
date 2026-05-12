@@ -34,10 +34,6 @@ export default async function NotificationsPage({ searchParams }: { searchParams
 
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col gap-2">
-        <h1 className="text-[32px] font-bold">{t("title")}</h1>
-        <p className="text-muted-foreground text-sm">{t("description")}</p>
-      </CardHeader>
       <CardContent className="px-0">
         <NotificationsView initialData={result} aggregates={aggregates} />
       </CardContent>

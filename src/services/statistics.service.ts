@@ -4,6 +4,10 @@ import { StatisticsFilters } from "@/schemas/statistics/statistics.schema";
 import { validateResponseData } from "@/lib/utils";
 import { BienDistribution, BienDistributionSchema } from "@/schemas/dashboard/bien-distribution.schema";
 import z from "zod";
+import { ClientFilterStatsForm } from "@/schemas/clients/client-filter-stats-form.schema";
+import { DemandFilterStatsForm } from "@/schemas/demands/demand-filter-stats-form.schema";
+import { OfferFilterStatsForm } from "@/schemas/offers/offer-filter-stats-form.schema";
+import { BillingFilterStatsForm } from "@/schemas/bills/bill-filter-stats-form.schema";
 
 function appendArrayParam(params: URLSearchParams, key: string, values: string[] | undefined) {
   if (!values?.length) return;
@@ -36,7 +40,10 @@ export function buildStatisticsQuery(filters: StatisticsFilters): string {
 const END_POINTS = {
   section: (name: string, qs: string) => `/statistics/${name}${qs ? `?${qs}` : ""}`,
   biens: "/statistics/biens",
-  clients: "/statistics/clients"
+  clients: "/statistics/clients",
+  demands: "/statistics/demands",
+  offers: "/statistics/offers",
+  billing: "/statistics/billing"
 };
 
 export const StatisticsService = {
@@ -62,10 +69,40 @@ export const StatisticsService = {
     return validatedResponseData;
   },
 
-  getClients: async (groupBy: string) => {
+  getClients: async (groupBy: string, filters: ClientFilterStatsForm) => {
     const response = await ApiService.get<BienDistribution[]>({
       endpoint: END_POINTS.clients,
-      query: { groupBy }
+      query: { groupBy, ...filters }
+    });
+    const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
+
+    return validatedResponseData;
+  },
+
+  getDemands: async (groupBy: string, filters: DemandFilterStatsForm) => {
+    const response = await ApiService.get<BienDistribution[]>({
+      endpoint: END_POINTS.demands,
+      query: { groupBy, ...filters }
+    });
+    const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
+
+    return validatedResponseData;
+  },
+
+  getOffers: async (groupBy: string, filters: OfferFilterStatsForm) => {
+    const response = await ApiService.get<BienDistribution[]>({
+      endpoint: END_POINTS.offers,
+      query: { groupBy, ...filters }
+    });
+    const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
+
+    return validatedResponseData;
+  },
+
+  getBilling: async (groupBy: string, filters: BillingFilterStatsForm) => {
+    const response = await ApiService.get<BienDistribution[]>({
+      endpoint: END_POINTS.offers,
+      query: { groupBy, ...filters }
     });
     const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
 

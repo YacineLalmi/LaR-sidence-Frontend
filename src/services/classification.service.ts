@@ -86,7 +86,13 @@ export const ClassificationService = (category: string, scope: string) => ({
   list: async (needle: string): Promise<ListItem[]> => {
     const response = await ApiService.get<ListItem[]>({
       endpoint: END_POINTS.list(category, scope),
-      query: { needle }
+      query: { needle },
+      options: {
+        cache: "force-cache",
+        next: {
+          tags: [`${category}-${scope}-classification-list`]
+        }
+      }
     });
 
     return validateResponseData<ListItem[]>(response.data, z.array(ListItemSchema));

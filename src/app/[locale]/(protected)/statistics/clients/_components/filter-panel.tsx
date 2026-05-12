@@ -8,8 +8,6 @@ import { ListItem } from "@/schemas/global.schema";
 import { getCommuneByWilaya } from "@/actions/commune/get-commune-by-wilaya";
 import { getWilayaListAction } from "@/actions/wilayas/get-wilaya-list.action";
 import { useForm } from "react-hook-form";
-import { BienFilterForm } from "@/schemas/biens/bien-filter-form.schema";
-import { BienFilterFormStats, BienFilterFormStatsSchema } from "@/schemas/biens/bien-filter-stats-form.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
@@ -20,7 +18,6 @@ import CustomButton from "@/components/ui/custom-button";
 import { ClientFilterStatsForm, ClientFilterStatsFormSchema } from "@/schemas/clients/client-filter-stats-form.schema";
 
 export function FilterPanel() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const translation = useTranslations();
@@ -56,6 +53,13 @@ export function FilterPanel() {
     },
   ];
 
+  const [bienTypes, isBienTypesLoading] = useFetch<ListItem[]>(
+    async () => getClassificationsListAction(CATEGORIES.TYPE, SCOPES.BIEN),
+    [],
+  );
+
+  const [wilayas, isWilayasLoading] = useFetch<ListItem[]>(async () => getWilayaListAction(), []);
+
   const [isFiltering, startFilteringTransition] = useTransition();
 
   const form = useForm<ClientFilterStatsForm>({
@@ -63,8 +67,19 @@ export function FilterPanel() {
     defaultValues: {
       period: (params.get("period") || "year") as "year" | "month" | "week",
       civility: (params.get("civility") || "mr") as "mr" | "mrs" | "company",
+      commune_id: searchParams.get("commune_id") || undefined,
+      wilaya_id: searchParams.get("wilaya_id") || undefined,
+      bien_type_id: searchParams.get("bien_type_id") || undefined,
     },
   });
+
+  const selectedWilaya = form.watch("wilaya_id");
+
+  const [communes, isCommunesLoading] = useFetch<ListItem[]>(
+    async () => getCommuneByWilaya(selectedWilaya || ""),
+    [],
+    !!selectedWilaya,
+  );
 
   async function onSubmit(values: ClientFilterStatsForm) {
     const params = new URLSearchParams();
@@ -76,7 +91,6 @@ export function FilterPanel() {
 
     startFilteringTransition(() => {
       router.push(`?${params.toString()}`);
-      setIsOpen(false);
     });
   }
 
@@ -84,7 +98,6 @@ export function FilterPanel() {
     startFilteringTransition(() => {
       form.reset({});
       router.push(window.location.pathname);
-      setIsOpen(false);
     });
   }
 
@@ -107,10 +120,27 @@ export function FilterPanel() {
           />
           <InputSelectField
             control={form.control}
-            name="civility"
-            options={civilities}
-            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY)}
-            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.CIVILITY)}
+            name="bien_type_id"
+            options={bienTypes}
+            isPending={isBienTypesLoading}
+            label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.BIEN_TYPE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.BIEN_TYPE)}
+          />
+          <InputSelectField
+            control={form.control}
+            name="wilaya_id"
+            options={wilayas}
+            isPending={isWilayasLoading}
+            label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.WILAYA)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.WILAYA)}
+          />
+          <InputSelectField
+            control={form.control}
+            name="commune_id"
+            options={communes}
+            isPending={isCommunesLoading}
+            label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.COMMUNE)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.COMMUNE)}
           />
         </div>
 

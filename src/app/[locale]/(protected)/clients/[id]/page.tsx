@@ -1,24 +1,13 @@
 import { ClientService } from "@/services/client.service";
 import UpdateClientForm from "./_components/update-client-form";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import NavigationButton from "@/components/ui/navigation-button";
-import { getTranslations } from "next-intl/server";
-import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { ROUTES } from "@/constants/routes";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default async function UpdateForm({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
-  const translation = await getTranslations();
   const client = await ClientService.findOne(id);
 
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col">
-        <NavigationButton
-          title={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.TITLES.UPDATE)}
-          backLink={ROUTES.CLIENTS.ROOT}
-        />
-      </CardHeader>
       <CardContent className="px-0">
         <UpdateClientForm client={client} />
       </CardContent>

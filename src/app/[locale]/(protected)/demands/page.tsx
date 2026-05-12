@@ -15,7 +15,6 @@ export default async function Demands({ searchParams }: { searchParams: Promise<
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
       <CardHeader className="px-0 flex flex-col">
-        <h1 className="text-[32px] font-bold">{translation(TRANSLATIONS_KEYS_2.DEMANDS.TITLE)}</h1>
         <DemandsHeader />
       </CardHeader>
       <CardContent className="px-0">

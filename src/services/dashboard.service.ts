@@ -21,6 +21,12 @@ export const DashboardService = {
     getBienStats: async () => {
         const response = await ApiService.get<Stats>({
             endpoint: END_POINTS.getBienStats,
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<Stats>(response.data, statsSchema);
 
@@ -30,6 +36,12 @@ export const DashboardService = {
     getDemandStats: async () => {
         const response = await ApiService.get<Stats>({
             endpoint: END_POINTS.getDemandStats,
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<Stats>(response.data, statsSchema);
 
@@ -39,6 +51,12 @@ export const DashboardService = {
     getOfferStats: async () => {
         const response = await ApiService.get<Stats>({
             endpoint: END_POINTS.getOfferStats,
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<Stats>(response.data, statsSchema);
 
@@ -48,6 +66,12 @@ export const DashboardService = {
     getUpcomingEvent: async () => {
         const response = await ApiService.get<Event>({
             endpoint: END_POINTS.getUpcomingEvent,
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<Event>(response.data, EventSchema);
 
@@ -57,6 +81,12 @@ export const DashboardService = {
     getNotifications: async () => {
         const response = await ApiService.get<Notification[]>({
             endpoint: END_POINTS.getNotifications,
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<Notification[]>(response.data, z.array(NotificationSchema));
 
@@ -66,7 +96,13 @@ export const DashboardService = {
     getTransactions: async (range: string) => {
         const response = await ApiService.get<ChartStats>({
             endpoint: END_POINTS.getTransactions,
-            query: { range }
+            query: { range },
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<ChartStats>(response.data, ChartStatsSchema);
 
@@ -76,7 +112,13 @@ export const DashboardService = {
     getBienDistribution: async (groupBy: string) => {
         const response = await ApiService.get<BienDistribution[]>({
             endpoint: END_POINTS.getBienDistribution,
-            query: { groupBy }
+            query: { groupBy },
+            options: {
+                cache: "force-cache",
+                next: {
+                    revalidate: 60
+                }
+            }
         });
         const validatedResponseData = validateResponseData<BienDistribution[]>(response.data, z.array(BienDistributionSchema));
 

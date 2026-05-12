@@ -1,129 +1,65 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clearCookies, getCookie } from "./lib/server.helper";
-import { checkRoutePermission, isPublicRoute } from "./lib/utiles/route.utile";
 import { COOKIES_KEYS } from "./constants/cookies-keys";
-import { refreshTokenAction } from "./actions/authentication/refresh.action";
-import { getProfilePermissionsAction } from "./actions/Profile/get-profile-permissions.action";
 import { ROUTES } from "./constants/routes";
 import { routing } from "./i18n/routing";
 import createMiddleware from 'next-intl/middleware';
 
 const intlMiddleware = createMiddleware(routing);
 
-export async function proxy(req: NextRequest) {
-  try {
-    // First, let i18n middleware handle locale detection and routing
-    const intlResponse = intlMiddleware(req);
+export default async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-    const { pathname } = req.nextUrl;
+  // 1. Run intlMiddleware first to handle prefixes and locales
+  const response = intlMiddleware(req);
+
+  // 2. Identify the locale from the pathname or the response headers
+  // next-intl usually attaches the locale to a header
+  const locale = response.headers.get('x-next-intl-locale') || routing.defaultLocale;
+
+  // 3. Define Public Routes (Optional but recommended)
+  // Prevent redirect loops if the user is already on the login or expired page
+  const isPublicRoute = [ROUTES.AUTH.LOGIN, ROUTES.AUTH.RESET_PASSWORD, ROUTES.AUTH.FORGET_PASSWORD, ROUTES.SESSION.EXPIRED].map(route => `/${locale}${route}`).includes(pathname);
+
+  if (isPublicRoute) return response;
 
 
-    // ✅ Skip permission check for Server Action POST requests
-    if (req.method === 'POST' && req.headers.get('content-type')?.includes('multipart/form-data') === false) {
-      // This is a Server Action - trust the page already validated
-      return intlResponse;
+  const accessToken = req.cookies.get(COOKIES_KEYS.ACCESS_TOKEN)?.value;
+  const refreshToken = req.cookies.get(COOKIES_KEYS.REFRESH_TOKEN)?.value;
+
+
+  // 4. Auth Logic
+  if (!accessToken) {
+    // Get the current URL the user was trying to access
+    const currentPath = req.nextUrl.pathname + req.nextUrl.search;
+
+    let targetPath = `/${locale}${ROUTES.AUTH.LOGIN}`;
+    if (refreshToken) targetPath = `/${locale}${ROUTES.SESSION.EXPIRED}`;
+
+
+    const url = new URL(targetPath, req.url);
+    // Add the current path as a search parameter
+    url.searchParams.set("returnTo", currentPath);
+
+    // Create redirect response
+    const redirectResponse = NextResponse.redirect(url);
+
+    // 5. IMPORTANT: Sync cookies from intlResponse to your new redirect
+    // This ensures locale preferences persist
+    response.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie.name, cookie.value);
+    });
+
+    if (!refreshToken) {
+      redirectResponse.cookies.delete(COOKIES_KEYS.ACCESS_TOKEN);
+      redirectResponse.cookies.delete(COOKIES_KEYS.REFRESH_TOKEN);
     }
-
-    if (intlResponse.ok) {
-      // Get the pathname with locale
-
-
-      // Extract locale and path without locale
-      const pathSegments = pathname.split('/').filter(Boolean);
-      const locale = pathSegments[0] || routing.defaultLocale;
-      const pathWithoutLocale = '/' + pathSegments.slice(1).join('/');
-
-
-      // Protected routes - Check for access token
-      let access_token: string | null = null;
-
-      try {
-        access_token = await getCookie(COOKIES_KEYS.ACCESS_TOKEN);
-      } catch (error) {
-        // No access token, allow access to public route
-      }
-
-
-
-      // Handle public routes
-      if (isPublicRoute(pathWithoutLocale)) {
-        if (access_token) {
-          // User is logged in, redirect to dashboard with locale
-          return NextResponse.redirect(new URL(`/${locale}${ROUTES.DASHBOARD}`, req.url));
-        }
-        return intlResponse;
-      }
-
-      if (!access_token) {
-        let refresh_token: string | null = null;
-
-        try {
-          refresh_token = await getCookie(COOKIES_KEYS.REFRESH_TOKEN);
-        } catch (error) {
-          refresh_token = null;
-        }
-
-        if (!refresh_token) {
-          await clearCookies();
-          return NextResponse.redirect(new URL(`/${locale}${ROUTES.AUTH.LOGIN}`, req.url));
-        }
-
-        // Attempt to refresh the access token
-        try {
-          const refreshResult = await refreshTokenAction(refresh_token);
-
-          if (!refreshResult.isOk) {
-            await clearCookies();
-          }
-
-          // Token refreshed successfully, continue with the request
-        } catch (error) {
-          await clearCookies();
-          const loginUrl = new URL(`/${locale}${ROUTES.AUTH.LOGIN}`, req.url);
-          return NextResponse.redirect(loginUrl);
-        }
-      }
-
-      // Check route permissions
-      try {
-        const permissions = await getProfilePermissionsAction();
-        const hasPermission = checkRoutePermission(pathWithoutLocale, permissions);
-
-        if (!hasPermission) {
-          return NextResponse.redirect(new URL(`/${locale}/forbidden`, req.url));
-        }
-
-        return intlResponse;
-
-      } catch (error) {
-        return NextResponse.redirect(new URL(`/${locale}/forbidden`, req.url));
-      }
-    }
-    return intlResponse;
-
-  } catch (error) {
-    console.error("Middleware error:", error);
-
-    // Fallback: redirect to login on any unexpected error
-    const pathSegments = req.nextUrl.pathname.split('/').filter(Boolean);
-    const locale = pathSegments[0] || routing.defaultLocale;
-    const loginUrl = new URL(`/${locale}${ROUTES.AUTH.LOGIN}`, req.url);
-    return NextResponse.redirect(loginUrl);
+    return redirectResponse;
   }
+  return response;
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - api routes
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, robots.txt, sitemap.xml
-     * - public files (images, etc.)
-     */
-    "/((?!api|_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.ico$|.*\\.json$).*)",
+    "/((?!api|_next/static|_next/image|metadata|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.ico$|.*\\.json$).*)",
   ],
 };
-
-export default proxy;

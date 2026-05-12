@@ -118,7 +118,6 @@ class ApiService {
     }
 
     const response = await fetch(url, config);
-    console.log(" file", response)
 
     if (!response.ok) {
       throw new Error(`Download failed: ${response.statusText}`);
@@ -160,9 +159,9 @@ const defaultConfig: HttpOptions = {
     Authorization: "",
   },
   cache: "no-cache",
-  next: {
-    revalidate: 3600,
-  },
+  // next: {
+  //   revalidate: 3600,
+  // },
 };
 
 const ApiServiceInstance = new ApiService(baseUrl, defaultConfig);

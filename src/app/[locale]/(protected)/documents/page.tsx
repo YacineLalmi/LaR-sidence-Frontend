@@ -1,13 +1,11 @@
-import { getTranslations } from "next-intl/server";
 import { getProfilePermissionsAction } from "@/actions/Profile/get-profile-permissions.action";
 import { PERMISSIONS } from "@/constants/permissions";
 import { ListItem } from "@/schemas/global.schema";
 import { DocumentService } from "@/services/document.service";
 import { UserService } from "@/services/user.service";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Suspense } from "react";
 import DocumentsView from "./_components/documents-view";
-import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 
 function mergeAgentLists(library: ListItem[], fallback: ListItem[]): ListItem[] {
   const byId = new Map<string, ListItem>();
@@ -53,14 +51,8 @@ export default async function DocumentsPage({
 
   const agents = mergeAgentLists(libraryUploaders, agentsFallback);
 
-  const translation = await getTranslations();
-
   return (
     <Card className="bg-transparent border-none shadow-none p-0">
-      <CardHeader className="px-0 flex flex-col gap-2">
-        <h1 className="text-[32px] font-bold">{translation(TRANSLATIONS_KEYS_2.DOCUMENTS.TITLE)}</h1>
-        <p className="text-muted-foreground text-sm">{translation(TRANSLATIONS_KEYS_2.DOCUMENTS.DESCRIPTION)}</p>
-      </CardHeader>
       <CardContent className="px-0">
         <Suspense fallback={null}>
           <DocumentsView
