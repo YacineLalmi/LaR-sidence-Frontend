@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Status from "@/components/ui/status";
 import { useTranslations } from "next-intl";
 import { User } from "@/schemas/users/user.schema";

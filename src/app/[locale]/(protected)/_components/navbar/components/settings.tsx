@@ -1,6 +1,6 @@
 import { ROUTES } from "@/constants/routes";
+import { Link } from "@/i18n/navigation";
 import { SettingsIcon } from "lucide-react";
-import Link from "next/link";
 
 export default function Settings() {
   return (

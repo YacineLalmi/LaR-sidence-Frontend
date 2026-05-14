@@ -31,7 +31,7 @@ import { Client } from "@/schemas/clients/client.schema";
 export default function CreateBienForm() {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
-  
+
   const [isClientDialogOpen, setIsClientDialogOpen] = useState<boolean>(false);
   const [clients, setClients] = useState<ListItem[]>([]);
   const [isClientsPending, startClientsTransition] = useTransition();
@@ -53,12 +53,12 @@ export default function CreateBienForm() {
       commune_id: undefined,
       priority_id: undefined,
       adresse: "",
-      postal_code: "",
+      postal_code: null,
       coordinates: "",
       description: "",
-      habitable_surface: "",
       total_surface: "",
-      developed_surface: "",
+      habitable_surface: null,
+      developed_surface: null,
       floor_number: "",
       bedrooms_number: "",
       rooms_number: "",

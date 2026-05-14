@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { PaginatedResponse } from "@/lib/definitions";
 import { useTranslations } from "next-intl";
 import { Client } from "@/schemas/clients/client.schema";

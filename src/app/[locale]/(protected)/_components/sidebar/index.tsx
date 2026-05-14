@@ -25,12 +25,13 @@ import {
 
 import Image from "next/image";
 import logo from "@/assests/images/logo-black.png";
-import Link from "next/link";
 import Logout from "./_components/logout";
 import { ROUTES } from "@/constants/routes";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { Link } from "@/i18n/navigation";
+// import { useRouter } from "@/i18n/navigation";
 
 export function SideBar() {
   const translation = useTranslations();
@@ -92,6 +93,14 @@ export function SideBar() {
     ],
     [translation],
   );
+
+  // const handleNavigation = useCallback(
+  //   (url: string) => {
+  //     // Implement your navigation logic here, for example using Next.js router
+  //     router.push(url);
+  //   },
+  //   [router],
+  // );
   return (
     <Sidebar className="items-center" collapsible="icon" side={isRTL ? "right" : "left"}>
       <SidebarTrigger

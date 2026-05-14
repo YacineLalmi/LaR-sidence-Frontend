@@ -44,9 +44,15 @@ export const BienService = {
         formData.append(key, (data as any)[key] ? "1" : "0");
         continue;
       }
+
       const value = (data as any)[key];
+      if (value === null || value === undefined) {
+        continue;
+      }
       formData.append(key, value);
     }
+
+    console.log(formData)
 
     const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.create,

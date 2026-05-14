@@ -3,7 +3,7 @@ import CustomCarousel from "../../_components/carousel";
 import { ForgetPasswordForm } from "./_components/forgot-password-form";
 import CustomButton from "@/components/ui/custom-button";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";
 
 export default function ForgetPasswordPage() {

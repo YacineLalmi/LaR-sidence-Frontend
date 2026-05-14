@@ -25,18 +25,16 @@ export const BienFormSchema = z
       .string()
       .min(5, "L'adresse doit contenir au moins 5 caractères")
       .max(1000, "L'adresse ne peut pas dépasser 1000 caractères"),
-    postal_code: PostCodeSchema
-      .nullable()
-      .optional(),
+    postal_code: PostCodeSchema,
     coordinates: z.string().nullable().optional(),
 
     // Description
     description: z.string().max(5000, "La description ne peut pas dépasser 5000 caractères").nullable().optional(),
 
     // Property Characteristics
-    habitable_surface: inputNumberFieldSchema(),
     total_surface: inputNumberFieldSchema(),
-    developed_surface: inputNumberFieldSchema().optional(),
+    habitable_surface: inputNumberFieldSchema(),
+    developed_surface: inputNumberFieldSchema(),
     floor_number: inputNumberFieldSchema(),
     rooms_number: inputNumberFieldSchema(),
     bedrooms_number: inputNumberFieldSchema(),
@@ -57,24 +55,6 @@ export const BienFormSchema = z
     images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
     documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
   })
-  .refine(
-    (data) => {
-      return data.habitable_surface <= data.total_surface;
-    },
-    {
-      message: "La surface habitable ne peut pas dépasser la surface totale",
-      path: ["habitable_surface"],
-    },
-  )
-  .refine(
-    (data) => {
-      return data.bedrooms_number <= data.rooms_number;
-    },
-    {
-      message: "Le nombre de chambres ne peut pas dépasser le nombre de pièces",
-      path: ["bedrooms_number"],
-    },
-  )
   .refine(
     (data) => {
       if (data.exclusivity) {

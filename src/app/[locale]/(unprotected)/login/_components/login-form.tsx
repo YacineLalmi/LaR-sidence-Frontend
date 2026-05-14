@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import MirageLoader from "@/components/mirage-loader";
 import logo from "@/assests/images/logo-black.png";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { LoginFormData, LoginFormDataSchema } from "@/schemas/auth/auth.schema";
@@ -19,9 +19,8 @@ import { loginAction } from "@/actions/authentication/login.action";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { redirect, useRouter } from "@/i18n/navigation";
 import { ROUTES } from "@/constants/routes";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function LoginForm() {
   const [isPending, setIsPending] = useState<boolean>(false);

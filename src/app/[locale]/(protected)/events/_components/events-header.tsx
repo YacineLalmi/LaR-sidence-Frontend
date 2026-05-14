@@ -5,7 +5,7 @@ import CustomButton from "@/components/ui/custom-button";
 import SearchField from "@/components/ui/search";
 import { ListItem } from "@/schemas/global.schema";
 import { ChevronDown, ChevronLeft, ChevronRight, Filter, Plus, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState, useEffect, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ROUTES } from "@/constants/routes";

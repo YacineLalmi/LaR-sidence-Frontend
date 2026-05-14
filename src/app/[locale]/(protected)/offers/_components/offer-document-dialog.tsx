@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Offer } from "@/schemas/offers/offer.schema";
 import CustomButton from "@/components/ui/custom-button";
 import { StatusBadge } from "@/components/ui/status-badge";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { format } from "date-fns";
 import { ROUTES } from "@/constants/routes";

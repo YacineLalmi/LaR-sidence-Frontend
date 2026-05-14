@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Bien } from "@/schemas/biens/bien.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Image } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import CustomButton from "@/components/ui/custom-button";
 import { ImageFetcher } from "@/components/ui/image-fetcher";

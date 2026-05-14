@@ -1,6 +1,6 @@
 import SearchField from "@/components/ui/search";
 import BienFilter from "./bien-filter";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";

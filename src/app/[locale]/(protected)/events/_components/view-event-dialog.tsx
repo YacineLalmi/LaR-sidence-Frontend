@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Event } from "@/schemas/events/event.schema";
 import { format } from "date-fns";
 import CustomButton from "@/components/ui/custom-button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import DeleteEventDialog from "./delete-event-dialog";
 import { ROUTES } from "@/constants/routes";
 import { useLocale } from "next-intl";

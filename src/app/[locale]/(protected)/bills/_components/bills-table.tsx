@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Demand } from "@/schemas/demands/demand.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Eye } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { PaginatedResponse } from "@/lib/definitions";
 import { useLocale, useTranslations } from "next-intl";
 import { StatusBadge } from "@/components/ui/status-badge";

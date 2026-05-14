@@ -28,7 +28,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         name="habitable_surface"
         label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.HABITABLE_SURFACE)}
         disabled={isPending}
-        required
         placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.HABITABLE_SURFACE)}
       />
       <InputNumberField
@@ -36,7 +35,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         name="developed_surface"
         label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.DEVELOPED_SURFACE)}
         disabled={isPending}
-        required
         placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.DEVELOPED_SURFACE)}
       />
       <InputNumberField

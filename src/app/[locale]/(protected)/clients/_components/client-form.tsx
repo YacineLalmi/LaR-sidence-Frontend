@@ -237,7 +237,6 @@ export default function ClientForm({
               name="email"
               label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.EMAIL)}
               disabled={isPending}
-              required
               placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.EMAIL)}
             />
 

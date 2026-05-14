@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Offer } from "@/schemas/offers/offer.schema";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Image } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { PaginatedResponse } from "@/lib/definitions";
 import { useLocale, useTranslations } from "next-intl";
 import DeleteOfferDialog from "./delete-offer-dialog";

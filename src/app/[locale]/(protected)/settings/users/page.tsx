@@ -3,7 +3,7 @@ import UsersTable from "./_components/users-table";
 import { getTranslations } from "next-intl/server";
 import CustomButton from "@/components/ui/custom-button";
 import { Plus } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import UsersHeader from "./_components/users-header";
 import SettingsView from "@/views/settings.view";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { StatCardSkeleton } from "./stat-card-skeleton";
 import { Stats } from "@/schemas/dashboard/stats.schema";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ROUTES } from "@/constants/routes";
 
 interface Props {

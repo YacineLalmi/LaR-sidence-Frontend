@@ -13,14 +13,11 @@ import {
   ClassificationForm as ClassificationFormType,
   ClassificationFormSchema,
 } from "@/schemas/classification/classification-form.schema";
-import { createClassificationAction } from "@/actions/classification/create-classification.action";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ListItem } from "@/schemas/global.schema";
 import InputSelectField from "@/components/custom-inputs/input-select";
 import { FormState } from "@/lib/definitions";
 import useFetch from "@/hooks/use-fetch.hook";
-import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
-import { CATEGORIES } from "@/services/classification.service";
 import { getColorsListAction } from "@/actions/colors/get-colors-list.action";
 
 interface Props {
@@ -101,6 +98,7 @@ export default function ClassificationForm({
         <InputTextArea
           control={form.control}
           name="description.fr"
+          rows={2}
           label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.DESCRIPTION)}
           disabled={isPending}
           placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
@@ -108,12 +106,14 @@ export default function ClassificationForm({
         <InputTextArea
           control={form.control}
           name="description.en"
+          rows={2}
           disabled={isPending}
           placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
         />
         <InputTextArea
           control={form.control}
           name="description.ar"
+          rows={2}
           disabled={isPending}
           placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
         />

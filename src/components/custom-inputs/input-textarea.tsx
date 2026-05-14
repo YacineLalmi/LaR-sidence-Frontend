@@ -16,6 +16,7 @@ type InputFieldProps<T extends FieldValues> = {
   disabled?: boolean;
   className?: string;
   errorInside?: boolean;
+  showFormatButtons?: boolean;
 };
 
 export default function InputTextArea<T extends FieldValues>({
@@ -28,6 +29,7 @@ export default function InputTextArea<T extends FieldValues>({
   disabled = false,
   className,
   errorInside = false,
+  showFormatButtons = false,
 }: InputFieldProps<T>) {
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
 
@@ -62,26 +64,27 @@ export default function InputTextArea<T extends FieldValues>({
               </FormLabel>
             )}
             <div className="flex items-center gap-0.5 ml-auto">
-              {formatButtons.map((button) => {
-                const Icon = button.icon;
-                const isActive = activeFormats.has(button.id);
-                return (
-                  <button
-                    key={button.id}
-                    type="button"
-                    onClick={() => toggleFormat(button.id)}
-                    disabled={disabled}
-                    className={cn(
-                      "p-1.5 rounded hover:bg-gray-200 transition-colors",
-                      isActive && "bg-gray-300",
-                      disabled && "opacity-50 cursor-not-allowed",
-                    )}
-                    aria-label={button.label}
-                  >
-                    <Icon className="w-4 h-4" strokeWidth={3} />
-                  </button>
-                );
-              })}
+              {showFormatButtons &&
+                formatButtons.map((button) => {
+                  const Icon = button.icon;
+                  const isActive = activeFormats.has(button.id);
+                  return (
+                    <button
+                      key={button.id}
+                      type="button"
+                      onClick={() => toggleFormat(button.id)}
+                      disabled={disabled}
+                      className={cn(
+                        "p-1.5 rounded hover:bg-gray-200 transition-colors",
+                        isActive && "bg-gray-300",
+                        disabled && "opacity-50 cursor-not-allowed",
+                      )}
+                      aria-label={button.label}
+                    >
+                      <Icon className="w-4 h-4" strokeWidth={3} />
+                    </button>
+                  );
+                })}
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import SearchField from "@/components/ui/search";
 import OffersFilter from "./offer-filter";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import CustomButton from "@/components/ui/custom-button";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";

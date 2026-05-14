@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "./button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLocale } from "next-intl";

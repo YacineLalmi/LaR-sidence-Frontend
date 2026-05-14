@@ -9,7 +9,7 @@ import { getFileBlob } from "@/actions/files/get-file-blob.action";
 import { File } from "@/schemas/file/file.schema";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { format } from "date-fns";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";

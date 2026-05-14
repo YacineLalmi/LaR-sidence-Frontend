@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ROUTES } from "@/constants/routes";
+import { Link } from "@/i18n/navigation";
 import { getUserFullName, getUserInitials, getUserRoleLabel } from "@/lib/user-display";
 import { User } from "@/schemas/users/user.schema";
-import Link from "next/link";
 
 const ROLE_ACCENT = "#C5A36F";
 

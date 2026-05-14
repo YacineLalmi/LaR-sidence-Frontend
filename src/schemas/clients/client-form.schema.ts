@@ -7,7 +7,7 @@ export const ClientFormSchema = z.object({
   first_name: z.string().max(50),
   last_name: z.string().max(50),
   civility: z.enum(["mr", "mrs", "company"]),
-  email: z.email(),
+  email: z.email().nullable().refine((email) => email === null || email === "", "Email must be from the domain example.com"),
   mobile: z.string(),
   phone_numbers: z.array(z.string().regex(/^\d{12}$/, { message: "Le format du numéro de téléphone est incorrect" })),
   test: z.array(z.string()).min(1).optional(),

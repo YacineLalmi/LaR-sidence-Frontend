@@ -16,7 +16,7 @@ export default function CreateClientForm() {
     last_name: "",
     first_name: "",
     source_id: "",
-    email: "",
+    email: null,
     phone_numbers: [],
     documents: [],
     comment: "",

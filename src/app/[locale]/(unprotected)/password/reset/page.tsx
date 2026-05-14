@@ -1,7 +1,7 @@
 import React from "react";
 import CustomCarousel from "../../_components/carousel";
 import { ResetPasswordForm } from "./_components/reset-password-form";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import CustomButton from "@/components/ui/custom-button";
 import { ArrowLeft } from "lucide-react";
 import { NAVIGATION_KEYS } from "@/lib/navigation-constants";

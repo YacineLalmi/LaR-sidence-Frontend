@@ -48,6 +48,9 @@ export const ClientService = {
         continue;
       }
       const value = (data as any)[key];
+      if (value === null || value === undefined) {
+        continue;
+      }
       formData.append(key, value);
     }
     const response = await ApiService.post<Client>({
