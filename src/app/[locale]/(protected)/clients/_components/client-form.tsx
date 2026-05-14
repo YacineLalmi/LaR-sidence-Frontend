@@ -8,6 +8,7 @@ import InputTextField from "@/components/custom-inputs/input-text";
 import InputTextArea from "@/components/custom-inputs/input-textarea";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import useFetch from "@/hooks/use-fetch.hook";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { FormState } from "@/lib/definitions";
 import { customToast, fetchFileAsFileObject } from "@/lib/utils";
@@ -46,12 +47,18 @@ export default function ClientForm({
   const [areFileLoading, setAreFilesLoading] = useState<boolean>(false);
 
   // Select Options
-  const [types, setTypes] = useState<ListItem[]>([]);
-  const [statuses, setStatuses] = useState<ListItem[]>([]);
-  const [sources, setSources] = useState<ListItem[]>([]);
-  const [isTypesPending, startTypesTransition] = useTransition();
-  const [isStatusesPending, startStatusesTransition] = useTransition();
-  const [isSourcesPending, startSourcesTransition] = useTransition();
+  const [types, isTypesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.CLEINT),
+    [],
+  );
+  const [statuses, isStatusesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.CLEINT),
+    [],
+  );
+  const [sources, isSourcesLoading] = useFetch<ListItem[]>(
+    async () => await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.CLEINT),
+    [],
+  );
 
   const router = useRouter();
   const translation = useTranslations();
@@ -75,36 +82,6 @@ export default function ClientForm({
       name: "Company",
     },
   ];
-
-  useEffect(() => {
-    startSourcesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.CLEINT);
-        setSources(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setSources([]);
-      }
-    });
-    startStatusesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.CLEINT);
-        setStatuses(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setStatuses([]);
-      }
-    });
-    startTypesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.CLEINT);
-        setTypes(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setTypes([]);
-      }
-    });
-  }, []);
 
   async function onSubmit(values: ClientFormType) {
     setIsPending(true);
@@ -300,7 +277,7 @@ export default function ClientForm({
               label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.SOURCE)}
               placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.SOURCE)}
               disabled={isPending}
-              isPending={isSourcesPending}
+              isPending={isSourcesLoading}
               required
             />
             <InputSelectField
@@ -310,7 +287,7 @@ export default function ClientForm({
               label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.TYPE)}
               placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.TYPE)}
               disabled={isPending}
-              isPending={isTypesPending}
+              isPending={isTypesLoading}
               required
             />
             <InputSelectField
@@ -320,7 +297,7 @@ export default function ClientForm({
               label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.STATUS)}
               placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.STATUS)}
               disabled={isPending}
-              isPending={isStatusesPending}
+              isPending={isStatusesLoading}
               required
             />
           </Section>
@@ -330,6 +307,7 @@ export default function ClientForm({
           type="submit"
           form={formId}
           disabled={isPending}
+          //this is to precent form submission when the form is inside the Dialog
           onClick={(e) => e.stopPropagation()}
         >
           {isPending ? (
