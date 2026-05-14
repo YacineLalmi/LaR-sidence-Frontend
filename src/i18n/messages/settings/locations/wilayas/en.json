@@ -1,9 +1,9 @@
 {
   "title": "List of wilayas",
-  "deleteText": "Do you want to delete the wilaya with ID {id}?",
-  "createText": "Create a wilaya",
+  "delete_text": "Do you want to delete the wilaya with ID {id}?",
+  "create_text": "Create a wilaya",
   "form": {
-    "title": {
+    "titles": {
       "create": "Add a wilaya",
       "edit": "Edit a wilaya"
     },
@@ -27,6 +27,6 @@
     "name": "Wilaya name",
     "code": "Wilaya code",
     "actions": "Actions",
-    "createdAt": "Creation date"
+    "created_at": "Creation date"
   }
 }

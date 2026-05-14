@@ -62,13 +62,15 @@
       "gender": "Gender",
       "type": "Type",
       "status": "Status",
-      "source": "Source"
+      "source": "Source",
+      "created_between": "Created Between"
     },
     "placeholders": {
       "gender": "Select gender",
       "type": "Select type",
       "status": "Select status",
-      "source": "Select source"
+      "source": "Select source",
+      "created_between": "Select creation period"
     }
   },
   "columns": {

@@ -62,13 +62,15 @@
       "gender": "الجنس",
       "type": "النوع",
       "status": "الحالة",
-      "source": "المصدر"
+      "source": "المصدر",
+      "created_between": "أنشئ بين"
     },
     "placeholders": {
       "gender": "اختر الجنس",
       "type": "اختر النوع",
       "status": "اختر الحالة",
-      "source": "اختر المصدر"
+      "source": "اختر المصدر",
+      "created_between": "اختر فترة الإنشاء"
     }
   },
   "columns": {

@@ -192,8 +192,8 @@ export default function ClientFilters() {
           <InputDateRangeField
             control={form.control}
             name="created_between"
-            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.SOURCE)}
-            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.SOURCE)}
+            label={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.LABELS.CREATED_BETWEEN)}
+            placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FILTER.PLACEHOLDERS.CREATED_BETWEEN)}
           />
 
           {/* Action Buttons */}
