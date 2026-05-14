@@ -484,7 +484,7 @@ function PageOne({ data }: { data: Bien }) {
         <DataField label="Agent responsable" value={data.agent?.first_name} bold />
         <DataField label="Wilaya" value={data.wilaya?.name[locale]} bold />
         <DataField label="Commune" value={data.commune?.name[locale]} bold />
-        <DataField label="Code postale" value={data.postal_code} bold />
+        <DataField label="Code postale" value={data.postal_code || undefined} bold />
         <div className="relative border-b border-zinc-200 pb-2">
           <p className="text-xs text-zinc-400 uppercase font-semibold">Adresse</p>
           <p className="font-bold flex items-center justify-between">
@@ -508,7 +508,7 @@ function PageTwo({ data }: { data: Bien }) {
     <div className="grid grid-cols-2 gap-12">
       {/* Left Column */}
       <div className="space-y-3">
-        <DataField label="Surface Habitable (m²)" value={data.habitable_surface.toString()} bold />
+        <DataField label="Surface Habitable (m²)" value={data.habitable_surface?.toString() || undefined} bold />
         <DataField label="Surface Totale (m²)" value={data.total_surface.toString()} bold />
         <DataField label="Surface Développée (m²)" value={data.developed_surface?.toString() || "N/A"} bold />
         <DataField label="Nombre d'Etages" value={data.floor_number.toString()} bold />

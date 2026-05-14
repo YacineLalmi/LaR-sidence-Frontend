@@ -61,7 +61,7 @@ export default function UpdateBienForm({ bien }: Props) {
       postal_code: bien.postal_code,
       coordinates: bien.coordinates,
       description: bien.description,
-      habitable_surface: bien.habitable_surface.toString(),
+      habitable_surface: bien.habitable_surface?.toString() || null,
       total_surface: bien.total_surface.toString(),
       developed_surface: bien.developed_surface?.toString() || "",
       floor_number: bien.floor_number.toString(),
