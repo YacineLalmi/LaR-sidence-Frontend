@@ -22,7 +22,10 @@
     "deleted": "Resource deleted successfully",
     "failed_deletion": "Failed to delete resource",
     "many_deleted": "Resources deleted successfully",
-    "failed_many_deletion": "Failed to delete resources"
+    "failed_many_deletion": "Failed to delete resources",
+    "accepted_format": "Accepted formats {formats}",
+    "max_size": "Maximum file size {size}MB",
+    "max_files": "Maximum number of files {count}"
   },
   "buttons": {
     "filter": "Filter",
@@ -39,5 +42,15 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "try_again": "Try again"
+  },
+  "inputs": {
+    "labels": {
+      "files": "Files",
+      "file": "File"
+    },
+    "placeholders": {
+      "files": "Drag and drop your files here or click to import",
+      "file": "Drag and drop your file here or click to import"
+    }
   }
 }

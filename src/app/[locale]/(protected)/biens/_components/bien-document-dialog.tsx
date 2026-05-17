@@ -228,7 +228,7 @@ export default function FicheBienDialog({ bien }: Props) {
                 
                 <div class="print-field">
                   <div class="print-label">Charges mensuelles</div>
-                  <div class="print-value">${bien.monthly_charges.toLocaleString()} DA</div>
+                  <div class="print-value">${bien.monthly_charges ? bien.monthly_charges.toLocaleString() : "N/A"} DA</div>
                 </div>
               </div>
               
@@ -289,12 +289,12 @@ export default function FicheBienDialog({ bien }: Props) {
               <div class="print-column">
                 <div class="print-field">
                   <div class="print-label">Surface Habitable (m²)</div>
-                  <div class="print-value print-value-bold">${bien.habitable_surface}</div>
+                  <div class="print-value print-value-bold">${bien.habitable_surface ? bien.habitable_surface : "N/A"}</div>
                 </div>
                 
                 <div class="print-field">
                   <div class="print-label">Surface Totale (m²)</div>
-                  <div class="print-value print-value-bold">${bien.total_surface}</div>
+                  <div class="print-value print-value-bold">${bien.total_surface ? bien.total_surface : "N/A"} m²</div>
                 </div>
                 
                 <div class="print-field">
@@ -343,7 +343,7 @@ export default function FicheBienDialog({ bien }: Props) {
               <div class="print-column">
                 <div class="print-field">
                   <div class="print-label">Priorité</div>
-                  <div class="print-value print-value-bold">${bien.priority?.name[locale] || "N/A"}</div>
+                  <div class="print-value print-value-bold">${"N/A"}</div>
                 </div>
                 
                 <div style="margin-top: 20px;">
@@ -475,7 +475,7 @@ function PageOne({ data }: { data: Bien }) {
         <DataField label="Statut du bien" value={data.status?.name[locale]} bold />
         <DataField label="Type de transaction" value={data.transaction_type?.name[locale]} bold />
         <DataField label="Prix de vente" value={data.price?.toString()} bold />
-        <DataField label="Charges mensuelles" value={data.monthly_charges.toString()} />
+        <DataField label="Charges mensuelles" value={data.monthly_charges ? data.monthly_charges.toString() : "N/A"} />
       </div>
 
       {/* Right Column */}
@@ -508,13 +508,25 @@ function PageTwo({ data }: { data: Bien }) {
     <div className="grid grid-cols-2 gap-12">
       {/* Left Column */}
       <div className="space-y-3">
-        <DataField label="Surface Habitable (m²)" value={data.habitable_surface?.toString() || undefined} bold />
-        <DataField label="Surface Totale (m²)" value={data.total_surface.toString()} bold />
+        <DataField label="Surface Habitable (m²)" value={data.habitable_surface?.toString() || "N/A"} bold />
+        <DataField
+          label="Surface Totale (m²)"
+          value={data.total_surface ? data.total_surface.toString() : "N/A"}
+          bold
+        />
         <DataField label="Surface Développée (m²)" value={data.developed_surface?.toString() || "N/A"} bold />
-        <DataField label="Nombre d'Etages" value={data.floor_number.toString()} bold />
-        <DataField label="Nombre de Pièces" value={data.rooms_number.toString()} bold />
-        <DataField label="Nombre de Salles de Bain" value={data.bathrooms_number.toString()} bold />
-        <DataField label="Nombre de Chambres" value={data.bedrooms_number.toString()} bold />
+        <DataField label="Nombre d'Etages" value={data.floor_number ? data.floor_number.toString() : "N/A"} bold />
+        <DataField label="Nombre de Pièces" value={data.rooms_number ? data.rooms_number.toString() : "N/A"} bold />
+        <DataField
+          label="Nombre de Salles de Bain"
+          value={data.bathrooms_number ? data.bathrooms_number.toString() : "N/A"}
+          bold
+        />
+        <DataField
+          label="Nombre de Chambres"
+          value={data.bedrooms_number ? data.bedrooms_number.toString() : "N/A"}
+          bold
+        />
         <DataField label="Date de Disponibilité" value={data.availability_date} bold />
 
         <div className="space-y-2">
@@ -527,7 +539,7 @@ function PageTwo({ data }: { data: Bien }) {
 
       {/* Right Column */}
       <div className="space-y-2">
-        <DataField label="Priorité" value={data.priority?.name[locale]} bold />
+        <DataField label="Priorité" value={"N/A"} bold />
 
         <div>
           <p className="text-xs text-zinc-400 uppercase font-semibold mb-3">Documents du Bien</p>

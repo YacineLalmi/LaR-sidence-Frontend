@@ -22,7 +22,10 @@
     "deleted": "Ressource supprimée avec succès",
     "failed_deletion": "Échec de la suppression de la ressource",
     "many_deleted": "Ressources supprimées avec succès",
-    "failed_many_deletion": "Échec de la suppression des ressources"
+    "failed_many_deletion": "Échec de la suppression des ressources",
+    "accepted_format": "Formats acceptés {formats}",
+    "max_size": "Taille maximale du fichier {size}MB",
+    "max_files": "Nombre maximal de fichiers {count}"
   },
   "buttons": {
     "filter": "Filtrer",
@@ -39,5 +42,15 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "try_again": "Réessayer"
+  },
+  "inputs": {
+    "labels": {
+      "files": "Fichiers",
+      "file": "Fichier"
+    },
+    "placeholders": {
+      "files": "Glissez-déposez vos fichiers ici ou cliquez pour importer",
+      "file": "Glissez-déposez votre fichier ici ou cliquez pour importer"
+    }
   }
 }

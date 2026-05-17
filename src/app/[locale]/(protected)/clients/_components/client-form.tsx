@@ -11,18 +11,19 @@ import { Form } from "@/components/ui/form";
 import useFetch from "@/hooks/use-fetch.hook";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { FormState } from "@/lib/definitions";
-import { customToast, fetchFileAsFileObject } from "@/lib/utils";
+import { customToast } from "@/lib/utils";
 import { ClientForm as ClientFormType, ClientFormSchema } from "@/schemas/clients/client-form.schema";
 import { Client } from "@/schemas/clients/client.schema";
-import { File } from "@/schemas/file/file.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { FileOrDocument } from "@/components/custom-inputs/input-file/file-card";
+import { Media } from "@/schemas/global/media.schema";
 
 interface Props {
   initialData: ClientFormType;
@@ -31,8 +32,41 @@ interface Props {
   errorMessage?: string;
   formId?: string;
   successAction?: (client: Client) => void;
-  documents?: File[];
+  existingDocuments?: any[]; // API documents array
+  isUpdate?: boolean;
 }
+
+/**
+ * IMPORTANT: Adjust this function to match your API's file serving endpoint
+ */
+function getDocumentUrl(document: any): string {
+  // Debug: Log the document structure
+  console.log("Document structure:", document);
+
+  // Try different URL patterns - uncomment the one that works for your API:
+
+  // Pattern 1: Using UUID (most common for Laravel/media library)
+  // return `/storage/${document.uuid}/${document.file_name}`;
+
+  // Pattern 2: Using UUID in API route
+  // return `/api/files/${document.uuid}`;
+
+  // Pattern 3: Using ID
+  // return `/api/documents/${document.id}/download`;
+
+  // Pattern 4: Direct storage path
+  // return `/storage/documents/${document.file_name}`;
+
+  // Pattern 5: If you have full URL in response
+  // return document.url || document.full_path;
+
+  // Pattern 6: For Laravel with collection name
+  const url = `/storage/${document.id}/${document.file_name}`;
+
+  console.log("Constructed URL:", url);
+  return url;
+}
+
 export default function ClientForm({
   initialData,
   submitAction,
@@ -40,21 +74,24 @@ export default function ClientForm({
   errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_FAILED,
   formId,
   successAction,
-  documents,
+  existingDocuments = [],
+  isUpdate = false,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [phoneNumbers, setPhoneNumbers] = useState<string[]>([]);
   const [areFileLoading, setAreFilesLoading] = useState<boolean>(false);
+  const [displayedDocuments, setDisplayedDocuments] = useState<FileOrDocument[]>([]);
 
   // Select Options
   const [types, isTypesLoading] = useFetch<ListItem[]>(
     async () => await getClassificationsListAction(CATEGORIES.TYPE, SCOPES.CLEINT),
     [],
   );
+
   const [statuses, isStatusesLoading] = useFetch<ListItem[]>(
     async () => await getClassificationsListAction(CATEGORIES.STATUS, SCOPES.CLEINT),
     [],
   );
+
   const [sources, isSourcesLoading] = useFetch<ListItem[]>(
     async () => await getClassificationsListAction(CATEGORIES.SOURCE, SCOPES.CLEINT),
     [],
@@ -71,62 +108,108 @@ export default function ClientForm({
   const civilities: ListItem[] = [
     {
       id: "mrs",
-      name: "Female",
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
     },
     {
       id: "mr",
-      name: "Male",
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
     },
     {
       id: "company",
-      name: "Company",
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
     },
   ];
 
-  async function onSubmit(values: ClientFormType) {
-    setIsPending(true);
-    try {
-      const response = await submitAction(values);
-      setIsPending(false);
-      if (response.isOk) {
-        successAction && response.data ? successAction(response.data) : router.refresh();
-        customToast.success(translation(successMessage));
-      } else customToast.error(response.errorMessage || translation(errorMessage));
-    } catch (error) {
-      customToast.error(translation(errorMessage));
-    }
-  }
-
+  // Load existing documents on mount (for update scenario)
   useEffect(() => {
-    if (!documents) return;
-    const loadFiles = async () => {
+    if (isUpdate && existingDocuments.length > 0) {
+      console.log("Loading existing documents:", existingDocuments);
       setAreFilesLoading(true);
-      try {
-        // Fetch documents
-        if (documents) {
-          const documentPromises: any = documents.map((doc) =>
-            fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type),
-          );
-          const files = await Promise.all(documentPromises);
-          const validFiles = files.filter((doc): doc is File => doc !== null);
 
-          form.setValue("documents", validFiles as any);
-        }
+      try {
+        // Transform API documents to FileOrDocument format
+        const transformedDocs: FileOrDocument[] = existingDocuments.map((doc): Media => {
+          const url = getDocumentUrl(doc);
+
+          return {
+            id: doc.id,
+            uuid: doc.uuid,
+            name: doc.name,
+            file_name: doc.file_name,
+            mime_type: doc.mime_type,
+            size: doc.size,
+            collection_name: "documents",
+            created_at: doc.created_at,
+            updated_at: doc.updated_at,
+            // url: url,
+          };
+        });
+
+        console.log("Transformed documents:", transformedDocs);
+        setDisplayedDocuments(transformedDocs);
       } catch (error) {
-        console.error("Error loading files:", error);
+        console.error("Error loading documents:", error);
         customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
       } finally {
         setAreFilesLoading(false);
       }
-    };
+    }
+  }, [isUpdate, existingDocuments, translation]);
 
-    loadFiles();
-    return () => {
-      setAreFilesLoading(false);
+  async function onSubmit(values: ClientFormType) {
+    setIsPending(true);
+    try {
+      console.log("Submitting form with values:", {
+        ...values,
+        new_documents: values.new_documents?.length,
+        deleted_documents: values.deleted_documents?.length,
+      });
+
+      const response = await submitAction(values);
+      if (response.isOk) {
+        successAction && response.data ? successAction(response.data) : router.refresh();
+        customToast.success(translation(successMessage));
+      } else {
+        customToast.error(response.errorMessage || translation(errorMessage));
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      customToast.error(translation(errorMessage));
+    } finally {
       setIsPending(false);
-      setPhoneNumbers([]);
-    };
-  }, [documents, form, customToast]);
+    }
+  }
+
+  const phoneNumbersFromForm = form.watch("phone_numbers") || [];
+
+  const handleAddingPhoneNumber = useCallback(() => {
+    const updatedPhones = [...phoneNumbersFromForm, ""];
+    form.setValue("phone_numbers", updatedPhones);
+  }, [phoneNumbersFromForm, form]);
+
+  const handleRemovingPhoneNumber = useCallback(
+    (index: number) => {
+      const updatedPhones = phoneNumbersFromForm.filter((_, i) => i !== index);
+      form.setValue("phone_numbers", updatedPhones);
+    },
+    [phoneNumbersFromForm, form],
+  );
+
+  const handleDocumentDelete = useCallback(
+    (documentId: string) => {
+      console.log("Deleting document:", documentId);
+
+      // Add document ID to deleted_documents array
+      const currentDeletedDocs = form.getValues("deleted_documents") || [];
+      form.setValue("deleted_documents", [...currentDeletedDocs, documentId]);
+
+      // Update displayed documents
+      setDisplayedDocuments((prev) => prev.filter((doc) => "id" in doc && doc.id !== documentId));
+
+      console.log("Updated deleted_documents:", [...currentDeletedDocs, documentId]);
+    },
+    [form],
+  );
 
   return (
     <Form {...form}>
@@ -142,7 +225,7 @@ export default function ClientForm({
         className="space-y-8 grid grid-cols-2 gap-5"
       >
         <div className="grid gap-3">
-          <Section header="Information Générale">
+          <Section header={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY)}>
             <InputSelectField
               control={form.control}
               name="civility"
@@ -225,8 +308,9 @@ export default function ClientForm({
               required
               placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.MOBILE)}
             />
+
             <div className="grid grid-cols-2 gap-3 items-end">
-              {phoneNumbers.map((_, index) => (
+              {phoneNumbersFromForm.map((_, index) => (
                 <div key={index} className="flex gap-2 items-start">
                   <InputTextField
                     control={form.control}
@@ -234,30 +318,17 @@ export default function ClientForm({
                     label={`${translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.PHONE_NUMBER, { index: index + 1 })}`}
                     placeholder={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.PLACEHOLDERS.PHONE_NUMBER)}
                     RightIcon={Trash2}
-                    RightIconOnClick={() => {
-                      const newPhones = phoneNumbers.filter((_, i) => i !== index);
-                      setPhoneNumbers(newPhones);
-                      form.setValue("phone_numbers", newPhones);
-                    }}
+                    RightIconOnClick={() => handleRemovingPhoneNumber(index)}
                     disabled={isPending}
                   />
                 </div>
               ))}
-              <Button
-                type="button"
-                variant="default"
-                size="sm"
-                onClick={() => {
-                  setPhoneNumbers((prev) => {
-                    form.setValue("phone_numbers", [...prev, ""]);
-                    return [...prev, ""];
-                  });
-                }}
-                className="mt-2"
-              >
+              <Button type="button" variant="default" size="sm" onClick={handleAddingPhoneNumber} className="mt-2">
                 <Plus className="h-4 w-4 mr-2" />
+                {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.ADD)}
               </Button>
             </div>
+
             <InputTextArea
               control={form.control}
               name="comment"
@@ -267,9 +338,17 @@ export default function ClientForm({
             />
           </Section>
         </div>
+
         <div>
-          <Section header="Docmuments">
-            <InputFileLarge control={form.control} name="documents" areFileLoading={areFileLoading} />
+          <Section header={translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.DOCUMENTS)}>
+            <InputFileLarge
+              control={form.control}
+              name="new_documents"
+              areFileLoading={areFileLoading}
+              existingDocuments={displayedDocuments}
+              onDocumentDelete={handleDocumentDelete}
+            />
+
             <InputSelectField
               control={form.control}
               name="source_id"
@@ -280,6 +359,7 @@ export default function ClientForm({
               isPending={isSourcesLoading}
               required
             />
+
             <InputSelectField
               control={form.control}
               name="type_id"
@@ -290,6 +370,7 @@ export default function ClientForm({
               isPending={isTypesLoading}
               required
             />
+
             <InputSelectField
               control={form.control}
               name="status_id"
@@ -302,12 +383,12 @@ export default function ClientForm({
             />
           </Section>
         </div>
+
         <Button
-          className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto"
+          className="border-1 cursor-pointer w-52 p-5 col-span-2 ml-auto"
           type="submit"
           form={formId}
           disabled={isPending}
-          //this is to precent form submission when the form is inside the Dialog
           onClick={(e) => e.stopPropagation()}
         >
           {isPending ? (

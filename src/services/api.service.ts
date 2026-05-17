@@ -124,28 +124,28 @@ class ApiService {
     }
 
     // Handle progress tracking if callback provided
-    if (onProgress && response.body) {
-      const contentLength = response.headers.get("content-length");
-      const total = contentLength ? parseInt(contentLength, 10) : 0;
-      let loaded = 0;
+    // if (onProgress && response.body) {
+    //   const contentLength = response.headers.get("content-length");
+    //   const total = contentLength ? parseInt(contentLength, 10) : 0;
+    //   let loaded = 0;
 
-      const reader = response.body.getReader();
-      const chunks: BlobPart[] = [];
+    //   const reader = response.body.getReader();
+    //   const chunks: BlobPart[] = [];
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+    //   while (true) {
+    //     const { done, value } = await reader.read();
+    //     if (done) break;
 
-        chunks.push(value);
-        loaded += value.length;
+    //     chunks.push(value);
+    //     loaded += value.length;
 
-        if (total > 0) {
-          onProgress((loaded / total) * 100);
-        }
-      }
+    //     if (total > 0) {
+    //       onProgress((loaded / total) * 100);
+    //     }
+    //   }
 
-      return new Blob(chunks);
-    }
+    //   return new Blob(chunks);
+    // }
 
     return await response.blob();
   }

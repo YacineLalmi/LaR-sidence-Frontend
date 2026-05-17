@@ -2,11 +2,11 @@
 import { useState } from "react";
 
 interface ValidationOptions {
-  maxFileSize: number;
+  maxFileSize?: number;
   maxFiles?: number;
 }
 
-export function useFileValidation({ maxFileSize, maxFiles }: ValidationOptions) {
+export function useFileValidation({ maxFileSize = 50, maxFiles }: ValidationOptions) {
   const [error, setError] = useState<string | null>(null);
 
   const validateFiles = (newFiles: File[], currentFiles: File[]): { valid: boolean; error?: string } => {

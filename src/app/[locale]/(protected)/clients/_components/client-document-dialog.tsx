@@ -13,6 +13,7 @@ import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import { Media } from "@/schemas/global/media.schema";
 
 interface Props {
   client: Client;
@@ -24,7 +25,7 @@ export default function ClientDocumentDialog({ client }: Props) {
   const locale = useLocale() as "fr" | "en" | "ar";
   const printRef = useRef<HTMLDivElement>(null);
 
-  const handleDownloadDocument = async (doc: File) => {
+  const handleDownloadDocument = async (doc: Media) => {
     try {
       const result = await getFileBlob(doc.id);
       const res = await fetch(`data:${doc.mime_type};base64,${result}`);
@@ -32,7 +33,7 @@ export default function ClientDocumentDialog({ client }: Props) {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = doc.original_name;
+      link.download = doc.file_name;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -205,7 +206,7 @@ export default function ClientDocumentDialog({ client }: Props) {
               <div class="print-documents">
                 ${
                   client.documents && client.documents.length > 0
-                    ? client.documents.map((doc) => `<div class="print-doc-item">• ${doc.original_name}</div>`).join("")
+                    ? client.documents.map((doc) => `<div class="print-doc-item">• ${doc.file_name}</div>`).join("")
                     : '<div class="print-value">Aucun document</div>'
                 }
               </div>
@@ -320,10 +321,10 @@ export default function ClientDocumentDialog({ client }: Props) {
                       key={index}
                       onClick={() => handleDownloadDocument(doc)}
                       className="flex flex-col items-center gap-1 hover:opacity-70 transition-opacity"
-                      title={doc.original_name}
+                      title={doc.file_name}
                     >
                       <FileText size={32} className="text-gray-700" />
-                      <span className="text-xs text-gray-600">{doc.original_name}</span>
+                      <span className="text-xs text-gray-600">{doc.file_name}</span>
                     </button>
                   ))}
                 {client.documents && client.documents.length === 0 && "no documents"}

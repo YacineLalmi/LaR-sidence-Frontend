@@ -17,6 +17,8 @@ export default function Images({ form, isPending = false }: Props) {
         control={form.control as Control<BienFormInput, any, any>}
         name="documents"
         areFileLoading={isPending}
+        existingDocuments={[]}
+        onDocumentDelete={() => console.log("deleted")}
       />
     </Section>
   );

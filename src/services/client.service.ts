@@ -21,41 +21,10 @@ const END_POINTS = {
 };
 
 export const ClientService = {
-  create: async (data: ClientForm): Promise<Client> => {
-    const formData = new FormData();
-    for (const key in data) {
-      if (key === "documents") {
-        const files = (data as any)[key] as File[];
-        files.forEach((file: File, index: number) => {
-          formData.append(`${key}[${index}]`, file);
-        });
-        continue;
-      }
-      if (key === "phone_numbers") {
-        const phoneNumbers = (data as any)[key];
-        phoneNumbers.forEach((phoneNumber: string, index: number) => {
-          formData.append(`${key}[${index}]`, phoneNumber);
-        });
-        continue;
-      }
-      if ((data as any)[key] instanceof Date) {
-        formData.append(key, (data as any)[key].toISOString());
-        continue;
-      }
-
-      if (typeof (data as any)[key] === "boolean") {
-        formData.append(key, (data as any)[key] ? "1" : "0");
-        continue;
-      }
-      const value = (data as any)[key];
-      if (value === null || value === undefined) {
-        continue;
-      }
-      formData.append(key, value);
-    }
+  create: async (data: FormData): Promise<Client> => {
     const response = await ApiService.post<Client>({
       endpoint: END_POINTS.create,
-      body: formData,
+      body: data,
     });
 
     const validatedResponseData = validateResponseData<Client>(response.data, ClientSchema);

@@ -15,18 +15,19 @@ export default function CreateClientForm() {
     civility: "mrs",
     last_name: "",
     first_name: "",
-    source_id: "",
     email: null,
-    phone_numbers: [],
-    documents: [],
-    comment: "",
-    company_name: "",
-    trade_register: "",
-    tax_identification: "",
     mobile: "",
-    ai: "",
+    phone_numbers: [],
+    comment: "",
+    company_name: null,
+    trade_register: null,
+    tax_identification: null,
+    ai: null,
+    source_id: "",
     status_id: "",
     type_id: "",
+    new_documents: [],
+    deleted_documents: [],
   };
 
   const onSuccess = useCallback(() => {
@@ -40,7 +41,8 @@ export default function CreateClientForm() {
       successAction={onSuccess}
       successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.CREATED}
       errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_CREATION}
-      formId={"create-client-id"}
+      formId="create-client-id"
+      isUpdate={false}
     />
   );
 }

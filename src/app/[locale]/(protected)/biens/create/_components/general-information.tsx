@@ -11,10 +11,8 @@ import { useEffect, useState, useTransition } from "react";
 import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { getAgentListAction } from "@/actions/users/get-agents-list.action";
-import { getClientListAction } from "@/actions/clients/get-client-list.action";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Client } from "@/schemas/clients/client.schema";
 
 interface Props {
   form: UseFormReturn<BienFormInput, any, BienFormOutput>;

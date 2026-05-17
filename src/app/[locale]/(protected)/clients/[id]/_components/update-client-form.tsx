@@ -1,29 +1,28 @@
 "use client";
 
-import { createClientAction } from "@/actions/clients/create-client.action";
+import { updateClientAction } from "@/actions/clients/update-client.action";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ClientForm as ClientFormType } from "@/schemas/clients/client-form.schema";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import ClientForm from "../../_components/client-form";
 import { Client } from "@/schemas/clients/client.schema";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
+import ClientForm from "../../_components/client-form";
 
 interface Props {
   client: Client;
 }
+
 export default function UpdateClientForm({ client }: Props) {
   const router = useRouter();
-  const [areFileLoading, setAreFilesLoading] = useState<boolean>(false);
 
   const initialData: ClientFormType = {
     civility: client.civility,
-    last_name: client.first_name,
-    first_name: client.last_name,
+    first_name: client.first_name,
+    last_name: client.last_name,
     email: client.email,
     phone_numbers: client.phone_numbers || [],
-    documents: [],
-    comment: client.comment,
+    comment: client.comment || "",
     company_name: client.company_name,
     trade_register: client.trade_register,
     tax_identification: client.tax_identification,
@@ -32,6 +31,8 @@ export default function UpdateClientForm({ client }: Props) {
     source_id: client.source?.id || "",
     status_id: client.status?.id || "",
     type_id: client.type?.id || "",
+    new_documents: [],
+    deleted_documents: [],
   };
 
   const onSuccess = useCallback(() => {
@@ -41,12 +42,13 @@ export default function UpdateClientForm({ client }: Props) {
   return (
     <ClientForm
       initialData={initialData}
-      submitAction={createClientAction}
+      submitAction={async (values: ClientFormType) => await updateClientAction(values, client.id)}
       successAction={onSuccess}
-      successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.CREATED}
-      errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_CREATION}
-      formId={"create-client-id"}
-      documents={client.documents}
+      successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.UPDATED}
+      errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_UPDATE}
+      formId="update-client-id"
+      existingDocuments={client.documents || []}
+      isUpdate={true}
     />
   );
 }

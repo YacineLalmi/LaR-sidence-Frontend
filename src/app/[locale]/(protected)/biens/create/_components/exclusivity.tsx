@@ -4,15 +4,10 @@ import { InputDateField } from "@/components/custom-inputs/input-date";
 import { useTranslations } from "next-intl";
 import { Control, UseFormReturn } from "react-hook-form";
 import Section from "./section";
-import { ListItem } from "@/schemas/global.schema";
-import InputSelectField from "@/components/custom-inputs/input-select";
 import { BienFormInput, BienFormOutput } from "@/schemas/biens/bien-form.schema";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
-import { useEffect, useState, useTransition } from "react";
-import { getClassificationsListAction } from "@/actions/classification/get-classifications-list.action";
-import { CATEGORIES, SCOPES } from "@/services/classification.service";
 
 interface Props {
   form: UseFormReturn<BienFormInput, any, BienFormOutput>;
@@ -22,22 +17,6 @@ interface Props {
 export default function Exclusivity({ form, isPending = false }: Props) {
   const translation = useTranslations();
   const isExclusive = form.watch("exclusivity");
-
-  const [priorities, setPriorities] = useState<ListItem[]>([]);
-
-  const [isPrioritiesPending, startPrioritiesTransition] = useTransition();
-
-  useEffect(() => {
-    startPrioritiesTransition(async () => {
-      try {
-        const results = await getClassificationsListAction(CATEGORIES.PRIORITY, SCOPES.BIEN);
-        setPriorities(results);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-        setPriorities([]);
-      }
-    });
-  }, []);
 
   // Clear dates when exclusivity is turned off
   const handleExclusivityToggle = (checked: boolean) => {
@@ -82,17 +61,6 @@ export default function Exclusivity({ form, isPending = false }: Props) {
           />
         </div>
       )}
-
-      {/* Priority Field - Always visible */}
-      <InputSelectField
-        control={form.control as Control<BienFormInput, any, any>}
-        name="priority_id"
-        label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.PRIORITY)}
-        placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.PRIORITY)}
-        disabled={isPending}
-        options={priorities}
-        isPending={isPrioritiesPending}
-      />
     </Section>
   );
 }

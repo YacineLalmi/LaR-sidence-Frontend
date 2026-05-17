@@ -2,6 +2,7 @@ import z from "zod";
 import { FileSchema } from "../file/file.schema";
 import { InteractionSchema } from "../interaction/interaction";
 import { ClassificationSchema } from "../classification/classification.schema";
+import { MediaSchema } from "../global/media.schema";
 
 export const ClientSchema = z.object({
   id: z.string(),
@@ -19,7 +20,7 @@ export const ClientSchema = z.object({
   trade_register: z.string().nullable(),
   tax_identification: z.string().nullable(),
   ai: z.string().nullable(),
-  documents: z.array(FileSchema).optional(),
+  documents: z.array(MediaSchema).optional(),
   interactions: z.array(InteractionSchema).optional(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),

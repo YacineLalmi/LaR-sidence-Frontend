@@ -42,7 +42,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
         name="floor_number"
         label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.FLOOR_NUMBER)}
         disabled={isPending}
-        required
         placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.FLOOR_NUMBER)}
       />
       <div className="grid grid-cols-2 gap-5">
@@ -51,7 +50,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           name="rooms_number"
           label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.ROOMS)}
           disabled={isPending}
-          required
           placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.ROOMS)}
         />
         <InputNumberField
@@ -59,7 +57,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           name="bathrooms_number"
           label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.BATHROOMS)}
           disabled={isPending}
-          required
           placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.BATHROOMS)}
         />
         <InputNumberField
@@ -67,7 +64,6 @@ export default function TechnicalCharacteristics({ form, isPending = false }: Pr
           name="bedrooms_number"
           label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.BEDROOMS)}
           disabled={isPending}
-          required
           placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.BEDROOMS)}
         />
         <InputDateField

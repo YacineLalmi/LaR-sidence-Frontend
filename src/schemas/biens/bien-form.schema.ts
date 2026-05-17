@@ -17,28 +17,31 @@ export const BienFormSchema = z
     bien_status_id: z.string().min(1, "Le statut est requis"),
     agent_id: z.string().nullable().optional(),
     price: inputNumberFieldSchema(),
-    monthly_charges: inputNumberFieldSchema().optional(),
+    monthly_charges: inputNumberFieldSchema().nullable().optional(), // Nullable now
     wilaya_id: z.string().min(1, "La wilaya est requise"),
     commune_id: z.string().min(1, "La commune est requise"),
-    priority_id: z.string().min(1, "La priorité est requise"),
+
+    // ❌ priority_id REMOVED to match your migration drop
+
     adresse: z
       .string()
       .min(5, "L'adresse doit contenir au moins 5 caractères")
       .max(1000, "L'adresse ne peut pas dépasser 1000 caractères"),
-    postal_code: PostCodeSchema,
-    coordinates: z.string().nullable().optional(),
+    postal_code: PostCodeSchema.nullable().optional(), // Nullable now
+    coordinates: z.string().nullable().optional(), // Nullable now
 
     // Description
     description: z.string().max(5000, "La description ne peut pas dépasser 5000 caractères").nullable().optional(),
 
-    // Property Characteristics
-    total_surface: inputNumberFieldSchema(),
-    habitable_surface: inputNumberFieldSchema(),
-    developed_surface: inputNumberFieldSchema(),
-    floor_number: inputNumberFieldSchema(),
-    rooms_number: inputNumberFieldSchema(),
-    bedrooms_number: inputNumberFieldSchema(),
-    bathrooms_number: inputNumberFieldSchema(),
+    // Property Characteristics (Altered to be Nullable/Optional)
+    total_surface: inputNumberFieldSchema(), // Kept required per business logic
+    habitable_surface: inputNumberFieldSchema().nullable().optional(),
+    developed_surface: inputNumberFieldSchema().nullable().optional(),
+    floor_number: inputNumberFieldSchema().nullable().optional(),
+    rooms_number: inputNumberFieldSchema().nullable().optional(),
+    bedrooms_number: inputNumberFieldSchema().nullable().optional(),
+    bathrooms_number: inputNumberFieldSchema().nullable().optional(),
+
     availability_date: z.date({
       error: "La date de disponibilité est requise",
     }),
@@ -52,6 +55,7 @@ export const BienFormSchema = z
 
     characteristics: z.array(z.number().int()),
 
+    // 🔄 Kept exactly as they were originally
     images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
     documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
   })

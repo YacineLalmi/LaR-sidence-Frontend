@@ -22,7 +22,10 @@
     "deleted": "تم حذف المورد بنجاح",
     "failed_deletion": "فشل حذف المورد",
     "many_deleted": "تم حذف الموارد بنجاح",
-    "failed_many_deletion": "فشل حذف الموارد"
+    "failed_many_deletion": "فشل حذف الموارد",
+    "accepted_format": "التنسيقات المقبولة {formats}",
+    "max_size": "الحد الأقصى لحجم الملف {size} ميجابايت",
+    "max_files": "الحد الأقصى لعدد الملفات {count}"
   },
   "buttons": {
     "filter": "تصفية",
@@ -39,5 +42,15 @@
     "cancel": "إلغاء",
     "delete": "حذف",
     "try_again": "إعادة المحاولة"
+  },
+  "inputs": {
+    "labels": {
+      "files": "الملفات",
+      "file": "الملف"
+    },
+    "placeholders": {
+      "files": "اسحب وأفلت ملفاتك هنا أو انقر للاستيراد",
+      "file": "اسحب وأفلت ملفك هنا أو انقر للاستيراد"
+    }
   }
 }

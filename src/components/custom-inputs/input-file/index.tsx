@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { useFileValidation } from "./use-file-validation";
@@ -9,6 +9,16 @@ import FileDropZone from "./file-drop-zone";
 import FilesGrid from "./files-grid";
 import { Input } from "@/components/ui/input";
 import FilesModal from "./files-modal";
+import { FileOrDocument } from "./file-card";
+
+export type AcceptableFileTypes =
+  | "image/jpg"
+  | "image/jpeg"
+  | "image/png"
+  | "image/webp"
+  | "application/pdf"
+  | "application/msword"
+  | "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
 type InputFieldProps<T extends FieldValues> = {
   control: Control<T>;
@@ -20,9 +30,11 @@ type InputFieldProps<T extends FieldValues> = {
   className?: string;
   areFileLoading?: boolean;
   multiple?: boolean;
-  accept?: string;
+  accept?: AcceptableFileTypes[];
   maxFiles?: number;
   maxFileSize?: number;
+  existingDocuments?: FileOrDocument[];
+  onDocumentDelete?: (documentId: string) => void;
 };
 
 export default function InputFileLarge<T extends FieldValues>({
@@ -33,12 +45,15 @@ export default function InputFileLarge<T extends FieldValues>({
   disabled = false,
   areFileLoading = false,
   multiple = true,
-  accept = ".jpg,.jpeg,.png,.pdf",
+  accept = ["image/jpg", "image/jpeg", "image/png", "application/pdf"],
   maxFiles,
-  maxFileSize = 50,
+  maxFileSize,
+  existingDocuments = [],
+  onDocumentDelete,
 }: InputFieldProps<T>) {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayedDocuments, setDisplayedDocuments] = useState<FileOrDocument[]>(existingDocuments);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { error, validateFiles, clearError } = useFileValidation({
@@ -46,12 +61,20 @@ export default function InputFileLarge<T extends FieldValues>({
     maxFiles,
   });
 
+  // Update displayed documents when existingDocuments prop changes
+  useEffect(() => {
+    setDisplayedDocuments(existingDocuments);
+  }, [existingDocuments]);
+
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => {
-        const files = multiple ? (field.value as File[]) || [] : field.value ? [field.value as File] : [];
+        const newFiles = multiple ? (field.value as File[]) || [] : field.value ? [field.value as File] : [];
+
+        // Combine existing documents with new files for display
+        const allFiles: FileOrDocument[] = [...displayedDocuments, ...newFiles];
 
         const handleFilesChange = (newFiles: File[]) => {
           if (multiple) {
@@ -62,24 +85,45 @@ export default function InputFileLarge<T extends FieldValues>({
         };
 
         const removeFile = (index: number) => {
-          const updatedFiles = files.filter((_, i) => i !== index);
-          handleFilesChange(updatedFiles);
+          // Check if it's an existing document or a new file
+          if (index < displayedDocuments.length) {
+            // It's an existing document
+            const documentToRemove = displayedDocuments[index];
+
+            // Remove from displayed documents
+            const updatedDisplayedDocs = displayedDocuments.filter((_, i) => i !== index);
+            setDisplayedDocuments(updatedDisplayedDocs);
+
+            // Call the delete callback if provided
+            if (onDocumentDelete && "id" in documentToRemove) {
+              onDocumentDelete(documentToRemove.id);
+            }
+          } else {
+            // It's a new file
+            const newFileIndex = index - displayedDocuments.length;
+            const updatedFiles = newFiles.filter((_, i) => i !== newFileIndex);
+            handleFilesChange(updatedFiles);
+          }
+
           clearError();
         };
 
-        const addFiles = (newFiles: File[]) => {
+        const addFiles = (newFilesToAdd: File[]) => {
           setIsLoading(true);
 
-          const validation = validateFiles(newFiles, files);
-          if (!validation.valid) {
-            setIsLoading(false);
-            return;
-          }
+          // const validation = validateFiles(newFilesToAdd, [...displayedDocuments, ...newFiles]);
+          // if (!validation.valid) {
+          //   setIsLoading(false);
+          //   return;
+          // }
 
           if (!multiple) {
-            handleFilesChange([newFiles[0]]);
+            // In single mode, clear existing and set new file
+            setDisplayedDocuments([]);
+            handleFilesChange([newFilesToAdd[0]]);
           } else {
-            handleFilesChange([...files, ...newFiles]);
+            // In multiple mode, append to existing files
+            handleFilesChange([...newFiles, ...newFilesToAdd]);
           }
 
           setIsLoading(false);
@@ -107,7 +151,7 @@ export default function InputFileLarge<T extends FieldValues>({
                 >
                   <LoadingOverlay isLoading={areFileLoading || isLoading} />
 
-                  {files.length === 0 ? (
+                  {allFiles.length === 0 ? (
                     <FileDropZone
                       multiple={multiple}
                       accept={accept}
@@ -118,7 +162,7 @@ export default function InputFileLarge<T extends FieldValues>({
                     />
                   ) : (
                     <FilesGrid
-                      files={files}
+                      files={allFiles}
                       multiple={multiple}
                       disabled={disabled}
                       maxFiles={maxFiles}
@@ -132,12 +176,12 @@ export default function InputFileLarge<T extends FieldValues>({
                     ref={fileInputRef}
                     type="file"
                     multiple={multiple}
-                    accept={accept}
+                    accept={accept.join(",")}
                     disabled={disabled}
                     onChange={(e) => {
-                      const newFiles = Array.from(e.target.files ?? []);
-                      if (newFiles.length > 0) {
-                        addFiles(newFiles);
+                      const newFilesToAdd = Array.from(e.target.files ?? []);
+                      if (newFilesToAdd.length > 0) {
+                        addFiles(newFilesToAdd);
                         e.target.value = "";
                       }
                     }}
@@ -150,7 +194,7 @@ export default function InputFileLarge<T extends FieldValues>({
 
                 {multiple && (
                   <FilesModal
-                    files={files}
+                    files={allFiles}
                     isOpen={showModal}
                     disabled={disabled}
                     onClose={() => setShowModal(false)}

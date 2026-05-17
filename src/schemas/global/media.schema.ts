@@ -11,3 +11,5 @@ export const MediaSchema = z.object({
     created_at: z.iso.datetime(),
     updated_at: z.iso.datetime(),
 })
+
+export type Media = z.infer<typeof MediaSchema>

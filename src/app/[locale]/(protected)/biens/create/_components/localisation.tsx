@@ -98,7 +98,6 @@ export default function Localisation({ form, isPending = false }: Props) {
         label={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.LABELS.GPS_COORDINATES)}
         disabled={isPending}
         placeholder={translation(TRANSLATIONS_KEYS_2.BIENS.FORM.PLACEHOLDERS.GPS_COORDINATES)}
-        required
       />
     </Section>
   );
