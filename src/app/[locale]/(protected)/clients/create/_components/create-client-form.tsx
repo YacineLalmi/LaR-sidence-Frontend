@@ -44,7 +44,7 @@ export default function CreateClientForm() {
       formId="create-client-id"
       existingDocuments={[]}
       setExistingDocuments={() => {}}
-      isUpdate={false}
+      isLoading={false}
     />
   );
 }

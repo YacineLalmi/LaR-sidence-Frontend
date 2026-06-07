@@ -68,13 +68,16 @@ export default function BillingModelForm({
     async function loadFile() {
       if (initialData.logo) {
         const result = await getMediaAsBlobAction(initialData.logo?.uuid);
-        if (result)
-          form.setValue(
-            "logo",
-            new File([result], initialData.logo?.file_name || "logo.png", {
-              type: initialData.logo?.mime_type,
-            }),
-          );
+        if (result) {
+          const binaryString = window.atob(result.base64);
+          const bytes = new Uint8Array(binaryString.length);
+
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+
+          form.setValue("logo", new File([bytes], result.name + "#" + result.uuid, { type: result.mimeType }));
+        }
       }
     }
     loadFile();

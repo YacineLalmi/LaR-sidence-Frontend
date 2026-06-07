@@ -354,7 +354,7 @@ export default function FicheBienDialog({ bien }: Props) {
                     ${
                       bien.documents && bien.documents.length > 0
                         ? bien.documents
-                            .map((doc) => `<div class="print-doc-item">${doc.original_name || "Document"}</div>`)
+                            .map((doc) => `<div class="print-doc-item">${doc.name || "Document"}</div>`)
                             .join("")
                         : '<div class="print-doc-item">Aucun document</div>'
                     }
@@ -547,7 +547,7 @@ function PageTwo({ data }: { data: Bien }) {
           <p className="text-xs text-zinc-400 uppercase font-semibold mb-3">Documents du Bien</p>
           <div className="flex gap-4">
             {data.documents && data.documents.length > 0 ? (
-              data.documents.map((doc) => <FileIcon key={doc.id} name={doc.original_name || "Document"} />)
+              data.documents.map((doc) => <FileIcon key={doc.id} name={doc.name || "Document"} />)
             ) : (
               <p className="text-sm font-medium text-zinc-500">Aucun document</p>
             )}

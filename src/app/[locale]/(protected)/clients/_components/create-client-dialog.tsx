@@ -54,6 +54,8 @@ export default function CreateClientDialog({ open, onOpenChange, onClientCreated
           successAction={onClientCreated}
           successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.CREATED}
           errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_CREATION}
+          existingDocuments={[]}
+          setExistingDocuments={() => {}}
         />
       </DialogContent>
     </Dialog>
