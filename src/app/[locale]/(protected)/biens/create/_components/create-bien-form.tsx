@@ -35,6 +35,8 @@ export default function CreateBienForm() {
   const [isClientDialogOpen, setIsClientDialogOpen] = useState<boolean>(false);
   const [clients, setClients] = useState<ListItem[]>([]);
   const [isClientsPending, startClientsTransition] = useTransition();
+  const [existingImages, setExistingImages] = useState<File[]>([]);
+  const [existingDocuments, setExistingDocuments] = useState<File[]>([]);
 
   const translation = useTranslations();
   const router = useRouter();
@@ -64,12 +66,14 @@ export default function CreateBienForm() {
       bathrooms_number: null,
       availability_date: new Date(),
       characteristics: [],
-      images: [],
       comment: "",
       exclusivity: false,
       exclusivity_start: null,
       exclusivity_end: null,
-      documents: [],
+      new_images: [],
+      new_documents: [],
+      deleted_images: [],
+      deleted_documents: [],
     },
   });
 
@@ -169,14 +173,19 @@ export default function CreateBienForm() {
               <TechnicalCharacteristics form={form} isPending={isPending} />
               <div>
                 <AdditionalCharacteristics form={form} isPending={isPending} />
-                <Images form={form} isPending={isPending} />
+                <Images
+                  form={form}
+                  isPending={isPending}
+                  existingImages={existingImages}
+                  setExistingImages={setExistingImages}
+                />
               </div>
             </div>
           )}
           {activeStep === 3 && (
             <div className="col-span-11 grid grid-cols-2 gap-5">
               <div>
-                <LinkedDocuments form={form} isPending={isPending} />
+                <LinkedDocuments form={form} isPending={isPending} existingDocuments={existingDocuments} setExistingDocuments={setExistingDocuments} />
                 <Exclusivity form={form} isPending={isPending} />
               </div>
               <Commentaire form={form} isPending={isPending} />

@@ -42,6 +42,8 @@ export default function CreateClientForm() {
       successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.CREATED}
       errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_CREATION}
       formId="create-client-id"
+      existingDocuments={[]}
+      setExistingDocuments={() => {}}
       isUpdate={false}
     />
   );

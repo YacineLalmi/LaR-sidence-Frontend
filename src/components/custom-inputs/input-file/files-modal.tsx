@@ -19,11 +19,8 @@ export default function FilesModal({ files, isOpen, disabled, onClose, onRemove 
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-      onClick={onClose}
-    >
-      <div 
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div
         className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -32,7 +29,7 @@ export default function FilesModal({ files, isOpen, disabled, onClose, onRemove 
       >
         <div className="flex items-center justify-between p-6 border-b">
           <h2 id="files-modal-title" className="text-xl font-semibold text-gray-800">
-            {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.ADD, { count: files.length })}
+            {translation(TRANSLATIONS_KEYS_2.COMMON.INPUTS.LABELS.FILE, { count: files.length })}
           </h2>
           <Button
             type="button"

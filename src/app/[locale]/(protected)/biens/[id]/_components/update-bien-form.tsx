@@ -26,6 +26,7 @@ import Commentaire from "../../create/_components/commentaire";
 import { getClientListAction } from "@/actions/clients/get-client-list.action";
 import { Client } from "@/schemas/clients/client.schema";
 import CreateClientDialog from "@/app/[locale]/(protected)/clients/_components/create-client-dialog";
+import { getMediaAsBlobAction } from "@/actions/media/get-media.actions";
 
 interface Props {
   bien: Bien;
@@ -35,6 +36,8 @@ export default function UpdateBienForm({ bien }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
   const [isLoadingFiles, setIsLoadingFiles] = useState<boolean>(true);
+  const [existingImages, setExistingImages] = useState<File[]>([]);
+  const [existingDocuments, setExistingDocuments] = useState<File[]>([]);
 
   const [isClientDialogOpen, setIsClientDialogOpen] = useState<boolean>(false);
   const [clients, setClients] = useState<ListItem[]>([]);
@@ -44,7 +47,7 @@ export default function UpdateBienForm({ bien }: Props) {
   const router = useRouter();
   const form = useForm<BienFormInput, null, BienFormOutput>({
     resolver: zodResolver(BienFormSchema),
-    mode: "onChange",
+    mode: "onTouched",
     defaultValues: {
       client_id: bien.client?.id.toString(),
       // title: bien.title,
@@ -53,28 +56,30 @@ export default function UpdateBienForm({ bien }: Props) {
       bien_status_id: bien.status?.id.toString(),
       agent_id: bien.agent?.id.toString(),
       price: bien?.price?.toString(),
-      monthly_charges: bien.monthly_charges?.toString() || null,
+      monthly_charges: (bien.monthly_charges && bien.monthly_charges.toString()) || "",
       wilaya_id: bien.wilaya?.id.toString(),
       commune_id: bien.commune?.id.toString(),
       adresse: bien.adresse,
       postal_code: bien.postal_code,
       coordinates: bien.coordinates,
-      description: bien.description,
-      habitable_surface: bien.habitable_surface?.toString() || null,
+      description: bien.description || "",
+      habitable_surface: (bien.habitable_surface && bien.habitable_surface.toString()) || null,
       total_surface: bien.total_surface.toString(),
-      developed_surface: bien.developed_surface?.toString() || null,
-      floor_number: bien.floor_number?.toString() || null,
-      bedrooms_number: bien.bedrooms_number?.toString() || null,
-      rooms_number: bien.rooms_number?.toString() || null,
-      bathrooms_number: bien.bathrooms_number?.toString() || null,
+      developed_surface: (bien.developed_surface && bien.developed_surface.toString()) || "",
+      floor_number: (bien.floor_number && bien.floor_number.toString()) || null,
+      bedrooms_number: (bien.bedrooms_number && bien.bedrooms_number.toString()) || null,
+      rooms_number: (bien.rooms_number && bien.rooms_number.toString()) || null,
+      bathrooms_number: (bien.bathrooms_number && bien.bathrooms_number.toString()) || null,
       availability_date: new Date(bien.availability_date),
       characteristics: bien.characteristics?.map((item) => +item.id) || [],
-      images: [],
       comment: bien.comment || "",
       exclusivity: bien.exclusivity,
       exclusivity_start: bien.exclusivity_start ? new Date(bien.exclusivity_start) : null,
       exclusivity_end: bien.exclusivity_end ? new Date(bien.exclusivity_end) : null,
-      documents: [],
+      new_images: [],
+      new_documents: [],
+      deleted_images: [],
+      deleted_documents: [],
     },
   });
 
@@ -96,20 +101,38 @@ export default function UpdateBienForm({ bien }: Props) {
       setIsLoadingFiles(true);
       try {
         // Fetch images
-        const imagePromises =
-          bien.images?.map((img) => fetchFileAsFileObject(img.id, img.original_name, img.mime_type)) || [];
+        const imagePromises = bien.images?.map((img) => getMediaAsBlobAction(img)) || [];
         const images = await Promise.all(imagePromises);
-        const validImages = images.filter((img): img is File => img !== null);
+        const validImages = images
+          .filter((img) => !!img)
+          .map((img) => {
+            const binaryString = window.atob(img.base64);
+            const bytes = new Uint8Array(binaryString.length);
+
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            return new File([bytes], img.name + "#" + img.uuid, { type: img.mimeType });
+          });
 
         // Fetch documents
-        const documentPromises =
-          bien.documents?.map((doc) => fetchFileAsFileObject(doc.id, doc.original_name, doc.mime_type)) || [];
+        const documentPromises = bien.documents?.map((doc) => getMediaAsBlobAction(doc)) || [];
         const documents = await Promise.all(documentPromises);
-        const validDocuments = documents.filter((doc): doc is File => doc !== null);
+        const validDocuments = documents
+          .filter((doc) => !!doc)
+          .map((doc) => {
+            const binaryString = window.atob(doc.base64);
+            const bytes = new Uint8Array(binaryString.length);
+
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            return new File([bytes], doc.name + "#" + doc.uuid, { type: doc.mimeType });
+          });
 
         // Set form values with File objects
-        form.setValue("images", validImages as any);
-        form.setValue("documents", validDocuments as any);
+        setExistingImages(validImages);
+        setExistingDocuments(validDocuments);
       } catch (error) {
         console.error("Error loading files:", error);
         customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
@@ -158,17 +181,6 @@ export default function UpdateBienForm({ bien }: Props) {
     },
   ];
 
-  if (isLoadingFiles) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">{translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING)}</p>
-        </div>
-      </div>
-    );
-  }
-
   const handleClientCreated = (client: Client) => {
     // Refresh the clients list
     setIsClientDialogOpen(false);
@@ -215,14 +227,24 @@ export default function UpdateBienForm({ bien }: Props) {
               <TechnicalCharacteristics form={form} isPending={isPending} />
               <div>
                 <AdditionalCharacteristics form={form} isPending={isPending} />
-                <Images form={form} isPending={isPending} />
+                <Images
+                  form={form}
+                  isPending={isPending || isLoadingFiles}
+                  existingImages={existingImages}
+                  setExistingImages={setExistingImages}
+                />
               </div>
             </div>
           )}
           {activeStep === 3 && (
             <div className="col-span-11 grid grid-cols-2 gap-5">
               <div>
-                <LinkedDocuments form={form} isPending={isPending} />
+                <LinkedDocuments
+                  form={form}
+                  isPending={isPending || isLoadingFiles}
+                  existingDocuments={existingDocuments}
+                  setExistingDocuments={setExistingDocuments}
+                />
                 <Exclusivity form={form} isPending={isPending} />
               </div>
               <Commentaire form={form} isPending={isPending} />

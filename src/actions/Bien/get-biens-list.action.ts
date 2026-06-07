@@ -1,7 +1,6 @@
 "use server";
 
 import { handleServerActionError } from "@/lib/server.helper";
-import { BienForm } from "@/schemas/biens/bien-form.schema";
 import { ListItem } from "@/schemas/global.schema";
 import { BienService } from "@/services/bien.service";
 

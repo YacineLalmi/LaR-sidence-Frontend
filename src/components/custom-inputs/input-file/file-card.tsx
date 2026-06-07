@@ -1,9 +1,18 @@
 "use client";
 import { X } from "lucide-react";
 import FileIcon from "./file-icon";
-import { Media } from "@/schemas/global/media.schema";
 
-export type FileOrDocument = File | Media;
+// Media type from your schema
+export type Media = {
+  id: string;
+  uuid: string;
+  name: string;
+  file_name: string;
+  mime_type: string;
+  size: number;
+};
+
+export type FileOrDocument = File;
 
 interface FileCardProps {
   file: FileOrDocument;
@@ -14,8 +23,7 @@ interface FileCardProps {
 }
 
 export default function FileCard({ file, index, onRemove, disabled = false, showFilename = false }: FileCardProps) {
-  const isFileObject = file instanceof File;
-  const fileName = isFileObject ? file.name : file.file_name;
+  const fileName = file.name;
 
   return (
     <div className="relative group">

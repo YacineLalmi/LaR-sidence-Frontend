@@ -58,7 +58,7 @@ export default function ViewEventDialog({ open, onOpenChange, event, onEdit, onD
             {event.bien && (
               <>
                 <span className="text-gray-500">Bien concerné</span>
-                <span className="text-gray-900">{event.bien.title}</span>
+                <span className="text-gray-900">{event.bien.id}</span>
               </>
             )}
 

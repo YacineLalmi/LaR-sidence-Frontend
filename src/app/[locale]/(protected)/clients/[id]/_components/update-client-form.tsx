@@ -6,8 +6,11 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ClientForm as ClientFormType } from "@/schemas/clients/client-form.schema";
 import { Client } from "@/schemas/clients/client.schema";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ClientForm from "../../_components/client-form";
+import { getMediaAsBlobAction } from "@/actions/media/get-media.actions";
+import { customToast } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface Props {
   client: Client;
@@ -15,12 +18,48 @@ interface Props {
 
 export default function UpdateClientForm({ client }: Props) {
   const router = useRouter();
+  const translation = useTranslations();
+
+  const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [existingDocuments, setExistingDocuments] = useState<File[]>([]);
+
+  // Load existing files and convert them to File objects
+  useEffect(() => {
+    const loadFiles = async () => {
+      setIsLoadingFiles(true);
+      try {
+        // Fetch documents
+        const documentPromises = client.documents?.map((doc) => getMediaAsBlobAction(doc)) || [];
+        const documents = await Promise.all(documentPromises);
+        const validDocuments = documents
+          .filter((doc) => !!doc)
+          .map((doc) => {
+            const binaryString = window.atob(doc.base64);
+            const bytes = new Uint8Array(binaryString.length);
+
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            return new File([bytes], doc.name + "#" + doc.uuid, { type: doc.mimeType });
+          });
+
+        setExistingDocuments(validDocuments);
+      } catch (error) {
+        console.error("Error loading files:", error);
+        customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
+      } finally {
+        setIsLoadingFiles(false);
+      }
+    };
+
+    loadFiles();
+  }, [client.documents]);
 
   const initialData: ClientFormType = {
     civility: client.civility,
     first_name: client.first_name,
     last_name: client.last_name,
-    email: client.email,
+    email: client.email || null,
     phone_numbers: client.phone_numbers || [],
     comment: client.comment || "",
     company_name: client.company_name,
@@ -47,8 +86,9 @@ export default function UpdateClientForm({ client }: Props) {
       successMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.UPDATED}
       errorMessage={TRANSLATIONS_KEYS_2.CLIENTS.FORM.MESSAGES.FAILED_UPDATE}
       formId="update-client-id"
-      existingDocuments={client.documents || []}
-      isUpdate={true}
+      existingDocuments={existingDocuments}
+      setExistingDocuments={setExistingDocuments}
+      isLoading={!!isLoadingFiles}
     />
   );
 }

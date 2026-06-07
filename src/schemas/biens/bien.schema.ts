@@ -6,6 +6,7 @@ import { FileSchema } from "../file/file.schema";
 import { ClientSchema } from "../clients/client.schema";
 import { PriceSchema } from "../price/price.schema";
 import { ClassificationSchema } from "../classification/classification.schema";
+import { MediaSchema } from "../global/media.schema";
 
 export const BienSchema = z.object({
   id: z.string(),
@@ -37,8 +38,8 @@ export const BienSchema = z.object({
   exclusivity_end: z.iso.date().nullable(),
   agent: UserSchema.nullable().optional(),
   characteristics: z.array(ClassificationSchema).optional(),
-  documents: z.array(FileSchema).optional(),
-  images: z.array(FileSchema).optional(),
+  documents: z.array(MediaSchema).optional(),
+  images: z.array(MediaSchema).optional(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   deleted_at: z.iso.datetime().nullable(),

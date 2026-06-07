@@ -52,7 +52,6 @@ export default function BillingModelForm({
   const watchedValues = form.watch();
 
   async function onSubmit(values: BillingModelFormType) {
-    console.log(values);
     setIsPending(true);
     try {
       const response = await submitAction(values);
@@ -69,7 +68,6 @@ export default function BillingModelForm({
     async function loadFile() {
       if (initialData.logo) {
         const result = await getMediaAsBlobAction(initialData.logo?.uuid);
-        console.log("gotten logo", result);
         if (result)
           form.setValue(
             "logo",

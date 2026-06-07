@@ -6,7 +6,7 @@ import ClientHeader from "./_components/client-header";
 export default async function Clients({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
 
-  const clients = await ClientService.findMany({ ...queryParams, include: "status.color" });
+  const clients = await ClientService.findMany({ ...queryParams, include: "status.color,source" });
 
   return (
     <Card className="bg-transparent border-none shadow-none p-0">

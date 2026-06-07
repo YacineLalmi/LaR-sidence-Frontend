@@ -34,8 +34,6 @@ export const BillingModelService = {
             query: QueryParams,
         });
 
-        console.log(response)
-
         const validatedResponseData = validateResponseData<BillingModel[]>(response.data, z.array(BillingModelSchema));
 
         return {
@@ -59,7 +57,6 @@ export const BillingModelService = {
         const response = await ApiService.get<BillingModel>({
             endpoint: END_POINTS.findOne(id),
         });
-        console.log(response)
 
         const validatedResponseData = validateResponseData<BillingModel>(response.data, BillingModelSchema);
 
@@ -72,8 +69,6 @@ export const BillingModelService = {
             endpoint: END_POINTS.update(id),
             body: data,
         });
-
-        console.log(response)
 
         const validatedResponseData = validateResponseData<BillingModel>(response.data, BillingModelSchema);
 

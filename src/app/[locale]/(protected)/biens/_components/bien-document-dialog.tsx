@@ -8,6 +8,8 @@ import { X, ChevronLeft, ChevronRight, MapPin, MessageCircle, FileText, FileSear
 import CustomButton from "@/components/ui/custom-button";
 import { Bien } from "@/schemas/biens/bien.schema";
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   bien: Bien;
@@ -435,7 +437,7 @@ export default function FicheBienDialog({ bien }: Props) {
             </Button>
             <div className="flex gap-2">
               <Button variant="outline" className="border-zinc-300 rounded-xl px-8 h-12">
-                Modifier
+                <Link href={ROUTES.BIENS.EDIT(bien.id)}>Modifier</Link>
               </Button>
               <Button className="bg-black hover:bg-zinc-800 text-white rounded-xl px-8 h-12" onClick={handlePrint}>
                 Imprimer
@@ -544,9 +546,11 @@ function PageTwo({ data }: { data: Bien }) {
         <div>
           <p className="text-xs text-zinc-400 uppercase font-semibold mb-3">Documents du Bien</p>
           <div className="flex gap-4">
-            <FileIcon name="Facture.pdf" />
-            <FileIcon name="Contrat.pdf" />
-            <FileIcon name="Facture.pdf" />
+            {data.documents && data.documents.length > 0 ? (
+              data.documents.map((doc) => <FileIcon key={doc.id} name={doc.original_name || "Document"} />)
+            ) : (
+              <p className="text-sm font-medium text-zinc-500">Aucun document</p>
+            )}
           </div>
         </div>
 

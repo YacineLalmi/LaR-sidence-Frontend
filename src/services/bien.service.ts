@@ -63,38 +63,11 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  update: async (data: BienForm, id: string): Promise<Bien> => {
-    const formData = new FormData();
-    for (const key in data) {
-      if (key === "images" || key === "documents") {
-        const files = (data as any)[key] as File[];
-        files.forEach((file: File, index: number) => {
-          formData.append(`${key}[${index}]`, file);
-        });
-        continue;
-      }
-      if (key === "characteristics") {
-        const characteristics = (data as any)[key] as number[];
-        characteristics.forEach((characteristic: number, index: number) => {
-          formData.append(`${key}[${index}]`, characteristic.toString());
-        });
-        continue;
-      }
-      if ((data as any)[key] instanceof Date) {
-        formData.append(key, (data as any)[key].toISOString());
-        continue;
-      }
+  update: async (data: FormData, id: string): Promise<Bien> => {
 
-      if (typeof (data as any)[key] === "boolean") {
-        formData.append(key, (data as any)[key] ? "1" : "0");
-        continue;
-      }
-      const value = (data as any)[key];
-      formData.append(key, value);
-    }
     const response = await ApiService.post<Bien>({
       endpoint: END_POINTS.update(id),
-      body: formData,
+      body: data,
     });
 
     const validatedResponseData = validateResponseData<Bien>(response.data, BienSchema);

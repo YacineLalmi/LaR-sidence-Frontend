@@ -20,9 +20,6 @@ export async function createBillingModelAction(data: BillingModelForm): Promise<
     formData.append("legal_mentions", data.legal_mentions);
     formData.append("logo", data.logo);
 
-    console.log(formData)
-    console.log(data.logo)
-
     const createdBillingModel = await BillingModelService.create(formData);
 
     return { isOk: true, data: createdBillingModel };

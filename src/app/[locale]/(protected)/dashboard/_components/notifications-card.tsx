@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import getNotificationAction from "@/actions/dashboard/get-notifications.action";
 import { Notification } from "@/schemas/notifications/notification.schema";
+import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export function NotificationsCard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,9 +41,12 @@ export function NotificationsCard() {
       {/* Header */}
       <div className="flex justify-between items-center px-2">
         <h2 className="text-xl font-bold text-black">Alertes & Notifications</h2>
-        <button className="flex items-center text-[#C9AF72] font-medium hover:opacity-80 transition-opacity">
+        <Link
+          href={ROUTES.NOTIFICATIONS.ROOT}
+          className="flex items-center text-[#C9AF72] font-medium hover:opacity-80 transition-opacity"
+        >
           Voir tout <ChevronRight size={18} />
-        </button>
+        </Link>
       </div>
 
       {/* List */}
@@ -68,9 +73,9 @@ export function NotificationsCard() {
               </div>
 
               {/* Options */}
-              <button className="text-gray-400 hover:text-gray-600 transition-colors">
+              {/* <button className="text-gray-400 hover:text-gray-600 transition-colors">
                 <MoreHorizontal size={20} />
-              </button>
+              </button> */}
             </div>
           ))}
       </div>

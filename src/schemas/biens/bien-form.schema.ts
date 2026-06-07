@@ -56,8 +56,10 @@ export const BienFormSchema = z
     characteristics: z.array(z.number().int()),
 
     // 🔄 Kept exactly as they were originally
-    images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
-    documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
+    new_images: inputFilesValidation({ maxSize: MAX_IMAGE_SIZE, acceptedTypes: ACCEPTED_IMAGE_TYPES }),
+    deleted_images: z.array(z.string()).optional(),
+    new_documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
+    deleted_documents: z.array(z.string()).optional(),
   })
   .refine(
     (data) => {

@@ -18,8 +18,6 @@ export async function updateBillingModelAction(data: BillingModelForm, id: strin
     formData.append("legal_mentions", data.legal_mentions);
     formData.append("logo", data.logo);
 
-    console.log(formData.get("name"))
-
     const response = await BillingModelService.update(formData, id);
     return { isOk: true, data: response };
   } catch (error) {

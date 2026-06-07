@@ -36,7 +36,10 @@
       "type": "Type",
       "source": "Source",
       "documents": "Documents",
-      "status": "Statut"
+      "status": "Statut",
+      "mrs": "Mme",
+      "mr": "M.",
+      "company": "Entreprise"
     },
     "placeholders": {
       "email": "Entrez l'adresse e-mail",

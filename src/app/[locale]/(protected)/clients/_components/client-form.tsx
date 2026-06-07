@@ -15,15 +15,14 @@ import { customToast } from "@/lib/utils";
 import { ClientForm as ClientFormType, ClientFormSchema } from "@/schemas/clients/client-form.schema";
 import { Client } from "@/schemas/clients/client.schema";
 import { ListItem } from "@/schemas/global.schema";
+import { Media } from "@/schemas/global/media.schema";
 import { CATEGORIES, SCOPES } from "@/services/classification.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FileOrDocument } from "@/components/custom-inputs/input-file/file-card";
-import { Media } from "@/schemas/global/media.schema";
 
 interface Props {
   initialData: ClientFormType;
@@ -32,39 +31,9 @@ interface Props {
   errorMessage?: string;
   formId?: string;
   successAction?: (client: Client) => void;
-  existingDocuments?: any[]; // API documents array
-  isUpdate?: boolean;
-}
-
-/**
- * IMPORTANT: Adjust this function to match your API's file serving endpoint
- */
-function getDocumentUrl(document: any): string {
-  // Debug: Log the document structure
-  console.log("Document structure:", document);
-
-  // Try different URL patterns - uncomment the one that works for your API:
-
-  // Pattern 1: Using UUID (most common for Laravel/media library)
-  // return `/storage/${document.uuid}/${document.file_name}`;
-
-  // Pattern 2: Using UUID in API route
-  // return `/api/files/${document.uuid}`;
-
-  // Pattern 3: Using ID
-  // return `/api/documents/${document.id}/download`;
-
-  // Pattern 4: Direct storage path
-  // return `/storage/documents/${document.file_name}`;
-
-  // Pattern 5: If you have full URL in response
-  // return document.url || document.full_path;
-
-  // Pattern 6: For Laravel with collection name
-  const url = `/storage/${document.id}/${document.file_name}`;
-
-  console.log("Constructed URL:", url);
-  return url;
+  existingDocuments: File[];
+  setExistingDocuments: React.Dispatch<React.SetStateAction<File[]>>;
+  isLoading?: boolean;
 }
 
 export default function ClientForm({
@@ -75,11 +44,10 @@ export default function ClientForm({
   formId,
   successAction,
   existingDocuments = [],
-  isUpdate = false,
+  setExistingDocuments,
+  isLoading = false,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [areFileLoading, setAreFilesLoading] = useState<boolean>(false);
-  const [displayedDocuments, setDisplayedDocuments] = useState<FileOrDocument[]>([]);
 
   // Select Options
   const [types, isTypesLoading] = useFetch<ListItem[]>(
@@ -108,63 +76,21 @@ export default function ClientForm({
   const civilities: ListItem[] = [
     {
       id: "mrs",
-      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.MRS),
     },
     {
       id: "mr",
-      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.MR),
     },
     {
       id: "company",
-      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.CIVILITY),
+      name: translation(TRANSLATIONS_KEYS_2.CLIENTS.FORM.LABELS.COMPANY),
     },
   ];
-
-  // Load existing documents on mount (for update scenario)
-  useEffect(() => {
-    if (isUpdate && existingDocuments.length > 0) {
-      console.log("Loading existing documents:", existingDocuments);
-      setAreFilesLoading(true);
-
-      try {
-        // Transform API documents to FileOrDocument format
-        const transformedDocs: FileOrDocument[] = existingDocuments.map((doc): Media => {
-          const url = getDocumentUrl(doc);
-
-          return {
-            id: doc.id,
-            uuid: doc.uuid,
-            name: doc.name,
-            file_name: doc.file_name,
-            mime_type: doc.mime_type,
-            size: doc.size,
-            collection_name: "documents",
-            created_at: doc.created_at,
-            updated_at: doc.updated_at,
-            // url: url,
-          };
-        });
-
-        console.log("Transformed documents:", transformedDocs);
-        setDisplayedDocuments(transformedDocs);
-      } catch (error) {
-        console.error("Error loading documents:", error);
-        customToast.error(translation(TRANSLATIONS_KEYS_2.COMMON.MESSAGES.LOADING_FILE_FAILED));
-      } finally {
-        setAreFilesLoading(false);
-      }
-    }
-  }, [isUpdate, existingDocuments, translation]);
 
   async function onSubmit(values: ClientFormType) {
     setIsPending(true);
     try {
-      console.log("Submitting form with values:", {
-        ...values,
-        new_documents: values.new_documents?.length,
-        deleted_documents: values.deleted_documents?.length,
-      });
-
       const response = await submitAction(values);
       if (response.isOk) {
         successAction && response.data ? successAction(response.data) : router.refresh();
@@ -173,7 +99,6 @@ export default function ClientForm({
         customToast.error(response.errorMessage || translation(errorMessage));
       }
     } catch (error) {
-      console.error("Form submission error:", error);
       customToast.error(translation(errorMessage));
     } finally {
       setIsPending(false);
@@ -195,21 +120,20 @@ export default function ClientForm({
     [phoneNumbersFromForm, form],
   );
 
-  const handleDocumentDelete = useCallback(
-    (documentId: string) => {
-      console.log("Deleting document:", documentId);
+  const handleFileDelete = (file: File, index: number) => {
+    // Track the deleted UUID in the form
+    const current = form.getValues("deleted_documents") ?? [];
+    const uuid = file.name.split("#").pop() || ""; // Extract UUID from filename
+    if (uuid) {
+      form.setValue("deleted_documents", [...current, uuid]);
+    }
+    setExistingDocuments?.((prev) => prev.filter((doc, docIndex) => docIndex !== index));
+  };
 
-      // Add document ID to deleted_documents array
-      const currentDeletedDocs = form.getValues("deleted_documents") || [];
-      form.setValue("deleted_documents", [...currentDeletedDocs, documentId]);
-
-      // Update displayed documents
-      setDisplayedDocuments((prev) => prev.filter((doc) => "id" in doc && doc.id !== documentId));
-
-      console.log("Updated deleted_documents:", [...currentDeletedDocs, documentId]);
-    },
-    [form],
-  );
+  const handleNewFiles = (files: File[]) => {
+    setExistingDocuments?.((prev) => [...(prev || []), ...files]);
+    form.setValue("new_documents", files);
+  };
 
   return (
     <Form {...form}>
@@ -344,9 +268,10 @@ export default function ClientForm({
             <InputFileLarge
               control={form.control}
               name="new_documents"
-              areFileLoading={areFileLoading}
-              existingDocuments={displayedDocuments}
-              onDocumentDelete={handleDocumentDelete}
+              existingFiles={existingDocuments}
+              handleNewFiles={handleNewFiles}
+              handleFileDelete={handleFileDelete}
+              areFileLoading={isLoading}
             />
 
             <InputSelectField

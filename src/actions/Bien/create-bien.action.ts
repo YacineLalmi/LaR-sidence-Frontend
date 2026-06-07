@@ -39,7 +39,9 @@ export async function createBienAction(data: BienForm): Promise<FormState> {
       }
       formData.append(key, value);
     }
+
     await BienService.create(formData);
+    
     return {
       isOk: true,
     };

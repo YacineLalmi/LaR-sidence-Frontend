@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { X, FileText, FileSearch } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import CustomButton from "@/components/ui/custom-button";
 import { Client } from "@/schemas/clients/client.schema";
 import { getFileBlob } from "@/actions/files/get-file-blob.action";
-import { File } from "@/schemas/file/file.schema";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { format } from "date-fns";
 import { Link } from "@/i18n/navigation";
@@ -225,7 +224,7 @@ export default function ClientDocumentDialog({ client }: Props) {
             <div class="print-field">
               <div class="print-label">Statut</div>
               <div class="print-status" style="background-color: ${getStatusColor(client.status?.name.fr || "active")};">
-                ${client.status}
+                ${client.status?.name[locale] || "N/A"}
               </div>
             </div>
             
