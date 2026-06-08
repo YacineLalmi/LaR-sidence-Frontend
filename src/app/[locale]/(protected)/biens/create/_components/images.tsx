@@ -34,6 +34,7 @@ export default function Images({ form, isPending = false, existingImages, setExi
         control={form.control as Control<BienFormInput, any, any>}
         name="images"
         areFileLoading={isPending}
+        accept={["image/jpeg", "image/jpg", "image/png"]}
         existingFiles={existingImages}
         handleNewFiles={handleNewFiles}
         handleFileDelete={handleDelete}

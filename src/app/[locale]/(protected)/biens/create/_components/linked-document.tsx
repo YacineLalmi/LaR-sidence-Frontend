@@ -34,6 +34,11 @@ export default function LinkedDocuments({ form, isPending = false, existingDocum
       <InputFileLarge
         control={form.control as Control<BienFormInput, any, any>}
         name="new_documents"
+        accept={[
+          "application/msword",
+          "application/pdf",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ]}
         areFileLoading={isPending}
         existingFiles={existingDocuments}
         handleNewFiles={handleNewFiles}

@@ -53,9 +53,10 @@ export const BienService = {
     return validatedResponseData;
   },
 
-  findOne: async (id: string): Promise<Bien> => {
+  findOne: async (id: string, query?: QueryParams): Promise<Bien> => {
     const response = await ApiService.get<Bien>({
       endpoint: END_POINTS.findOne(id),
+      query
     });
 
     const validatedResponseData = validateResponseData<Bien>(response.data, BienSchema);

@@ -73,14 +73,6 @@ export default function InputFileLarge<T extends FieldValues>({
         // Combine existing documents with new files for display
         const allFiles: FileOrDocument[] = [...existingFiles, ...newFiles];
 
-        const handleFilesChange = (newFiles: File[]) => {
-          if (multiple) {
-            field.onChange(newFiles);
-          } else {
-            field.onChange(newFiles[0] || null);
-          }
-        };
-
         const removeFile = (index: number) => {
           // Check if it's an existing document or a new file
           if (index < existingFiles.length) {

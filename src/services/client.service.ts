@@ -89,9 +89,10 @@ export const ClientService = {
     return validatedResponseData;
   },
 
-  findOne: async (id: string) => {
+  findOne: async (id: string, query?: QueryParams) => {
     const response = await ApiService.get<Client>({
       endpoint: END_POINTS.findOne(id),
+      query: query,
     });
 
     const validatedResponseData = validateResponseData<Client>(response.data, ClientSchema);

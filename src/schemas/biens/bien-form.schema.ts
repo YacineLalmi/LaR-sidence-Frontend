@@ -4,7 +4,7 @@ import { inputFilesValidation } from "../global/file-field.schema";
 import { PostCodeSchema } from "../global/post-code.schema";
 
 const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_DOCUMENT_TYPES = ["application/pdf"];
+const ACCEPTED_DOCUMENT_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
@@ -20,8 +20,6 @@ export const BienFormSchema = z
     monthly_charges: inputNumberFieldSchema().nullable().optional(), // Nullable now
     wilaya_id: z.string().min(1, "La wilaya est requise"),
     commune_id: z.string().min(1, "La commune est requise"),
-
-    // ❌ priority_id REMOVED to match your migration drop
 
     adresse: z
       .string()

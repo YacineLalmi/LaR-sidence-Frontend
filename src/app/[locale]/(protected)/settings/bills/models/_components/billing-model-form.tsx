@@ -8,7 +8,7 @@ import { customToast } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   BillingModelForm as BillingModelFormType,
@@ -41,7 +41,7 @@ export default function BillingModelForm({
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
   const translation = useTranslations();
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [existingLogo, setExistingLogo] = useState<File | null>(null);
 
   const form = useForm<BillingModelFormType>({
     resolver: zodResolver(BillingModelFormSchema),
@@ -64,10 +64,12 @@ export default function BillingModelForm({
     }
   }
 
+  console.log("existing logo", existingLogo);
+
   useEffect(() => {
     async function loadFile() {
       if (initialData.logo) {
-        const result = await getMediaAsBlobAction(initialData.logo?.uuid);
+        const result = await getMediaAsBlobAction(initialData.logo);
         if (result) {
           const binaryString = window.atob(result.base64);
           const bytes = new Uint8Array(binaryString.length);
@@ -75,7 +77,7 @@ export default function BillingModelForm({
           for (let i = 0; i < binaryString.length; i++) {
             bytes[i] = binaryString.charCodeAt(i);
           }
-
+          setExistingLogo(new File([bytes], result.name + "#" + result.uuid, { type: result.mimeType }));
           form.setValue("logo", new File([bytes], result.name + "#" + result.uuid, { type: result.mimeType }));
         }
       }
@@ -83,11 +85,10 @@ export default function BillingModelForm({
     loadFile();
   }, [initialData]);
 
-  useEffect(() => {
-    if (watchedValues.logo) {
-      setLogoPreview(URL.createObjectURL(watchedValues.logo));
-    }
-  }, [watchedValues.logo]);
+  const handleNewLogo = useCallback((files: File[]) => {
+    setExistingLogo(files[0]);
+    form.setValue("logo", files[0]);
+  }, []);
 
   async function onInvalid(values: any) {
     const [field, error] = Object.entries(values)[0] as [string, { message: string }];
@@ -153,6 +154,9 @@ export default function BillingModelForm({
                 control={form.control}
                 name="logo"
                 multiple={false}
+                existingFiles={existingLogo ? [existingLogo] : []}
+                handleNewFiles={handleNewLogo}
+                accept={["image/jpeg", "image/jpg", "image/png"]}
                 label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.LABELS.LOGO)}
               />
             </div>
@@ -199,8 +203,12 @@ export default function BillingModelForm({
                   {/* Header avec Logo */}
                   <div className="flex justify-between items-start pb-6 border-b-2 border-gray-200">
                     <div className="flex-1">
-                      {logoPreview ? (
-                        <img src={logoPreview} alt="Logo" className="max-h-20 max-w-[200px] object-contain" />
+                      {existingLogo ? (
+                        <img
+                          src={URL.createObjectURL(existingLogo)}
+                          alt="Logo"
+                          className="max-h-20 max-w-[200px] object-contain"
+                        />
                       ) : (
                         <div className="h-20 w-32 bg-gray-100 rounded flex items-center justify-center text-xs text-gray-400">
                           Votre logo

@@ -37,7 +37,6 @@ export default function FileIcon({ file, className = "" }: FileIconProps) {
             alt={fileName}
             className={`w-full h-24 object-cover rounded ${className}`}
             onError={(e) => {
-              console.error("Image failed to load:", previewUrl);
               setImageError(true);
             }}
           />

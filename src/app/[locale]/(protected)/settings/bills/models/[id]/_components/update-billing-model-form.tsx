@@ -5,7 +5,7 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { BillingModelForm as BillingModelFormType } from "@/schemas/bills/models/billing-model-form.schema";
 import { BillingModel } from "@/schemas/bills/models/billing-model.schema";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import BillingModelForm from "../../_components/billing-model-form";
 import { updateBillingModelAction } from "@/actions/bills/models/update-billing-model.action";
 import { customToast } from "@/lib/utils";
@@ -35,24 +35,6 @@ export default function UpdateBillingModelForm({ billingModel }: Props) {
     router.push(ROUTES.SETTINGS.BILLS.MODELS.ROOT);
     customToast.success(translation(TRANSLATIONS_KEYS_2.SETTINGS.BILLS.MODELS.FORM.MESSAGES.UPDATED));
   }, [router]);
-
-  // useEffect(() => {
-  //   async function loadFile() {
-  //     if (billingModel.logo) {
-  //       const result = await getMediaAsBlobAction(billingModel.logo?.uuid);
-  //       result?.slice();
-  //       if (result)
-  //         setFormData((prev) => ({
-  //           ...prev,
-  //           logo: new File([result], billingModel.logo?.file_name || "logo.png", {
-  //             type: billingModel.logo?.mime_type,
-  //           }),
-  //         }));
-  //     }
-  //   }
-
-  //   loadFile();
-  // }, [billingModel]);
 
   return (
     <BillingModelForm

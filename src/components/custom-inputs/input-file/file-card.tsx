@@ -28,7 +28,7 @@ export default function FileCard({ file, index, onRemove, disabled = false, show
   return (
     <div className="relative group">
       <div className="aspect-square rounded-lg overflow-hidden bg-white border border-gray-200 flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center p-2 w-full h-full">
+        <div className="flex flex-col items-center justify-center p-2 w-full">
           <FileIcon file={file} />
         </div>
       </div>

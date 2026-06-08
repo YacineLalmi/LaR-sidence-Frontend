@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { X, FileText, FileSearch } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { X, FileText, FileSearch, ImageIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import CustomButton from "@/components/ui/custom-button";
 import { Client } from "@/schemas/clients/client.schema";
@@ -13,6 +13,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { Media } from "@/schemas/global/media.schema";
+import getClientDetailsAction from "@/actions/clients/get-client-details";
+import { getMediaAsBlobAction } from "@/actions/media/get-media.actions";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 interface Props {
   client: Client;
@@ -20,29 +23,57 @@ interface Props {
 
 export default function ClientDocumentDialog({ client }: Props) {
   const [open, setOpen] = useState(false);
+  const [clientDetails, setClientDetails] = useState<Client | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const translation = useTranslations();
   const locale = useLocale() as "fr" | "en" | "ar";
   const printRef = useRef<HTMLDivElement>(null);
 
-  const handleDownloadDocument = async (doc: Media) => {
-    try {
-      const result = await getFileBlob(doc.id);
-      const res = await fetch(`data:${doc.mime_type};base64,${result}`);
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = doc.file_name;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading document:", error);
+  useEffect(() => {
+    const fetchClientDetails = async () => {
+      setIsLoading(true);
+      try {
+        const details = await getClientDetailsAction(client.id, {
+          include: "agent,type,status,media",
+        });
+        setClientDetails(details.data);
+      } catch (error) {
+        console.error("Error fetching client details:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (open) {
+      fetchClientDetails();
     }
+  }, [open]);
+
+  const handleDownloadDocument = async (doc: Media) => {
+    const blob = await getMediaAsBlobAction(doc);
+    console.log("doc files", doc);
+    console.log("blob files", blob);
+    if (!blob) return;
+
+    const binaryString = window.atob(blob.base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const file = new File([bytes], doc.file_name, { type: doc.mime_type });
+    const url = URL.createObjectURL(file);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = doc.file_name;
+    a.click();
+
+    URL.revokeObjectURL(url);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (client: Client | undefined) => {
+    if (!client) return;
     const printContent = printRef.current;
     if (!printContent) return;
 
@@ -213,7 +244,7 @@ export default function ClientDocumentDialog({ client }: Props) {
             
             <div class="print-field">
               <div class="print-label">Email</div>
-              <div class="print-value">${client.email}</div>
+              <div class="print-value">${client.email || "N/A"}</div>
             </div>
             
             <div class="print-field">
@@ -268,6 +299,67 @@ export default function ClientDocumentDialog({ client }: Props) {
     return statusColors[status] || "#f5f5f5";
   };
 
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className="px-6 min-h-[400px] flex items-center justify-center">
+          <p>Chargement en cours...</p>
+        </div>
+      );
+    }
+
+    if (!clientDetails) {
+      return (
+        <div className="px-6 min-h-[400px] flex items-center justify-center">
+          <p>Impossible de charger les détails du client.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div ref={printRef} className="grid grid-cols-2 gap-3">
+        <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+          <DataField label="ID du client" value={clientDetails.id} bold />
+          <DataField label="Civilité" value={clientDetails.civility} bold />
+          <DataField label="Nom et Prénom" value={clientDetails.first_name + " " + clientDetails.last_name} bold />
+          <DataField label="Email" value={clientDetails.email || "N/A"} bold />
+          <DataField label="Téléphone" value={clientDetails.mobile || "N/A"} bold />
+          <StatusBadge status={clientDetails.status} />
+        </div>
+
+        <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+          <DataField label="Réseaux du Client" value={clientDetails.source?.name[locale] || "N/A"} bold />{" "}
+          {/* Documents */}
+          <div>
+            <label className="text-xs text-gray-500 block mb-3">Documents du Client</label>
+            {clientDetails.documents && clientDetails.documents?.length > 0 ? (
+              <Carousel className="w-full px-6">
+                <CarouselContent>
+                  {clientDetails.documents.map((doc, index) => (
+                    <CarouselItem key={index} className="basis-1/2">
+                      <DocCard
+                        key={doc.id}
+                        doc={doc}
+                        isLoading={isLoading}
+                        onClick={() => handleDownloadDocument(doc)}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
+                <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />
+              </Carousel>
+            ) : (
+              <p className="text-sm text-gray-500">Aucun document</p>
+            )}
+          </div>
+          <DataField label="Date et Heure" value={format(clientDetails.created_at, "dd-MM-yyyy HH:mm")} bold />
+          <DataField label="Commentaires internes" value={client.comment || "pas de commentaire"} bold />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -279,89 +371,9 @@ export default function ClientDocumentDialog({ client }: Props) {
           <CustomButton Icon={X} size="icon" className="!p-0" onClick={() => setOpen(false)} />
         </DialogHeader>
 
-        {/* Content */}
-        <div ref={printRef} className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-          {/* ID du client */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">ID du client</label>
-              <div className="font-semibold">{client.id}</div>
-            </div>
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">Réseaux du Client</label>
-              <div className="font-medium">{client.source?.name[locale] || "N/A"}</div>
-            </div>
-          </div>
+        {renderContent()}
 
-          {/* Civilité */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">Civilité</label>
-              <div className="font-medium">{client.civility}</div>
-            </div>
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">Type de Réseau</label>
-              <div className="font-medium">{client.type?.name[locale] || "N/A"}</div>
-            </div>
-          </div>
-
-          {/* Nom et Prénom */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">Nom et Prénom</label>
-              <div className="font-semibold">{client.first_name + " " + client.last_name}</div>
-            </div>
-            <div>
-              <label className="text-xs text-gray-500 block mb-1">Documents du Client</label>
-              <div className="flex gap-2">
-                {client.documents &&
-                  client.documents.map((doc, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleDownloadDocument(doc)}
-                      className="flex flex-col items-center gap-1 hover:opacity-70 transition-opacity"
-                      title={doc.file_name}
-                    >
-                      <FileText size={32} className="text-gray-700" />
-                      <span className="text-xs text-gray-600">{doc.file_name}</span>
-                    </button>
-                  ))}
-                {client.documents && client.documents.length === 0 && "no documents"}
-              </div>
-            </div>
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="text-xs text-gray-500 block mb-1">Email</label>
-            <div className="font-medium">{client.email}</div>
-          </div>
-
-          {/* Téléphone */}
-          <div>
-            <label className="text-xs text-gray-500 block mb-1">Téléphone</label>
-            <div className="font-medium">{client.mobile}</div>
-          </div>
-
-          {/* Statut */}
-          <div>
-            <StatusBadge status={client.status} />
-          </div>
-
-          {/* Date et Heure */}
-          <div>
-            <label className="text-xs text-gray-500 block mb-1">Date et Heure</label>
-            <div className="font-medium">{format(client.created_at, "dd-MM-yyyy HH:mm")}</div>
-          </div>
-
-          {/* Commentaires */}
-          <div>
-            <label className="text-xs text-gray-500 block mb-1">Commentaires internes</label>
-            <div className="text-sm">{!!client.comment ? client.comment : "pas de commentaire"}</div>
-          </div>
-        </div>
-
-        {/* Footer Buttons */}
+        {/* Footer */}
         <div className="flex gap-3 p-6 pt-0 border-t justify-center">
           <Link href={ROUTES.CLIENTS.EDIT(client.id)}>
             <CustomButton
@@ -373,10 +385,76 @@ export default function ClientDocumentDialog({ client }: Props) {
           <CustomButton
             text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.PRINT)}
             className="w-42"
-            onClick={handlePrint}
+            onClick={() => handlePrint(clientDetails)}
           />
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function DocCard({ doc, isLoading, onClick }: { doc: Media; isLoading: boolean; onClick: () => void }) {
+  const isPdf = doc.mime_type === "application/pdf";
+  const isWord =
+    doc.mime_type === "application/msword" ||
+    doc.mime_type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+  const isImage = doc.mime_type.startsWith("image/");
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={isLoading}
+      className="flex flex-col items-center gap-1.5 w-20 group cursor-pointer disabled:opacity-50"
+    >
+      <div className="p-3 bg-white rounded-xl shadow-sm border border-zinc-100 flex items-center justify-center w-14 h-14 group-hover:border-amber-400 group-hover:shadow-md transition-all">
+        {isLoading ? (
+          <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        ) : isPdf ? (
+          <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+            <path
+              d="M6 2h9l5 5v15a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"
+              fill="#FF3B30"
+              opacity="0.15"
+              stroke="#FF3B30"
+              strokeWidth="1.5"
+            />
+            <path d="M14 2v5h5" stroke="#FF3B30" strokeWidth="1.5" strokeLinecap="round" />
+            <text x="5" y="18" fontSize="5.5" fontWeight="bold" fill="#FF3B30" fontFamily="sans-serif">
+              PDF
+            </text>
+          </svg>
+        ) : isWord ? (
+          <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+            <path
+              d="M6 2h9l5 5v15a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"
+              fill="#2B579A"
+              opacity="0.15"
+              stroke="#2B579A"
+              strokeWidth="1.5"
+            />
+            <path d="M14 2v5h5" stroke="#2B579A" strokeWidth="1.5" strokeLinecap="round" />
+            <text x="4" y="18" fontSize="5" fontWeight="bold" fill="#2B579A" fontFamily="sans-serif">
+              DOC
+            </text>
+          </svg>
+        ) : isImage ? (
+          <ImageIcon className="w-7 h-7 text-emerald-500" />
+        ) : (
+          <FileText className="w-7 h-7 text-zinc-400" />
+        )}
+      </div>
+      <span className="text-xs font-medium text-zinc-500 text-center leading-tight line-clamp-2 w-full group-hover:text-zinc-800 transition-colors">
+        {doc.name}
+      </span>
+    </button>
+  );
+}
+
+function DataField({ label, value, bold }: { label: string; value?: string | undefined; bold?: boolean }) {
+  return (
+    <div className="border-b text-xs border-zinc-200">
+      <p className="text-zinc-400 uppercase font-semibold">{label}</p>
+      <p className={bold ? "font-bold" : "font-medium"}>{value || "N/A"}</p>
+    </div>
   );
 }

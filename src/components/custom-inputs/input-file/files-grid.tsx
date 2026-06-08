@@ -27,8 +27,6 @@ export default function FilesGrid({
 }: FilesGridProps) {
   const translation = useTranslations();
 
-  console.log("FilesGrid render with files:", files);
-
   // Show only 2 files in grid for multiple mode
   const displayedFiles = files.slice(0, multiple ? 2 : 1);
   const hasMoreFiles = multiple && files.length > 2;
@@ -71,7 +69,7 @@ export default function FilesGrid({
 
       {/* Replace button (for single mode when file exists) */}
       {!multiple && !disabled && files.length > 0 && (
-        <Button type="button" onClick={onAddMore} className="mt-2" variant="outline">
+        <Button type="button" onClick={onAddMore} className="mt-2 z-50" variant="outline">
           {translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.DELETE)}
         </Button>
       )}
