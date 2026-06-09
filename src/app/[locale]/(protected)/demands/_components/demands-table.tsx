@@ -116,7 +116,12 @@ export default function DemandsTable({ data }: Props) {
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DATE_ADDED),
+      header: () => (
+        <SortingButton
+          columnName={translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DATE_ADDED)}
+          columnKey="created_at"
+        />
+      ),
       cell: ({ row }) => formatDate(row.original.created_at),
     },
     {

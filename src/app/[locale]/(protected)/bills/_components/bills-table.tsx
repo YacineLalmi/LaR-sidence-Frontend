@@ -18,6 +18,7 @@ import { ROUTES } from "@/constants/routes";
 import PaymentDialog from "./payment-dialog";
 import PaymentHistoryDialog from "./payment-history-dialog";
 import ViewBillDialog from "./bill-preview";
+import SortingButton from "@/components/ui/sorting-button";
 
 interface Props {
   data: PaginatedResponse<Bill>;
@@ -70,7 +71,7 @@ export default function BillsTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.ID),
+      header: () => <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.ID)} columnKey="id" />,
       cell: ({ row }) => {
         const id = row.original.id;
         return id ? id.toString().padStart(6, "0") : "-";
@@ -78,12 +79,16 @@ export default function BillsTable({ data }: Props) {
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.CREATED_AT),
+      header: () => (
+        <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.CREATED_AT)} columnKey="created_at" />
+      ),
       cell: ({ row }) => formatDate(row.original.created_at),
     },
     {
       accessorKey: "due_date",
-      header: translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.DUE_DATE),
+      header: () => (
+        <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.BILLS.COLUMNS.DUE_DATE)} columnKey="due_date" />
+      ),
       cell: ({ row }) => formatDate(row.original.due_date),
     },
     {

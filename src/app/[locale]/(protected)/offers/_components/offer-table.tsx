@@ -17,6 +17,7 @@ import OfferVisitHistoryDialog from "./offer-visit-history-dialog";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { formatId } from "@/lib/utils";
 import { deleteOffersAction } from "@/actions/offers/delete-offers.action";
+import SortingButton from "@/components/ui/sorting-button";
 
 interface Props {
   data: PaginatedResponse<Offer>;
@@ -52,7 +53,7 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.ID),
+      header: () => <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.ID)} columnKey="id" />,
       cell: ({ row }) => formatId(row.original.id),
     },
     {
@@ -64,11 +65,11 @@ export default function OffersTable({ data }: Props) {
           return (
             <div className="flex items-center gap-2">
               {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
-              <div>{row.original.bien.title || "ID: " + formatId(row.original.bien.id)}</div>
+              <div>{`${row.original.bien.adresse} (${formatId(row.original.bien.id)})`}</div>
             </div>
           );
         } else {
-          return row.original?.bien?.title || "ID: " + formatId(row.original?.bien?.id);
+          return `${row.original.bien?.adresse} (${formatId(row.original.bien?.id)})`;
         }
       },
     },
@@ -97,7 +98,9 @@ export default function OffersTable({ data }: Props) {
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.CREATED_AT),
+      header: () => (
+        <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.CREATED_AT)} columnKey="created_at" />
+      ),
       cell: ({ row }) => {
         const date = row.original.created_at;
         if (!date) return "-";

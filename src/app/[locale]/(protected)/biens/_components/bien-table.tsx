@@ -18,6 +18,7 @@ import FicheBienDialog from "./bien-document-dialog";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ROUTES } from "@/constants/routes";
 import { deleteBiensAction } from "@/actions/Bien/delete-biens.action";
+import SortingButton from "@/components/ui/sorting-button";
 
 interface Props {
   data: PaginatedResponse<Bien>;
@@ -53,7 +54,7 @@ export default function BienTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.ID),
+      header: () => <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.ID)} columnKey="id" />,
       cell: ({ row }) => formatId(row.original.id),
     },
     {
@@ -86,7 +87,12 @@ export default function BienTable({ data }: Props) {
     },
     {
       accessorKey: "availability_date",
-      header: translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.AVAILABILITY_DATE),
+      header: () => (
+        <SortingButton
+          columnName={translation(TRANSLATIONS_KEYS_2.BIENS.COLUMNS.AVAILABILITY_DATE)}
+          columnKey="availability_date"
+        />
+      ),
       cell: ({ row }) => {
         const date = new Date(row.original.availability_date);
         return date.toLocaleDateString();

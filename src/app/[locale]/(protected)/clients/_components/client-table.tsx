@@ -18,6 +18,7 @@ import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ROUTES } from "@/constants/routes";
 import { deleteClientsAction } from "@/actions/clients/delete-clients.action";
 import { formatId } from "@/lib/utils";
+import SortingButton from "@/components/ui/sorting-button";
 
 interface Props {
   data: PaginatedResponse<Client>;
@@ -52,7 +53,7 @@ export default function ClientTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.ID),
+      header: () => <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.ID)} columnKey="id" />,
       cell: ({ row }) => formatId(row.original.id),
     },
     {
@@ -75,7 +76,12 @@ export default function ClientTable({ data }: Props) {
     },
     {
       accessorKey: "created_at",
-      header: translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.CREATED_AT),
+      header: () => (
+        <SortingButton
+          columnName={translation(TRANSLATIONS_KEYS_2.CLIENTS.COLUMNS.CREATED_AT)}
+          columnKey="created_at"
+        />
+      ),
       cell: ({ row }) => format(new Date(row.original.created_at), "dd/MM/yyyy HH:mm"),
     },
     {
