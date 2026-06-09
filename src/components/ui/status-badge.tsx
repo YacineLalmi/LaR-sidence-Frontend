@@ -12,7 +12,7 @@ export const StatusBadge = ({ status }: Props) => {
   return (
     <div
       className={`inline-flex items-center gap-1 px-2 py-1 rounded-full w-24`}
-      title={status.name[locale]}
+      title={status.name[locale] || "N/A"}
       style={{ backgroundColor: status.color?.background_color || "black" }}
     >
       <div className={`size-2 rounded-full w-2.5`} style={{ backgroundColor: status.color?.text_color || "white" }} />

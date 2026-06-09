@@ -75,7 +75,7 @@ export default function DemandTypeTable({ data }: Props) {
       accessorKey: "description",
       header: translation(TRANSLATIONS_KEYS_2.SETTINGS.DEMANDS.TYPES.COLUMNS.DESCRIPTION),
       cell: ({ row }) => (
-        <div className="font-medium max-w-36 truncate text-sm" title={row.original.description[locale]}>
+        <div className="font-medium max-w-36 truncate text-sm" title={row.original.description[locale] || "N/A"}>
           {row.original.description[locale]}
         </div>
       ),

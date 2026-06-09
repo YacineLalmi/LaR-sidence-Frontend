@@ -3,17 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Dialog, DialogContent, DialogClose, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-  MessageCircle,
-  FileText,
-  FileSearch,
-  Download,
-  ImageIcon,
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight, MessageCircle, FileText, FileSearch, ImageIcon } from "lucide-react";
 import CustomButton from "@/components/ui/custom-button";
 import { Bien } from "@/schemas/biens/bien.schema";
 import { useLocale } from "next-intl";
@@ -25,7 +15,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Media } from "@/schemas/global/media.schema";
-import image from "next/image";
 
 interface Props {
   bien: Bien;
@@ -37,8 +26,6 @@ export default function FicheBienDialog({ bien }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [areImagesLoading, setAreImagesLoading] = useState(false);
   const [images, setImages] = useState<File[]>([]);
-  const [documents, setDocuments] = useState<File[]>([]);
-  const [areDocumentsLoading, setAreDocumentsLoading] = useState(false);
   const locale = useLocale() as "fr" | "en" | "ar";
 
   useEffect(() => {
@@ -64,32 +51,6 @@ export default function FicheBienDialog({ bien }: Props) {
 
     if (open && !!BienDetails) {
       loadImages(BienDetails);
-    }
-  }, [open, BienDetails]);
-
-  useEffect(() => {
-    const LoadDocuments = async (bien: Bien) => {
-      setAreDocumentsLoading(true);
-      const documentPromises = bien.documents?.map((doc) => getMediaAsBlobAction(doc)) || [];
-      const documents = await Promise.all(documentPromises);
-      const validDocuments = documents
-        .filter((doc) => !!doc)
-        .map((doc) => {
-          const binaryString = window.atob(doc.base64);
-          const bytes = new Uint8Array(binaryString.length);
-
-          for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-          }
-          return new File([bytes], doc.name + "#" + doc.uuid, { type: doc.mimeType });
-        });
-
-      setDocuments(validDocuments);
-      setAreDocumentsLoading(false);
-    };
-
-    if (open && !!BienDetails) {
-      LoadDocuments(BienDetails);
     }
   }, [open, BienDetails]);
 
@@ -257,7 +218,7 @@ function PageOne({ data, images, areImagesLoading }: { data: Bien; images: File[
           )}
         </div>
         <DataField label="ID du bien" value={data.id.toString()} bold />
-        <DataField label="Titre du bien" value={data.title || "N/A"} bold />
+        {/* <DataField label="Titre du bien" value={data.title || "N/A"} bold /> */}
         <DataField label="Type de bien" value={data.type?.name[locale]} bold />
         <DataField label="Statut du bien" value={data.status?.name[locale]} bold />
         <DataField label="Type de transaction" value={data.transaction_type?.name[locale]} bold />
@@ -272,7 +233,7 @@ function PageOne({ data, images, areImagesLoading }: { data: Bien; images: File[
       {/* Right Column */}
       <div className="space-y-6">
         <DataField label="Exclusivité" value={data.exclusivity ? "Oui" : "Non"} bold />
-        <DataField label="Agent responsable" value={data.agent?.first_name} bold />
+        <DataField label="Agent responsable" value={data.agent?.first_name + " " + data.agent?.last_name} bold />
         <DataField label="Wilaya" value={data.wilaya?.name[locale]} bold />
         <DataField label="Commune" value={data.commune?.name[locale]} bold />
         <DataField label="Code postale" value={data.postal_code || undefined} bold />
@@ -286,15 +247,6 @@ function PageOne({ data, images, areImagesLoading }: { data: Bien; images: File[
 
 function PageTwo({ data }: { data: Bien }) {
   const locale = useLocale() as "fr" | "en" | "ar";
-  const [previewDoc, setPreviewDoc] = useState<Media | null>(null);
-
-  const chunkDocuments = (docs: typeof data.documents, size: number) => {
-    if (!docs) return [];
-    return Array.from({ length: Math.ceil(docs.length / size) }, (_, i) => docs.slice(i * size, i * size + size));
-  };
-
-  const documentChunks = chunkDocuments(data.documents, 3);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   return (
     <div className="grid grid-cols-2 gap-12">
@@ -381,12 +333,12 @@ async function downloadFile(doc: Media) {
     bytes[i] = binaryString.charCodeAt(i);
   }
 
-  const file = new File([bytes], doc.file_name, { type: doc.mime_type });
+  const file = new File([bytes], doc.name, { type: doc.mime_type });
   const url = URL.createObjectURL(file);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = doc.file_name;
+  a.download = doc.name;
   a.click();
 
   URL.revokeObjectURL(url); // cleanup immediately after click
@@ -394,7 +346,7 @@ async function downloadFile(doc: Media) {
 
 /** ─── REUSABLE UI COMPONENTS ─── **/
 
-function DataField({ label, value, bold }: { label: string; value?: string | undefined; bold?: boolean }) {
+function DataField({ label, value, bold }: { label: string; value?: string | null | undefined; bold?: boolean }) {
   return (
     <div className="border-b text-xs border-zinc-200">
       <p className="text-zinc-400 uppercase font-semibold">{label}</p>
@@ -587,11 +539,6 @@ const handlePrint = (bien: Bien, locale: "fr" | "en" | "ar") => {
                 </div>
                 
                 <div class="print-field">
-                  <div class="print-label">Titre du bien</div>
-                  <div class="print-value print-value-bold">${bien.title || "N/A"}</div>
-                </div>
-                
-                <div class="print-field">
                   <div class="print-label">Type de bien</div>
                   <div class="print-value print-value-bold">${bien.type?.name[locale] || "N/A"}</div>
                 </div>
@@ -613,7 +560,7 @@ const handlePrint = (bien: Bien, locale: "fr" | "en" | "ar") => {
                 
                 <div class="print-field">
                   <div class="print-label">Charges mensuelles</div>
-                  <div class="print-value">${bien.monthly_charges ? bien.monthly_charges.toLocaleString() + " DA" : "N/A"} </div>
+                  <div class="print-value print-value-bold">${bien.monthly_charges ? bien.monthly_charges.toLocaleString() + " DA" : "N/A"} </div>
                 </div>
               </div>
               
@@ -626,7 +573,7 @@ const handlePrint = (bien: Bien, locale: "fr" | "en" | "ar") => {
                 
                 <div class="print-field">
                   <div class="print-label">Agent responsable</div>
-                  <div class="print-value print-value-bold">${bien.agent?.first_name || "N/A"}</div>
+                  <div class="print-value print-value-bold">${bien.agent?.first_name + " " + bien.agent?.last_name || "N/A"}</div>
                 </div>
                 
                 <div class="print-field">
@@ -651,12 +598,12 @@ const handlePrint = (bien: Bien, locale: "fr" | "en" | "ar") => {
                 
                 <div style="margin-top: 20px;">
                   <div class="print-label">Description</div>
-                  <div class="print-description">${bien.description || "Aucune description"}</div>
+                  <div class="print-description print-value-bold">${bien.description || "Aucune description"}</div>
                 </div>
                 
                 <div class="print-field" style="margin-top: 20px;">
                   <div class="print-label">Date de Création</div>
-                  <div class="print-value">${format(bien.created_at, "dd-MM-yyyy") || "N/A"}</div>
+                  <div class="print-value print-value-bold">${format(bien.created_at, "dd-MM-yyyy") || "N/A"}</div>
                 </div>
               </div>
             </div>

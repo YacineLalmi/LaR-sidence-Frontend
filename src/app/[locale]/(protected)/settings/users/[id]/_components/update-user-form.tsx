@@ -57,6 +57,7 @@ export default function UpdateUserForm({ roles, user }: Props) {
       successAction={onSuccess}
       successMessage={TRANSLATIONS_KEYS_2.SETTINGS.USERS.FORM.MESSAGES.CREATED}
       errorMessage={TRANSLATIONS_KEYS_2.SETTINGS.USERS.FORM.MESSAGES.FAILED_CREATION}
+      submitButtonText={TRANSLATIONS_KEYS_2.COMMON.BUTTONS.APPLY}
     />
   );
 }

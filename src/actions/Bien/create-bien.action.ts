@@ -9,7 +9,7 @@ export async function createBienAction(data: BienForm): Promise<FormState> {
     const formData = new FormData();
 
     for (const key in data) {
-      if (key === "images" || key === "documents") {
+      if (key === "new_images" || key === "new_documents") {
         const files = (data as any)[key] as File[];
         files.forEach((file: File, index: number) => {
           formData.append(`${key}[${index}]`, file);

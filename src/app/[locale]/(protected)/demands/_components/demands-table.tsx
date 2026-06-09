@@ -14,6 +14,8 @@ import CustomButton from "@/components/ui/custom-button";
 import DemandDocumentDialog from "./demand-document-dialog";
 import { deleteDemandsAction } from "@/actions/demands/delete-demands.action";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import SortingButton from "@/components/ui/sorting-button";
+import { formatId } from "@/lib/utils";
 
 interface Props {
   data: PaginatedResponse<Demand>;
@@ -66,10 +68,11 @@ export default function DemandsTable({ data }: Props) {
     },
     {
       accessorKey: "id",
-      header: translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DEMAND_ID),
+      header: () => (
+        <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.DEMANDS.COLUMNS.DEMAND_ID)} columnKey="id" />
+      ),
       cell: ({ row }) => {
-        const id = row.original.id;
-        return id ? id.toString().padStart(6, "0") : "-";
+        return formatId(row.original.id);
       },
     },
     // {

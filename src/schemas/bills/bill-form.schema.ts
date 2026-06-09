@@ -1,6 +1,9 @@
 import z from "zod";
+import { FileSchema } from "../file/file.schema";
+import { inputFilesValidation } from "../global/file-field.schema";
 
 const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
+const ACCEPTED_DOCUMENT_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 export const BillFormSchema = z.object({
   due_date: z.string(),
@@ -12,9 +15,8 @@ export const BillFormSchema = z.object({
   amount_tva: z.string(),
   amount_ttc: z.string(),
   billing_model_id: z.string(),
-  documents: z
-    .array(z.instanceof(File))
-    .refine((files) => files.every((file) => file.size <= MAX_DOCUMENT_SIZE), "Each file must be 5MB or less"),
+  new_documents: inputFilesValidation({ maxSize: MAX_DOCUMENT_SIZE, acceptedTypes: ACCEPTED_DOCUMENT_TYPES }),
+  deleted_documents: z.array(z.string()).optional(),
 });
 
 export type BillForm = z.infer<typeof BillFormSchema>;

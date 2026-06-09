@@ -27,6 +27,7 @@ interface Props {
   successMessage?: string;
   errorMessage?: string;
   successAction?: () => void;
+  submitButtonText?: string;
 }
 
 export default function UserForm({
@@ -37,6 +38,7 @@ export default function UserForm({
   errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_FAILED,
   successAction,
   status,
+  submitButtonText = TRANSLATIONS_KEYS_2.COMMON.BUTTONS.SUBMIT,
 }: Props) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const router = useRouter();
@@ -45,6 +47,7 @@ export default function UserForm({
   const form = useForm<UserFormType>({
     resolver: zodResolver(UserFormSchema),
     defaultValues: initialData,
+    mode: "onTouched",
   });
 
   async function onSubmit(values: UserFormType) {
@@ -134,7 +137,7 @@ export default function UserForm({
           />
         </div>
         <Button className="border-1 cursor-pointer w-52 p-5 col-span-3 ml-auto" type="submit">
-          {isPending ? <MirageLoader /> : translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.ADD)}
+          {isPending ? <MirageLoader /> : translation(submitButtonText)}
         </Button>
       </form>
     </Form>

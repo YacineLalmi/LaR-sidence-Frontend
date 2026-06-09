@@ -27,7 +27,7 @@ export default function UpdateRoleDialog({ permissions, role }: Props) {
 
   const initialDate: RoleFormType = {
     display_name: role.display_name,
-    description: role.description,
+    description: role.description || "",
     permissions: role.permissions?.map((permission) => permission.id) ?? [],
   };
   const submitAction = useCallback(async (values: RoleFormType) => {

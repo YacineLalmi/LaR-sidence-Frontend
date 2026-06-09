@@ -15,6 +15,7 @@ import DeleteUserDialog from "./delete-user-dialog";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { ROUTES } from "@/constants/routes";
 import { deleteUsersAction } from "@/actions/users/delete-users.action";
+import { formatId } from "@/lib/utils";
 
 interface Props {
   data: any;
@@ -49,6 +50,9 @@ export default function UsersTable({ data }: Props) {
       accessorKey: "id",
       header: () => {
         return <SortingButton columnName={translation(TRANSLATIONS_KEYS_2.SETTINGS.USERS.COLUMNS.ID)} columnKey="id" />;
+      },
+      cell: ({ row }) => {
+        return formatId(row.original.id);
       },
     },
     {

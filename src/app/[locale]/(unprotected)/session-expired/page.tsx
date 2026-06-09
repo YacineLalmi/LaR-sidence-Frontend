@@ -36,5 +36,9 @@ export default function SessionExpiredPage() {
     handleRefresh();
   }, [router]);
 
-  return <div className="flex flex-col items-center justify-center min-h-screen p-4">LOADing...</div>;
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      Actualisation de la session... Veuillez patienter un instant.
+    </div>
+  );
 }

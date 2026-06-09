@@ -8,6 +8,7 @@ import { BillService } from "@/services/bill.service";
 export async function updateBillAction(data: BillForm, id: string): Promise<FormState> {
   try {
 
+    console.log("from action", data)
     const formData = new FormData()
     formData.append("due_date", data.due_date)
     formData.append("client_id", data.client_id)
@@ -18,8 +19,11 @@ export async function updateBillAction(data: BillForm, id: string): Promise<Form
     formData.append("amount_tva", data.amount_tva)
     formData.append("amount_ttc", data.amount_ttc)
     formData.append("billing_model_id", data.billing_model_id)
-    data.documents.forEach((file: File, index: number) => {
-      formData.append(`documents[${index}]`, file);
+    data.new_documents.forEach((file: File, index: number) => {
+      formData.append(`new_documents[${index}]`, file);
+    });
+    data.deleted_documents?.forEach((uuid: string, index: number) => {
+      formData.append(`deleted_documents[${index}]`, uuid);
     });
 
     await BillService.update(formData, id);

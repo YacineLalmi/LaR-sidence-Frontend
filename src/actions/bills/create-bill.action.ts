@@ -18,8 +18,8 @@ export async function createBillAction(data: BillForm): Promise<FormState<Bill>>
     formData.append("amount_tva", data.amount_tva)
     formData.append("amount_ttc", data.amount_ttc)
     formData.append("billing_model_id", data.billing_model_id)
-    data.documents.forEach((file: File, index: number) => {
-      formData.append(`documents[${index}]`, file);
+    data.new_documents.forEach((file: File, index: number) => {
+      formData.append(`new_documents[${index}]`, file);
     });
 
     const createdBill = await BillService.create(formData);

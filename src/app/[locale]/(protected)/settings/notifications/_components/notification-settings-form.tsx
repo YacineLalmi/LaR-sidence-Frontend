@@ -25,6 +25,8 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
+import NavigationButton from "@/components/ui/navigation-button";
+import { ROUTES } from "@/constants/routes";
 
 const CATEGORY_SET = new Set<string>(NOTIFICATION_CATEGORIES);
 const RULE_SET = new Set<string>(NOTIFICATION_RULE_KEYS);
@@ -106,7 +108,7 @@ export default function NotificationSettingsForm({ initialSettings }: { initialS
   };
 
   const ruleMeta = (key: NotificationRuleKey, field: "title" | "desc" | "placeholder") =>
-    (translation as (k: string) => string)(`rules.${key}.${field}`);
+    (translation as (k: string) => string)(`settings.notifications.rules.${key}.${field}`);
 
   const renderRuleBlock = (cat: NotificationCategoryId, ruleKey: NotificationRuleKey) => {
     const ruleSetting = byKey.get(ruleKey);
@@ -181,7 +183,10 @@ export default function NotificationSettingsForm({ initialSettings }: { initialS
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            {translation(TRANSLATIONS_KEYS_2.SETTINGS.NOTIFICATIONS.TITLE)}
+            <NavigationButton
+              title={translation(TRANSLATIONS_KEYS_2.SETTINGS.NOTIFICATIONS.TITLE)}
+              backLink={ROUTES.SETTINGS.ROOT}
+            />
           </h1>
           <p className="text-sm text-muted-foreground mt-2 max-w-2xl leading-relaxed">
             {translation(TRANSLATIONS_KEYS_2.SETTINGS.NOTIFICATIONS.SUBTITLE)}

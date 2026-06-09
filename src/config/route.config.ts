@@ -204,6 +204,18 @@ export const ROUTES_CONFIG: Record<string, RouteConfig> = {
     requireAuthentication: true,
     title: TRANSLATIONS_KEYS_2.BILLS.TITLE,
   },
+  [ROUTES.BILLS.EDIT("[id]")]: {
+    permissions: [PERMISSIONS.MANAGE_BILLS],
+    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.BILLS.FORM.TITLES.UPDATE,
+    backLink: ROUTES.BILLS.ROOT
+  },
+  [ROUTES.BILLS.CREATE]: {
+    permissions: [PERMISSIONS.MANAGE_BILLS],
+    requireAuthentication: true,
+    title: TRANSLATIONS_KEYS_2.BILLS.FORM.TITLES.CREATE,
+    backLink: ROUTES.BILLS.ROOT
+  },
   [ROUTES.DEMANDS.ROOT]: {
     permissions: [PERMISSIONS.VIEW_DEMANDS],
     requireAuthentication: true,

@@ -3,6 +3,7 @@ import { ClientSchema } from "../clients/client.schema";
 import { BienSchema } from "../biens/bien.schema";
 import { ClassificationSchema } from "../classification/classification.schema";
 import { BillingModelSchema } from "./models/billing-model.schema";
+import { MediaSchema } from "../global/media.schema";
 // import { PaymentSchema } from "../payment/payment.schema";
 
 export const BillSchema = z.object({
@@ -17,6 +18,7 @@ export const BillSchema = z.object({
   amount_ttc: z.string(),
   billing_model: BillingModelSchema.nullable().optional(),
   payments: z.array(z.any()).nullable().optional(),
+  documents: z.array(MediaSchema).optional(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   deleted_at: z.iso.datetime().nullable().optional(),

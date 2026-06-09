@@ -52,7 +52,7 @@ export const BillService = {
   },
 
   update: async (data: FormData, id: string) => {
-    const response = await ApiService.put<Bill>({
+    const response = await ApiService.post<Bill>({
       endpoint: END_POINTS.update(id),
       body: data,
     });

@@ -226,7 +226,7 @@ export default function DemandDocumentDialog({ demand }: Props) {
   };
 
   // Helper function to get status color
-  const getStatusColor = (status: string | undefined) => {
+  const getStatusColor = (status: string | null | undefined) => {
     if (!status) {
       return;
     }

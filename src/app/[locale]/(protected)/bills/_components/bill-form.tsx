@@ -37,6 +37,9 @@ interface Props {
   errorMessage?: string;
   formId?: string;
   successAction?: () => void;
+  existingDocuments?: File[];
+  setExistingDocuments?: React.Dispatch<React.SetStateAction<File[]>>;
+  areDocumentsLoading?: boolean;
 }
 
 export default function BillForm({
@@ -46,9 +49,12 @@ export default function BillForm({
   errorMessage = TRANSLATIONS_KEYS_2.COMMON.MESSAGES.OPERATION_FAILED,
   formId,
   successAction,
+  existingDocuments = [],
+  setExistingDocuments,
+  areDocumentsLoading = false,
 }: Props) {
+  console.log(initialData);
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [documents, setDocuments] = useState<File[]>([]);
   const router = useRouter();
   const translation = useTranslations();
   const [clients, isClientsPending] = useFetch<ListItem[]>(() => getClientListAction(), []);
@@ -136,6 +142,21 @@ export default function BillForm({
       form.setValue("amount_ttc", `${(amoutHT + taxAmount).toFixed(2)}`);
     }
   }, [form.watch("amount_ht"), selectedBillingModel]);
+
+  const handleFileDelete = (file: File, index: number) => {
+    // Track the deleted UUID in the form
+    const current = form.getValues("deleted_documents") ?? [];
+    const uuid = file.name.split("#").pop() || ""; // Extract UUID from filename
+    if (uuid) {
+      form.setValue("deleted_documents", [...current, uuid]);
+    }
+    setExistingDocuments?.((prev) => prev.filter((doc, docIndex) => docIndex !== index));
+  };
+
+  const handleNewFiles = (files: File[]) => {
+    setExistingDocuments?.((prev) => [...(prev || []), ...files]);
+    form.setValue("new_documents", files);
+  };
 
   return (
     <>
@@ -254,7 +275,15 @@ export default function BillForm({
                 required
               />
 
-              <InputFileLarge control={form.control} name="documents" />
+              <InputFileLarge
+                control={form.control}
+                name="new_documents"
+                existingFiles={existingDocuments}
+                handleNewFiles={handleNewFiles}
+                handleFileDelete={handleFileDelete}
+                areFileLoading={areDocumentsLoading}
+                
+              />
             </div>
           </div>
 

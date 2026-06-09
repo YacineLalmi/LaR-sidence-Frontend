@@ -51,8 +51,6 @@ export default function ClientDocumentDialog({ client }: Props) {
 
   const handleDownloadDocument = async (doc: Media) => {
     const blob = await getMediaAsBlobAction(doc);
-    console.log("doc files", doc);
-    console.log("blob files", blob);
     if (!blob) return;
 
     const binaryString = window.atob(blob.base64);

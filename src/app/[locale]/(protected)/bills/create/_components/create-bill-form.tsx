@@ -21,7 +21,8 @@ export default function CreateBillForm() {
     amount_tva: "",
     amount_ttc: "",
     billing_model_id: "",
-    documents: [],
+    new_documents: [],
+    deleted_documents: [],
   };
 
   const onSuccess = useCallback(() => {
@@ -36,6 +37,7 @@ export default function CreateBillForm() {
       errorMessage={TRANSLATIONS_KEYS_2.BILLS.FORM.MESSAGES.FAILED_CREATION}
       formId="create-bill-form"
       successAction={onSuccess}
+      existingDocuments={[]}
     />
   );
 }
