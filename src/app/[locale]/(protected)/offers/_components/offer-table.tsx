@@ -61,10 +61,10 @@ export default function OffersTable({ data }: Props) {
       header: translation(TRANSLATIONS_KEYS_2.OFFERS.COLUMNS.BIEN),
       cell: ({ row }) => {
         if (row.original.bien?.images?.[0]) {
-          const firstImageId = row.original.bien.images?.[0]?.id;
+          const firstImageId = row.original.bien.images?.[0];
           return (
             <div className="flex items-center gap-2">
-              {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
+              {firstImageId ? <ImageFetcher image={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
               <div>{`${row.original.bien.adresse} (${formatId(row.original.bien.id)})`}</div>
             </div>
           );
