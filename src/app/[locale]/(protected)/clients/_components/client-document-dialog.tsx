@@ -184,9 +184,8 @@ export default function ClientDocumentDialog({ client }: Props) {
           
           .print-status {
             display: inline-block;
-            padding: 6px 12px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
           }
           
@@ -211,17 +210,17 @@ export default function ClientDocumentDialog({ client }: Props) {
             
             <div class="print-field">
               <div class="print-label">Réseaux du Client</div>
-              <div class="print-value">${client.source?.name[locale] || "N/A"}</div>
+              <div class="print-value print-value-bold">${client.source?.name[locale] || "N/A"}</div>
             </div>
             
             <div class="print-field">
               <div class="print-label">Civilité</div>
-              <div class="print-value">${client.civility}</div>
+              <div class="print-value print-value-bold">${client.civility}</div>
             </div>
             
             <div class="print-field">
               <div class="print-label">Type de Réseau</div>
-              <div class="print-value">${client.type?.name[locale] || "N/A"}</div>
+              <div class="print-value print-value-bold">${client.type?.name[locale] || "N/A"}</div>
             </div>
             
             <div class="print-field">
@@ -242,24 +241,24 @@ export default function ClientDocumentDialog({ client }: Props) {
             
             <div class="print-field">
               <div class="print-label">Email</div>
-              <div class="print-value">${client.email || "N/A"}</div>
+              <div class="print-value print-value-bold">${client.email || "N/A"}</div>
             </div>
             
             <div class="print-field">
               <div class="print-label">Téléphone</div>
-              <div class="print-value">${client.mobile}</div>
+              <div class="print-value print-value-bold">${client.mobile}</div>
             </div>
             
             <div class="print-field">
               <div class="print-label">Statut</div>
-              <div class="print-status" style="background-color: ${getStatusColor(client.status?.name.fr || "active")};">
+              <div class="print-value print-value-bold"  style="background-color: ${getStatusColor(client.status?.name.fr || "active")};">
                 ${client.status?.name[locale] || "N/A"}
               </div>
             </div>
             
             <div class="print-field">
               <div class="print-label">Date et Heure</div>
-              <div class="print-value">${format(client.created_at, "dd-MM-yyyy HH:mm")}</div>
+              <div class="print-value print-value-bold">${format(client.created_at, "dd-MM-yyyy HH:mm")}</div>
             </div>
           </div>
           
@@ -372,11 +371,11 @@ export default function ClientDocumentDialog({ client }: Props) {
         {renderContent()}
 
         {/* Footer */}
-        <div className="flex gap-3 p-6 pt-0 border-t justify-center">
+        <div className="flex gap-3 p-6 border-t justify-center">
           <Link href={ROUTES.CLIENTS.EDIT(client.id)}>
             <CustomButton
               text={translation(TRANSLATIONS_KEYS_2.COMMON.BUTTONS.EDIT)}
-              variant="ghost"
+              variant="outline"
               className="w-42"
             />
           </Link>

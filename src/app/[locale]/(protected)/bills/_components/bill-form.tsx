@@ -253,7 +253,7 @@ export default function BillForm({
                 name="amount_ht"
                 label="Montant HT"
                 placeholder="Sélectionner une option"
-                disabled={isPending}
+                disabled={isPending || !form.watch("billing_model_id")}
                 required
               />
 
@@ -279,10 +279,14 @@ export default function BillForm({
                 control={form.control}
                 name="new_documents"
                 existingFiles={existingDocuments}
+                accept={[
+                  "application/msword",
+                  "application/pdf",
+                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ]}
                 handleNewFiles={handleNewFiles}
                 handleFileDelete={handleFileDelete}
                 areFileLoading={areDocumentsLoading}
-                
               />
             </div>
           </div>

@@ -10,7 +10,7 @@ export async function updateBillAction(data: BillForm, id: string): Promise<Form
 
     console.log("from action", data)
     const formData = new FormData()
-    formData.append("due_date", data.due_date)
+    formData.append("due_date", data.due_date.toISOString())
     formData.append("client_id", data.client_id)
     formData.append("bien_id", data.bien_id)
     formData.append("status_id", data.status_id)

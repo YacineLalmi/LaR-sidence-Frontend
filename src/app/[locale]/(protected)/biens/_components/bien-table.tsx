@@ -49,8 +49,6 @@ export default function BienTable({ data }: Props) {
           />
         </div>
       ),
-      enableSorting: false,
-      enableHiding: false,
     },
     {
       accessorKey: "id",
@@ -60,10 +58,10 @@ export default function BienTable({ data }: Props) {
     {
       id: "bien.id",
       cell: ({ row }) => {
-        const firstImageId = row.original.images?.[0]?.id;
+        const firstImage = row.original.images?.[0];
         return (
           <div className="flex items-center gap-2">
-            {firstImageId ? <ImageFetcher imageId={firstImageId} /> : <Image className="h-8 w-8 text-gray-400" />}
+            {firstImage ? <ImageFetcher image={firstImage} /> : <Image className="h-8 w-8 text-gray-400" />}
           </div>
         );
       },

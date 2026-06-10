@@ -39,6 +39,7 @@ const END_POINTS = {
 };
 
 export const ClassificationService = (category: string, scope: string) => ({
+  
   create: async (data: ClassificationForm) => {
     const response = await ApiService.post<Classification>({
       endpoint: END_POINTS.create(category, scope),

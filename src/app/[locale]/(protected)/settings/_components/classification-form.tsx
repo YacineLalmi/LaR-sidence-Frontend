@@ -65,66 +65,58 @@ export default function ClassificationForm({
   return (
     <Form {...form}>
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)} className="grid gap-[12px]">
-        {/* <InputTextField
-          control={form.control}
-          name="code"
-          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.CODE)}
-          disabled={isPending}
-          required
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.CODE)}
-        /> */}
         <InputTextField
           control={form.control}
           name="name.fr"
-          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.NAME)}
+          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.LABELS.NAME.FR)}
           disabled={isPending}
           required
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.NAME)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.NAME.FR)}
         />
         <InputTextField
           control={form.control}
           name="name.en"
           disabled={isPending}
           required
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.NAME)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.NAME.EN)}
         />
         <InputTextField
           control={form.control}
           name="name.ar"
           disabled={isPending}
           required
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.NAME)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.NAME.AR)}
         />
         <InputTextArea
           control={form.control}
           name="description.fr"
           rows={2}
-          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.DESCRIPTION)}
+          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.LABELS.DESCRIPTION.FR)}
           disabled={isPending}
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.DESCRIPTION.FR)}
         />
         <InputTextArea
           control={form.control}
           name="description.en"
           rows={2}
           disabled={isPending}
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.DESCRIPTION.EN)}
         />
         <InputTextArea
           control={form.control}
           name="description.ar"
           rows={2}
           disabled={isPending}
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.DESCRIPTION)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.DESCRIPTION.AR)}
         />
         <InputSelectField
           control={form.control}
           name="color_id"
-          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.LABELS.CODE)}
+          label={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.LABELS.COLOR)}
           disabled={isPending}
           options={colors}
           isPending={isColorPending}
-          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.BIENS.TYPES.FORM.PLACEHOLDERS.CODE)}
+          placeholder={translation(TRANSLATIONS_KEYS_2.SETTINGS.CLASSIFICATIONS.FORM.PLACEHOLDERS.COLOR)}
         />
       </form>
     </Form>

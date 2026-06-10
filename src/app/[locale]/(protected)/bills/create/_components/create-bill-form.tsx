@@ -3,16 +3,17 @@
 import { ROUTES } from "@/constants/routes";
 import { TRANSLATIONS_KEYS_2 } from "@/i18n/translation-keys";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { createBillAction } from "@/actions/bills/create-bill.action";
 import { BillForm as BillFormType } from "@/schemas/bills/bill-form.schema";
 import BillForm from "../../_components/bill-form";
 
 export default function CreateBillForm() {
   const router = useRouter();
+  const [existingDocuments, setExistingDocuments] = useState<File[]>([]);
 
   const initialData: BillFormType = {
-    due_date: new Date().toISOString(),
+    due_date: new Date(),
     client_id: "",
     bien_id: "",
     status_id: "",
@@ -37,7 +38,8 @@ export default function CreateBillForm() {
       errorMessage={TRANSLATIONS_KEYS_2.BILLS.FORM.MESSAGES.FAILED_CREATION}
       formId="create-bill-form"
       successAction={onSuccess}
-      existingDocuments={[]}
+      existingDocuments={existingDocuments}
+      setExistingDocuments={setExistingDocuments}
     />
   );
 }

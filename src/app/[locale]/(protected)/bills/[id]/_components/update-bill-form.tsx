@@ -57,7 +57,7 @@ export default function UpdateBillForm({ bill }: Props) {
   }, [bill.documents]);
 
   const initialData: BillFormType = {
-    due_date: bill.due_date || new Date().toISOString(),
+    due_date: bill.due_date ? new Date(bill.due_date) : new Date(),
     client_id: bill.client?.id || "",
     bien_id: bill.bien?.id || "",
     status_id: bill.status?.id || "",

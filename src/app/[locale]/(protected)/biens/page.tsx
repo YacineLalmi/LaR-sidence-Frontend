@@ -6,7 +6,10 @@ import BienHeader from "./_components/bien-header";
 export default async function Biens({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const queryParams = await searchParams;
 
-  const data = await BienService.findMany({ ...queryParams, include: "transactionType,bienType,bienStatus.color" });
+  const data = await BienService.findMany({
+    ...queryParams,
+    include: "transactionType,bienType,bienStatus.color,media",
+  });
 
   return (
     <Card className="bg-transparent border-none shadow-none p-0">

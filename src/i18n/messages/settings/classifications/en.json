@@ -1,0 +1,30 @@
+{
+  "form": {
+    "labels": {
+      "color": "Select a color",
+      "name": {
+        "fr": "Nom",
+        "en": "Name",
+        "ar": "اسم"
+      },
+      "description": {
+        "fr": "Description",
+        "en": "Description",
+        "ar": "وصف"
+      }
+    },
+    "placeholders": {
+      "color": "Select a color",
+      "name": {
+        "fr": "Insérer le nom",
+        "en": "Insert name",
+        "ar": "أدخل الاسم"
+      },
+      "description": {
+        "fr": "Insérer la description",
+        "en": "Insert description",
+        "ar": "أدخل الوصف"
+      }
+    }
+  }
+}

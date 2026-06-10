@@ -6,7 +6,7 @@ const MAX_DOCUMENT_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_DOCUMENT_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 export const BillFormSchema = z.object({
-  due_date: z.string(),
+  due_date: z.date(),
   client_id: z.string(),
   bien_id: z.string(),
   status_id: z.string(),
